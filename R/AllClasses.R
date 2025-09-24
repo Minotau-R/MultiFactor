@@ -1,4 +1,28 @@
-
+#' LinkMap S7 container class
+#' @name LinkMap
+#' @rdname LinkMap-class
+#' @description
+#' `LinkMap` is an S7 class to organize and manage multiple sets of factors,
+#' for instance when tracing or converting feature IDs across databases. Methods
+#' for `LinkMap` aim to follow `factor` behaviour.
+#'
+#' @slot levels `Named list` of character vectors depicting levels.
+#' @slot value `Numeric vector` or `boolean scalar`.
+#' @slot is_bool `Boolean`, returns `TRUE` if this object contains no `value`.
+#' @param x a `data.frame` with two named columns that can be coerced to factors
+#'     and an optional third column of values associated with those two columns.
+#' @returns a `LinkMap` object.
+#' @examples
+#' # Generate some random linkage input
+#' x <- data.frame(
+#'     a = sample(letters[seq(3)], 10, replace = TRUE),
+#'     A = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#' )
+#' LinkMap(x)
+#'
+#' @seealso [MultiFactor()]
+#' @export
+#'
 LinkMap <- S7::new_class(
     "LinkMap",
     package = "MultiFactor",
@@ -61,7 +85,7 @@ LinkMap <- S7::new_class(
 #'     content, or `TRUE`, if missing.
 #' @slot map `(sparse) Matrix` specifying which elements contain which levels.
 #' @param x a `LinkMap`, or named list of `LinkMap` objects.
-#' @returns a MultiFactor object.
+#' @returns a `MultiFactor` object.
 #' @seealso [MultiFactor-methods()]
 #' @examples
 #' # Generate some random linkage input
@@ -71,6 +95,7 @@ LinkMap <- S7::new_class(
 #' )
 #' MultiFactor(x)
 #'
+#' @seealso [LinkMap()]
 #' @export
 #'
 MultiFactor <- S7::new_class(
@@ -112,8 +137,7 @@ MultiFactor <- S7::new_class(
 
 )
 
-
-# LinkMap utils
+##### LinkMap utils ----
 
 .check_input_df <- function(x) {
     stopifnot("x must be a data.frame" = is.data.frame(x))
@@ -137,7 +161,7 @@ MultiFactor <- S7::new_class(
 }
 
 
-# MultiFactor utils ----
+#### MultiFactor utils ----
 
 .mapMultiFactor <- function(x, mode = "counts") {
     # Some flexibility in input

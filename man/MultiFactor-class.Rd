@@ -10,7 +10,7 @@ MultiFactor(x)
 \item{x}{a \code{LinkMap}, or named list of \code{LinkMap} objects.}
 }
 \value{
-a MultiFactor object.
+a \code{MultiFactor} object.
 }
 \description{
 \code{MultiFactor} is an S7 class to organize and manage multiple sets of factors,
@@ -50,4 +50,6 @@ MultiFactor(x)
 }
 \seealso{
 \code{\link[=MultiFactor-methods]{MultiFactor-methods()}}
+
+\code{\link[=LinkMap]{LinkMap()}}
 }
