@@ -20,11 +20,59 @@ LinkMap <- S7::new_class(
             .parent = edgelist[[1L]],
             value   = edgelist[[2L]]
         )
+    },
+    validator = function(self) {
+        if(!is.data.frame(self)) {
+            "Must be a data.frame. "
+        }
+        if(! NCOL(self) %in% c(2L, 3L)) {
+            "Must be a data.frame with exactly two or three columns. "
+        }
+        if(!length(colnames(self)) %in% c(2L, 3L)) {
+            "The first two columns must be named. "
+        }
+        if(!all(vapply(self[,c(1L, 2L)], is.factor, NA, USE.NAMES = FALSE))){
+            "The first two columns must be factors. "
+        }
     }
 )
 
 
-
+#' MultiFactor S7 container class
+#' @name MultiFactor
+#' @rdname MultiFactor-class
+#' @description
+#' `MultiFactor` is an S7 class to organize and manage multiple sets of factors,
+#' for instance when tracing or converting feature IDs across databases. Methods
+#' for `MultiFactor` aim to follow `factor` behaviour.
+#'
+#' @details
+#' The most straightforward way to construct a `MultiFactor` object is as a
+#' named list of named data.frames. The columns of the data.frames indicate the
+#' category of factor in that column.
+#'
+#' A `MultiFactor` object presents itself similar to a `data.frame`, in the
+#' sense that level types can be called as columns and individual data.frame
+#' components can be called as rows.
+#' `MultiFactor` inherits from `list`; Content can be accessed through regular
+#' list methods (e.g., `[`, `[[`).
+#' @slot levels `Named list of character vectors`. Accessed through `levels(x)`
+#' @slot value Optional. `Named list of vectors` of same size as `MultiFactor`
+#'     content, or `TRUE`, if missing.
+#' @slot map `(sparse) Matrix` specifying which elements contain which levels.
+#' @param x a `LinkMap`, or named list of `LinkMap` objects.
+#' @returns a MultiFactor object.
+#' @seealso [MultiFactor-methods()]
+#' @examples
+#' # Generate some random linkage input
+#' x <- data.frame(
+#'     a = sample(letters[seq(3)], 10, replace = TRUE),
+#'     A = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#' )
+#' MultiFactor(x)
+#'
+#' @export
+#'
 MultiFactor <- S7::new_class(
     "MultiFactor",
     package = "MultiFactor",
@@ -39,7 +87,7 @@ MultiFactor <- S7::new_class(
     constructor = function(x) {
         # check input
         if(is.data.frame(x)) x <- LinkMap(x)
-        if(S7::S7_inherits(x, LinkMap)) x <- list(x)
+        if(S7::S7_inherits(x, LinkMap)) x <- list(x = x)
         stopifnot(
             "x must be a LinkMap or list of LinkMaps. " =
                 all(vapply(x, .check_input_df, FALSE))
@@ -54,9 +102,15 @@ MultiFactor <- S7::new_class(
             .parent = x,
             value   = value
         )
-    }
-)
+    },
+    validator = function(self) {
+        if(!all(vapply(self, .validLinkMap, NA))) {
+            "LinkMap content not properly formatted. "
+        }
 
+    }
+
+)
 
 
 # LinkMap utils
@@ -81,6 +135,7 @@ MultiFactor <- S7::new_class(
     out <- list(x, value)
     return(out)
 }
+
 
 # MultiFactor utils ----
 
@@ -138,5 +193,10 @@ MultiFactor <- S7::new_class(
     x
 }
 
-
+.validLinkMap <- function(x) {
+    is.data.frame(x) &&
+        NCOL(x) %in% c(2L, 3L) &&
+        length(colnames(x)) == NCOL(x) &&
+        all(vapply(x, is.factor, NA, USE.NAMES = FALSE))
+}
 
