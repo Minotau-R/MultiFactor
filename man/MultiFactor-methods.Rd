@@ -14,11 +14,15 @@ Methods for MultiFactor S7 container class
 }
 \examples{
 # Setup
-x <- data.frame(
+a2b <- data.frame(
     a = sample(letters[seq(3)], 10, replace = TRUE),
-    A = sample(LETTERS[seq(3)], 10, replace = TRUE)
-) |> MultiFactor()
-x
+    b = sample(LETTERS[seq(3)], 10, replace = TRUE)
+)
+a2c <- data.frame(
+    a = sample(letters[seq(3)], 10, replace = TRUE),
+    c = sample(LETTERS[seq(3)], 10, replace = TRUE)
+)
+x <- MultiFactor(list(a2b, a2c))
 
 # Basic properties
 dim(x)
@@ -27,8 +31,13 @@ dimnames(x)
 # Factor-like properties
 levels(x)
 
-# Extract component LinkMaps using `[`.
+# Retain MultiFactor structure using `[`.
 x[1]
-x["ec2cpd"]
+
+# Or extract individual LinkMaps using `[[`
+x[["A"]]
+
+# Combine using `c`:
+c(x[2], x[1])
 
 }

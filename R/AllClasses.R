@@ -118,9 +118,10 @@ MultiFactor <- S7::new_class(
                 all(vapply(x, .check_input_df, FALSE))
         )
         x <- lapply(x, LinkMap)
+        if(is.null(names(x))) names(x) <- paste0("x_", seq_along(x))
         # extract levels
         x   <- .unify_levels(x)
-        value      <- lapply(x, \(x) x@value)
+        value    <- lapply(x, \(x) x@value)
 
 
         S7::new_object(

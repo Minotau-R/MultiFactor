@@ -3,11 +3,15 @@
 #' @rdname MultiFactor-methods
 #' @examples
 #' # Setup
-#' x <- data.frame(
+#' a2b <- data.frame(
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
-#'     A = sample(LETTERS[seq(3)], 10, replace = TRUE)
-#' ) |> MultiFactor()
-#' x
+#'     b = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#' )
+#' a2c <- data.frame(
+#'     a = sample(letters[seq(3)], 10, replace = TRUE),
+#'     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#' )
+#' x <- MultiFactor(list(a2b, a2c))
 #'
 #' # Basic properties
 #' dim(x)
@@ -16,9 +20,14 @@
 #' # Factor-like properties
 #' levels(x)
 #'
-#' # Extract component LinkMaps using `[`.
+#' # Retain MultiFactor structure using `[`.
 #' x[1]
-#' x["ec2cpd"]
+#'
+#' # Or extract individual LinkMaps using `[[`
+#' x[["A"]]
+#'
+#' # Combine using `c`:
+#' c(x[2], x[1])
 #'
 #' @param x,object `MultiFactor` on which the method should be applied.
 #' @returns A MultiFactor
@@ -60,3 +69,32 @@ S7::method(dim, MultiFactor) <- function(x) {
     dim(x@map)
 }
 
+local({
+S7::method(`[`, MultiFactor) <- function(x, i) {
+    if(rlang::is_missing(i)) return(x)
+    MultiFactor(base::`[`(S7::S7_data(x), i))
+}
+
+S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
+
+})
+
+#' @export
+#'
+`[<-.MultiFactor::MultiFactor` <- function(x, i, value) {
+    MultiFactor(base::`[<-`(S7::S7_data(x), i, value))
+
+}
+
+#' @export
+#'
+`[[<-.MultiFactor::MultiFactor` <- function(x, i, value) {
+    MultiFactor(base::`[[<-`(S7::S7_data(x), i, value))
+}
+
+#' @export
+#'
+`c.MultiFactor::MultiFactor` <- function(...) {
+    x <- unlist(lapply(list(...), S7::S7_data), recursive = FALSE)
+    MultiFactor(x)
+}
