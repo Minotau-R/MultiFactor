@@ -41,11 +41,15 @@ content, or \code{TRUE}, if missing.}
 
 \examples{
 # Generate some random linkage input
-x <- data.frame(
+a2b <- data.frame(
     a = sample(letters[seq(3)], 10, replace = TRUE),
-    A = sample(LETTERS[seq(3)], 10, replace = TRUE)
+    b = sample(LETTERS[seq(3)], 10, replace = TRUE)
 )
-MultiFactor(x)
+a2c <- data.frame(
+    a = sample(letters[seq(3)], 10, replace = TRUE),
+    c = sample(LETTERS[seq(3)], 10, replace = TRUE)
+)
+x <- MultiFactor(list(a2b, a2c))
 
 }
 \seealso{

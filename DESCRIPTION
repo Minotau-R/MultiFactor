@@ -14,7 +14,8 @@ Imports:
     S7, 
     rlang, 
     Matrix, 
-    forcats
+    forcats, 
+    igraph
 Depends: 
     R (>= 4.1.0)
 License: GPL-3
