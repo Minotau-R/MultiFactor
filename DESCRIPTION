@@ -1,0 +1,21 @@
+Package: MultiFactor
+Title: S7 Classes for Relational Data
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Thomaz", "Bastiaanssen", email = "thomazbastiaanssen@gmail.com", 
+        role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6891-734X")),
+    person("Giulio", "Benedetti", email = "giulio.benedetti@utu.fi", 
+        role = c("aut"), comment = c(ORCID = "0000-0002-8732-7692"))
+            )
+Description: An S7 framework to organize and manage multiple sets of factors, 
+    for instance when tracing or converting feature IDs across databases. 
+    Methods for MultiFactor aim to follow factor behaviour.
+Imports:
+    S7, 
+    rlang, 
+    Matrix, 
+    forcats
+License: GPL-3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
