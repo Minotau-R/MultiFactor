@@ -11,6 +11,8 @@
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
 #'     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
+#' 
+#' # Create MultiFactor
 #' x <- MultiFactor(list(a2b, a2c))
 #'
 #' # Basic properties
@@ -21,16 +23,16 @@
 #' levels(x)
 #'
 #' # Retain MultiFactor structure using `[`.
-#' x[1]
+#' x["x_1"]
 #'
 #' # Or extract individual LinkMaps using `[[`
-#' x[["A"]]
+#' x[["x_1"]]
 #'
 #' # Combine using `c`:
 #' c(x[2], x[1])
 #'
 #' @param x,object `MultiFactor` on which the method should be applied.
-#' @returns A MultiFactor
+#' @returns A `MultiFactor`
 NULL
 
 method(str, MultiFactor) <- function(object, ...) {
@@ -56,7 +58,7 @@ method(print, MultiFactor) <- function(x, ...) {
     str(levels(x))
 }
 
-method(levels, MultiFactor) <- function(x) {
+S7::method(levels, MultiFactor) <- function(x) {
     lvs <- unlist(unname(lapply(x, levels)), recursive = FALSE)
     lvs[!duplicated(names(lvs))]
 }

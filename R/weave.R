@@ -8,16 +8,20 @@
 #'     names of the desired combination of feature types.
 #' @returns a `LinkMap`
 #' @examples
-#' # Generate some random linkage input
+#' # Generate pair of random linkage input
 #' a2b <- data.frame(
 #'    a = sample(letters[seq(3)], 10, replace = TRUE),
 #'    b = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
 #' a2c <- data.frame(
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
-#'     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#'     c = sample(c("x", "y", "z"), 10, replace = TRUE)
 #' )
+#' 
+#' # Create MultiFactor
 #' x <- MultiFactor(list(a2b, a2c))
+#' 
+#' # Weave new b2c LinkMap
 #' weave(x, b ~ c)
 #' @export
 #'

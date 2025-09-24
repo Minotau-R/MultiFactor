@@ -29,11 +29,13 @@ for \code{LinkMap} aim to follow \code{factor} behaviour.
 }}
 
 \examples{
-# Generate some random linkage input
+# Generate random linkage input
 x <- data.frame(
     a = sample(letters[seq(3)], 10, replace = TRUE),
     A = sample(LETTERS[seq(3)], 10, replace = TRUE)
 )
+
+# Create LinkMap
 LinkMap(x)
 
 }
