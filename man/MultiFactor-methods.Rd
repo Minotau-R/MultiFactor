@@ -7,7 +7,7 @@
 \item{x, object}{\code{MultiFactor} on which the method should be applied.}
 }
 \value{
-A MultiFactor
+A \code{MultiFactor}
 }
 \description{
 Methods for MultiFactor S7 container class
@@ -22,6 +22,8 @@ a2c <- data.frame(
     a = sample(letters[seq(3)], 10, replace = TRUE),
     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
 )
+
+# Create MultiFactor
 x <- MultiFactor(list(a2b, a2c))
 
 # Basic properties
@@ -32,10 +34,10 @@ dimnames(x)
 levels(x)
 
 # Retain MultiFactor structure using `[`.
-x[1]
+x["x_1"]
 
 # Or extract individual LinkMaps using `[[`
-x[["A"]]
+x[["x_1"]]
 
 # Combine using `c`:
 c(x[2], x[1])

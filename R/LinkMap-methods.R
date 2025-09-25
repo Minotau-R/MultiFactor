@@ -1,9 +1,9 @@
 
-method(str, LinkMap) <- function(object, ...) {
+S7::method(str, LinkMap) <- function(object, ...) {
     str(`class<-`(S7::S7_data(object), "data.frame"))
 }
 
 
-method(levels, LinkMap) <- function(x) {
+S7::method(levels, LinkMap) <- function(x) {
     lapply(x, levels)
 }
