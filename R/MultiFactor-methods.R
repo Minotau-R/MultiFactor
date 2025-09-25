@@ -35,12 +35,12 @@
 #' @returns A `MultiFactor`
 NULL
 
-method(str, MultiFactor) <- function(object, ...) {
+S7::method(str, MultiFactor) <- function(object, ...) {
     Matrix::printSpMatrix(object@map)
     str(levels(object))
 }
 
-method(print, MultiFactor) <- function(x, ...) {
+S7::method(print, MultiFactor) <- function(x, ...) {
     cat(
         "A ", paste(class(x), collapse = " "),
         ",\n    ", NCOL(x),
