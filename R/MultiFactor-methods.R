@@ -46,12 +46,12 @@ S7::method(print, MultiFactor) <- function(x, ...) {
         ",\n    ", NCOL(x),
         " feature types across ",
         NROW(x),
-        " edge lists.\n\n",
+        " LinkMaps.\n\n",
         sep = ""
     )
     Matrix::printSpMatrix(x@map)
     cat(
-        "\nValues represent unique feature names in that edge list.\n\n",
+        "\nValues represent unique feature names in that LinkMap.\n\n",
         "Levels: ",
         sep = ""
     )
