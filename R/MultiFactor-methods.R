@@ -52,10 +52,35 @@ S7::method(print, MultiFactor) <- function(x, ...) {
     Matrix::printSpMatrix(x@map)
     cat(
         "\nValues represent unique feature names in that LinkMap.\n\n",
-        "Levels: ",
+        "Levels:\n",
         sep = ""
     )
-    str(levels(x))
+    id_w <- max(nchar(colnames(x)))
+    nm_w <- max(nchar(nlevels(x)))
+    for (id in colnames(x)) {
+        num_lvs <- length(levels(x)[[id]])
+        cat(
+            format(id, width = id_w),
+            " : ",
+            format(num_lvs, width = nm_w),
+            " Levels: ",
+            sep = ""
+        )
+
+        if (num_lvs > 4L) {
+            cat(
+                levels(x)[[id]][1],
+                levels(x)[[id]][2],
+                "...",
+                levels(x)[[id]][num_lvs],
+                "\n",
+                sep = " "
+            )
+        } else {
+            cat(levels(x)[[id]], "\n", sep = " ")
+        }
+    }
+    invisible(NULL)
 }
 
 S7::method(levels, MultiFactor) <- function(x) {
@@ -111,6 +136,5 @@ method(subset, MultiFactor) <- function(x, subset = NULL, by_path = TRUE) {
         subset <- termSeq(subset, x)
         # Determine required ids in order, keep relevant elements of MultiFactor
         return(subsetByPath(x, subset))
-    }
-    `[`(x, subset)
+    } else `[`(x, subset)
 }

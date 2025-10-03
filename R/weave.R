@@ -73,16 +73,14 @@ termSeq <- function(terms, x) {
 #'     traversed.
 #' @noRd
 #'
-stepSeq <- function(term_list, d) {
-    vapply(
-        term_list,
-        rowsWithCol,
-        d = d,
-        name = FALSE,
-        FUN.VALUE = 0L,
-        USE.NAMES = FALSE
-    )
-}
+stepSeq <- function(term_list, d) vapply(
+    term_list,
+    FUN = rowsWithCol,
+    d = d,
+    name = FALSE,
+    FUN.VALUE = 0L,
+    USE.NAMES = FALSE
+)
 
 #' @param d `MultiFactor@map`
 #' @param id `Character or Integer scalar`. Selects column(s) of `d`.
@@ -94,7 +92,7 @@ stepSeq <- function(term_list, d) {
 #' data frames that contain an id column
 #'
 rowsWithCol <- function(d, id, names = TRUE) {
-    rowInds <- which(Matrix::rowSums(d[, id, drop = FALSE] > 0L) == length(id))
+    rowInds <- which(Matrix::rowSums(d[, id, drop = FALSE] != 0L) == length(id))
     if (length(rowInds) == 0L) {
         return(NULL)
     }
