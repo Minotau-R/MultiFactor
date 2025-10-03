@@ -56,7 +56,8 @@ S7::method(print, MultiFactor) <- function(x, ...) {
         sep = ""
     )
     id_w <- max(nchar(colnames(x)))
-    nm_w <- max(nchar(nlevels(x)))
+    nm_w <- max(nchar(lengths(levels(x), use.names = FALSE)))
+    fr_w <- getOption("width") -id_w -nm_w -12
     for (id in colnames(x)) {
         num_lvs <- length(levels(x)[[id]])
         cat(
@@ -68,11 +69,14 @@ S7::method(print, MultiFactor) <- function(x, ...) {
         )
 
         if (num_lvs > 4L) {
+            n_show   <- floor(fr_w / 20) -1
+            show_lvs <- levels(x)[[id]][c(seq(n_show), num_lvs)]
+            show_lvs <- c(show_lvs[seq(n_show)], "...", show_lvs[n_show+1])
             cat(
-                levels(x)[[id]][1],
-                levels(x)[[id]][2],
-                "...",
-                levels(x)[[id]][num_lvs],
+                ifelse(nchar(show_lvs) > 20,
+                       paste0(substring(show_lvs, 1, 16), ".."),
+                       show_lvs)
+                ,
                 "\n",
                 sep = " "
             )
