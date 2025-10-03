@@ -43,6 +43,8 @@
 #'
 NULL
 
+S7::method(as.LinkMap, LinkMap) <- function(x) x
+
 S7::method(as.LinkMap, S7::class_data.frame) <- function(
     x, edge.names = NULL){
     # Assign custom edge names
