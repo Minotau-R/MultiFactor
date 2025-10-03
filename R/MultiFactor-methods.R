@@ -11,7 +11,7 @@
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
 #'     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
-#' 
+#'
 #' # Create MultiFactor
 #' x <- MultiFactor(list(a2b, a2c))
 #'
@@ -99,4 +99,18 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 `c.MultiFactor::MultiFactor` <- function(...) {
     x <- unlist(lapply(list(...), S7::S7_data), recursive = FALSE)
     MultiFactor(x)
+}
+
+#'
+method(subset, MultiFactor) <- function(x, subset = NULL, by_path = TRUE) {
+    if(is.null(subset)) return(x)
+    if(by_path){
+        if(inherits(subset, "formula")) {subset <- all.vars(subset)}
+        stopifnot("Argument `subset` must be length 2 if by_path` is TRUE" =
+                      length(subset) == 2L)
+        subset <- termSeq(subset, x)
+        # Determine required ids in order, keep relevant elements of MultiFactor
+        return(subsetByPath(x, subset))
+    }
+    `[`(x, subset)
 }

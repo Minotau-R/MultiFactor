@@ -17,10 +17,10 @@
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
 #'     c = sample(c("x", "y", "z"), 10, replace = TRUE)
 #' )
-#' 
+#'
 #' # Create MultiFactor
 #' x <- MultiFactor(list(a2b, a2c))
-#' 
+#'
 #' # Weave new b2c LinkMap
 #' weave(x, b ~ c)
 #' @export
@@ -28,7 +28,7 @@
 weave <- function(x, .by = NULL) {
 
     # Ensure link is a MultiFactor
-    x <- MultiFactor(x)
+    x <- subset(x, subset = .by, by_path = TRUE)
     terms <- if(inherits(.by, "formula")) all.vars(.by) else .by
     # Determine required ids in order, only keep relevant elements of link.
     all_terms <- termSeq(terms, x)
