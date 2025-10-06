@@ -4,16 +4,18 @@
 \alias{weave}
 \title{Weave a new LinkMap from a MultiFactor}
 \usage{
-weave(x, .by = NULL)
+weave(x, .by = NULL, out.format = c("LinkMap", "matrix"))
 }
 \arguments{
 \item{x}{a \code{MultiFactor}}
 
 \item{.by}{either a \code{formula} or a `character vector`` of length 2 with the
 names of the desired combination of feature types.}
+
+\item{out.format}{\verb{Character scalar}. One of \code{'LinkMap'}, \code{'matrix'}.}
 }
 \value{
-a \code{LinkMap}
+a \code{LinkMap} or \verb{sparse Matrix}.
 }
 \description{
 Generates a new \code{LinkMap} object by cross-referencing the elements of a
@@ -35,4 +37,5 @@ x <- MultiFactor(list(a2b, a2c))
 
 # Weave new b2c LinkMap
 weave(x, b ~ c)
+weave(x, b ~ a, out.format = "matrix")
 }

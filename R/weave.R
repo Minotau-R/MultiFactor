@@ -6,7 +6,8 @@
 #' @param x a `MultiFactor`
 #' @param .by either a `formula` or a `character vector`` of length 2 with the
 #'     names of the desired combination of feature types.
-#' @returns a `LinkMap`
+#' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
+#' @returns a `LinkMap` or `sparse Matrix`.
 #' @examples
 #' # Generate pair of random linkage input
 #' a2b <- data.frame(
@@ -23,9 +24,11 @@
 #'
 #' # Weave new b2c LinkMap
 #' weave(x, b ~ c)
+#' weave(x, b ~ a, out.format = "matrix")
 #' @export
 #'
-weave <- function(x, .by = NULL) {
+weave <- function(x, .by = NULL, out.format = c("LinkMap", "matrix")) {
+    out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
     # Ensure link is a MultiFactor
     x <- subset(x, subset = .by, by_path = TRUE)
@@ -36,6 +39,14 @@ weave <- function(x, .by = NULL) {
 
     # Construct dictionary
     res <- dictionaryMatrix(x, all_terms)
+
+    # Check if we're done
+    if(out.format == "matrix") {
+        dimnames(res) <- levels(x)[terms]
+        return(res)
+    }
+
+    # Otherwise, make a LinkMap
     res <- as.data.frame.matrix(Matrix::which(res, arr.ind = TRUE))
     res[] <- mapply(FUN = function(x, y) {
         attr(x, "levels") <- y
