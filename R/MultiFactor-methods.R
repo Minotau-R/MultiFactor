@@ -21,6 +21,7 @@
 #'
 #' # Factor-like properties
 #' levels(x)
+#' nlevels(x)
 #'
 #' # Retain MultiFactor structure using `[`.
 #' x["x_1"]
@@ -34,6 +35,13 @@
 #' @param x,object `MultiFactor` on which the method should be applied.
 #' @returns A `MultiFactor`
 NULL
+
+#' @param use.names `Boolean scalar` Whether tho provide names.
+#'     (Default: `TRUE`)
+#' @noRd
+#'
+S7::method(nlevels, MultiFactor) <-
+    function(x, use.names = TRUE) lengths(levels(x), use.names)
 
 S7::method(str, MultiFactor) <- function(object, ...) {
     Matrix::printSpMatrix(object@map)
@@ -131,7 +139,7 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 }
 
 #'
-method(subset, MultiFactor) <- function(x, subset = NULL, by_path = TRUE) {
+method(subset, MultiFactor) <- function(x, subset = NULL, by_path = TRUE, ...) {
     if(is.null(subset)) return(x)
     if(by_path){
         if(inherits(subset, "formula")) {subset <- all.vars(subset)}

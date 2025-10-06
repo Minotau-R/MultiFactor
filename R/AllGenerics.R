@@ -11,6 +11,21 @@
 #'
 as.LinkMap <- S7::new_generic("as.LinkMap", "x")
 
+#' The Number of Levels of an Object
+#' @description
+#' Return the number of levels which its argument has. Extends `base::nlevels`.
+#' @param x an object, such as a `LinkMap`, `MultiFactor` or `factor`.
+#' @param ... additional arguments. Not used for `base::factor` method.
+#' @returns A `Numeric vector` of length equal to the number of elements in `x`.
+#'     Optionally, named.
+#' @examples
+#' # Available methods:
+#' nlevels
+#'
+#' @export
+nlevels <- S7::new_generic("nlevels", "x")
+
+S7::method(nlevels, S7::class_any) <- base::nlevels
 
 #' Convert common classes to MultiFactor
 #' @export

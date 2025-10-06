@@ -18,7 +18,7 @@
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
 #'     A = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
-#' 
+#'
 #' # Create LinkMap
 #' LinkMap(x)
 #'
@@ -129,7 +129,6 @@ MultiFactor <- S7::new_class(
         x   <- .unify_levels(x)
         value    <- lapply(x, \(x) x@value)
 
-
         S7::new_object(
             .parent = x,
             value   = value
@@ -175,7 +174,7 @@ MultiFactor <- S7::new_class(
     mode <- match.arg(mode, choices = c("counts", "binary", "pattern"))
     all_names <- lapply(x, base::names)
     i <- factor(
-        rep( names(all_names), vapply(all_names, length, 1, USE.NAMES = FALSE) ),
+        rep( names(all_names), lengths(all_names, use.names = FALSE)),
         levels = names(all_names)
     )
     j <- factor(

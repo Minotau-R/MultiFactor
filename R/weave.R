@@ -125,34 +125,23 @@ dictionaryMatrix <- function(link, all_terms) {
         FUN = function(x) all_terms[c(x, x + 1L)]
     )
     steps <- stepSeq(term_list, link@map)
-    lv_len <- vapply(X = levels(link), FUN = length, 0L, USE.NAMES = TRUE)
+    lv_len <- nlevels(link, use.names = TRUE)
 
     # Handle simple case of one link df first, return sparse matrix.
     if (length(steps) == 1L) {
-        return(mapFromLink(
-            all_terms,
-            df = S7::S7_data(link)[[steps]],
+        return(`as.matrix.MultiFactor::LinkMap`(
+            x = S7::S7_data(link)[[steps]],
+            terms = all_terms,
             dims = lv_len[all_terms]
         ))
     }
     lv_list <- lapply(term_list, function(x) lv_len[x])
     # Otherwise, make a list of matrices to Reduce to final dictionary
     mat_list <- mapply(
-        FUN = mapFromLink,
+        FUN = `as.matrix.MultiFactor::LinkMap`,
+        x = S7::S7_data(link)[steps],
         terms = term_list,
-        df = S7::S7_data(link)[steps],
         dims = lv_list
     )
     Reduce(Matrix::`%&%`, mat_list)
-}
-
-#' @param terms id of cols. `c(y, x)`.
-#' @param df element of a `MultiFactor` object
-#' @param dims length-2 integer vector of matrix dimensions.
-#' @importFrom Matrix sparseMatrix
-#' @returns a sparse biadjacency Matrix
-#' @noRd
-#'
-mapFromLink <- function(terms, df, dims) {
-    Matrix::sparseMatrix(i = df[[terms[1]]], j = df[[terms[2]]], dims = dims)
 }

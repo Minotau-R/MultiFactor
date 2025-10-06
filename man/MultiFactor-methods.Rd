@@ -32,6 +32,7 @@ dimnames(x)
 
 # Factor-like properties
 levels(x)
+nlevels(x)
 
 # Retain MultiFactor structure using `[`.
 x["x_1"]

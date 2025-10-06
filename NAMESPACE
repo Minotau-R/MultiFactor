@@ -2,11 +2,13 @@
 
 S3method("[<-","MultiFactor::MultiFactor")
 S3method("[[<-","MultiFactor::MultiFactor")
+S3method(as.matrix,"MultiFactor::LinkMap")
 S3method(c,"MultiFactor::MultiFactor")
 export(LinkMap)
 export(MultiFactor)
 export(as.LinkMap)
 export(as.MultiFactor)
+export(nlevels)
 export(randomLinkMap)
 export(randomMultiFactor)
 export(weave)
