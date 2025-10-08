@@ -29,6 +29,9 @@
 #' # Or extract individual LinkMaps using `[[`
 #' x[["x_1"]]
 #'
+#' # Subset by a path
+#' subset(x, a ~ c)
+#'
 #' # Combine using `c`:
 #' c(x[2], x[1])
 #'
@@ -138,8 +141,12 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     MultiFactor(x)
 }
 
+#' @export
+#' @aliases subset.MultiFactor
 #'
-method(subset, MultiFactor) <- function(x, subset = NULL, by_path = TRUE, ...) {
+`subset.MultiFactor::MultiFactor` <- function(
+        x, subset = NULL, by_path = TRUE, ...
+        ) {
     if(is.null(subset)) return(x)
     if(by_path){
         if(inherits(subset, "formula")) {subset <- all.vars(subset)}
@@ -150,3 +157,10 @@ method(subset, MultiFactor) <- function(x, subset = NULL, by_path = TRUE, ...) {
         return(subsetByPath(x, subset))
     } else `[`(x, subset)
 }
+
+#' @export
+#'
+method(subset, MultiFactor) <-
+    function(x, subset = NULL, by_path = TRUE, ...)
+        `subset.MultiFactor::MultiFactor`(x, subset, by_path)
+

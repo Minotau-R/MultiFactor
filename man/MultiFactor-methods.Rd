@@ -40,6 +40,9 @@ x["x_1"]
 # Or extract individual LinkMaps using `[[`
 x[["x_1"]]
 
+# Subset by a path
+subset(x, a ~ c)
+
 # Combine using `c`:
 c(x[2], x[1])
 
