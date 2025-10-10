@@ -13,3 +13,4 @@
 ^\.github$
 ^\.air\.toml$
 ^\.travis\.yml$
+^_pkgdown\.yml$
