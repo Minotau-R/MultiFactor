@@ -126,6 +126,7 @@ MultiFactor <- S7::new_class(
         x <- lapply(x, LinkMap)
         if(is.null(names(x))) names(x) <- paste0("x_", seq_along(x))
         # extract levels
+        x   <- .merge_linkmaps(x)
         x   <- .unify_levels(x)
         value    <- lapply(x, \(x) x@value)
 
@@ -205,6 +206,24 @@ MultiFactor <- S7::new_class(
             )
         )
     )
+}
+
+
+.merge_linkmaps <- function(x) {
+    all_names <- lapply(x, function(x) sort(names(x)))
+    if(!any(duplicated(all_names))) return(x)
+
+    dup_names <- unique(all_names[duplicated(all_names)])
+    merg_list <- vector("list", length = length(dup_names))
+
+    for(dup in seq_along(dup_names)) {
+        merg <- unique(do.call(rbind, x[ all_names %in% dup_names[dup] ]))
+        row.names(merg) <- NULL
+        merg_list[[dup]] <- merg
+    }
+    names(merg) <- lapply(dup_names, paste0, collapse = "2")
+    x <- c(x[! all_names %in% dup_names ], merg_list)
+    return(x)
 }
 
 
