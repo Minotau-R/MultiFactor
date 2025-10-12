@@ -4,11 +4,13 @@
 \alias{LinkMap}
 \title{LinkMap S7 container class}
 \usage{
-LinkMap(x)
+LinkMap(x, metadata = list())
 }
 \arguments{
-\item{x}{a \code{data.frame} with two named columns that can be coerced to factors
-and an optional third column of values associated with those two columns.}
+\item{x}{\code{data.frame} with two named columns that can be coerced to factors.}
+
+\item{metadata}{\code{list}. Optional. May be used to store additional data or
+application-specific tags.}
 }
 \value{
 a \code{LinkMap} object.
@@ -23,9 +25,8 @@ for \code{LinkMap} aim to follow \code{factor} behaviour.
 \describe{
 \item{\code{levels}}{\verb{Named list} of character vectors depicting levels.}
 
-\item{\code{value}}{\verb{Numeric vector} or \verb{boolean scalar}.}
-
-\item{\code{is_bool}}{\code{Boolean}, returns \code{TRUE} if this object contains no \code{value}.}
+\item{\code{metadata}}{\code{list}. Optional. May be used to store additional data or
+application-specific tags.}
 }}
 
 \examples{

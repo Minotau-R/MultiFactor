@@ -33,9 +33,6 @@ list methods (e.g., \code{[}, \code{[[}).
 \describe{
 \item{\code{levels}}{\verb{Named list of character vectors}. Accessed through \code{levels(x)}}
 
-\item{\code{value}}{Optional. \verb{Named list of vectors} of same size as \code{MultiFactor}
-content, or \code{TRUE}, if missing.}
-
 \item{\code{map}}{\verb{(sparse) Matrix} specifying which elements contain which levels.}
 }}
 

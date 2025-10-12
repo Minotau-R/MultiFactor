@@ -7,10 +7,11 @@
 #' for `LinkMap` aim to follow `factor` behaviour.
 #'
 #' @slot levels `Named list` of character vectors depicting levels.
-#' @slot value `Numeric vector` or `boolean scalar`.
-#' @slot is_bool `Boolean`, returns `TRUE` if this object contains no `value`.
-#' @param x a `data.frame` with two named columns that can be coerced to factors
-#'     and an optional third column of values associated with those two columns.
+#' @slot metadata `list`. Optional. May be used to store additional data or
+#'     application-specific tags.
+#' @param x `data.frame` with two named columns that can be coerced to factors.
+#' @param metadata `list`. Optional. May be used to store additional data or
+#'     application-specific tags.
 #' @returns a `LinkMap` object.
 #' @examples
 #' # Generate random linkage input
@@ -31,34 +32,32 @@ LinkMap <- S7::new_class(
     parent = S7::class_data.frame,
     properties  = list(
         levels   = S7::new_property(getter = function(self) lapply(self, levels)),
-        value    = S7::class_numeric | S7::class_logical,
-        is_bool  = S7::new_property(getter = function(self) isTRUE(self@value))
+        metadata = S7::class_list
     ),
-    constructor = function(x) {
+    constructor = function(x, metadata = list()) {
         if(S7::S7_inherits(x, LinkMap)) return(x)
         stopifnot(.check_input_df(x))
-        is_bool    <- length(colnames(x)) == 2L
 
-        value      <- if(is_bool) TRUE else x[,3L]
-        edgelist   <- .factorize_df(x, is_bool)
+        # Factorize x
+        x  <- `[<-.data.frame`(x, , value = lapply(x, as.factor))
 
         S7::new_object(
-            .parent = edgelist[[1L]],
-            value   = edgelist[[2L]]
+            .parent  = x,
+            metadata = metadata
         )
     },
     validator = function(self) {
         if(!is.data.frame(self)) {
             "Must be a data.frame. "
         }
-        if(! NCOL(self) %in% c(2L, 3L)) {
-            "Must be a data.frame with exactly two or three columns. "
+        if(! NCOL(self) == 2L) {
+            "Must be a data.frame with exactly two columns. "
         }
-        if(!length(colnames(self)) %in% c(2L, 3L)) {
-            "The first two columns must be named. "
+        if(!length(colnames(self)) == 2L) {
+            "Both columns must be named. "
         }
-        if(!all(vapply(self[,c(1L, 2L)], is.factor, NA, USE.NAMES = FALSE))){
-            "The first two columns must be factors. "
+        if(!all(vapply(self, is.factor, NA, USE.NAMES = FALSE))){
+            "Both columns must be factors. "
         }
     }
 )
@@ -83,12 +82,11 @@ LinkMap <- S7::new_class(
 #' `MultiFactor` inherits from `list`; Content can be accessed through regular
 #' list methods (e.g., `[`, `[[`).
 #' @slot levels `Named list of character vectors`. Accessed through `levels(x)`
-#' @slot value Optional. `Named list of vectors` of same size as `MultiFactor`
-#'     content, or `TRUE`, if missing.
 #' @slot map `(sparse) Matrix` specifying which elements contain which levels.
 #' @param x a `LinkMap`, or named list of `LinkMap` objects.
 #' @returns a `MultiFactor` object.
 #' @seealso [MultiFactor-methods()]
+#' @importFrom S7 new_class new_property
 #' @examples
 #' # Generate some random linkage input
 #' a2b <- data.frame(
@@ -110,13 +108,15 @@ MultiFactor <- S7::new_class(
     parent = S7::class_list,
     properties  = list(
         levels = S7::new_property(getter = function(self) lapply(self, levels)),
-        value = S7::class_list,
         map = S7::new_property(
             getter = function(self) .mapMultiFactor(self, mode = "counts")
+        ),
+        metadata = S7::new_property(
+            getter = function(self) lapply(self, function(x) x@metadata)
         )
     ),
     constructor = function(x) {
-        # check input
+        # Check input
         if(is.data.frame(x)) x <- LinkMap(x)
         if(S7::S7_inherits(x, LinkMap)) x <- list(x = x)
         stopifnot(
@@ -124,15 +124,18 @@ MultiFactor <- S7::new_class(
                 all(vapply(x, .check_input_df, FALSE))
         )
         x <- lapply(x, LinkMap)
-        if(is.null(names(x))) names(x) <- paste0("x_", seq_along(x))
-        # extract levels
+        names(x) <- paste0("x_", seq_along(x))
+        # Extract levels
         x   <- .merge_linkmaps(x)
         x   <- .unify_levels(x)
-        value    <- lapply(x, \(x) x@value)
+        names(x) <- vapply(
+            x,
+            function(x) paste(names(x), collapse = "2"),
+            FUN.VALUE = "", USE.NAMES = FALSE
+        )
 
         S7::new_object(
-            .parent = x,
-            value   = value
+            .parent = x
         )
     },
     validator = function(self) {
@@ -147,24 +150,16 @@ MultiFactor <- S7::new_class(
 ##### LinkMap utils ----
 
 .check_input_df <- function(x) {
-    stopifnot("x must be a data.frame" = is.data.frame(x))
-    stopifnot(
-        "x must be a data.frame with exactly two or three columns" =
-            NCOL(x) %in% c(2L, 3L)
-    )
-    stopifnot(
-        "The first two columns of x must be named" =
-            length(colnames(x)) %in% c(2L, 3L)
-    )
+    if(!is.data.frame(x)) {
+        stop("Must be a data.frame. ")
+    }
+    if(! NCOL(x) == 2L) {
+        stop("Must be a data.frame with exactly two columns. ")
+    }
+    if(!length(colnames(x)) == 2L) {
+        stop("Both columns must be named. ")
+    }
     return(TRUE)
-}
-
-.factorize_df <- function(x, is_bool) {
-    value <- if(is_bool) TRUE else x[[3L]]
-    x[[3L]] <- NULL
-    x  <- `[<-.data.frame`(x, , value = lapply(x, as.factor))
-    out <- list(x, value)
-    return(out)
 }
 
 
@@ -246,8 +241,8 @@ MultiFactor <- S7::new_class(
 
 .validLinkMap <- function(x) {
     is.data.frame(x) &&
-        NCOL(x) %in% c(2L, 3L) &&
-        length(colnames(x)) == NCOL(x) &&
+        NCOL(x) == 2L &&
+        length(colnames(x)) == 2L &&
         all(vapply(x, is.factor, NA, USE.NAMES = FALSE))
 }
 

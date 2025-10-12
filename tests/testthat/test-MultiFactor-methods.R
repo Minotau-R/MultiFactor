@@ -12,8 +12,8 @@ mf2 <- x |> MultiFactor()
 })
 
 
-df_a <- LinkMap( data.frame(a = c("a_1", "a_2"), b = c("b_5", "b_4")) )
-df_b <- LinkMap( data.frame(b = c("b_3", "b_2"), a = c("a_3", "a_4")) )
+df_a <- LinkMap( data.frame(a = c("a_2", "a_1"), b = c("b_5", "b_4")) )
+df_b <- LinkMap( data.frame(b = c("b_3", "b_2"), a = c("a_4", "a_3")) )
 df_c <- LinkMap( data.frame(a = c("a_5"), b = c("b_1")) )
 
 x <- list(df_a, df_b, df_c)
@@ -27,10 +27,13 @@ test_that("MultiFactor correctly merges conflicting LinkMaps, orders levels", {
                      b = c("b_1", "b_2", "b_3", "b_4", "b_5"))
   )
 
-  expect_identical(levels(MultiFactor(c(x, rev(x)))),
+
+  expect_identical(levels(c(MultiFactor(x),  MultiFactor(rev(x)))),
                    list(
                      a = c("a_1", "a_2", "a_3", "a_4", "a_5"),
                      b = c("b_1", "b_2", "b_3", "b_4", "b_5"))
   )
+
+
 }
 )
