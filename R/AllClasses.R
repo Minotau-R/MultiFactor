@@ -219,6 +219,8 @@ MultiFactor <- S7::new_class(
     for(dup in seq_along(dup_names)) {
         merg <- unique(do.call(rbind, x[ all_names %in% dup_names[dup] ]))
         row.names(merg) <- NULL
+
+        #TODO merge factors here with forcats
         merg_list[[dup]] <- merg
     }
     names(merg) <- lapply(dup_names, paste0, collapse = "2")
