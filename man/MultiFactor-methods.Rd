@@ -35,13 +35,16 @@ levels(x)
 nlevels(x)
 
 # Retain MultiFactor structure using `[`.
-x["x_1"]
+x["a2b"]
 
 # Or extract individual LinkMaps using `[[`
-x[["x_1"]]
+x[["a2c"]]
 
 # Subset by a path
 subset(x, a ~ c)
+
+# Unused features will be dropped unless specified:
+subset(x, a ~ c, drop.unmatched = FALSE)
 
 # Combine using `c`:
 c(x[2], x[1])

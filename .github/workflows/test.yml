@@ -1,8 +1,11 @@
-name: build
+name: R-BiocCheck
 'on':
   push:
     branches:
-      - none
+    - devel
+  pull_request:
+    branches:
+    - devel
 env:
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 jobs:
@@ -33,13 +36,13 @@ jobs:
     steps:
     - uses: neurogenomics/rworkflows@master
       with:
-        run_bioccheck: ${{ false }}
-        run_rcmdcheck: ${{ false }}
+        run_bioccheck: ${{ true }}
+        run_rcmdcheck: ${{ true }}
         as_cran: ${{ true }}
-        run_vignettes: ${{ true }}
+        run_vignettes: ${{ false }}
         has_testthat: ${{ true }}
         run_covr: ${{ false }}
-        run_pkgdown: ${{ true }}
+        run_pkgdown: ${{ false }}
         has_runit: ${{ false }}
         has_latex: ${{ false }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

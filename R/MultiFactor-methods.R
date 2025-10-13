@@ -24,13 +24,16 @@
 #' nlevels(x)
 #'
 #' # Retain MultiFactor structure using `[`.
-#' x["x_1"]
+#' x["a2b"]
 #'
 #' # Or extract individual LinkMaps using `[[`
-#' x[["x_1"]]
+#' x[["a2c"]]
 #'
 #' # Subset by a path
 #' subset(x, a ~ c)
+#'
+#' # Unused features will be dropped unless specified:
+#' subset(x, a ~ c, drop.unmatched = FALSE)
 #'
 #' # Combine using `c`:
 #' c(x[2], x[1])
@@ -145,8 +148,9 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 #' @aliases subset.MultiFactor
 #'
 `subset.MultiFactor::MultiFactor` <- function(
-        x, subset = NULL, by_path = TRUE, ...
+        x, subset = NULL, by_path = TRUE, drop.unmatched = TRUE, ...
         ) {
+    if(drop.unmatched) x <- .trimMultiFactor(x)
     if(is.null(subset)) return(x)
     if(by_path){
         if(inherits(subset, "formula")) {subset <- all.vars(subset)}

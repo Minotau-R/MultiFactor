@@ -223,6 +223,59 @@ MultiFactor <- S7::new_class(
     return(x)
 }
 
+#' @noRd
+#' @param x a list in `MultiFactor` formatting.
+#' @description Drop features that are not matched in another LinkMap.
+#' @returns a subsetted list with `MultiFactor`.formatting.
+#' @importFrom Matrix colSums
+#'
+.trimMultiFactor <- function(x) {
+    # Determine positions of feature names that occur in several edge link dfs
+    m <- .mapMultiFactor(x, mode = "pattern")
+    jj <- colnames(m)[Matrix::colSums(m) > 1]
+
+    # Sequentially subset over feature names
+    for (j in jj) {
+        # Select all those data frames where that term is mentioned
+        ii <- rowsWithCol(m, j, FALSE)
+        keep <- Reduce(intersect, lapply(x[ii], base::`[[`, j))
+
+        # Filter feature ids in each df to only universally shared ones.
+        x[ii] <- lapply(x[ii], function(df) {
+            return(df[df[[j]] %in% keep, ])
+        })
+    }
+    return(x)
+}
+
+#' @description Subset MultiFactor to only include the features
+#'     found in a feature table.
+#' @returns a MultiFactor subsetted by relevant features
+#' @param x a `MultiFactor` .
+#' @param id `Character scalar`, naming the x term to be trimmed
+#' @param ft A table containing features of interest, `tableX` or `tableY`.
+#' @noRd
+#'
+.trimByFeatureTable <- function(x, ft, id) {
+    lv <- levels(x)[[id]]
+    r <- rowsWithCol(x@map, id)
+    stopifnot(
+        "Feature names appeared in several index elements. " = length(r) == 1L
+    )
+    # Subset index by table rows
+    xr <- x[[r]]
+    x.names <- match(row.names(ft), lv)
+    xr <- xr[xr[, id] %in% x.names, ]
+    xr.id <- xr[, id]
+
+    # Subset levels
+    x@levels[[id]] <- lv[sort(unique(xr.id))]
+    # Reorder and replace indices
+    xr[, id] <- match(xr.id, sort(unique(xr.id)))
+    x[[r]] <- xr
+
+    return(x)
+}
 
 .unify_levels <- function(x) {
     map <- .mapMultiFactor(x, "pattern")

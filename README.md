@@ -1,6 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<!-- badges: start -->
+
+[![GitHub
+issues](https://img.shields.io/github/issues/Minotau-R/MultiFactor)](https://github.com/Minotau-R/MultiFactor/issues)
+[![GitHub
+pulls](https://img.shields.io/github/issues-pr/Minotau-R/MultiFactor)](https://github.com/Minotau-R/MultiFactor/pulls)
+[![R
+BiocCheck](https://github.com/Minotau-R/MultiFactor/actions/workflows/test.yml/badge.svg)](https://github.com/Minotau-R/MultiFactor/actions/workflows/test.yml)
+<!-- badges: end -->
+
 # MultiFactor: R package for MultiFactor and LinkMap S7 container classes.
 
 ## Introduction
