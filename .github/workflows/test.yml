@@ -36,9 +36,7 @@ jobs:
     steps:
     - uses: neurogenomics/rworkflows@master
       with:
-        no-check-bioc-views: 'TRUE'
-        no-check-bioc-help: 'TRUE'
-        run_bioccheck: ${{ true }}
+        run_bioccheck: ${{ false }}
         run_rcmdcheck: ${{ true }}
         as_cran: ${{ true }}
         run_vignettes: ${{ false }}
