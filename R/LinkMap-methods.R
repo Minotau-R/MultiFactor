@@ -1,12 +1,11 @@
 
-S7::method(str, LinkMap) <- function(object, ...) {
-    str(`class<-`(S7::S7_data(object), "data.frame"))
-}
-
+S7::method(str, LinkMap) <- function(object, ...) str(
+    `class<-`(S7::S7_data(object), "data.frame")
+)
 
 S7::method(levels, LinkMap) <- function(x) lapply(x, levels)
 
-#' @param use.names `Boolean scalar` Whether tho provide names.
+#' @param use.names `Boolean scalar` Should names be provided.
 #'     (Default: `TRUE`)
 #' @noRd
 #'
