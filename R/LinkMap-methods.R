@@ -29,4 +29,3 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
         x, terms = colnames(x),
         dims = nlevels(x[terms]), ...
 ) Matrix::sparseMatrix(i = x[[terms[1L]]], j = x[[terms[2L]]], dims = dims)
-

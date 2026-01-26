@@ -31,6 +31,7 @@ weave <- function(x, .by = NULL, out.format = c("LinkMap", "matrix")) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
     # Ensure link is a MultiFactor
+    x <- MultiFactor(x)
     x <- subset(x, subset = .by, by_path = TRUE)
     terms <- if(inherits(.by, "formula")) all.vars(.by) else .by
     # Determine required ids in order, only keep relevant elements of link.
