@@ -89,7 +89,7 @@ stepSeq <- function(term_list, d) vapply(
     term_list,
     FUN = rowsWithCol,
     d = d,
-    name = FALSE,
+    names = FALSE,
     FUN.VALUE = 0L,
     USE.NAMES = FALSE
 )
