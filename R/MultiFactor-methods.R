@@ -165,6 +165,8 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 #' @export
 #'
 method(subset, MultiFactor) <-
-    function(x, subset = NULL, by_path = TRUE, ...)
-        `subset.MultiFactor::MultiFactor`(x, subset, by_path)
-
+    function(
+        x, subset = NULL, by_path = TRUE, drop.unmatched = TRUE, ...
+        ) `subset.MultiFactor::MultiFactor`(
+            x, subset, by_path, drop.unmatched, ...
+            )
