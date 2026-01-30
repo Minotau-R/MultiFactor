@@ -153,7 +153,7 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     if(drop.unmatched) x <- .trimMultiFactor(x)
     if(is.null(subset)) return(x)
     if(by_path){
-        if(inherits(subset, "formula")) {subset <- all.vars(subset)}
+        subset <- .by_terms(subset)
         stopifnot("Argument `subset` must be length 2 if by_path` is TRUE" =
                       length(subset) == 2L)
         subset <- termSeq(subset, x)
@@ -170,3 +170,17 @@ method(subset, MultiFactor) <-
         ) `subset.MultiFactor::MultiFactor`(
             x, subset, by_path, drop.unmatched, ...
             )
+
+#' @importFrom igraph as.igraph graph_from_data_frame
+#' @param x a `MultiFactor`
+#' @param ... Additional arguments passed to `graph_from_data_frame`.
+#' @returns an `igraph` object.
+#' @export
+#' @noRd
+#'
+S7::method(as.igraph, MultiFactor) <- function(x, ...) {
+    igraph::graph_from_data_frame(.get_edge_list_df(x), ...)
+}
+
+.get_edge_list_df <-
+    function(x) as.data.frame.matrix(do.call(rbind, lapply(x, names)))

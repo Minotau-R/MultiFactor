@@ -85,7 +85,7 @@ subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) 
     # Ensure link is a MultiFactor
     link <- MultiFactor(link)
 
-    terms <- if(inherits(.by, "formula")) all.vars(.by) else .by
+    terms <- .by_terms(.by)
     X <- .index_tbl(X, type = terms[[2L]], .i = .i)
     terms[[2L]] <- colnames(X)[[2L]]
     X <- MultiFactor(X)

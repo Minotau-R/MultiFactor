@@ -1,12 +1,14 @@
 #' Weave a new LinkMap from a MultiFactor
-#' @name weave
+#' @name weave.MultiFactor
+#' @rdname weave-methods
 #' @description
 #' Generates a new `LinkMap` object by cross-referencing the elements of a
 #'     given `MultiFactor`
 #' @param x a `MultiFactor`
-#' @param .by either a `formula` or a `character vector`` of length 2 with the
+#' @param .by either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
+#'
 #' @returns a `LinkMap` or `sparse Matrix`.
 #' @examples
 #' # Generate pair of random linkage input
@@ -25,9 +27,11 @@
 #' # Weave new b2c LinkMap
 #' weave(x, b ~ c)
 #' weave(x, b ~ a, out.format = "matrix")
+NULL
+
 #' @export
 #'
-weave <- function(x, .by = NULL, out.format = c("LinkMap", "matrix")) {
+S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "matrix")) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
     # Ensure link is a MultiFactor
@@ -58,6 +62,13 @@ weave <- function(x, .by = NULL, out.format = c("LinkMap", "matrix")) {
 }
 
 # Utilities ----
+
+#' Standardize terms
+#' @returns a langth 2 character vector of y, x.
+#' @noRd
+#'
+.by_terms <- function(.by) if(inherits(.by, "formula")) all.vars(.by) else .by
+
 
 # Find a path through different feature types.
 # returns a Character vector of the ids to walk in order.
@@ -157,3 +168,4 @@ dictionaryMatrix <- function(link, all_terms) {
     )
     Reduce(Matrix::`%&%`, mat_list)
 }
+

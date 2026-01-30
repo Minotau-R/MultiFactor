@@ -40,3 +40,19 @@ S7::method(nlevels, S7::class_any) <- base::nlevels
 #'
 #'
 as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
+
+#' Convert common classes to MultiFactor
+#' @export
+#' @rdname weave-generic
+#' @name weave
+#' @param x input object
+#' @param .by either a `formula` or a `character vector`` of length 2 with the
+#'     names of the desired combination of feature types.
+#' @param ... additional arguments
+#' @examples
+#' # Available methods:
+#' weave
+#'
+weave <- S7::new_generic("weave", "x", function(x, .by, ...) {
+    S7_dispatch()
+})
