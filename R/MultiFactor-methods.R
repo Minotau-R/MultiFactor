@@ -171,16 +171,3 @@ method(subset, MultiFactor) <-
             x, subset, by_path, drop.unmatched, ...
             )
 
-#' @importFrom igraph as.igraph graph_from_data_frame
-#' @param x a `MultiFactor`
-#' @param ... Additional arguments passed to `graph_from_data_frame`.
-#' @returns an `igraph` object.
-#' @export
-#' @noRd
-#'
-S7::method(as.igraph, MultiFactor) <- function(x, ...) {
-    igraph::graph_from_data_frame(.get_edge_list_df(x), ...)
-}
-
-.get_edge_list_df <-
-    function(x) as.data.frame.matrix(do.call(rbind, lapply(x, names)))
