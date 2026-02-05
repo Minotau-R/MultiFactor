@@ -153,7 +153,7 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     if(drop.unmatched) x <- .trimMultiFactor(x)
     if(is.null(subset)) return(x)
     if(by_path){
-        subset <- .by_terms(subset)
+        subset <- unlist(.by_terms(subset))
         stopifnot("Argument `subset` must be length 2 if by_path` is TRUE" =
                       length(subset) == 2L)
         subset <- termSeq(subset, x)

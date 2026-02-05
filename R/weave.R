@@ -37,7 +37,7 @@ S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
     # Ensure link is a MultiFactor
     x <- MultiFactor(x)
     x <- subset(x, subset = .by, by_path = TRUE)
-    terms <- if(inherits(.by, "formula")) all.vars(.by) else .by
+    terms <- unlist(.by_terms(.by))
     # Determine required ids in order, only keep relevant elements of link.
     all_terms <- termSeq(terms, x)
     x <- subsetByPath(x, all_terms)
@@ -64,10 +64,46 @@ S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
 # Utilities ----
 
 #' Standardize terms
-#' @returns a langth 2 character vector of y, x.
+#' @returns a length 2 character vector of y, x.
 #' @noRd
 #'
-.by_terms <- function(.by) if(inherits(.by, "formula")) all.vars(.by) else .by
+.by_terms <- function(.by) {
+    if(inherits(.by, "formula")) .weave_parse_formula(.by) else .by
+}
+
+#' Combine LinkMaps by stacking features of multiple types.
+#' @description
+#' Utility to resolve multiple paths
+#' @param x `MultiFactor`
+#' @param stack_vars `Character vector` names of feature types to combine
+#' @param to `Character scalar` name of feature type in right column of output.
+#' @returns `LinkMap`
+#' @noRd
+#'
+.stack_features <- function(x, stack_vars, to) {
+    stopifnot(
+        "At least two stacking targets must be found as colnames in 'x'" =
+            sum(c(stack_vars) %in% colnames(x)) >= 2L
+    )
+    stopifnot(
+        "'to' arg must be found in colnames of 'x'" = to %in% colnames(x)
+        )
+
+    var_list <- lapply(stack_vars, `c`, to)
+    i <- vapply(var_list, rowsWithCol, d = x@map, names = FALSE, FUN.VALUE = 0L)
+    var_list <- var_list[i > 0L]
+    stack_name <- paste(stack_vars[i > 0L], collapse = "8")
+    x_sub <- lapply(
+        S7::S7_data(x)[i], function(y) {
+            colnames(y)[colnames(y) != to] <- stack_name
+            y
+        }
+    )
+    LinkMap(
+        do.call(rbind.data.frame, list(unname(x_sub), make.row.names = FALSE ))
+        )
+
+}
 
 
 # Find a path through different feature types.
@@ -117,7 +153,7 @@ stepSeq <- function(term_list, d) vapply(
 rowsWithCol <- function(d, id, names = TRUE) {
     rowInds <- which(Matrix::rowSums(d[, id, drop = FALSE] != 0L) == length(id))
     if (length(rowInds) == 0L) {
-        return(NULL)
+        return(0L)
     }
     if (names) {
         rowInds <- rownames(d)[rowInds]
