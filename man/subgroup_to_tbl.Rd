@@ -4,7 +4,7 @@
 \alias{subgroup_to_tbl}
 \title{Expand a table based on possibly overlapping group membership.}
 \usage{
-subgroup_to_tbl(x, link, .by, .index = "row.names", ...)
+subgroup_to_tbl(x, link, .by, .index = "row.names")
 }
 \arguments{
 \item{x}{\verb{A table}. A \code{data.frame}, \code{matrix}, other object with rows and
@@ -17,8 +17,6 @@ names of the desired combination of feature types.}
 
 \item{.index}{\verb{Character scalar} Column to look for feature IDs to link.
 Default: "row.names".}
-
-\item{...}{Optional additional arguments passed to \code{cbind()}.}
 }
 \value{
 An expanded table \code{x}, with an added first column containing

@@ -32,6 +32,7 @@ of row-based subsets of table \code{X}. Mimics lapply.
 \examples{
 
 # Prepare data
+
 link <- anansi::kegg_link()
 data("FMT_data", package = "anansi")
 x <- FMT_KOs

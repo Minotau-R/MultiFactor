@@ -16,8 +16,8 @@
 }
 
 #' Standardize terms
-#' @importFrom rlang  f_lhs f_rhs
-#' @returns a length 2 character vector of y, x.
+#' @importFrom rlang f_lhs f_rhs
+#' @returns a list of length 2 containing character vectors of y, x.
 #' @noRd
 #'
 .weave_parse_formula <- function(.by) {

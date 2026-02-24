@@ -9,8 +9,6 @@
 #'     names of the desired combination of feature types.
 #' @param .index `Character scalar` Column to look for feature IDs to link.
 #'     Default: "row.names".
-#' @param ... Optional additional arguments passed to `cbind()`.
-#'
 #' @returns An expanded table `x`, with an added first column containing
 #'     subgroups.
 #' @importFrom Matrix which
@@ -23,7 +21,7 @@
 #'
 #' @export
 #'
-subgroup_to_tbl <- function(x, link, .by, .index = "row.names", ...) {
+subgroup_to_tbl <- function(x, link, .by, .index = "row.names") {
    out <- .index_tbl_by(x, link, .by, .index)
    out[[2L]] <- as.integer(out[[2L]])
    xcol <- if(.index == "row.names") row.names(x) else x[[.index]]
@@ -31,5 +29,5 @@ subgroup_to_tbl <- function(x, link, .by, .index = "row.names", ...) {
    subgroup <- data.frame(y = out[1L], x = xcol[out[[2L]]])
    colnames(subgroup) <- if(inherits(.by, "formula")) all.vars(.by) else .by
 
-   cbind(subgroup, x[out[[2L]], ], ...)
+   cbind(subgroup, x[out[[2L]], ])
 }

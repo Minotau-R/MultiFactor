@@ -17,6 +17,7 @@
 #' @examples
 #'
 #' # Prepare data
+#'
 #' link <- anansi::kegg_link()
 #' data("FMT_data", package = "anansi")
 #' x <- FMT_KOs
@@ -28,12 +29,12 @@
 #' @export
 #'
 subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) {
-    FUN <- if (!is.null(FUN)) match.fun(FUN)
+    IDX <- .splitLinkMap(
+        .index_tbl_by(X, LINK, BY, INDEX)
+        )
 
-    IDX <- .splitLinkMap( .index_tbl_by(X, LINK, BY, INDEX) )
-
-    # Mimic tapply behaviour
-    if(is.null(FUN)) return(IDX)
+    # Mimic tapply behaviour; Leaving FUN = NULL returns the index itself.
+    if(is.null(FUN)) return(IDX) else FUN <- match.fun(FUN)
 
     # Apply FUN over each subset of X indexed by IDX
     lapply(X = IDX, FUN = function(iii) FUN(X[iii, ]), ...)
@@ -92,7 +93,7 @@ subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) 
 
     X <- `c.MultiFactor::MultiFactor`(link, X)
 
-    weave(X, .by = terms, ...)
+    weave(X, .by, ...)
 
 }
 
