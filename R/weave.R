@@ -33,11 +33,22 @@ NULL
 #'
 S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "matrix")) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
-
-    # Ensure link is a MultiFactor
     x <- MultiFactor(x)
+    terms <- .by_terms(.by)
+
+    #Stacking case
+    if( any(lengths(terms) > 1L) ) {
+        x <- .stack_by_character(x, terms[[1L]], terms[[2L]])
+        if(out.format == "matrix") {
+            res <- `as.matrix.MultiFactor::LinkMap`(res)
+            dimnames(res) <- levels(x)[terms]
+            return(res)
+        } else
+            if( out.format == "LinkMap" ) return(x)
+    }
+    # Non-stacking case
+    terms <- unlist(terms)
     x <- subset(x, subset = .by, by_path = TRUE)
-    terms <- unlist(.by_terms(.by))
     # Determine required ids in order, only keep relevant elements of link.
     all_terms <- termSeq(terms, x)
     x <- subsetByPath(x, all_terms)
@@ -50,7 +61,6 @@ S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
         dimnames(res) <- levels(x)[terms]
         return(res)
     }
-
     # Otherwise, make a LinkMap
     res <- as.data.frame.matrix(Matrix::which(res, arr.ind = TRUE))
     res[] <- mapply(FUN = function(x, y) {
