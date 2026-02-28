@@ -16,7 +16,8 @@ a \code{LinkMap} or \verb{sparse Matrix}.
 }
 \description{
 Generates a new \code{LinkMap} object by cross-referencing the elements of a
-given \code{MultiFactor}
+given \code{MultiFactor}. Elements can be merged by including several names,
+separated by the plus (\code{+}) sign. See examples.
 }
 \examples{
 # Generate pair of random linkage input
@@ -35,4 +36,5 @@ x <- MultiFactor(list(a2b, a2c))
 # Weave new b2c LinkMap
 weave(x, b ~ c)
 weave(x, b ~ a, out.format = "matrix")
+
 }
