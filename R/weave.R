@@ -37,39 +37,21 @@ S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
     terms <- .by_terms(.by)
 
-    #Stacking case
+    # Simple case
+    if (all (lengths(terms) == 1L)) {
+        res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
+    }
+
+    # Multiple variable case
     if( any(lengths(terms) > 1L) ) {
-        x <- .stack_by_character(x, terms[[1L]], terms[[2L]])
-        if(out.format == "matrix") {
-            res <- `as.matrix.MultiFactor::LinkMap`(x)
-            dimnames(res) <- levels(x)[terms]
-            return(res)
-        } else
-            if( out.format == "LinkMap" ) return(x)
+      res <- .weave_mult(terms, x, out.format)
+      if(out.format == "LinkMap") {
+          cn <- vapply(terms, paste, collapse = ".", "")
+          res <- do.call(rbind.data.frame, lapply(res, `colnames<-`, cn))
+      }
     }
-    # Non-stacking case
-    terms <- unlist(terms)
-    x <- subset(x, subset = .by, by_path = TRUE)
-    # Determine required ids in order, only keep relevant elements of link.
-    all_terms <- termSeq(terms, x)
-    x <- subsetByPath(x, all_terms)
 
-    # Construct dictionary
-    res <- dictionaryMatrix(x, all_terms)
-
-    # Check if we're done
-    if(out.format == "matrix") {
-        dimnames(res) <- levels(x)[terms]
-        return(res)
-    }
-    # Otherwise, make a LinkMap
-    res <- as.data.frame.matrix(Matrix::which(res, arr.ind = TRUE))
-    res[] <- mapply(FUN = function(x, y) {
-        attr(x, "levels") <- y
-        `class<-`(x, "factor")
-    }, x = res, y = levels(x)[terms], SIMPLIFY = FALSE )
-    colnames(res) <- terms
-    LinkMap(res)
+    return(res)
 }
 
 #' @export
@@ -94,6 +76,46 @@ S7::method(stack, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
     if( out.format == "LinkMap" ) return(x)
 
 }
+
+.weave_mult <- function(terms, x, out.format) {
+    terms <- expand.grid(terms)
+    apply(
+        terms, 1L, .weave_simple_df,
+        x = x, out.format = out.format, simplify = FALSE
+    )
+}
+
+.weave_simple_df <- function(df, x, out.format) .weave_simple(
+    df[1], df[2], x, out.format
+)
+
+.weave_simple <- function(y_var, x_var, x, out.format) {
+    # Non-stacking case
+    terms <- c(y_var, x_var)
+
+    # Determine required ids in order, only keep relevant elements of link.
+    all_terms <- termSeq(terms, x)
+    x <- subsetByPath(x, all_terms)
+
+    # Construct dictionary
+    res <- dictionaryMatrix(x, all_terms)
+
+    # Check if we're done
+    if(out.format == "matrix") {
+        dimnames(res) <- levels(x)[terms]
+        return(res)
+    }
+    # Otherwise, make a LinkMap
+    res <- as.data.frame.matrix(Matrix::which(res, arr.ind = TRUE))
+    res[] <- mapply(FUN = function(x, y) {
+        attr(x, "levels") <- y
+        `class<-`(x, "factor")
+    }, x = res, y = levels(x)[terms], SIMPLIFY = FALSE )
+    colnames(res) <- terms
+    LinkMap(res)
+
+}
+
 
 #' @noRd
 #'
