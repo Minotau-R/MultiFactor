@@ -6,7 +6,7 @@
 #'     given `MultiFactor`. Elements can be merged by including several names,
 #'     separated by the plus (`+`) sign. See examples.
 #' @param x a `MultiFactor`
-#' @param .by either a `formula` or a `character vector` of length 2 with the
+#' @param .by Either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
 #'
@@ -33,7 +33,9 @@ NULL
 
 #' @export
 #'
-S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "matrix")) {
+S7::method(weave, MultiFactor) <- function(
+    x, .by, out.format = c("LinkMap", "matrix"), include = NULL, exclude = NULL
+) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
     terms <- .by_terms(.by)
 
@@ -42,9 +44,7 @@ S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
         res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
     }
     if( out.format == "matrix" ) {
-      dn <- levels(res)
-      res <- `as.matrix.MultiFactor::LinkMap`(res)
-      dimnames(res) <- dn
+      res <- `as.matrix.MultiFactor::LinkMap`(res, dimnames = levels(res))
     }
 
     # Multiple variable case
@@ -82,6 +82,39 @@ S7::method(stack, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
     if( out.format == "LinkMap" ) return(x)
 
 }
+
+#' @title Get and select paths to weave through a MutiFactor.
+#' @name weave_all_paths
+#' @inheritParams weave.MultiFactor
+#' @param as.paths `Boolean scalar` Whether to return an `igraph` path class, or
+#'     a list of character vectors (Default).
+#' @param include,exclude `Character vectors` Should feature types be included
+#'     or excluded from the available paths?
+#' @export
+#'
+weave_all_paths <- function(
+    x, .by, as.paths = FALSE, include = NULL, exclude = NULL
+) {
+  term.grid <- expand.grid(.by_terms(.by))
+  paths <- apply(term.grid, 1L, .weave_paths_terms, x = x)
+  paths <- unlist(paths, recursive = FALSE, use.names = FALSE)
+
+  pathnames <- lapply(paths, names)
+  if( !as.paths ) paths <- pathnames
+  i <- .which_paths(pathnames, include, exclude)
+  paths <- paths[i]
+  if(length(paths) == 0L) warning("No pathways match provided critria.")
+  return(paths)
+}
+
+.which_paths <- function(x, include = NULL, exclude = NULL) {
+  i.bool <- if( is.null(include) ) rep(TRUE, length(x)) else
+    vapply(x, function(y) all(include %in% y), FALSE)
+  e.bool <- if( is.null(exclude) ) rep(TRUE, length(x)) else
+    vapply(x, function(y) all(! exclude %in% y), FALSE)
+  i.bool & e.bool
+}
+
 
 .weave_mult <- function(terms, x, out.format) apply(
   expand.grid(terms), 1L, .weave_simple_df,

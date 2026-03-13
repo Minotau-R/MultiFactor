@@ -16,7 +16,7 @@
 #' igraph::as.igraph(x)
 #'
 `as.igraph.MultiFactor::MultiFactor`  <- function(x, ...) {
-    igraph::graph_from_data_frame(mf_to_graph_df(x), ...)
+    igraph::graph_from_data_frame(mf_as_graph_df(x), ...)
 }
 
 #' @export
@@ -31,25 +31,20 @@ S7::method(as.igraph, MultiFactor) <-
 #' Utility function to convert graph information of a MultiFactor to a
 #' `data.frame`. Used in `as.igraph` method for MultiFactor.
 #' @param x MultiFactor
-#' @param source_name `Character scalar` Content of source column in output.
-#' @returns a `data.frame` with three named columns; from, to and source_name.
+#' @returns a `data.frame` with three or more named columns; from, to and name.
 #' @export
 #' @examples
 #' x <- randomMultiFactor()
 #'
 #' # Three-column dfs of layouts
-#' x_df <- mf_to_graph_df(x, source_name = "example_name")
+#' x_df <- mf_as_graph_df(x)
 #'
-mf_to_graph_df <- function(x, source_name) {
-    if(missing(source_name)) source_name <- deparse1(substitute(x))
+mf_as_graph_df <- function(x) {
     x <- MultiFactor(x)
-    x <- lapply(x, names) |>
-        list2DF() |>
-        t() |>
-        as.data.frame.matrix(row.names = NULL, make.names = FALSE)
-    rownames(x) <- NULL
-    colnames(x) <- c("from", "to")
-    x[["source_name"]] <- source_name
-    x
+
+    res <- as.data.frame.matrix(
+        t(vapply(x, names, c(NA_character_, NA_character_))),
+    )
+    cbind.data.frame(res, x@metadata)
 }
 

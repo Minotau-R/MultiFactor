@@ -6,7 +6,7 @@
 \arguments{
 \item{x}{a \code{MultiFactor}}
 
-\item{.by}{either a \code{formula} or a \verb{character vector} of length 2 with the
+\item{.by}{Either a \code{formula} or a \verb{character vector} of length 2 with the
 names of the desired combination of feature types.}
 
 \item{out.format}{\verb{Character scalar}. One of \code{'LinkMap'}, \code{'matrix'}.}
