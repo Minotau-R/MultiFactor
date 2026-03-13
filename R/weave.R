@@ -42,9 +42,7 @@ S7::method(weave, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
         res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
     }
     if( out.format == "matrix" ) {
-      dn <- levels(res)
-      res <- `as.matrix.MultiFactor::LinkMap`(res)
-      dimnames(res) <- dn
+      res <- `as.matrix.MultiFactor::LinkMap`(res, dimnames = levels(res))
     }
 
     # Multiple variable case
