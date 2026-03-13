@@ -1,9 +1,24 @@
+S7::method(names, LinkMap) <- function(x) names(
+    S7::S7_data(x)[c(1, 2)]
+    )
+
+S7::method(dimnames, LinkMap) <- function(x) dimnames(
+    `class<-`(S7::S7_data(x), "data.frame")[c(1, 2)]
+    )
+
+S7::method(dim, LinkMap) <- function(x) dim(
+    `class<-`(S7::S7_data(x), "data.frame")[c(1, 2)]
+    )
+
+S7::method(print, LinkMap) <- function(x, ...) print(
+    `class<-`(S7::S7_data(x), "data.frame")[c(1, 2)], ...
+)
 
 S7::method(str, LinkMap) <- function(object, ...) str(
     `class<-`(S7::S7_data(object), "data.frame")
 )
 
-S7::method(levels, LinkMap) <- function(x) lapply(x, levels)
+S7::method(levels, LinkMap) <- function(x) lapply(x[c(1, 2)], levels)
 
 #' @param use.names `Boolean scalar` Should names be provided.
 #'     (Default: `TRUE`)
@@ -28,4 +43,4 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
 `as.matrix.MultiFactor::LinkMap` <- function(
         x, terms = colnames(x),
         dims = nlevels(x[terms]), ...
-) Matrix::sparseMatrix(i = x[[terms[1L]]], j = x[[terms[2L]]], dims = dims)
+) Matrix::sparseMatrix(i = x[[terms[1L]]], j = x[[terms[2L]]], dims = dims, ...)

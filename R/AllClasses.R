@@ -7,11 +7,10 @@
 #' for `LinkMap` aim to follow `factor` behaviour.
 #'
 #' @slot levels `Named list` of character vectors depicting levels.
-#' @slot metadata `list`. Optional. May be used to store additional data or
+#' @slot metadata `data.frame`. Optional. Used to store additional data or
 #'     application-specific tags.
 #' @param x `data.frame` with two named columns that can be coerced to factors.
-#' @param metadata `list`. Optional. May be used to store additional data or
-#'     application-specific tags.
+#'     Optionally, additional columns will be stored as metadata.
 #' @returns a `LinkMap` object.
 #' @examples
 #' # Generate random linkage input
@@ -30,21 +29,26 @@ LinkMap <- S7::new_class(
     "LinkMap",
     package = "MultiFactor",
     parent = S7::class_data.frame,
-    properties  = list(
-        levels   = S7::new_property(getter = function(self) lapply(self, levels)),
-        metadata = S7::class_list
+    properties = list(
+        levels = S7::new_property(
+            getter = function(self) lapply(
+                S7::S7_data(self)[c(1, 2)], levels
+            )
+        ),
+        metadata = S7::new_property(
+            getter = function(self) `class<-`(
+                S7::S7_data(self), "data.frame"
+            )[-c(1, 2)]
+        )
     ),
-    constructor = function(x, metadata = list()) {
+    constructor = function(x) {
         if(S7::S7_inherits(x, LinkMap)) return(x)
         stopifnot(.check_input_df(x))
 
         # Factorize x
-        x  <- `[<-.data.frame`(x, , value = lapply(x, as.factor))
+        x[c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
 
-        S7::new_object(
-            .parent  = x,
-            metadata = metadata
-        )
+        S7::new_object(x)
     },
     validator = function(self) {
         if(!is.data.frame(self)) {
@@ -56,7 +60,7 @@ LinkMap <- S7::new_class(
         if(!length(colnames(self)) == 2L) {
             "Both columns must be named. "
         }
-        if(!all(vapply(self, is.factor, NA, USE.NAMES = FALSE))){
+        if(!all(vapply(self[c(1, 2)], is.factor, NA, USE.NAMES = FALSE))){
             "Both columns must be factors. "
         }
     }
@@ -150,14 +154,14 @@ MultiFactor <- S7::new_class(
 ##### LinkMap utils ----
 
 .check_input_df <- function(x) {
-    if(!is.data.frame(x)) {
+    if(! is.data.frame(x) ) {
         stop("Must be a data.frame. ")
     }
-    if(! NCOL(x) == 2L) {
-        stop("Must be a data.frame with exactly two columns. ")
+    if(! NCOL(x) >= 2L ) {
+        stop("Must be a data.frame with at least two key columns. ")
     }
-    if(!length(colnames(x)) == 2L) {
-        stop("Both columns must be named. ")
+    if(! length(colnames(x)[seq_len(2L)]) == 2L ) {
+        stop("Both key columns must be named. ")
     }
     return(TRUE)
 }
