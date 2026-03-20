@@ -1,11 +1,13 @@
 #' Convert a MultiFactor to igraph
 #' @description
 #' Extract relational information from MultiFactor and return an igraph object.
+#' Calls `igraph::graph_from_data_frame` under the hood.
 #' @name as.igraph.MultiFactor
 #' @aliases as.igraph.MultiFactor::MultiFactor
 #' @importFrom igraph as.igraph graph_from_data_frame
 #' @param x a `MultiFactor`
-#' @param ... Additional arguments passed to `graph_from_data_frame`.
+#' @param directed See `?igraph::graph_from_data_frame`
+#' @param ... Additional arguments passed to `igraph::graph_from_data_frame`.
 #' @returns an `igraph` object.
 #' @method as.igraph MultiFactor::MultiFactor
 #' @export
@@ -15,8 +17,8 @@
 #' # Make igraph object:
 #' igraph::as.igraph(x)
 #'
-`as.igraph.MultiFactor::MultiFactor`  <- function(x, ...) {
-    igraph::graph_from_data_frame(mf_as_graph_df(x), ...)
+`as.igraph.MultiFactor::MultiFactor`  <- function(x, directed = FALSE, ...) {
+    igraph::graph_from_data_frame(mf_as_graph_df(x), directed, ...)
 }
 
 #' @export
@@ -24,7 +26,6 @@
 #'
 S7::method(as.igraph, MultiFactor) <-
     function(x, ...) `as.igraph.MultiFactor::MultiFactor`(x, ...)
-
 
 #' Convert a MultiFactor to relational graph format.
 #' @description
