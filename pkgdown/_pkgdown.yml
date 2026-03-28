@@ -1,0 +1,27 @@
+destination: docs
+reference:
+- title: Operations
+- contents:
+  - weave
+  - weave.MultiFactor
+  - weave_all_paths
+  - subgroup_apply
+  - subgroup_to_tbl
+- title: Classes
+- contents:
+  - MultiFactor
+  - MultiFactor-methods
+  - LinkMap
+- title: Converters
+- contents:
+  - as.MultiFactor
+  - as.LinkMap
+  - as.LinkMap-methods
+  - as.igraph.MultiFactor
+  - as.matrix.LinkMap
+  - mf_as_graph_df
+- title: Utils
+- contents:
+  - randomMultiFactor
+  - randomLinkMap
+  - nlevels

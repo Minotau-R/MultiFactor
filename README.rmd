@@ -31,8 +31,13 @@ across databases. Methods for `MultiFactor` aim to follow `factor` behaviour.
 ## Installation instructions
 
 Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
-install `MultiFactor` from [GitHub](https://github.com/minotau-R/MultiFactor) 
-with `remotes`: 
+install the released version of `MultiFactor`:
+
+```{r 'cran-install', eval = FALSE}
+install.packages("MultiFactor")
+```
+
+Or install the development version from this repository:
 
 ```{r, 'remotes-install', eval = FALSE}
 install.packages("remotes")
