@@ -22,8 +22,9 @@ feature IDs across databases. Methods for `MultiFactor` aim to follow
 
 ## Installation instructions
 
-Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
-install the released version of `MultiFactor`:
+Get the latest stable `R` release from
+[CRAN](http://cran.r-project.org/). Then install the released version of
+`MultiFactor`:
 
 ``` r
 install.packages("MultiFactor")
@@ -36,3 +37,7 @@ install.packages("remotes")
 remotes::install_github("minotau-R/MultiFactor")
 ```
 
+## Getting started using MultiFactor
+
+[See the vignettes on the package
+site.](https://minotau-r.github.io/MultiFactor/MultiFactor.html)

@@ -7,13 +7,43 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r 'knitr-setup', include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+# Overview
+
+MultiFactor aims to provide a consistent toolkit to incorporate relational data 
+into data analytical tools and methods. In practice, we expect MultiFactor to be
+used in combination with additional packages that extend it. For instance, see
+[ariadne](https://github.com/minotau-R/ariadne) and
+[anansi](https://github.com/thomazbastiaanssen/anansi), two such packages that 
+make use of MultiFactor to link and convert across biological database IDs and
+perform muti-omics integration analysis, respectively. 
+
+# Get started using MultiFactor
+
+## Installation instructions
+
+Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
+install the released version of `MultiFactor`:
+
+```{r 'cran-install', eval = FALSE}
+install.packages("MultiFactor")
+```
+
+Or install the development version from this repository:
+
+```{r, 'remotes-install', eval = FALSE}
+install.packages("remotes")
+remotes::install_github("minotau-R/MultiFactor")
+```
+
+## Setup 
+
+```{r 'setup-multifactor'}
 library(MultiFactor)
 ```

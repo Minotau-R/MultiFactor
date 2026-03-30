@@ -43,3 +43,7 @@ Or install the development version from this repository:
 install.packages("remotes")
 remotes::install_github("minotau-R/MultiFactor")
 ```
+
+## Getting started using MultiFactor
+
+[See the vignettes on the package site.](https://minotau-r.github.io/MultiFactor/MultiFactor.html) 
