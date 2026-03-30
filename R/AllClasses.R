@@ -117,7 +117,7 @@ MultiFactor <- S7::new_class(
         ),
         metadata = S7::new_property(
             getter = function(self) Reduce(
-                function(...) merge(..., all = TRUE), lapply(x, .squash_meta)
+                function(...) merge(..., all = TRUE), lapply(self, .squash_meta)
             )
         )
     ),

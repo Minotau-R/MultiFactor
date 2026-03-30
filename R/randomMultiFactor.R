@@ -22,7 +22,7 @@ NULL
 #' @param sparseness `Numeric scalar`, proportion: How rare are connections
 #' @export
 #'
-randomMultiFactor <- function(n_types = 6, n_features = 100, sparseness = 0.5) {
+randomMultiFactor <- function(n_types = 6, n_features = 10, sparseness = 0.75) {
     stopifnot(
         "'sparseness' must be a proportion [0-1]. " = sparseness <= 1 &&
             sparseness > 0
