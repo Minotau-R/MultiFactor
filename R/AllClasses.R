@@ -117,7 +117,7 @@ MultiFactor <- S7::new_class(
         ),
         metadata = S7::new_property(
             getter = function(self) Reduce(
-                function(...) merge(..., all = TRUE), lapply(x, .squash_meta)
+                function(...) merge(..., all = TRUE), lapply(self, .squash_meta)
             )
         )
     ),
@@ -172,12 +172,12 @@ MultiFactor <- S7::new_class(
 #### MultiFactor utils ----
 
 .squash_meta <- function(x) {
-    name <- paste(colnames(x), collapse = "2")
+    names <- paste(colnames(x), collapse = "2")
     res <- lapply(x@metadata, unique)
     res <- if (length(res) <= 1L ) res else length(res)
 
-    res <- c(name = name, res)
-    `class<-`(`attr<-`(res, "row.names", name), "data.frame")
+    res <- c(name = names, res)
+    `class<-`(`attr<-`(res, "row.names", names), "data.frame")
 }
 
 .mapMultiFactor <- function(x, mode = "counts") {

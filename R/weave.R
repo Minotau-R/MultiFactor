@@ -1,5 +1,5 @@
 #' Weave a new LinkMap from a MultiFactor
-#' @name weave.MultiFactor
+#' @name weave-methods
 #' @rdname weave-methods
 #' @description
 #' Generates a new `LinkMap` object by cross-referencing the elements of a
@@ -9,7 +9,9 @@
 #' @param .by Either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
-#'
+#' @param include,exclude,exact `Character vectors` Should feature types be
+#'     included or excluded from the available paths? Exact allows for exact
+#'     path definition.
 #' @returns a `LinkMap` or `sparse Matrix`.
 #' @examples
 #' # Generate pair of random linkage input
@@ -34,17 +36,18 @@ NULL
 #' @export
 #'
 S7::method(weave, MultiFactor) <- function(
-    x, .by, out.format = c("LinkMap", "matrix"), include = NULL, exclude = NULL
+    x, .by, out.format = c("LinkMap", "matrix"),
+    include = NULL, exclude = NULL, exact = NULL
 ) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
     terms <- .by_terms(.by)
 
     # Simple case
     if (all (lengths(terms) == 1L)) {
-        res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
-    }
-    if( out.format == "matrix" ) {
-      res <- `as.matrix.MultiFactor::LinkMap`(res, dimnames = levels(res))
+      res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
+      if( out.format == "matrix" ) {
+        res <- `as.matrix.MultiFactor::LinkMap`(res, dimnames = levels(res))
+      }
     }
 
     # Multiple variable case
@@ -83,61 +86,19 @@ S7::method(stack, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
 
 }
 
-#' @title Get and select paths to weave through a MutiFactor.
-#' @name weave_all_paths
-#' @inheritParams weave.MultiFactor
-#' @param as.paths `Boolean scalar` Whether to return an `igraph` path class, or
-#'     a list of character vectors (Default).
-#' @param include,exclude `Character vectors` Should feature types be included
-#'     or excluded from the available paths?
-#' @export
-#'
-weave_all_paths <- function(
-    x, .by, as.paths = FALSE, include = NULL, exclude = NULL
-) {
-  term.grid <- expand.grid(.by_terms(.by))
-  paths <- apply(term.grid, 1L, .weave_paths_terms, x = x)
-  paths <- unlist(paths, recursive = FALSE, use.names = FALSE)
-
-  pathnames <- lapply(paths, names)
-  if( !as.paths ) paths <- pathnames
-  i <- .which_paths(pathnames, include, exclude)
-  paths <- paths[i]
-  if(length(paths) == 0L) warning("No pathways match provided critria.")
-  return(paths)
-}
-
-.which_paths <- function(x, include = NULL, exclude = NULL) {
-  i.bool <- if( is.null(include) ) rep(TRUE, length(x)) else
-    vapply(x, function(y) all(include %in% y), FALSE)
-  e.bool <- if( is.null(exclude) ) rep(TRUE, length(x)) else
-    vapply(x, function(y) all(! exclude %in% y), FALSE)
-  i.bool & e.bool
-}
-
-
-.weave_mult <- function(terms, x, out.format) apply(
-  expand.grid(terms), 1L, .weave_simple_df,
-  x = x, out.format = out.format, simplify = FALSE
-)
-
-.weave_simple_df <- function(df, x, out.format) .weave_simple(
-    df[1], df[2], x, out.format
-)
 
 .weave_simple <- function(y_var, x_var, x, out.format) {
-    # Non-stacking case
-    terms <- c(y_var, x_var)
+  # Non-stacking case
+  terms <- c(y_var, x_var)
 
-    # Determine required ids in order, only keep relevant elements of link.
-    all_terms <- termSeq(terms, x)
-    all_terms <- lapply(.weave_paths_terms(x, terms), names)
-    res <- lapply(all_terms, .weave_single, x = x, out.format = "LinkMap", terms = terms)
-    res <- do.call(
-      rbind.data.frame,
-      c(res, make.row.names = FALSE, stringsAsFactors = TRUE)
-    )
-    return(res)
+  # Determine required ids in order, only keep relevant elements of link.
+  all_terms <- .select_shortest_paths(x, terms, include = NULL, exclude = NULL, exact = NULL)
+  res <- lapply(all_terms, .weave_single, x = x, out.format = "LinkMap", terms = terms)
+  res <- do.call(
+    rbind.data.frame,
+    c(res, make.row.names = FALSE, stringsAsFactors = TRUE)
+  )
+  return(res)
 }
 
 
@@ -162,86 +123,6 @@ weave_all_paths <- function(
   LinkMap(res)
 }
 
-#' @noRd
-#'
-.stack_by_formula <- function(x, .by) {
-    all_terms <- .weave_parse_formula(.by)
-
-    .stack_by_character(x, all_terms[[1L]], all_terms[[2L]])
-}
-
-#' Combine LinkMaps by stacking features of multiple types.
-#' @description
-#' Utility to resolve multiple paths
-#' @param x `MultiFactor`
-#' @param y_vars,x_vars `Character vector` names of feature types in left and
-#'     right columns of output, respectively.
-#' @returns `LinkMap`
-#' @noRd
-#'
-.stack_by_character <- function(x, y_vars, x_vars) {
-    # Defensive
-    if( length(y_vars) == 0L || length(x_vars) == 0L ) {
-        stop("Variables must be specified.")
-    }
-    stopifnot(
-        "Same variable may not appear in both arguments." =
-            length(intersect(y_vars, x_vars)) == 0L
-    )
-    if( length(miss <- setdiff(c(y_vars, x_vars), colnames(x))) >= 1L ) {
-        stop(
-            "Variables '", paste(miss, collapse = "', '"), "' not found in 'x'."
-        )
-    }
-    # Check combinations
-    var_grid <- expand.grid(y_vars, x_vars)
-    y_dupes  <- apply(var_grid, 1L, function(v) all(v %in% y_vars))
-    x_dupes  <- apply(var_grid, 1L, function(v) all(v %in% x_vars))
-    var_list <- apply(var_grid, 1L, `[`, simplify = FALSE)
-
-    i <- vapply(var_list, rowsWithCol, d = x@map, names = FALSE, FUN.VALUE = 0L)
-
-    tot_vars <- unique(unlist(var_list[i > 0L], use.names = FALSE))
-    y_name   <- paste(intersect(y_vars, tot_vars), collapse = ".")
-    x_name   <- paste(intersect(x_vars, tot_vars), collapse = ".")
-
-    x_sub <- lapply(
-        S7::S7_data(x)[i], function(y) {
-            # Ensure order: bools + 1L to get 1 and 2, where 2 is the x-column.
-            y <- y[, 1L + colnames(y) %in% x_vars ]
-            colnames(y) <- c(y_name, x_name)
-            y
-        }
-    )
-    do.call(
-        rbind.data.frame,
-        args = c(x_sub, make.row.names = FALSE, stringsAsFactors = TRUE)
-    )
-}
-
-
-
-# Utilities ----
-
-#' Standardize terms
-#' @returns a length 2 character vector of y, x.
-#' @noRd
-#'
-.by_terms <- function(.by) {
-    stopifnot(
-        "'.by' must be a character vector or a formula." =
-            inherits(.by, c("character", "formula"))
-    )
-    if(inherits(.by, "formula")) return(.weave_parse_formula(.by))
-
-    if(inherits(.by, "character")) {
-        if(length(.by == 2L)) return(.by) else stop(
-            "Length of '.by' is must be exactly 2 using character input. ",
-            "Use formula syntax for more control."
-        )
-    }
-}
-
 .weave_paths_terms <- function(x, terms) {
   stopifnot(
     "both terms must be found as colnames in 'x'" = all(
@@ -253,106 +134,5 @@ weave_all_paths <- function(
     directed = FALSE
   )
   igraph::all_shortest_paths(
-    g, from = terms[1], to = terms[2])[["res"]]
+    g, from = terms[1], to = terms[2])[["vpaths"]]
 }
-
-
-# Find a path through different feature types.
-# returns a Character vector of the ids to walk in order.
-#' @importFrom igraph shortest_paths graph_from_data_frame
-#'
-termSeq <- function(terms, x) {
-    stopifnot(
-        "both terms must be found as colnames in 'x'" = all(
-            terms %in% colnames(x)
-        )
-    )
-    g <- igraph::graph_from_data_frame(
-        d = t(vapply(x, names, c(NA_character_, NA_character_))),
-        directed = FALSE
-    )
-    sp <- igraph::all_shortest_paths(
-        g, from = terms[1], to = terms[2])
-    names(unlist(sp, FALSE, FALSE)[[1]])
-}
-
-#' Find the order in which link data frames should be listed
-#' @param term_list list of `Character vectors`, each with length of two.
-#' @param d link@map.
-#' @returns a numeric vector with order in which row data frames should be
-#'     traversed.
-#' @noRd
-#'
-stepSeq <- function(term_list, d) vapply(
-    term_list,
-    FUN = rowsWithCol,
-    d = d,
-    names = FALSE,
-    FUN.VALUE = 0L,
-    USE.NAMES = FALSE
-)
-
-#' @param d `MultiFactor@map`
-#' @param id `Character or Integer scalar`. Selects column(s) of `d`.
-#' @param names Whether to return characters (Default) or integer indices.
-#' @returns A vector indicating which elements of `MultiFactor` contain `id`.
-#' @importFrom Matrix rowSums
-#' @noRd
-#' @description Helper function for `MultiFactor` to get names or indices of
-#' data frames that contain an id column
-#'
-rowsWithCol <- function(d, id, names = TRUE) {
-    rowInds <- which(Matrix::rowSums(d[, id, drop = FALSE] != 0L) == length(id))
-    if (length(rowInds) == 0L) {
-        return(0L)
-    }
-    if (names) {
-        rowInds <- rownames(d)[rowInds]
-    }
-    return(rowInds)
-}
-
-subsetByPath <- function(link, all_terms) {
-    term_list <- lapply(
-        seq_len(length(all_terms) - 1L),
-        FUN = function(x) all_terms[c(x, x + 1L)]
-    )
-    steps <- stepSeq(term_list, link@map)
-    link <- link[steps]
-    return(link)
-}
-
-#' Generate dictionary Matrix from link input
-#' @inheritParams weaveWeb
-#' @param all_terms `Character vector` of all path terms in sequence.
-#'     `termSeq(x, y, link)`
-#' @importMethodsFrom Matrix %&%
-#' @noRd
-#'
-dictionaryMatrix <- function(link, all_terms) {
-    term_list <- lapply(
-        seq_len(length(all_terms) - 1L),
-        FUN = function(x) all_terms[c(x, x + 1L)]
-    )
-    steps <- stepSeq(term_list, link@map)
-    lv_len <- nlevels(link, use.names = TRUE)
-
-    # Handle simple case of one link df first, return sparse matrix.
-    if (length(steps) == 1L) {
-        return(`as.matrix.MultiFactor::LinkMap`(
-            x = S7::S7_data(link)[[steps]],
-            terms = all_terms,
-            dims = lv_len[all_terms]
-        ))
-    }
-    lv_list <- lapply(term_list, function(x) lv_len[x])
-    # Otherwise, make a list of matrices to Reduce to final dictionary
-    mat_list <- mapply(
-        FUN = `as.matrix.MultiFactor::LinkMap`,
-        x = S7::S7_data(link)[steps],
-        terms = term_list,
-        dims = lv_list
-    )
-    Reduce(Matrix::`%&%`, mat_list)
-}
-

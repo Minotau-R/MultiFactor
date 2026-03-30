@@ -5,7 +5,7 @@
 \alias{randomLinkMap}
 \title{Generate a random MultiFactor or LinkMap}
 \usage{
-randomMultiFactor(n_types = 6, n_features = 100, sparseness = 0.5)
+randomMultiFactor(n_types = 6, n_features = 10, sparseness = 0.75)
 
 randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 }

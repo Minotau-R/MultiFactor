@@ -5,18 +5,21 @@
 \alias{as.igraph.MultiFactor::MultiFactor}
 \title{Convert a MultiFactor to igraph}
 \usage{
-\method{as.igraph}{`MultiFactor::MultiFactor`}(x, ...)
+\method{as.igraph}{`MultiFactor::MultiFactor`}(x, directed = FALSE, ...)
 }
 \arguments{
 \item{x}{a \code{MultiFactor}}
 
-\item{...}{Additional arguments passed to \code{graph_from_data_frame}.}
+\item{directed}{See \code{?igraph::graph_from_data_frame}}
+
+\item{...}{Additional arguments passed to \code{igraph::graph_from_data_frame}.}
 }
 \value{
 an \code{igraph} object.
 }
 \description{
 Extract relational information from MultiFactor and return an igraph object.
+Calls \code{igraph::graph_from_data_frame} under the hood.
 }
 \examples{
 x <- randomMultiFactor()
