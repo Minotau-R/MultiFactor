@@ -47,3 +47,47 @@ remotes::install_github("minotau-R/MultiFactor")
 ```{r 'setup-multifactor'}
 library(MultiFactor)
 ```
+
+## MultiFactor and LinkMap objects
+### LinkMap
+The basic object in the `MultiFactor` package is the `LinkMap`, which contains 
+relational information across two types of features. This format is sometimes 
+referred to as an [edge list](https://en.wikipedia.org/wiki/Edge_list). 
+Under a thin layer of S7, the `LinkMap` object is a `data.frame` where the first
+two columns indicate which feature IDs that are considered linked. Optional 
+additional columns are considered metadata. 
+
+```{r 'linkmap-object'}
+
+```
+
+## MultiFactor
+The `MultiFactor` is in essence a collection of `LinkMap`s. Where `LinkMap`s 
+contain relational information across two data types, `MultiFactor`s are a 
+representation of the relational graph formed by combining those `LinkMaps`. 
+
+```{r 'multifactor-object'}
+
+```
+
+# weave() a path
+
+```{r 'weave'}
+
+```
+
+# Compatibility with `igraph` and `Matrix`
+
+# Utilities
+
+## subgroup_apply
+
+```{r 'subgroup-apply'}
+
+```
+
+## tidy/subgroup_to_tbl
+
+```{r 'subgroup-tbl'}
+
+```
