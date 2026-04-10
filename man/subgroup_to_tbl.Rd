@@ -23,7 +23,7 @@ An expanded table \code{x}, with an added first column containing
 subgroups.
 }
 \description{
-Expand a table
+Expand a table into a tidy table suitable for tidyverse-stype operations.
 }
 \examples{
 # Prepare data

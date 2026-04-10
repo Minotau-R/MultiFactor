@@ -4,6 +4,11 @@
 #' Read relational data from a file in adjacency list format and parse it into a
 #' `LinkMap` (or a `LinkMap`-shaped `data.frame`). Relies on `base::scan` and
 #' `utils::count.fields` under the hood.
+#' @details
+#' Note that the other common representation of relational data, a two-column
+#' table, known as an edge list, can be read in using regular approaches
+#' (e.g., `?base::read.table`).
+#'
 #' @inheritParams base::scan
 #' @param sep the field separator character. Values on each line of the file
 #'     are separated by this character. (Default: `"\t"`)
@@ -11,7 +16,6 @@
 #'     the output. (Default: `c("id.x", "id.y")`)
 #' @param as.df `Boolean` Whether to return an unmodified `data.frame` or a
 #'     `LinkMap` (Default).
-#' the underlying `data.frame`.
 #' @param ... Additional arguments, passed to `count.fields` and `scan`.
 #' @seealso [utils::count.fields()] [base::scan()]
 #' @returns A `LinkMap`, or `if( as.df )`, a two-column data.frame formatted

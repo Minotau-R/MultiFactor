@@ -1,7 +1,7 @@
 #' Expand a table based on possibly overlapping group membership.
 #' @name subgroup_to_tbl
 #' @description
-#' Expand a table
+#' Expand a table into a tidy table suitable for tidyverse-stype operations.
 #' @param x `A table`. A `data.frame`, `matrix`, other object with rows and
 #'     columns. Should have a `cbind` method.
 #' @param link a `MultiFactor`.
@@ -29,5 +29,7 @@ subgroup_to_tbl <- function(x, link, .by, .index = "row.names") {
    subgroup <- data.frame(y = out[1L], x = xcol[out[[2L]]])
    colnames(subgroup) <- if(inherits(.by, "formula")) all.vars(.by) else .by
 
-   cbind(subgroup, x[out[[2L]], ])
+   out <- data.frame(subgroup, x[out[[2L]], ])
+   row.names(out) <- NULL
+   out
 }
