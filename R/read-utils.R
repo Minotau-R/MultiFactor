@@ -16,7 +16,7 @@
 #'     the output. (Default: `c("id.x", "id.y")`)
 #' @param as.df `Boolean` Whether to return an unmodified `data.frame` or a
 #'     `LinkMap` (Default).
-#' @param ... Additional arguments, passed to `count.fields` and `scan`.
+#' @param ... Additional arguments, passed to `scan`.
 #' @seealso [utils::count.fields()] [base::scan()]
 #' @returns A `LinkMap`, or `if( as.df )`, a two-column data.frame formatted
 #'     like an edge list, appropriate input for `LinkMap()`.
@@ -28,13 +28,16 @@
 #' # )
 #'
 read_adjacency_list <- function(
-        file, sep = "\t", col.names = c("id.x", "id.y"), as.df = FALSE, ...
+        file, sep = "\t", quote = "\"'", col.names = c("id.x", "id.y"),
+        as.df = FALSE, ...
         ) {
     # Count fields per line to find indices of the first element of each line.
-    n_fields <- count.fields(file, sep = sep, ...)
+    n_fields <- count.fields(file, sep, quote)
     key_indices <- cumsum(c(1L, n_fields[-length(n_fields)]))
 
-    x.content <- scan(file, what = character(), sep = sep, quiet = TRUE, ...)
+    x.content <- scan(
+        file, what = character(), sep = sep, quote = quote, quiet = TRUE, ...
+        )
 
     out <- data.frame(
             id.x = rep(x.content[key_indices], n_fields -1L),

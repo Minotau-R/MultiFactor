@@ -7,6 +7,7 @@
 read_adjacency_list(
   file,
   sep = "\\t",
+  quote = "\\"'",
   col.names = c("id.x", "id.y"),
   as.df = FALSE,
   ...
@@ -48,13 +49,17 @@ read_adjacency_list(
 \item{sep}{the field separator character. Values on each line of the file
 are separated by this character. (Default: \code{"\\t"})}
 
+\item{quote}{the set of quoting characters as a single character
+    string or \code{NULL}.  In a multibyte locale the quoting characters
+    must be ASCII (single-byte).}
+
 \item{col.names}{\verb{Character vector} of length 2, specifying the colnames of
 the output. (Default: \code{c("id.x", "id.y")})}
 
 \item{as.df}{\code{Boolean} Whether to return an unmodified \code{data.frame} or a
 \code{LinkMap} (Default).}
 
-\item{...}{Additional arguments, passed to \code{count.fields} and \code{scan}.}
+\item{...}{Additional arguments, passed to \code{scan}.}
 }
 \value{
 A \code{LinkMap}, or \verb{if( as.df )}, a two-column data.frame formatted

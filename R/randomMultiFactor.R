@@ -24,8 +24,8 @@ NULL
 #'
 randomMultiFactor <- function(n_types = 6, n_features = 10, sparseness = 0.75) {
     stopifnot(
-        "'sparseness' must be a proportion [0-1]. " = sparseness <= 1 &&
-            sparseness > 0
+        "'sparseness' must be a proportion [0-1]." =
+            sparseness <= 1 && sparseness > 0
     )
     n_types <- max(min(n_types, 26), 2)
     ids <- letters[seq_len(n_types)]
@@ -72,7 +72,7 @@ stopifnot("If provided, 'x' must be a list of two named character vectors" =
         "'sparseness' must be a proportion [0-1]. " = sparseness <= 1 &&
             sparseness > 0
     )
-    LinkMap(randomLinkDF(
+    LinkMap(.randomLinkDF(
         x[[1]], x[[2]], names(x)[[1]], names(x)[[2]],
         p = 1 - sparseness
         ))
@@ -88,7 +88,7 @@ stopifnot("If provided, 'x' must be a list of two named character vectors" =
 #' @param p proportion of connections to keep
 #' @noRd
 #'
-randomLinkDF <- function(l, r, l_id, r_id, p) {
+.randomLinkDF <- function(l, r, l_id, r_id, p) {
     len <- length(l) * length(r)
     ind <- sort(sample(seq_len(len), size = ceiling(p * len)))
     out <- expand.grid(l, r, KEEP.OUT.ATTRS = FALSE)[ind, ]
