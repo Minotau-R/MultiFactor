@@ -30,22 +30,42 @@
 read_adjacency_list <- function(
         file, sep = "\t", quote = "\"'", col.names = c("id.x", "id.y"),
         as.df = FALSE, ...
-        ) {
+) {
+    if( is.character(file) ) {
+        if( .check_is_url(file) && .is_compressed(file)) {
+            x <- file
+            file <- tempfile()
+            download.file(x, file)
+            on.exit(unlink(file), add = TRUE)
+
+        } else {
+            file <- file(file)
+            on.exit(close(file), add = TRUE)
+        }
+    }
     # Count fields per line to find indices of the first element of each line.
     n_fields <- count.fields(file, sep, quote)
     key_indices <- cumsum(c(1L, n_fields[-length(n_fields)]))
 
     x.content <- scan(
         file, what = character(), sep = sep, quote = quote, quiet = TRUE, ...
-        )
+    )
 
     out <- data.frame(
-            id.x = rep(x.content[key_indices], n_fields -1L),
-            id.y = x.content[-key_indices]
-        )
+        id.x = rep(x.content[key_indices], n_fields -1L),
+        id.y = x.content[-key_indices],
+        stringsAsFactors = TRUE
+    )
     colnames(out) <- col.names
 
     if( !as.df ) out <- LinkMap(out)
 
     return(out)
 }
+
+.check_is_url <- function(x) if(is.character(x)) {
+    grepl("^(?:file|ftp|ftps|http|https)://", x)
+} else FALSE
+
+.is_compressed <- function(x) grepl("(?:gz|bz|xz|zstd|zip)$", x)
+
