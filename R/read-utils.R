@@ -20,7 +20,7 @@
 #' @seealso [utils::count.fields()] [base::scan()]
 #' @returns A `LinkMap`, or `if( as.df )`, a two-column data.frame formatted
 #'     like an edge list, appropriate input for `LinkMap()`.
-#' @importFrom utils count.fields
+#' @importFrom utils count.fields download.file
 #' @export
 #' @examples
 #' # read_adjacency_list(
@@ -28,16 +28,15 @@
 #' # )
 #'
 read_adjacency_list <- function(
-        file, sep = "\t", quote = "\"'", col.names = c("id.x", "id.y"),
+        file, sep = "\t", quote = "'\"", col.names = c("id.x", "id.y"),
         as.df = FALSE, ...
 ) {
     if( is.character(file) ) {
-        if( .check_is_url(file) && .is_compressed(file)) {
+        if( .check_is_url(file) && .is_compressed(file) ) {
             x <- file
             file <- tempfile()
             download.file(x, file)
             on.exit(unlink(file), add = TRUE)
-
         } else {
             file <- file(file)
             on.exit(close(file), add = TRUE)
