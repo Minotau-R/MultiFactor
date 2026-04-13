@@ -7,7 +7,7 @@
 read_adjacency_list(
   file,
   sep = "\\t",
-  quote = "\\"'",
+  quote = "'\\"",
   col.names = c("id.x", "id.y"),
   as.df = FALSE,
   ...

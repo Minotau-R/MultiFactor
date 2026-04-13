@@ -33,13 +33,13 @@ read_adjacency_list <- function(
 ) {
     if( is.character(file) ) {
         if( .check_is_url(file) && .is_compressed(file) ) {
-            x <- file
+            x    <- file
             file <- tempfile()
             download.file(x, file)
-            on.exit(unlink(file), add = TRUE)
+            on.exit( unlink(file), add = TRUE )
         } else {
             file <- file(file)
-            on.exit(close(file), add = TRUE)
+            on.exit( close(file), add = TRUE )
         }
     }
     # Count fields per line to find indices of the first element of each line.
