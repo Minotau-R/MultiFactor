@@ -5,12 +5,12 @@
 \alias{randomLinkMap}
 \title{Generate a random MultiFactor or LinkMap}
 \usage{
-randomMultiFactor(n_types = 6, n_features = 10, sparseness = 0.75)
+randomMultiFactor(layout = NULL, n_features = 10, sparseness = 0.75)
 
 randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 }
 \arguments{
-\item{n_types}{\verb{Numeric scalar}, number of types of features to generate}
+\item{layout}{\code{igraph}, optional graph structure to generate random data for}
 
 \item{n_features}{\verb{Numeric scalar}, number of features per type}
 
@@ -31,6 +31,9 @@ called by \code{randomMultiFactor}, shouldn't be called by user.
 \examples{
 # Make a random MultiFactor object
 randomMultiFactor()
+
+# Use a (possibly random) igraph as input:
+randomMultiFactor( igraph::sample_gnp(6, 2/3) )
 
 # Make a random LinkMap object
 randomLinkMap()

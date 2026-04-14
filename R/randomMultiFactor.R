@@ -7,6 +7,9 @@
 #' # Make a random MultiFactor object
 #' randomMultiFactor()
 #'
+#' # Use a (possibly random) igraph as input:
+#' randomMultiFactor( igraph::sample_gnp(6, 2/3) )
+#'
 #' # Make a random LinkMap object
 #' randomLinkMap()
 #'
@@ -17,26 +20,40 @@ NULL
 
 #' @rdname randomMultiFactor
 #' @name randomMultiFactor
-#' @param n_types `Numeric scalar`, number of types of features to generate
+#' @param layout `igraph`, optional graph structure to generate random data for
 #' @param n_features `Numeric scalar`, number of features per type
 #' @param sparseness `Numeric scalar`, proportion: How rare are connections
+#' @importFrom igraph as_edgelist
 #' @export
 #'
-randomMultiFactor <- function(n_types = 6, n_features = 10, sparseness = 0.75) {
+randomMultiFactor <- function(layout = NULL, n_features = 10, sparseness = 0.75) {
     stopifnot(
         "'sparseness' must be a proportion [0-1]." =
             sparseness <= 1 && sparseness > 0
     )
-    n_types <- max(min(n_types, 26), 2)
+    if(is.null(layout)) return(.randomMultiFactor.auto(n_features, sparseness))
+    stopifnot("'layout' must be an igraph object." = inherits(layout, "igraph"))
+    el <- igraph::as_edgelist(layout)
+    edge_names <- unique(c(el))
+    lv_list <- .feature_names(edge_names, n_features)
+    names(lv_list) <- edge_names
+    out <- apply(el, 1L, function(i) randomLinkMap(
+        lv_list[c(i[1], i[2])], sparseness = sparseness
+        ), simplify = FALSE
+        )
+
+    names(out) <- apply(el, 1L, paste, collapse = "2")
+
+    return( MultiFactor(out) )
+
+
+}
+
+.randomMultiFactor.auto <- function(n_features, sparseness) {
+    n_types <- 6
     ids <- letters[seq_len(n_types)]
     out_names <- paste0(ids[-n_types], "2", ids[-1L])
-    id_list <- lapply(ids, function(x) {
-        paste(
-            x,
-            formatC(seq_len(n_features), digits = 2, flag = "0"),
-            sep = "_"
-        )
-    })
+    id_list <- .feature_names(ids, n_features)
 
     out <- lapply(seq_len(n_types - 1), FUN = function(x) {
         randomLinkMap(
@@ -44,13 +61,22 @@ randomMultiFactor <- function(n_types = 6, n_features = 10, sparseness = 0.75) {
                 list(id_list[-n_types][[x]],
                      id_list[-1L][[x]]),
                 c(ids[-n_types][x],ids[-1L][x])
-                ),
+            ),
             sparseness = sparseness
         )
     })
     names(out) <- out_names
-    MultiFactor(out)
+
+    return( MultiFactor(out) )
 }
+
+.feature_names <- function(y, n_features) lapply(y, function(x) {
+    paste(
+        x,
+        formatC(seq_len(n_features), digits = 2, flag = "0"),
+        sep = "_"
+    )
+})
 
 #' @rdname randomMultiFactor
 #' @name randomLinkMap

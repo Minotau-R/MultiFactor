@@ -44,8 +44,11 @@ mf_as_graph_df <- function(x) {
     x <- MultiFactor(x)
 
     res <- as.data.frame.matrix(
-        t(vapply(x, names, c(NA_character_, NA_character_))),
+        t(vapply(x, names, c(NA_character_, NA_character_)))
     )
-    cbind.data.frame(res, x@metadata)
+    cbind.data.frame(
+        res,
+        x@metadata
+    )
 }
 
