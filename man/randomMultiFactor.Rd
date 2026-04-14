@@ -2,10 +2,13 @@
 % Please edit documentation in R/randomMultiFactor.R
 \name{randomMultiFactor}
 \alias{randomMultiFactor}
+\alias{trade_posts}
 \alias{randomLinkMap}
 \title{Generate a random MultiFactor or LinkMap}
 \usage{
 randomMultiFactor(layout = NULL, n_features = 10, sparseness = 0.75)
+
+trade_posts(raw.list = FALSE)
 
 randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 }
@@ -17,6 +20,9 @@ randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 \item{sparseness}{\verb{Numeric scalar}, proportion: How rare are connections.
 Default is \code{0.5}.}
 
+\item{raw.list}{\code{Boolean}, Whether to return the list of goods rather than
+the default \code{MultiFactor}.}
+
 \item{x}{optional list of two named vectors of features to use. Default is
 \code{list(lower = letters, UPPER = LETTERS)}.}
 }
@@ -25,6 +31,10 @@ a randomly generated object of the specified class.
 }
 \description{
 Randomly generate a valid \code{MultiFactor} or \code{LinkMap} object.
+\code{randomMultiFactor} can optionally take am \code{igraph} object to determine its
+layout. (See examples)
+\code{trade_posts()} generates a random \code{MultiFactor} in the style of the trading
+example from the vignette.
 
 called by \code{randomMultiFactor}, shouldn't be called by user.
 }
@@ -38,6 +48,8 @@ randomMultiFactor( igraph::sample_gnp(6, 2/3) )
 # Make a random LinkMap object
 randomLinkMap()
 
+# Make a random MultiFactor with the trading goods from the vignettes
+trade_posts()
 }
 \seealso{
 \code{\link[=MultiFactor]{MultiFactor()}}

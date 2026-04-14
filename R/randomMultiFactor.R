@@ -2,6 +2,10 @@
 #' @name randomMultiFactor
 #' @description
 #' Randomly generate a valid `MultiFactor` or `LinkMap` object.
+#' `randomMultiFactor` can optionally take am `igraph` object to determine its
+#' layout. (See examples)
+#' `trade_posts()` generates a random `MultiFactor` in the style of the trading
+#' example from the vignette.
 #' @returns a randomly generated object of the specified class.
 #' @examples
 #' # Make a random MultiFactor object
@@ -13,6 +17,8 @@
 #' # Make a random LinkMap object
 #' randomLinkMap()
 #'
+#' # Make a random MultiFactor with the trading goods from the vignettes
+#' trade_posts()
 #' @seealso [MultiFactor()]
 #' @seealso [LinkMap()]
 #'
@@ -46,6 +52,38 @@ randomMultiFactor <- function(layout = NULL, n_features = 10, sparseness = 0.75)
 
     return( MultiFactor(out) )
 
+
+}
+
+#' @rdname randomMultiFactor
+#' @name trade_posts
+#' @param raw.list `Boolean`, Whether to return the list of goods rather than
+#'     the default `MultiFactor`.
+#' @importFrom igraph as_edgelist sample_gnm
+#' @export
+#'
+trade_posts <- function(raw.list = FALSE) {
+    trade_goods <- list(
+        fruit = c("apple", "pear", "cherry", "orange", "melon", "blueberry"),
+        furniture = c("chair", "table", "desk", "bed", "drawer", "chest"),
+        quartz = c(
+            "amethyst", "citrine", "carnelian", "rock crystal", "onyx", "agate"
+        ),
+        utensils = c("spatula", "whisk", "sieve", "blender", "knife", "cup"),
+        marbles = paste(
+            c("red", "green", "purple", "blue", "yellow", "spotted"), "marble"
+        )
+    )
+    if(raw.list) return(trade_goods)
+    layout <- igraph::sample_gnm(length(trade_goods), length(trade_goods))
+    el <- igraph::as_edgelist(layout)
+    lv_list <- trade_goods
+    out <- apply(el, 1L, function(i) randomLinkMap(
+        trade_goods[c(i[1], i[2])], sparseness = 3/4
+    ), simplify = FALSE
+    )
+
+    MultiFactor(out)
 
 }
 
