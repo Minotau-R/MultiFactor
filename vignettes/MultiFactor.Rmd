@@ -52,8 +52,8 @@ set.seed(010292)
 tp <- trade_posts()
 ```
 
-## MultiFactor and LinkMap objects
-### LinkMap
+# MultiFactor and LinkMap objects
+## LinkMap
 The basic object in the `MultiFactor` package is the `LinkMap`, which contains 
 relational information across two types of features. This format is sometimes 
 referred to as an [edge list](https://en.wikipedia.org/wiki/Edge_list). 
@@ -133,6 +133,7 @@ weave(tp, fruit ~ furniture)
 We receive a new `LinkMap` containing all fruits that could be traded for 
 furniture. 
 
+## Selecting a path
 We can use `select_shortest_paths()` to find the types of traded goods in order,
 or more generally, the paths that were traversed. If several paths exist, all 
 will be traversed and included into one `LinkMap`. 
@@ -145,7 +146,7 @@ select_shortest_paths(tp, fruit ~ furniture)
 and [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly for
 path finding and sparse matrix representation. 
 
-# Convert `MultiFactor` main graph representation to `igraph` object
+### Convert `MultiFactor` main graph representation to `igraph` object
 ```{r 'igraph-sp', fig.height=6, fig.width = 6}
 library(igraph)
 # Convert to an igraph object
@@ -154,22 +155,40 @@ g
 plot(g)
 ```
 
-# Convert `LinkMap` link information to sparse adjacency `Matrix`
+### Convert `LinkMap` link information to sparse adjacency `Matrix`
 ```{r 'Matrix-sp'}
 # Convert to an igraph object
 m <- as.matrix(linkmap, dimnames = levels(linkmap))
 m
 ```
+
 # Utilities
 
-## subgroup_apply
+`MultiFactor` also provides some utility functions for data wrangling on tables 
+with features (rows) of the appropriate type. 
 
+```{r}
+furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
+rownames(furniture_table) <- levels(tp)$furniture
+```
+## subgroup_apply
+`subgroup_apply` allows us to run arbitrary code on subsets of a table, based on
+groupings on the left hand of the formula:  
 ```{r 'subgroup-apply'}
+subgroup_apply(
+  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = force
+  )
 
 ```
 
 ## tidy/subgroup_to_tbl
-
+`subgroup_to_tbl()` returns a tidy wide-format table, ready to be grouped based 
+on the first two columns. 
 ```{r 'subgroup-tbl'}
+subgroup_to_tbl(furniture_table, tp, fruit ~ furniture)
+```
 
+### Session Info
+```{r 'session-info'}
+sessionInfo()
 ```
