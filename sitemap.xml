@@ -4,16 +4,25 @@
 <url><loc>https://minotau-r.github.io/MultiFactor/articles/index.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/authors.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/index.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/news/index.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/LinkMap-methods.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/MultiFactor-class.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/MultiFactor-methods.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-generic.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-methods.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/as.MultiFactor-generic.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/as.igraph.MultiFactor.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/as.matrix.LinkMap.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/index.html</loc></url>
-<url><loc>https://minotau-r.github.io/MultiFactor/reference/nlevels.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/mf_as_graph_df.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/nlevels-generic.html</loc></url>
 <url><loc>https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.html</loc></url>
-<url><loc>https://minotau-r.github.io/MultiFactor/reference/weave.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/select_path.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/subgroup_apply.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/subgroup_to_tbl.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/weave-generic.html</loc></url>
+<url><loc>https://minotau-r.github.io/MultiFactor/reference/weave-methods.html</loc></url>
 </urlset>
 
