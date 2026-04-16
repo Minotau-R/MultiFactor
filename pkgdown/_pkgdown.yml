@@ -1,10 +1,25 @@
+url: https://minotau-r.github.io/MultiFactor
+
+template:
+  bootstrap: 5
+  math-rendering: mathjax
+  light-switch: true
+  bslib:
+    primary: "#0054AD"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+    danger: "#A6081A"
+
+development:
+  mode: auto
+
 destination: docs
 reference:
 - title: Operations
 - contents:
   - weave
-  - weave.MultiFactor
-  - weave_all_paths
+  - weave-methods
+  - select_shortest_paths
   - subgroup_apply
   - subgroup_to_tbl
 - title: Classes
@@ -12,6 +27,8 @@ reference:
   - MultiFactor
   - MultiFactor-methods
   - LinkMap
+  - LinkMap-methods
+  - nlevels
 - title: Converters
 - contents:
   - as.MultiFactor
@@ -24,4 +41,4 @@ reference:
 - contents:
   - randomMultiFactor
   - randomLinkMap
-  - nlevels
+  - read_adjacency_list

@@ -1,3 +1,29 @@
+#' Methods for LinkMap S7 container class
+#' @name LinkMap-methods
+#' @rdname LinkMap-methods
+#' @examples
+#' # Setup
+#' a2b <- data.frame(
+#'     a = sample(letters[seq(3)], 10, replace = TRUE),
+#'     b = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#' )
+#'
+#' # Create LinkMap
+#' x <- LinkMap(a2b)
+#'
+#' # Basic properties
+#' dim(x)
+#' dimnames(x)
+#'
+#' # Factor-like properties
+#' levels(x)
+#' nlevels(x)
+#'
+#'
+#' @param x,object `LinkMap` on which the method should be applied.
+#' @returns A `LinkMap`
+NULL
+
 S7::method(names, LinkMap) <- function(x) names(
     S7::S7_data(x)[c(1, 2)]
     )

@@ -12,6 +12,8 @@
 as.LinkMap <- S7::new_generic("as.LinkMap", "x")
 
 #' The Number of Levels of an Object
+#' @name nlevels
+#' @rdname nlevels-generic
 #' @description
 #' Return the number of levels which its argument has. Extends `base::nlevels`.
 #' @param x an object, such as a `LinkMap`, `MultiFactor` or `factor`.
