@@ -65,17 +65,23 @@ Let's use an example data set to take a closer look at `LinkMap`. The
 `trade_posts()` function generates data about fictional trade posts, where one 
 type of good is traded for another. In this particular case, types of furniture 
 are traded for types of utensils. 
-```{r 'linkmap-object1'}
-tp[[1]]
+```{r 'linkmap-object-start'}
+linkmap <- tp[[1]]
+linkmap
 ```
 The two types of goods are captured by the two columns, with column names 
 representing the *types* of good and rows representing which specific 
 *type-pairs* are traded at that trade post, or, more generally, are linked in 
 that `LinkMap`. 
+```{r 'linkmap-object-lvs'}
+levels( linkmap )
+```
+Notice that `LinkMap` is two `factor` columns in a trench coat. We can inspect 
+the levels as usual. 
 
 We can see that we have several of these types of trade posts in our data set. 
 However, we also notice that the column names - the types of goods - can differ. 
-```{r 'linkmap-object2'}
+```{r 'linkmap-object-more'}
 tp[[2]]
 tp[[3]]
 ```
@@ -87,7 +93,7 @@ representation of the relational graph formed by combining those `LinkMaps`.
 The full object `tp`, which contains the `LinkMaps` we just investigated, is in
 fact a `MultiFactor` object: 
 
-```{r 'multifactor-object'}
+```{r 'multifactor-object-start'}
 tp
 ```
 Notice that a `MultiFactor` summarizes information across the component 
@@ -102,14 +108,58 @@ For instance, in the top-left corner of the matrix, we can see that the first
 Notice that five unique types of furniture as well as five types of utensils are
 mentioned in `furniture2utensils`.  
 
+Though `MultiFactor` is a list of `LinkMap`s under the hood, we can also 
+interact with its matrix representation, as well as access the component levels:  
+```{r 'multifactor-object-matrix'}
+dim(tp)
+dimnames(tp)
+levels(tp)
+lengths(levels(tp))
+```
+Note that levels of the same type are automatically unified across all component
+LinkMaps with that type of level.
+
 # weave() a path
-
+Going back to our trading post example, let's say we'd want to get some new 
+chairs, but we only have fruit. While both fruit and furniture are available in 
+our data set, there aren't any trade post that deals in that particular pair of 
+goods. 
+However, we could imagine trading our fruit for furniture in steps: We can trade
+our fruit for a different good, which we trade for another one, until we reach a
+good that we can trade for furniture. The `weave()` function does exactly this: 
 ```{r 'weave'}
+weave(tp, fruit ~ furniture)
+```
+We receive a new `LinkMap` containing all fruits that could be traded for 
+furniture. 
 
+We can use `select_shortest_paths()` to find the types of traded goods in order,
+or more generally, the paths that were traversed. If several paths exist, all 
+will be traversed and included into one `LinkMap`. 
+```{r 'weave-sp'}
+select_shortest_paths(tp, fruit ~ furniture)
 ```
 
 # Compatibility with `igraph` and `Matrix`
+`MultiFactor` relies heavily on the excellent [`igraph`](https://r.igraph.org/) 
+and [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly for
+path finding and sparse matrix representation. 
 
+# Convert `MultiFactor` main graph representation to `igraph` object
+```{r 'igraph-sp', fig.height=6, fig.width = 6}
+library(igraph)
+# Convert to an igraph object
+g <- as.igraph(tp)
+g
+plot(g)
+```
+
+# Convert `LinkMap` link information to sparse adjacency `Matrix`
+```{r 'Matrix-sp'}
+# Convert to an igraph object
+m <- as.matrix(linkmap, dimnames = levels(linkmap))
+m
+```
 # Utilities
 
 ## subgroup_apply
