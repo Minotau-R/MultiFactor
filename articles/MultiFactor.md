@@ -49,9 +49,9 @@ set.seed(010292)
 tp <- trade_posts()
 ```
 
-### MultiFactor and LinkMap objects
+## MultiFactor and LinkMap objects
 
-#### LinkMap
+### LinkMap
 
 The basic object in the `MultiFactor` package is the `LinkMap`, which
 contains relational information across two types of features. This
@@ -244,6 +244,8 @@ weave(tp, fruit ~ furniture)
 We receive a new `LinkMap` containing all fruits that could be traded
 for furniture.
 
+### Selecting a path
+
 We can use
 [`select_shortest_paths()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
 to find the types of traded goods in order, or more generally, the paths
@@ -264,7 +266,7 @@ select_shortest_paths(tp, fruit ~ furniture)
 [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly
 for path finding and sparse matrix representation.
 
-## Convert `MultiFactor` main graph representation to `igraph` object
+#### Convert `MultiFactor` main graph representation to `igraph` object
 
 ``` r
 
@@ -280,9 +282,9 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH a3786a8 UN-- 5 5 -- 
+#> IGRAPH a59c70b UN-- 5 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from a3786a8 (vertex names):
+#> + edges from a59c70b (vertex names):
 #> [1] furniture--utensils quartz   --utensils fruit    --marbles 
 #> [4] quartz   --marbles  utensils --marbles
 plot(g)
@@ -290,7 +292,7 @@ plot(g)
 
 ![](MultiFactor_files/figure-html/igraph-sp-1.png)
 
-## Convert `LinkMap` link information to sparse adjacency `Matrix`
+#### Convert `LinkMap` link information to sparse adjacency `Matrix`
 
 ``` r
 
@@ -310,6 +312,106 @@ m
 
 ## Utilities
 
+`MultiFactor` also provides some utility functions for data wrangling on
+tables with features (rows) of the appropriate type.
+
+``` r
+
+furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
+rownames(furniture_table) <- levels(tp)$furniture
+```
+
 ### subgroup_apply
 
+`subgroup_apply` allows us to run arbitrary code on subsets of a table,
+based on groupings on the left hand of the formula:
+
+``` r
+
+subgroup_apply(
+  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = force
+  )
+#> $pear
+#>      X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> desk  7  8  5  5  7  6  7 10  5   5
+#> 
+#> $cherry
+#>       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> chair  7  8  6  6  6  8  7  7  6   8
+#> table  7  5  7  6  7  9  7  8  8   5
+#> desk   7  8  5  5  7  6  7 10  5   5
+#> 
+#> $melon
+#>       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> chair  7  8  6  6  6  8  7  7  6   8
+#> table  7  5  7  6  7  9  7  8  8   5
+#> desk   7  8  5  5  7  6  7 10  5   5
+#> 
+#> $blueberry
+#>       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> chair  7  8  6  6  6  8  7  7  6   8
+#> desk   7  8  5  5  7  6  7 10  5   5
+```
+
 ### tidy/subgroup_to_tbl
+
+[`subgroup_to_tbl()`](https://minotau-r.github.io/MultiFactor/reference/subgroup_to_tbl.md)
+returns a tidy wide-format table, ready to be grouped based on the first
+two columns.
+
+``` r
+
+subgroup_to_tbl(furniture_table, tp, fruit ~ furniture)
+#>       fruit furniture X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> 1    cherry     chair  7  8  6  6  6  8  7  7  6   8
+#> 2     melon     chair  7  8  6  6  6  8  7  7  6   8
+#> 3 blueberry     chair  7  8  6  6  6  8  7  7  6   8
+#> 4    cherry     table  7  5  7  6  7  9  7  8  8   5
+#> 5     melon     table  7  5  7  6  7  9  7  8  8   5
+#> 6      pear      desk  7  8  5  5  7  6  7 10  5   5
+#> 7    cherry      desk  7  8  5  5  7  6  7 10  5   5
+#> 8     melon      desk  7  8  5  5  7  6  7 10  5   5
+#> 9 blueberry      desk  7  8  5  5  7  6  7 10  5   5
+```
+
+#### Session Info
+
+``` r
+
+sessionInfo()
+#> R Under development (unstable) (2026-04-12 r89873)
+#> Platform: x86_64-pc-linux-gnu
+#> Running under: Ubuntu 24.04.4 LTS
+#> 
+#> Matrix products: default
+#> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> 
+#> locale:
+#>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+#>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+#>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+#>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+#>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+#> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+#> 
+#> time zone: UTC
+#> tzcode source: system (glibc)
+#> 
+#> attached base packages:
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
+#> 
+#> other attached packages:
+#> [1] igraph_2.2.3      MultiFactor_0.1.2
+#> 
+#> loaded via a namespace (and not attached):
+#>  [1] cli_3.6.6         knitr_1.51        rlang_1.2.0       xfun_0.57        
+#>  [5] forcats_1.0.1     otel_0.2.0        textshaping_1.0.5 S7_0.2.1         
+#>  [9] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.9   ragg_1.5.2       
+#> [13] sass_0.4.10       rmarkdown_2.31    grid_4.7.0        evaluate_1.0.5   
+#> [17] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  
+#> [21] compiler_4.7.0    fs_2.0.1          pkgconfig_2.0.3   htmlwidgets_1.6.4
+#> [25] lattice_0.22-9    systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         
+#> [29] magrittr_2.0.5    bslib_0.10.0      Matrix_1.7-5      tools_4.7.0      
+#> [33] pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
+```

@@ -114,12 +114,13 @@ version of <code>MultiFactor</code>:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">010292</span><span class="op">)</span></span>
 <span><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/randomMultiFactor.html">trade_posts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="multifactor-and-linkmap-objects">MultiFactor and LinkMap objects<a class="anchor" aria-label="anchor" href="#multifactor-and-linkmap-objects"></a>
+</h2>
 <div class="section level3">
-<h3 id="multifactor-and-linkmap-objects">MultiFactor and LinkMap objects<a class="anchor" aria-label="anchor" href="#multifactor-and-linkmap-objects"></a>
+<h3 id="linkmap">LinkMap<a class="anchor" aria-label="anchor" href="#linkmap"></a>
 </h3>
-<div class="section level4">
-<h4 id="linkmap">LinkMap<a class="anchor" aria-label="anchor" href="#linkmap"></a>
-</h4>
 <p>The basic object in the <code>MultiFactor</code> package is the
 <code>LinkMap</code>, which contains relational information across two
 types of features. This format is sometimes referred to as an <a href="https://en.wikipedia.org/wiki/Edge_list" class="external-link">edge list</a>. Under a
@@ -184,7 +185,6 @@ goods - can differ.</p>
 <span><span class="co">#&gt; 26      pear  yellow marble</span></span>
 <span><span class="co">#&gt; 33    cherry spotted marble</span></span>
 <span><span class="co">#&gt; 36 blueberry spotted marble</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level3">
 <h3 id="multifactor">MultiFactor<a class="anchor" aria-label="anchor" href="#multifactor"></a>
@@ -290,6 +290,9 @@ this:</p>
 <span><span class="co">#&gt; 9 blueberry      desk</span></span></code></pre></div>
 <p>We receive a new <code>LinkMap</code> containing all fruits that
 could be traded for furniture.</p>
+<div class="section level3">
+<h3 id="selecting-a-path">Selecting a path<a class="anchor" aria-label="anchor" href="#selecting-a-path"></a>
+</h3>
 <p>We can use <code><a href="../reference/select_path.html">select_shortest_paths()</a></code> to find the types of
 traded goods in order, or more generally, the paths that were traversed.
 If several paths exist, all will be traversed and included into one
@@ -299,17 +302,17 @@ If several paths exist, all will be traversed and included into one
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] "fruit"     "marbles"   "utensils"  "furniture"</span></span></code></pre></div>
 </div>
+</div>
 <div class="section level2">
 <h2 id="compatibility-with-igraph-and-matrix">Compatibility with <code>igraph</code> and <code>Matrix</code><a class="anchor" aria-label="anchor" href="#compatibility-with-igraph-and-matrix"></a>
 </h2>
 <p><code>MultiFactor</code> relies heavily on the excellent <a href="https://r.igraph.org/" class="external-link"><code>igraph</code></a> and <a href="https://matrix.r-forge.r-project.org/" class="external-link"><code>Matrix</code></a>
 packages, particularly for path finding and sparse matrix
 representation.</p>
-</div>
-<div class="section level2">
-<h2 id="convert-multifactor-main-graph-representation-to-igraph-object">Convert <code>MultiFactor</code> main graph representation to
+<div class="section level4">
+<h4 id="convert-multifactor-main-graph-representation-to-igraph-object">Convert <code>MultiFactor</code> main graph representation to
 <code>igraph</code> object<a class="anchor" aria-label="anchor" href="#convert-multifactor-main-graph-representation-to-igraph-object"></a>
-</h2>
+</h4>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -323,18 +326,18 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH a3786a8 UN-- 5 5 -- </span></span>
+<span><span class="co">#&gt; IGRAPH a59c70b UN-- 5 5 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c)</span></span>
-<span><span class="co">#&gt; + edges from a3786a8 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from a59c70b (vertex names):</span></span>
 <span><span class="co">#&gt; [1] furniture--utensils quartz   --utensils fruit    --marbles </span></span>
 <span><span class="co">#&gt; [4] quartz   --marbles  utensils --marbles</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MultiFactor_files/figure-html/igraph-sp-1.png" class="r-plt" alt="" width="576"></p>
 </div>
-<div class="section level2">
-<h2 id="convert-linkmap-link-information-to-sparse-adjacency-matrix">Convert <code>LinkMap</code> link information to sparse adjacency
+<div class="section level4">
+<h4 id="convert-linkmap-link-information-to-sparse-adjacency-matrix">Convert <code>LinkMap</code> link information to sparse adjacency
 <code>Matrix</code><a class="anchor" aria-label="anchor" href="#convert-linkmap-link-information-to-sparse-adjacency-matrix"></a>
-</h2>
+</h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">linkmap</span>, dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">linkmap</span><span class="op">)</span><span class="op">)</span></span>
@@ -349,16 +352,105 @@ representation.</p>
 <span><span class="co">#&gt;    drawer       .     .     .       .     .   |</span></span>
 <span><span class="co">#&gt;    chest        |     .     .       .     .   .</span></span></code></pre></div>
 </div>
+</div>
 <div class="section level2">
 <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
 </h2>
+<p><code>MultiFactor</code> also provides some utility functions for
+data wrangling on tables with features (rows) of the appropriate
+type.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">furniture_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">furniture_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">furniture</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="subgroup_apply">subgroup_apply<a class="anchor" aria-label="anchor" href="#subgroup_apply"></a>
 </h3>
+<p><code>subgroup_apply</code> allows us to run arbitrary code on
+subsets of a table, based on groupings on the left hand of the
+formula:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_apply.html">subgroup_apply</a></span><span class="op">(</span></span>
+<span>  X <span class="op">=</span> <span class="va">furniture_table</span>, LINK <span class="op">=</span> <span class="va">tp</span>, BY <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span>, FUN <span class="op">=</span> <span class="va">force</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; $pear</span></span>
+<span><span class="co">#&gt;      X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
+<span><span class="co">#&gt; desk  7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $cherry</span></span>
+<span><span class="co">#&gt;       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
+<span><span class="co">#&gt; chair  7  8  6  6  6  8  7  7  6   8</span></span>
+<span><span class="co">#&gt; table  7  5  7  6  7  9  7  8  8   5</span></span>
+<span><span class="co">#&gt; desk   7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $melon</span></span>
+<span><span class="co">#&gt;       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
+<span><span class="co">#&gt; chair  7  8  6  6  6  8  7  7  6   8</span></span>
+<span><span class="co">#&gt; table  7  5  7  6  7  9  7  8  8   5</span></span>
+<span><span class="co">#&gt; desk   7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $blueberry</span></span>
+<span><span class="co">#&gt;       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
+<span><span class="co">#&gt; chair  7  8  6  6  6  8  7  7  6   8</span></span>
+<span><span class="co">#&gt; desk   7  8  5  5  7  6  7 10  5   5</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="tidysubgroup_to_tbl">tidy/subgroup_to_tbl<a class="anchor" aria-label="anchor" href="#tidysubgroup_to_tbl"></a>
 </h3>
+<p><code><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl()</a></code> returns a tidy wide-format table,
+ready to be grouped based on the first two columns.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl</a></span><span class="op">(</span><span class="va">furniture_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       fruit furniture X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
+<span><span class="co">#&gt; 1    cherry     chair  7  8  6  6  6  8  7  7  6   8</span></span>
+<span><span class="co">#&gt; 2     melon     chair  7  8  6  6  6  8  7  7  6   8</span></span>
+<span><span class="co">#&gt; 3 blueberry     chair  7  8  6  6  6  8  7  7  6   8</span></span>
+<span><span class="co">#&gt; 4    cherry     table  7  5  7  6  7  9  7  8  8   5</span></span>
+<span><span class="co">#&gt; 5     melon     table  7  5  7  6  7  9  7  8  8   5</span></span>
+<span><span class="co">#&gt; 6      pear      desk  7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt; 7    cherry      desk  7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt; 8     melon      desk  7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt; 9 blueberry      desk  7  8  5  5  7  6  7 10  5   5</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+</h4>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2026-04-12 r89873)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 24.04.4 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; time zone: UTC</span></span>
+<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] igraph_2.2.3      MultiFactor_0.1.2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] cli_3.6.6         knitr_1.51        rlang_1.2.0       xfun_0.57        </span></span>
+<span><span class="co">#&gt;  [5] forcats_1.0.1     otel_0.2.0        textshaping_1.0.5 S7_0.2.1         </span></span>
+<span><span class="co">#&gt;  [9] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.9   ragg_1.5.2       </span></span>
+<span><span class="co">#&gt; [13] sass_0.4.10       rmarkdown_2.31    grid_4.7.0        evaluate_1.0.5   </span></span>
+<span><span class="co">#&gt; [17] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  </span></span>
+<span><span class="co">#&gt; [21] compiler_4.7.0    fs_2.0.1          pkgconfig_2.0.3   htmlwidgets_1.6.4</span></span>
+<span><span class="co">#&gt; [25] lattice_0.22-9    systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         </span></span>
+<span><span class="co">#&gt; [29] magrittr_2.0.5    bslib_0.10.0      Matrix_1.7-5      tools_4.7.0      </span></span>
+<span><span class="co">#&gt; [33] pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
