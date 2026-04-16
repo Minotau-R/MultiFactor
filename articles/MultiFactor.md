@@ -266,7 +266,7 @@ select_shortest_paths(tp, fruit ~ furniture)
 [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly
 for path finding and sparse matrix representation.
 
-#### Convert `MultiFactor` main graph representation to `igraph` object
+### Convert `MultiFactor` main graph representation to `igraph` object
 
 ``` r
 
@@ -282,9 +282,9 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH a59c70b UN-- 5 5 -- 
+#> IGRAPH b26d266 UN-- 5 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from a59c70b (vertex names):
+#> + edges from b26d266 (vertex names):
 #> [1] furniture--utensils quartz   --utensils fruit    --marbles 
 #> [4] quartz   --marbles  utensils --marbles
 plot(g)
@@ -292,7 +292,7 @@ plot(g)
 
 ![](MultiFactor_files/figure-html/igraph-sp-1.png)
 
-#### Convert `LinkMap` link information to sparse adjacency `Matrix`
+### Convert `LinkMap` linkage information to sparse adjacency `Matrix`
 
 ``` r
 
@@ -319,6 +319,14 @@ tables with features (rows) of the appropriate type.
 
 furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
 rownames(furniture_table) <- levels(tp)$furniture
+furniture_table
+#>        X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
+#> chair   7  8  6  6  6  8  7  7  6   8
+#> table   7  5  7  6  7  9  7  8  8   5
+#> desk    7  8  5  5  7  6  7 10  5   5
+#> bed     8  8  7  8  7  8  7  7  8   8
+#> drawer  5  7  7  8  8  7  5  9  6   6
+#> chest   4  6  8  9  5  5  7  7  7   7
 ```
 
 ### subgroup_apply
@@ -353,8 +361,9 @@ subgroup_apply(
 #> desk   7  8  5  5  7  6  7 10  5   5
 ```
 
-### tidy/subgroup_to_tbl
+### Compatibility with the tidyverse: `subgroup_to_tbl`
 
+For those who prefer to use `tidyverse`,
 [`subgroup_to_tbl()`](https://minotau-r.github.io/MultiFactor/reference/subgroup_to_tbl.md)
 returns a tidy wide-format table, ready to be grouped based on the first
 two columns.
@@ -374,7 +383,34 @@ subgroup_to_tbl(furniture_table, tp, fruit ~ furniture)
 #> 9 blueberry      desk  7  8  5  5  7  6  7 10  5   5
 ```
 
-#### Session Info
+### Reading and parsing adjaceny list-formatted files
+
+Relational data between two types (bipartite) is sometimes expressed as
+a text file to be read row-wise. The first element of each row specifies
+a level of the first type of data, whereas all following elements all
+from the second type, indicate which levels it is connected to. These
+files can be tricky to load and properly parse into R. The function
+[`read_adjacency_list()`](https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.md)
+allows these files to be read from file (or URL).
+
+``` r
+
+# Create some temporary data to read from a 'file':
+temp <- tempfile()
+# fill file with some 
+t.con <- file(temp, "w")
+cat("a\tb", "b\tc\td", "d\te", file = t.con, sep = "\n")
+close(t.con)
+
+read_adjacency_list(temp)
+#>   id.x id.y
+#> 1    a    b
+#> 2    b    c
+#> 3    b    d
+#> 4    d    e
+```
+
+## Session Info
 
 ``` r
 
