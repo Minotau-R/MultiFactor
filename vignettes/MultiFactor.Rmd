@@ -46,6 +46,10 @@ remotes::install_github("minotau-R/MultiFactor")
 
 ```{r 'setup-multifactor'}
 library(MultiFactor)
+
+# Load demo data
+set.seed(010292)
+tp <- trade_posts()
 ```
 
 ## MultiFactor and LinkMap objects
@@ -57,18 +61,46 @@ Under a thin layer of S7, the `LinkMap` object is a `data.frame` where the first
 two columns indicate which feature IDs that are considered linked. Optional 
 additional columns are considered metadata. 
 
-```{r 'linkmap-object'}
+Let's use an example data set to take a closer look at `LinkMap`. The 
+`trade_posts()` function generates data about fictional trade posts, where one 
+type of good is traded for another. In this particular case, types of furniture 
+are traded for types of utensils. 
+```{r 'linkmap-object1'}
+tp[[1]]
+```
+The two types of goods are captured by the two columns, with column names 
+representing the *types* of good and rows representing which specific 
+*type-pairs* are traded at that trade post, or, more generally, are linked in 
+that `LinkMap`. 
 
+We can see that we have several of these types of trade posts in our data set. 
+However, we also notice that the column names - the types of goods - can differ. 
+```{r 'linkmap-object2'}
+tp[[2]]
+tp[[3]]
 ```
 
 ## MultiFactor
 The `MultiFactor` is in essence a collection of `LinkMap`s. Where `LinkMap`s 
 contain relational information across two data types, `MultiFactor`s are a 
 representation of the relational graph formed by combining those `LinkMaps`. 
+The full object `tp`, which contains the `LinkMaps` we just investigated, is in
+fact a `MultiFactor` object: 
 
 ```{r 'multifactor-object'}
-
+tp
 ```
+Notice that a `MultiFactor` summarizes information across the component 
+`LinkMaps` in several ways. First, The matrix shows the types of goods as 
+columns and the component `LinkMaps` that contain this information as rows. The 
+numbers in the matrix then show the number of unique types of that type of good 
+in that particular LinkMap - and that are therefore linked to the second feature
+in the `LinkMap`. 
+
+For instance, in the top-left corner of the matrix, we can see that the first 
+`LinkMap` links furniture and utensils and is aptly named `furniture2utensils`.
+Notice that five unique types of furniture as well as five types of utensils are
+mentioned in `furniture2utensils`.  
 
 # weave() a path
 
