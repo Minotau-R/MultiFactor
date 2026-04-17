@@ -63,16 +63,25 @@ site.](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html)
 
 - [`as.MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/as.MultiFactor-generic.md)
   : Convert common classes to MultiFactor
+
 - [`as.LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-generic.md)
   : Convert common classes to LinkMap
+
 - [`as.LinkMap-methods`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-methods.md)
   : Convert common classes to LinkMap or MultiFactor
+
 - [`as.igraph(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.igraph.MultiFactor.md)
   : Convert a MultiFactor to igraph
+
 - [`as.igraph(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.igraph.LinkMap.md)
   : Convert a LinkMap to igraph
+
 - [`as.matrix(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.matrix.LinkMap.md)
-  : Convert a LinkMap to a sparse matrix.
+  :
+
+  Convert a LinkMap to a sparse matrix. Convert a LinkMap to a sparse
+  matrix object from the `Matrix` package.
+
 - [`mf_as_graph_df()`](https://minotau-r.github.io/MultiFactor/reference/mf_as_graph_df.md)
   : Convert a MultiFactor to relational graph format.
 

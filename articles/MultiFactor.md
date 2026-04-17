@@ -228,7 +228,8 @@ function does exactly this:
 
 ``` r
 
-weave(tp, fruit ~ furniture)
+fruit2furniture <- weave(tp, fruit ~ furniture)
+fruit2furniture
 #>       fruit furniture
 #> 1    cherry     chair
 #> 2     melon     chair
@@ -284,9 +285,9 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH dbef0cf UN-- 5 5 -- 
+#> IGRAPH 2b80ee1 UN-- 5 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from dbef0cf (vertex names):
+#> + edges from 2b80ee1 (vertex names):
 #> [1] furniture--utensils quartz   --utensils fruit    --marbles 
 #> [4] quartz   --marbles  utensils --marbles
 # Plot graph across data types
@@ -300,14 +301,14 @@ plot(g)
 ``` r
 
 # Convert to an igraph object
-lg <- as.igraph(linkmap)
+lg <- as.igraph(fruit2furniture)
 lg
-#> IGRAPH 21e20a6 UN-B 12 9 -- 
+#> IGRAPH 6623ace UN-B 12 9 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 21e20a6 (vertex names):
-#> [1] desk  --spatula chest --spatula desk  --whisk   chair --sieve  
-#> [5] desk  --sieve   chair --blender table --blender desk  --cup    
-#> [9] drawer--cup
+#> + edges from 6623ace (vertex names):
+#> [1] cherry   --chair melon    --chair blueberry--chair cherry   --table
+#> [5] melon    --table pear     --desk  cherry   --desk  melon    --desk 
+#> [9] blueberry--desk
 # Same information as the LinkMap: 
 plot(lg)
 ```
@@ -319,17 +320,17 @@ plot(lg)
 ``` r
 
 # Convert to an igraph object
-m <- as.matrix(linkmap, dimnames = levels(linkmap))
+m <- as.matrix(fruit2furniture, dimnames = levels(fruit2furniture))
 m
 #> 6 x 6 sparse Matrix of class "ngCMatrix"
-#>          utensils
-#> furniture spatula whisk sieve blender knife cup
-#>    chair        .     .     |       |     .   .
-#>    table        .     .     .       |     .   .
-#>    desk         |     |     |       .     .   |
-#>    bed          .     .     .       .     .   .
-#>    drawer       .     .     .       .     .   |
-#>    chest        |     .     .       .     .   .
+#>            furniture
+#> fruit       chair table desk bed drawer chest
+#>   apple         .     .    .   .      .     .
+#>   pear          .     .    |   .      .     .
+#>   cherry        |     |    |   .      .     .
+#>   orange        .     .    .   .      .     .
+#>   melon         |     |    |   .      .     .
+#>   blueberry     |     .    |   .      .     .
 ```
 
 ## Utilities
@@ -340,16 +341,18 @@ tables with features (rows) of the appropriate type.
 ``` r
 
 # Generate small example table
-furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
+furniture_table <- as.data.frame(
+  replicate( 10, rbinom(6, rbinom(6, 100, runif(6)), runif(6)) ) 
+  )
 rownames(furniture_table) <- levels(tp)$furniture
 furniture_table
-#>        X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> chair   7  8  6  6  6  8  7  7  6   8
-#> table   7  5  7  6  7  9  7  8  8   5
-#> desk    7  8  5  5  7  6  7 10  5   5
-#> bed     8  8  7  8  7  8  7  7  8   8
-#> drawer  5  7  7  8  8  7  5  9  6   6
-#> chest   4  6  8  9  5  5  7  7  7   7
+#>        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> chair   7  1 69 16 28 21 25 10  7   0
+#> table   6 30  4  8  6 13  0  3  2  18
+#> desk    7 16 12  2  7 16 50  5 17  37
+#> bed     3 27 59  3 27 65  2 32  2   5
+#> drawer 63 55  1 20 29 15 11 49 12   4
+#> chest  29  4 27 57 74  2 27 54 28  20
 ```
 
 ### subgroup_apply
@@ -363,25 +366,84 @@ subgroup_apply(
   X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = as.data.frame
   )
 #> $pear
-#>      X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> desk  7  8  5  5  7  6  7 10  5   5
+#>      V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> desk  7 16 12  2  7 16 50  5 17  37
 #> 
 #> $cherry
-#>       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> chair  7  8  6  6  6  8  7  7  6   8
-#> table  7  5  7  6  7  9  7  8  8   5
-#> desk   7  8  5  5  7  6  7 10  5   5
+#>       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> chair  7  1 69 16 28 21 25 10  7   0
+#> table  6 30  4  8  6 13  0  3  2  18
+#> desk   7 16 12  2  7 16 50  5 17  37
 #> 
 #> $melon
-#>       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> chair  7  8  6  6  6  8  7  7  6   8
-#> table  7  5  7  6  7  9  7  8  8   5
-#> desk   7  8  5  5  7  6  7 10  5   5
+#>       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> chair  7  1 69 16 28 21 25 10  7   0
+#> table  6 30  4  8  6 13  0  3  2  18
+#> desk   7 16 12  2  7 16 50  5 17  37
 #> 
 #> $blueberry
-#>       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> chair  7  8  6  6  6  8  7  7  6   8
-#> desk   7  8  5  5  7  6  7 10  5   5
+#>       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> chair  7  1 69 16 28 21 25 10  7   0
+#> desk   7 16 12  2  7 16 50  5 17  37
+
+# More complex example: 
+# For all subgroups of furniture corresponding to one particular food, if that 
+# group has more than two rows (types of furniture), fit a statistical model. 
+# 
+subgroup_apply(
+  furniture_table, tp, fruit ~ furniture, FUN = function(x) {
+    if( NROW(x) <= 2) return( NULL )
+    # else: 
+    summary( lm(V1 ~ V2, data = x) )
+    }
+)
+#> $pear
+#> NULL
+#> 
+#> $cherry
+#> 
+#> Call:
+#> lm(formula = V1 ~ V2, data = x)
+#> 
+#> Residuals:
+#>   chair   table    desk 
+#> -0.1664 -0.1783  0.3447 
+#> 
+#> Coefficients:
+#>             Estimate Std. Error t value Pr(>|t|)  
+#> (Intercept)  7.20048    0.40430  17.810   0.0357 *
+#> V2          -0.03407    0.02059  -1.655   0.3460  
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 0.4222 on 1 degrees of freedom
+#> Multiple R-squared:  0.7326, Adjusted R-squared:  0.4651 
+#> F-statistic: 2.739 on 1 and 1 DF,  p-value: 0.346
+#> 
+#> 
+#> $melon
+#> 
+#> Call:
+#> lm(formula = V1 ~ V2, data = x)
+#> 
+#> Residuals:
+#>   chair   table    desk 
+#> -0.1664 -0.1783  0.3447 
+#> 
+#> Coefficients:
+#>             Estimate Std. Error t value Pr(>|t|)  
+#> (Intercept)  7.20048    0.40430  17.810   0.0357 *
+#> V2          -0.03407    0.02059  -1.655   0.3460  
+#> ---
+#> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+#> 
+#> Residual standard error: 0.4222 on 1 degrees of freedom
+#> Multiple R-squared:  0.7326, Adjusted R-squared:  0.4651 
+#> F-statistic: 2.739 on 1 and 1 DF,  p-value: 0.346
+#> 
+#> 
+#> $blueberry
+#> NULL
 ```
 
 ### Compatibility with the tidyverse: `subgroup_to_tbl`
@@ -394,16 +456,16 @@ two columns.
 ``` r
 
 subgroup_to_tbl(furniture_table, tp, fruit ~ furniture)
-#>       fruit furniture X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
-#> 1    cherry     chair  7  8  6  6  6  8  7  7  6   8
-#> 2     melon     chair  7  8  6  6  6  8  7  7  6   8
-#> 3 blueberry     chair  7  8  6  6  6  8  7  7  6   8
-#> 4    cherry     table  7  5  7  6  7  9  7  8  8   5
-#> 5     melon     table  7  5  7  6  7  9  7  8  8   5
-#> 6      pear      desk  7  8  5  5  7  6  7 10  5   5
-#> 7    cherry      desk  7  8  5  5  7  6  7 10  5   5
-#> 8     melon      desk  7  8  5  5  7  6  7 10  5   5
-#> 9 blueberry      desk  7  8  5  5  7  6  7 10  5   5
+#>       fruit furniture V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> 1    cherry     chair  7  1 69 16 28 21 25 10  7   0
+#> 2     melon     chair  7  1 69 16 28 21 25 10  7   0
+#> 3 blueberry     chair  7  1 69 16 28 21 25 10  7   0
+#> 4    cherry     table  6 30  4  8  6 13  0  3  2  18
+#> 5     melon     table  6 30  4  8  6 13  0  3  2  18
+#> 6      pear      desk  7 16 12  2  7 16 50  5 17  37
+#> 7    cherry      desk  7 16 12  2  7 16 50  5 17  37
+#> 8     melon      desk  7 16 12  2  7 16 50  5 17  37
+#> 9 blueberry      desk  7 16 12  2  7 16 50  5 17  37
 ```
 
 ### Reading and parsing adjaceny list-formatted files
@@ -416,22 +478,59 @@ files can be tricky to load and properly parse into R. The function
 [`read_adjacency_list()`](https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.md)
 allows these files to be read from file (or URL).
 
+#### Example of adjacency list formatted data
+
+We’ll format the `LinkMap` from fruit to furniture that we generated
+above.
+
 ``` r
 
-# Create some temporary data to read from a 'file':
+# Use igraph to deconstruct a graph into an adjacency list, coerce to characters
+adj <- lapply(
+  as_adj_list(as.igraph(fruit2furniture)), as_ids
+  )
+# Only keep the 'fruit' nodes that have more than one link for now
+adj <- adj[ levels(fruit2furniture)$fruit ]
+adj <- adj[ lengths(adj) > 0 ]
+# collapse names to first elements of character vectors
+adj <- mapply(c, names(adj), adj, USE.NAMES = FALSE)
+adj <- vapply(adj, paste, collapse = "\t", "")
+```
+
+If stored in a file in adjacency list format, it may look like this:
+
+    pear\tdesk
+    cherry\tchair\ttable\tdesk
+    melon\tchair\ttable\tdesk 
+    blueberry\tchair\tdesk
+
+``` r
+
+# Create some temporary file to read from:
 temp <- tempfile()
-# fill file with some 
+# fill the temp file with the adjacency list we just constructed 
 t.con <- file(temp, "w")
-cat("a\tb", "b\tc\td", "d\te", file = t.con, sep = "\n")
+cat(adj, file = t.con, sep = "\n")
 close(t.con)
 
-read_adjacency_list(temp)
-#>   id.x id.y
-#> 1    a    b
-#> 2    b    c
-#> 3    b    d
-#> 4    d    e
+adj_data <- read_adjacency_list(temp)
+adj_data
+#>        id.x  id.y
+#> 1      pear  desk
+#> 2    cherry chair
+#> 3    cherry table
+#> 4    cherry  desk
+#> 5     melon chair
+#> 6     melon table
+#> 7     melon  desk
+#> 8 blueberry chair
+#> 9 blueberry  desk
+
+# Notice that the unlinked data types are no longer in the graph.  
+plot(as.igraph(adj_data))
 ```
+
+![](MultiFactor_files/figure-html/read-adj-1.png)
 
 ## Session Info
 

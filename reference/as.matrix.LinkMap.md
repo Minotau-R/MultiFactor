@@ -1,12 +1,19 @@
-# Convert a LinkMap to a sparse matrix.
+# Convert a LinkMap to a sparse matrix. Convert a LinkMap to a sparse matrix object from the `Matrix` package.
 
-Convert a LinkMap to a sparse matrix.
+Convert a LinkMap to a sparse matrix. Convert a LinkMap to a sparse
+matrix object from the `Matrix` package.
 
 ## Usage
 
 ``` r
 # S3 method for class '`MultiFactor::LinkMap`'
-as.matrix(x, terms = colnames(x), dims = nlevels(x[terms]), ...)
+as.matrix(
+  x,
+  terms = colnames(x),
+  dims = nlevels(x[terms]),
+  dimnames = levels(x)[terms],
+  ...
+)
 ```
 
 ## Arguments
@@ -21,7 +28,11 @@ as.matrix(x, terms = colnames(x), dims = nlevels(x[terms]), ...)
 
 - dims:
 
-  length-2 integer vector of matrix dimensions.
+  length-2 integer vector of matrix dimensions. Default: `colnames(x)`
+
+- dimnames:
+
+  list of dimnames. (Default: `levels(x)`).
 
 - ...:
 

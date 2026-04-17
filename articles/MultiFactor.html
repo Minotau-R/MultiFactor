@@ -277,7 +277,8 @@ good, which we trade for another one, until we reach a good that we can
 trade for furniture. The <code><a href="../reference/weave-generic.html">weave()</a></code> function does exactly
 this:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/weave-generic.html">weave</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fruit2furniture</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave-generic.html">weave</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span><span class="op">)</span></span>
+<span><span class="va">fruit2furniture</span></span>
 <span><span class="co">#&gt;       fruit furniture</span></span>
 <span><span class="co">#&gt; 1    cherry     chair</span></span>
 <span><span class="co">#&gt; 2     melon     chair</span></span>
@@ -330,9 +331,9 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH dbef0cf UN-- 5 5 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 2b80ee1 UN-- 5 5 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c)</span></span>
-<span><span class="co">#&gt; + edges from dbef0cf (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 2b80ee1 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] furniture--utensils quartz   --utensils fruit    --marbles </span></span>
 <span><span class="co">#&gt; [4] quartz   --marbles  utensils --marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -345,14 +346,14 @@ representation.</p>
 </h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
-<span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">linkmap</span><span class="op">)</span></span>
+<span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 21e20a6 UN-B 12 9 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 6623ace UN-B 12 9 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 21e20a6 (vertex names):</span></span>
-<span><span class="co">#&gt; [1] desk  --spatula chest --spatula desk  --whisk   chair --sieve  </span></span>
-<span><span class="co">#&gt; [5] desk  --sieve   chair --blender table --blender desk  --cup    </span></span>
-<span><span class="co">#&gt; [9] drawer--cup</span></span>
+<span><span class="co">#&gt; + edges from 6623ace (vertex names):</span></span>
+<span><span class="co">#&gt; [1] cherry   --chair melon    --chair blueberry--chair cherry   --table</span></span>
+<span><span class="co">#&gt; [5] melon    --table pear     --desk  cherry   --desk  melon    --desk </span></span>
+<span><span class="co">#&gt; [9] blueberry--desk</span></span>
 <span><span class="co"># Same information as the LinkMap: </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lg</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MultiFactor_files/figure-html/igraph-linkmap-sp-1.png" class="r-plt" alt="" width="576"></p>
@@ -365,17 +366,17 @@ representation.</p>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
-<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">linkmap</span>, dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">linkmap</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fruit2furniture</span>, dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">m</span></span>
 <span><span class="co">#&gt; 6 x 6 sparse Matrix of class "ngCMatrix"</span></span>
-<span><span class="co">#&gt;          utensils</span></span>
-<span><span class="co">#&gt; furniture spatula whisk sieve blender knife cup</span></span>
-<span><span class="co">#&gt;    chair        .     .     |       |     .   .</span></span>
-<span><span class="co">#&gt;    table        .     .     .       |     .   .</span></span>
-<span><span class="co">#&gt;    desk         |     |     |       .     .   |</span></span>
-<span><span class="co">#&gt;    bed          .     .     .       .     .   .</span></span>
-<span><span class="co">#&gt;    drawer       .     .     .       .     .   |</span></span>
-<span><span class="co">#&gt;    chest        |     .     .       .     .   .</span></span></code></pre></div>
+<span><span class="co">#&gt;            furniture</span></span>
+<span><span class="co">#&gt; fruit       chair table desk bed drawer chest</span></span>
+<span><span class="co">#&gt;   apple         .     .    .   .      .     .</span></span>
+<span><span class="co">#&gt;   pear          .     .    |   .      .     .</span></span>
+<span><span class="co">#&gt;   cherry        |     |    |   .      .     .</span></span>
+<span><span class="co">#&gt;   orange        .     .    .   .      .     .</span></span>
+<span><span class="co">#&gt;   melon         |     |    |   .      .     .</span></span>
+<span><span class="co">#&gt;   blueberry     |     .    |   .      .     .</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
@@ -385,16 +386,18 @@ data wrangling on tables with features (rows) of the appropriate
 type.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate small example table</span></span>
-<span><span class="va">furniture_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">furniture_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span> <span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span> </span>
+<span>  <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">furniture_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">furniture</span></span>
 <span><span class="va">furniture_table</span></span>
-<span><span class="co">#&gt;        X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
-<span><span class="co">#&gt; chair   7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; table   7  5  7  6  7  9  7  8  8   5</span></span>
-<span><span class="co">#&gt; desk    7  8  5  5  7  6  7 10  5   5</span></span>
-<span><span class="co">#&gt; bed     8  8  7  8  7  8  7  7  8   8</span></span>
-<span><span class="co">#&gt; drawer  5  7  7  8  8  7  5  9  6   6</span></span>
-<span><span class="co">#&gt; chest   4  6  8  9  5  5  7  7  7   7</span></span></code></pre></div>
+<span><span class="co">#&gt;        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; chair   7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; table   6 30  4  8  6 13  0  3  2  18</span></span>
+<span><span class="co">#&gt; desk    7 16 12  2  7 16 50  5 17  37</span></span>
+<span><span class="co">#&gt; bed     3 27 59  3 27 65  2 32  2   5</span></span>
+<span><span class="co">#&gt; drawer 63 55  1 20 29 15 11 49 12   4</span></span>
+<span><span class="co">#&gt; chest  29  4 27 57 74  2 27 54 28  20</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="subgroup_apply">subgroup_apply<a class="anchor" aria-label="anchor" href="#subgroup_apply"></a>
 </h3>
@@ -406,25 +409,84 @@ formula:</p>
 <span>  X <span class="op">=</span> <span class="va">furniture_table</span>, LINK <span class="op">=</span> <span class="va">tp</span>, BY <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span>, FUN <span class="op">=</span> <span class="va">as.data.frame</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $pear</span></span>
-<span><span class="co">#&gt;      X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
-<span><span class="co">#&gt; desk  7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt;      V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; desk  7 16 12  2  7 16 50  5 17  37</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cherry</span></span>
-<span><span class="co">#&gt;       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
-<span><span class="co">#&gt; chair  7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; table  7  5  7  6  7  9  7  8  8   5</span></span>
-<span><span class="co">#&gt; desk   7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; chair  7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; table  6 30  4  8  6 13  0  3  2  18</span></span>
+<span><span class="co">#&gt; desk   7 16 12  2  7 16 50  5 17  37</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melon</span></span>
-<span><span class="co">#&gt;       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
-<span><span class="co">#&gt; chair  7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; table  7  5  7  6  7  9  7  8  8   5</span></span>
-<span><span class="co">#&gt; desk   7  8  5  5  7  6  7 10  5   5</span></span>
+<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; chair  7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; table  6 30  4  8  6 13  0  3  2  18</span></span>
+<span><span class="co">#&gt; desk   7 16 12  2  7 16 50  5 17  37</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $blueberry</span></span>
-<span><span class="co">#&gt;       X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
-<span><span class="co">#&gt; chair  7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; desk   7  8  5  5  7  6  7 10  5   5</span></span></code></pre></div>
+<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; chair  7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; desk   7 16 12  2  7 16 50  5 17  37</span></span>
+<span></span>
+<span><span class="co"># More complex example: </span></span>
+<span><span class="co"># For all subgroups of furniture corresponding to one particular food, if that </span></span>
+<span><span class="co"># group has more than two rows (types of furniture), fit a statistical model. </span></span>
+<span><span class="co"># </span></span>
+<span><span class="fu"><a href="../reference/subgroup_apply.html">subgroup_apply</a></span><span class="op">(</span></span>
+<span>  <span class="va">furniture_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="cn">NULL</span> <span class="op">)</span></span>
+<span>    <span class="co"># else: </span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">V1</span> <span class="op">~</span> <span class="va">V2</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; $pear</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $cherry</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;   chair   table    desk </span></span>
+<span><span class="co">#&gt; -0.1664 -0.1783  0.3447 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span><span class="co">#&gt; (Intercept)  7.20048    0.40430  17.810   0.0357 *</span></span>
+<span><span class="co">#&gt; V2          -0.03407    0.02059  -1.655   0.3460  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.4222 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.7326, Adjusted R-squared:  0.4651 </span></span>
+<span><span class="co">#&gt; F-statistic: 2.739 on 1 and 1 DF,  p-value: 0.346</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $melon</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;   chair   table    desk </span></span>
+<span><span class="co">#&gt; -0.1664 -0.1783  0.3447 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span><span class="co">#&gt; (Intercept)  7.20048    0.40430  17.810   0.0357 *</span></span>
+<span><span class="co">#&gt; V2          -0.03407    0.02059  -1.655   0.3460  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 0.4222 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.7326, Adjusted R-squared:  0.4651 </span></span>
+<span><span class="co">#&gt; F-statistic: 2.739 on 1 and 1 DF,  p-value: 0.346</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $blueberry</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="compatibility-with-the-tidyverse-subgroup_to_tbl">Compatibility with the tidyverse: <code>subgroup_to_tbl</code><a class="anchor" aria-label="anchor" href="#compatibility-with-the-tidyverse-subgroup_to_tbl"></a>
@@ -434,16 +496,16 @@ formula:</p>
 to be grouped based on the first two columns.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl</a></span><span class="op">(</span><span class="va">furniture_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       fruit furniture X1 X2 X3 X4 X5 X6 X7 X8 X9 X10</span></span>
-<span><span class="co">#&gt; 1    cherry     chair  7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; 2     melon     chair  7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; 3 blueberry     chair  7  8  6  6  6  8  7  7  6   8</span></span>
-<span><span class="co">#&gt; 4    cherry     table  7  5  7  6  7  9  7  8  8   5</span></span>
-<span><span class="co">#&gt; 5     melon     table  7  5  7  6  7  9  7  8  8   5</span></span>
-<span><span class="co">#&gt; 6      pear      desk  7  8  5  5  7  6  7 10  5   5</span></span>
-<span><span class="co">#&gt; 7    cherry      desk  7  8  5  5  7  6  7 10  5   5</span></span>
-<span><span class="co">#&gt; 8     melon      desk  7  8  5  5  7  6  7 10  5   5</span></span>
-<span><span class="co">#&gt; 9 blueberry      desk  7  8  5  5  7  6  7 10  5   5</span></span></code></pre></div>
+<span><span class="co">#&gt;       fruit furniture V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; 1    cherry     chair  7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; 2     melon     chair  7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; 3 blueberry     chair  7  1 69 16 28 21 25 10  7   0</span></span>
+<span><span class="co">#&gt; 4    cherry     table  6 30  4  8  6 13  0  3  2  18</span></span>
+<span><span class="co">#&gt; 5     melon     table  6 30  4  8  6 13  0  3  2  18</span></span>
+<span><span class="co">#&gt; 6      pear      desk  7 16 12  2  7 16 50  5 17  37</span></span>
+<span><span class="co">#&gt; 7    cherry      desk  7 16 12  2  7 16 50  5 17  37</span></span>
+<span><span class="co">#&gt; 8     melon      desk  7 16 12  2  7 16 50  5 17  37</span></span>
+<span><span class="co">#&gt; 9 blueberry      desk  7 16 12  2  7 16 50  5 17  37</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="reading-and-parsing-adjaceny-list-formatted-files">Reading and parsing adjaceny list-formatted files<a class="anchor" aria-label="anchor" href="#reading-and-parsing-adjaceny-list-formatted-files"></a>
@@ -455,26 +517,59 @@ elements all from the second type, indicate which levels it is connected
 to. These files can be tricky to load and properly parse into R. The
 function <code><a href="../reference/read_adjacency_list.html">read_adjacency_list()</a></code> allows these files to be
 read from file (or URL).</p>
+<div class="section level4">
+<h4 id="example-of-adjacency-list-formatted-data">Example of adjacency list formatted data<a class="anchor" aria-label="anchor" href="#example-of-adjacency-list-formatted-data"></a>
+</h4>
+<p>We’ll format the <code>LinkMap</code> from fruit to furniture that we
+generated above.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Create some temporary data to read from a 'file':</span></span>
+<code class="sourceCode R"><span><span class="co"># Use igraph to deconstruct a graph into an adjacency list, coerce to characters</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://r.igraph.org/reference/as_adj_list.html" class="external-link">as_adj_list</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span><span class="op">)</span>, <span class="va">as_ids</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co"># Only keep the 'fruit' nodes that have more than one link for now</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span><span class="op">$</span><span class="va">fruit</span> <span class="op">]</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">]</span></span>
+<span><span class="co"># collapse names to first elements of character vectors</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span>, <span class="va">adj</span>, USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">adj</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"\t"</span>, <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<p>If stored in a file in adjacency list format, it may look like
+this:</p>
+<pre><code>pear\tdesk
+cherry\tchair\ttable\tdesk
+melon\tchair\ttable\tdesk 
+blueberry\tchair\tdesk</code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Create some temporary file to read from:</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># fill file with some </span></span>
+<span><span class="co"># fill the temp file with the adjacency list we just constructed </span></span>
 <span><span class="va">t.con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">file</a></span><span class="op">(</span><span class="va">temp</span>, <span class="st">"w"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"a\tb"</span>, <span class="st">"b\tc\td"</span>, <span class="st">"d\te"</span>, file <span class="op">=</span> <span class="va">t.con</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">adj</span>, file <span class="op">=</span> <span class="va">t.con</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">close</a></span><span class="op">(</span><span class="va">t.con</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/read_adjacency_list.html">read_adjacency_list</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   id.x id.y</span></span>
-<span><span class="co">#&gt; 1    a    b</span></span>
-<span><span class="co">#&gt; 2    b    c</span></span>
-<span><span class="co">#&gt; 3    b    d</span></span>
-<span><span class="co">#&gt; 4    d    e</span></span></code></pre></div>
+<span><span class="va">adj_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_adjacency_list.html">read_adjacency_list</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
+<span><span class="va">adj_data</span></span>
+<span><span class="co">#&gt;        id.x  id.y</span></span>
+<span><span class="co">#&gt; 1      pear  desk</span></span>
+<span><span class="co">#&gt; 2    cherry chair</span></span>
+<span><span class="co">#&gt; 3    cherry table</span></span>
+<span><span class="co">#&gt; 4    cherry  desk</span></span>
+<span><span class="co">#&gt; 5     melon chair</span></span>
+<span><span class="co">#&gt; 6     melon table</span></span>
+<span><span class="co">#&gt; 7     melon  desk</span></span>
+<span><span class="co">#&gt; 8 blueberry chair</span></span>
+<span><span class="co">#&gt; 9 blueberry  desk</span></span>
+<span></span>
+<span><span class="co"># Notice that the unlinked data types are no longer in the graph.  </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">adj_data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="MultiFactor_files/figure-html/read-adj-1.png" class="r-plt" alt="" width="576"></p>
+</div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; R Under development (unstable) (2026-04-12 r89873)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
