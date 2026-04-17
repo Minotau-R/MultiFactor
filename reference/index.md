@@ -6,7 +6,7 @@
   : Convert common classes to MultiFactor
 - [`weave-methods`](https://minotau-r.github.io/MultiFactor/reference/weave-methods.md)
   : Weave a new LinkMap from a MultiFactor
-- [`select_shortest_paths()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
+- [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
   : Define a path through a MultiFactor object.
 - [`subgroup_apply()`](https://minotau-r.github.io/MultiFactor/reference/subgroup_apply.md)
   : Index a table and apply arbitrary code to it
@@ -36,6 +36,8 @@
   : Convert common classes to LinkMap or MultiFactor
 - [`as.igraph(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.igraph.MultiFactor.md)
   : Convert a MultiFactor to igraph
+- [`as.igraph(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.igraph.LinkMap.md)
+  : Convert a LinkMap to igraph
 - [`as.matrix(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.matrix.LinkMap.md)
   : Convert a LinkMap to a sparse matrix.
 - [`mf_as_graph_df()`](https://minotau-r.github.io/MultiFactor/reference/mf_as_graph_df.md)

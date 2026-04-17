@@ -53,12 +53,14 @@ weave(x, b ~ c)
 #> 4 A y
 #> 5 B y
 #> 6 C y
-#> 7 C z
+#> 7 A z
+#> 8 B z
+#> 9 C z
 weave(x, b ~ a, out.format = "matrix")
 #> 3 x 3 sparse Matrix of class "ngCMatrix"
 #>    a
 #> b   a b c
-#>   A . | .
-#>   B | | .
+#>   A | | .
+#>   B . . |
 #>   C . | |
 ```

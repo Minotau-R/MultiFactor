@@ -29,4 +29,4 @@ remotes::install_github("minotau-R/MultiFactor")
 ## Getting started using MultiFactor
 
 [See the vignettes on the package
-site.](https://minotau-r.github.io/MultiFactor/)
+site.](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html)

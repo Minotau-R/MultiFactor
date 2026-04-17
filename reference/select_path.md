@@ -5,7 +5,7 @@ Define a path through a MultiFactor object.
 ## Usage
 
 ``` r
-select_shortest_paths(
+select_path(
   x,
   .by,
   include = NULL,
@@ -57,7 +57,7 @@ a2c <- data.frame(
 x <- MultiFactor(list(a2b, a2c))
 
 # Inspect a path between data types
-select_shortest_paths(x, b ~ c)
+select_path(x, b ~ c)
 #> [[1]]
 #> [1] "b" "a" "c"
 #> 

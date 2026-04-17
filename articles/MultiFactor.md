@@ -2,14 +2,14 @@
 
 ## Overview
 
-MultiFactor aims to provide a consistent toolkit to incorporate
-relational data into data analytical tools and methods. In practice, we
-expect MultiFactor to be used in combination with additional packages
+`MultiFactor` aims to provide a consistent toolkit to incorporate
+relational data into data-analytical tools and methods. In practice, we
+expect `MultiFactor` to be used in combination with additional packages
 that extend it. For instance, see
 [ariadne](https://github.com/minotau-R/ariadne) and
 [anansi](https://github.com/thomazbastiaanssen/anansi), two such
-packages that make use of MultiFactor to link and convert across
-biological database IDs and perform muti-omics integration analysis,
+packages that make use of `MultiFactor` to link and convert across
+biological database IDs and perform multi-omics integration analysis,
 respectively.
 
 ## Get started using MultiFactor
@@ -166,7 +166,7 @@ Notice that a `MultiFactor` summarizes information across the component
 `LinkMaps` in several ways. First, The matrix shows the types of goods
 as columns and the component `LinkMaps` that contain this information as
 rows. The numbers in the matrix then show the number of unique types of
-that type of good in that particular LinkMap - and that are therefore
+that type of good in that particular `LinkMap` - and that are therefore
 linked to the second feature in the `LinkMap`.
 
 For instance, in the top-left corner of the matrix, we can see that the
@@ -247,26 +247,28 @@ for furniture.
 ### Selecting a path
 
 We can use
-[`select_shortest_paths()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
+[`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
 to find the types of traded goods in order, or more generally, the paths
 that were traversed. If several paths exist, all will be traversed and
 included into one `LinkMap`.
 
 ``` r
 
-select_shortest_paths(tp, fruit ~ furniture)
+select_path(tp, fruit ~ furniture)
 #> [[1]]
 #> [1] "fruit"     "marbles"   "utensils"  "furniture"
 ```
 
 ## Compatibility with `igraph` and `Matrix`
 
+### Convert `MultiFactor` and `LinkMap` objects to `igraph` representation
+
 `MultiFactor` relies heavily on the excellent
 [`igraph`](https://r.igraph.org/) and
 [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly
 for path finding and sparse matrix representation.
 
-### Convert `MultiFactor` main graph representation to `igraph` object
+#### Convert `MultiFactor` main graph representation to `igraph` object
 
 ``` r
 
@@ -282,17 +284,37 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH b26d266 UN-- 5 5 -- 
+#> IGRAPH dbef0cf UN-- 5 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from b26d266 (vertex names):
+#> + edges from dbef0cf (vertex names):
 #> [1] furniture--utensils quartz   --utensils fruit    --marbles 
 #> [4] quartz   --marbles  utensils --marbles
+# Plot graph across data types
 plot(g)
 ```
 
-![](MultiFactor_files/figure-html/igraph-sp-1.png)
+![](MultiFactor_files/figure-html/igraph-multifactor-sp-1.png)
 
-### Convert `LinkMap` linkage information to sparse adjacency `Matrix`
+#### Convert `LinkMap` relational information to `igraph` object
+
+``` r
+
+# Convert to an igraph object
+lg <- as.igraph(linkmap)
+lg
+#> IGRAPH 21e20a6 UN-B 12 9 -- 
+#> + attr: type (v/l), name (v/c)
+#> + edges from 21e20a6 (vertex names):
+#> [1] desk  --spatula chest --spatula desk  --whisk   chair --sieve  
+#> [5] desk  --sieve   chair --blender table --blender desk  --cup    
+#> [9] drawer--cup
+# Same information as the LinkMap: 
+plot(lg)
+```
+
+![](MultiFactor_files/figure-html/igraph-linkmap-sp-1.png)
+
+## Convert `LinkMap` linkage information to sparse adjacency `Matrix`
 
 ``` r
 
@@ -317,6 +339,7 @@ tables with features (rows) of the appropriate type.
 
 ``` r
 
+# Generate small example table
 furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
 rownames(furniture_table) <- levels(tp)$furniture
 furniture_table
@@ -337,7 +360,7 @@ based on groupings on the left hand of the formula:
 ``` r
 
 subgroup_apply(
-  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = force
+  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = as.data.frame
   )
 #> $pear
 #>      X1 X2 X3 X4 X5 X6 X7 X8 X9 X10
