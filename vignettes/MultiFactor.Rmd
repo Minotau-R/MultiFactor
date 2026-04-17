@@ -9,8 +9,8 @@ vignette: >
 
 ```{r 'knitr-setup', include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  knitr::opts_chunk$set(dev = 'svg'), # set output device to svg
+  collapse = TRUE, 
+  dev = "ragg_png", 
   comment = "#>"
 )
 ```
