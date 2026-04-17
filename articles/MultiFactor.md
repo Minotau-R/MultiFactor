@@ -289,9 +289,9 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH 1abf3b8 UN-- 5 5 -- 
+#> IGRAPH 6bbd203 UN-- 5 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from 1abf3b8 (vertex names):
+#> + edges from 6bbd203 (vertex names):
 #> [1] furniture  --clothing instruments--clothing fruit      --marbles 
 #> [4] instruments--marbles  clothing   --marbles
 # Plot graph across data types
@@ -307,9 +307,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2furniture)
 lg
-#> IGRAPH c703c4a UN-B 12 9 -- 
+#> IGRAPH 17f1f06 UN-B 12 9 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from c703c4a (vertex names):
+#> + edges from 17f1f06 (vertex names):
 #> [1] cherry   --chair melon    --chair blueberry--chair cherry   --table
 #> [5] melon    --table pear     --desk  cherry   --desk  melon    --desk 
 #> [9] blueberry--desk
