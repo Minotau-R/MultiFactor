@@ -3,16 +3,26 @@
 \name{as.matrix.LinkMap}
 \alias{as.matrix.LinkMap}
 \alias{as.matrix.MultiFactor::LinkMap}
-\title{Convert a LinkMap to a sparse matrix.}
+\title{Convert a LinkMap to a sparse matrix.
+Convert a LinkMap to a sparse matrix object from the \code{Matrix} package.}
 \usage{
-\method{as.matrix}{`MultiFactor::LinkMap`}(x, terms = colnames(x), dims = nlevels(x[terms]), ...)
+\method{as.matrix}{`MultiFactor::LinkMap`}(
+  x,
+  terms = colnames(x),
+  dims = nlevels(x[terms]),
+  dimnames = levels(x)[terms],
+  ...
+)
 }
 \arguments{
 \item{x}{a \code{LinkMap} object.}
 
 \item{terms}{id of cols in their desired order. \code{c(rows, cols)}.}
 
-\item{dims}{length-2 integer vector of matrix dimensions.}
+\item{dims}{length-2 integer vector of matrix dimensions.
+Default: \code{colnames(x)}}
+
+\item{dimnames}{list of dimnames. (Default: \code{levels(x)}).}
 
 \item{...}{additional arguments. Not used.}
 }
@@ -21,6 +31,7 @@ a sparse biadjacency \code{Matrix} with
 }
 \description{
 Convert a LinkMap to a sparse matrix.
+Convert a LinkMap to a sparse matrix object from the \code{Matrix} package.
 }
 \seealso{
 \code{\link[Matrix:sparseMatrix]{Matrix::sparseMatrix()}}

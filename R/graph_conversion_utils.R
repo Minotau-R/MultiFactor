@@ -46,7 +46,7 @@
 `as.igraph.MultiFactor::LinkMap`  <- function( x, directed = FALSE, ... ) {
 
     g <- igraph::graph_from_biadjacency_matrix(
-        `as.matrix.MultiFactor::LinkMap`( x, dimnames = levels(x) ),
+        `as.matrix.MultiFactor::LinkMap`( x ),
         directed, ...
     )
     # Include metadata if it exits

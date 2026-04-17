@@ -55,10 +55,13 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
     )
 
 #' @title Convert a LinkMap to a sparse matrix.
+#' Convert a LinkMap to a sparse matrix object from the `Matrix` package.
 #' @name as.matrix.LinkMap
 #' @param x a `LinkMap` object.
 #' @param terms id of cols in their desired order. `c(rows, cols)`.
 #' @param dims length-2 integer vector of matrix dimensions.
+#'     Default: `colnames(x)`
+#' @param dimnames list of dimnames. (Default: `levels(x)`).
 #' @param ... additional arguments. Not used.
 #' @importFrom Matrix sparseMatrix
 #' @returns a sparse biadjacency `Matrix` with
@@ -68,5 +71,10 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
 #'
 `as.matrix.MultiFactor::LinkMap` <- function(
         x, terms = colnames(x),
-        dims = nlevels(x[terms]), ...
-) Matrix::sparseMatrix(i = x[[terms[1L]]], j = x[[terms[2L]]], dims = dims, ...)
+        dims = nlevels(x[terms]), dimnames = levels(x)[terms],
+        ...
+) Matrix::sparseMatrix(
+    i = x[[terms[1L]]], j = x[[terms[2L]]],
+    dims = dims, dimnames = dimnames,
+    ...
+)

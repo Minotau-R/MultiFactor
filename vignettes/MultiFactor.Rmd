@@ -128,7 +128,8 @@ However, we could imagine trading our fruit for furniture in steps: We can trade
 our fruit for a different good, which we trade for another one, until we reach a
 good that we can trade for furniture. The `weave()` function does exactly this: 
 ```{r 'weave'}
-weave(tp, fruit ~ furniture)
+fruit2furniture <- weave(tp, fruit ~ furniture)
+fruit2furniture
 ```
 We receive a new `LinkMap` containing all fruits that could be traded for 
 furniture. 
@@ -160,7 +161,7 @@ plot(g)
 ### Convert `LinkMap` relational information to `igraph` object
 ```{r 'igraph-linkmap-sp', fig.height=6, fig.width = 6}
 # Convert to an igraph object
-lg <- as.igraph(linkmap)
+lg <- as.igraph(fruit2furniture)
 lg
 # Same information as the LinkMap: 
 plot(lg)
@@ -169,7 +170,7 @@ plot(lg)
 # Convert `LinkMap` linkage information to sparse adjacency `Matrix`
 ```{r 'Matrix-sp'}
 # Convert to an igraph object
-m <- as.matrix(linkmap, dimnames = levels(linkmap))
+m <- as.matrix(fruit2furniture, dimnames = levels(fruit2furniture))
 m
 ```
 
@@ -179,7 +180,9 @@ with features (rows) of the appropriate type.
 
 ```{r 'prep-apply'}
 # Generate small example table
-furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
+furniture_table <- as.data.frame(
+  replicate( 10, rbinom(6, rbinom(6, 100, runif(6)), runif(6)) ) 
+  )
 rownames(furniture_table) <- levels(tp)$furniture
 furniture_table
 ```
@@ -192,6 +195,17 @@ subgroup_apply(
   X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = as.data.frame
   )
 
+# More complex example: 
+# For all subgroups of furniture corresponding to one particular food, if that 
+# group has more than two rows (types of furniture), fit a statistical model. 
+# 
+subgroup_apply(
+  furniture_table, tp, fruit ~ furniture, FUN = function(x) {
+    if( NROW(x) <= 2) return( NULL )
+    # else: 
+    summary( lm(V1 ~ V2, data = x) )
+    }
+)
 ```
 
 ## Compatibility with the tidyverse: `subgroup_to_tbl`
@@ -208,15 +222,43 @@ first type of data, whereas all following elements all from the second type,
 indicate which levels it is connected to. These files can be tricky to load and 
 properly parse into R. The function `read_adjacency_list()` allows these files 
 to be read from file (or URL). 
-```{r 'read-adj'}
-# Create some temporary data to read from a 'file':
+
+### Example of adjacency list formatted data
+We'll format the `LinkMap` from fruit to furniture that we generated above. 
+```{r}
+# Use igraph to deconstruct a graph into an adjacency list, coerce to characters
+adj <- lapply(
+  as_adj_list(as.igraph(fruit2furniture)), as_ids
+  )
+# Only keep the 'fruit' nodes that have more than one link for now
+adj <- adj[ levels(fruit2furniture)$fruit ]
+adj <- adj[ lengths(adj) > 0 ]
+# collapse names to first elements of character vectors
+adj <- mapply(c, names(adj), adj, USE.NAMES = FALSE)
+adj <- vapply(adj, paste, collapse = "\t", "")
+```
+
+If stored in a file in adjacency list format, it may look like this: 
+```
+pear\tdesk
+cherry\tchair\ttable\tdesk
+melon\tchair\ttable\tdesk 
+blueberry\tchair\tdesk
+```
+
+```{r 'read-adj', fig.height=6, fig.width = 6}
+# Create some temporary file to read from:
 temp <- tempfile()
-# fill file with some 
+# fill the temp file with the adjacency list we just constructed 
 t.con <- file(temp, "w")
-cat("a\tb", "b\tc\td", "d\te", file = t.con, sep = "\n")
+cat(adj, file = t.con, sep = "\n")
 close(t.con)
 
-read_adjacency_list(temp)
+adj_data <- read_adjacency_list(temp)
+adj_data
+
+# Notice that the unlinked data types are no longer in the graph.  
+plot(as.igraph(adj_data))
 ```
 
 # Session Info
