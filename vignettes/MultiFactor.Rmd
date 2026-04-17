@@ -16,13 +16,13 @@ knitr::opts_chunk$set(
 
 # Overview
 
-MultiFactor aims to provide a consistent toolkit to incorporate relational data 
-into data analytical tools and methods. In practice, we expect MultiFactor to be
-used in combination with additional packages that extend it. For instance, see
-[ariadne](https://github.com/minotau-R/ariadne) and
+`MultiFactor` aims to provide a consistent toolkit to incorporate relational 
+data into data-analytical tools and methods. In practice, we expect 
+`MultiFactor` to be used in combination with additional packages that extend it.
+For instance, see [ariadne](https://github.com/minotau-R/ariadne) and
 [anansi](https://github.com/thomazbastiaanssen/anansi), two such packages that 
-make use of MultiFactor to link and convert across biological database IDs and
-perform muti-omics integration analysis, respectively. 
+make use of `MultiFactor` to link and convert across biological database IDs and
+perform multi-omics integration analysis, respectively. 
 
 # Get started using MultiFactor
 
@@ -100,7 +100,7 @@ Notice that a `MultiFactor` summarizes information across the component
 `LinkMaps` in several ways. First, The matrix shows the types of goods as 
 columns and the component `LinkMaps` that contain this information as rows. The 
 numbers in the matrix then show the number of unique types of that type of good 
-in that particular LinkMap - and that are therefore linked to the second feature
+in that particular `LinkMap` - and that are therefore linked to the second feature
 in the `LinkMap`. 
 
 For instance, in the top-left corner of the matrix, we can see that the first 
@@ -134,28 +134,39 @@ We receive a new `LinkMap` containing all fruits that could be traded for
 furniture. 
 
 ## Selecting a path
-We can use `select_shortest_paths()` to find the types of traded goods in order,
+We can use `select_path()` to find the types of traded goods in order,
 or more generally, the paths that were traversed. If several paths exist, all 
 will be traversed and included into one `LinkMap`. 
 ```{r 'weave-sp'}
-select_shortest_paths(tp, fruit ~ furniture)
+select_path(tp, fruit ~ furniture)
 ```
 
 # Compatibility with `igraph` and `Matrix`
+## Convert `MultiFactor` and `LinkMap` objects to `igraph` representation 
 `MultiFactor` relies heavily on the excellent [`igraph`](https://r.igraph.org/) 
 and [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly for
 path finding and sparse matrix representation. 
 
-## Convert `MultiFactor` main graph representation to `igraph` object
-```{r 'igraph-sp', fig.height=6, fig.width = 6}
+### Convert `MultiFactor` main graph representation to `igraph` object
+```{r 'igraph-multifactor-sp', fig.height=6, fig.width = 6}
 library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
+# Plot graph across data types
 plot(g)
 ```
 
-## Convert `LinkMap` linkage information to sparse adjacency `Matrix`
+### Convert `LinkMap` relational information to `igraph` object
+```{r 'igraph-linkmap-sp', fig.height=6, fig.width = 6}
+# Convert to an igraph object
+lg <- as.igraph(linkmap)
+lg
+# Same information as the LinkMap: 
+plot(lg)
+```
+
+# Convert `LinkMap` linkage information to sparse adjacency `Matrix`
 ```{r 'Matrix-sp'}
 # Convert to an igraph object
 m <- as.matrix(linkmap, dimnames = levels(linkmap))
@@ -167,6 +178,7 @@ m
 with features (rows) of the appropriate type. 
 
 ```{r 'prep-apply'}
+# Generate small example table
 furniture_table <- data.frame(replicate(10, rbinom(6, 10, 2/3)))
 rownames(furniture_table) <- levels(tp)$furniture
 furniture_table
@@ -177,7 +189,7 @@ furniture_table
 groupings on the left hand of the formula:  
 ```{r 'subgroup-apply'}
 subgroup_apply(
-  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = force
+  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = as.data.frame
   )
 
 ```

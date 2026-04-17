@@ -21,6 +21,48 @@
     igraph::graph_from_data_frame(mf_as_graph_df(x), directed, ...)
 }
 
+#' Convert a LinkMap to igraph
+#' @description
+#' Extract relational information from LinkMap and return an igraph object.
+#' Calls `igraph::graph_from_biadjacency_matrix` under the hood.
+#' @name as.igraph.LinkMap
+#' @aliases as.igraph.MultiFactor::LinkMap
+#' @importFrom igraph as.igraph graph_from_biadjacency_matrix edge_attr<-
+#' @param x a `MultiFactor`
+#' @param directed See `?igraph::graph_from_biadjacency_matrix`
+#' @param ... Additional arguments passed to
+#'     `igraph::graph_from_biadjacency_matrix`.
+#' @returns an `igraph` object.
+#' @details If a `LinkMap` contains metadata, this can be found back as edge
+#' attributes in the returned graph (see `igraph::edge_attr()`)
+#' @method as.igraph MultiFactor::LinkMap
+#' @export
+#' @examples
+#' x <- randomLinkMap()
+#'
+#' # Make igraph object:
+#' igraph::as.igraph(x)
+#'
+`as.igraph.MultiFactor::LinkMap`  <- function( x, directed = FALSE, ... ) {
+
+    g <- igraph::graph_from_biadjacency_matrix(
+        `as.matrix.MultiFactor::LinkMap`( x, dimnames = levels(x) ),
+        directed, ...
+    )
+    # Include metadata if it exits
+    if ( NCOL(mm <- x@metadata) > 0L ) {
+        for( m in NCOL(mm) ) edge_attr(g, colnames(mm)[m]) <- mm[[m]]
+    }
+    return(g)
+}
+
+#' @export
+#' @importFrom igraph as.igraph
+#'
+S7::method(as.igraph, LinkMap) <-
+    function(x, ...) `as.igraph.MultiFactor::LinkMap`(x, ...)
+
+
 #' @export
 #' @importFrom igraph as.igraph
 #'

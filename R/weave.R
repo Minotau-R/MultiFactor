@@ -92,7 +92,7 @@ S7::method(stack, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "ma
   terms <- c(y_var, x_var)
 
   # Determine required ids in order, only keep relevant elements of link.
-  all_terms <- .select_shortest_paths(x, terms, include = NULL, exclude = NULL, exact = NULL)
+  all_terms <- .select_path(x, terms, include = NULL, exclude = NULL, exact = NULL)
   res <- lapply(all_terms, .weave_single, x = x, out.format = "LinkMap", terms = terms)
   res <- do.call(
     rbind.data.frame,

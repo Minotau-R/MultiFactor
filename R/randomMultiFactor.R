@@ -63,6 +63,7 @@ randomMultiFactor <- function(layout = NULL, n_features = 10, sparseness = 0.75)
 #' @export
 #'
 trade_posts <- function(raw.list = FALSE) {
+    # Small dummy data; five factors of length six
     trade_goods <- list(
         fruit = c("apple", "pear", "cherry", "orange", "melon", "blueberry"),
         furniture = c("chair", "table", "desk", "bed", "drawer", "chest"),
@@ -140,9 +141,7 @@ stopifnot("If provided, 'x' must be a list of two named character vectors" =
         x[[1]], x[[2]], names(x)[[1]], names(x)[[2]],
         p = 1 - sparseness
         ))
-
 }
-
 
 #' Make a single df for a random MultiFactor
 #' @rdname randomMultiFactor

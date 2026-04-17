@@ -19,7 +19,7 @@ reference:
 - contents:
   - weave
   - weave-methods
-  - select_shortest_paths
+  - select_path
   - subgroup_apply
   - subgroup_to_tbl
 - title: Classes
@@ -35,6 +35,7 @@ reference:
   - as.LinkMap
   - as.LinkMap-methods
   - as.igraph.MultiFactor
+  - as.igraph.LinkMap
   - as.matrix.LinkMap
   - mf_as_graph_df
 - title: Utils

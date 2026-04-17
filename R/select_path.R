@@ -1,6 +1,6 @@
 #' Define a path through a MultiFactor object.
 #' @rdname select_path
-#' @name select_shortest_paths
+#' @name select_path
 #' @inheritParams weave-methods
 #' @param as.edges `Boolean scalar` Whether to return names of edges or nodes
 #'     (Default) in the path.
@@ -21,19 +21,19 @@
 #' x <- MultiFactor(list(a2b, a2c))
 #'
 #' # Inspect a path between data types
-#' select_shortest_paths(x, b ~ c)
+#' select_path(x, b ~ c)
 #' @export
 #'
-select_shortest_paths <- function(
+select_path <- function(
         x, .by, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
 ) {
-    paths <- .select_shortest_paths(x, .by_terms(.by), include, exclude, exact)
+    paths <- .select_path(x, .by_terms(.by), include, exclude, exact)
 
     if( as.edges ) paths <- lapply(paths, .V_path_as_E_path)
     return(paths)
 }
 
-.select_shortest_paths <- function(
+.select_path <- function(
         x, terms, include = NULL, exclude = NULL, exact = NULL
 ) {
     g <- `as.igraph.MultiFactor::MultiFactor`(x)
