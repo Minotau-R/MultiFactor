@@ -109,6 +109,7 @@ version of <code>MultiFactor</code>:</p>
 <span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     nlevels</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Load demo data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">010292</span><span class="op">)</span></span>
@@ -136,16 +137,16 @@ types of utensils.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">linkmap</span> <span class="op">&lt;-</span> <span class="va">tp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">linkmap</span></span>
-<span><span class="co">#&gt;    furniture utensils</span></span>
-<span><span class="co">#&gt; 3       desk  spatula</span></span>
-<span><span class="co">#&gt; 6      chest  spatula</span></span>
-<span><span class="co">#&gt; 9       desk    whisk</span></span>
-<span><span class="co">#&gt; 13     chair    sieve</span></span>
-<span><span class="co">#&gt; 15      desk    sieve</span></span>
-<span><span class="co">#&gt; 19     chair  blender</span></span>
-<span><span class="co">#&gt; 20     table  blender</span></span>
-<span><span class="co">#&gt; 33      desk      cup</span></span>
-<span><span class="co">#&gt; 35    drawer      cup</span></span></code></pre></div>
+<span><span class="co">#&gt;    furniture clothing</span></span>
+<span><span class="co">#&gt; 3       desk    shirt</span></span>
+<span><span class="co">#&gt; 6      chest    shirt</span></span>
+<span><span class="co">#&gt; 9       desk trousers</span></span>
+<span><span class="co">#&gt; 13     chair    socks</span></span>
+<span><span class="co">#&gt; 15      desk    socks</span></span>
+<span><span class="co">#&gt; 19     chair   gloves</span></span>
+<span><span class="co">#&gt; 20     table   gloves</span></span>
+<span><span class="co">#&gt; 33      desk    scarf</span></span>
+<span><span class="co">#&gt; 35    drawer    scarf</span></span></code></pre></div>
 <p>The two types of goods are captured by the two columns, with column
 names representing the <em>types</em> of good and rows representing
 which specific <em>type-pairs</em> are traded at that trade post, or,
@@ -155,8 +156,8 @@ more generally, are linked in that <code>LinkMap</code>.</p>
 <span><span class="co">#&gt; $furniture</span></span>
 <span><span class="co">#&gt; [1] "chair"  "table"  "desk"   "bed"    "drawer" "chest" </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $utensils</span></span>
-<span><span class="co">#&gt; [1] "spatula" "whisk"   "sieve"   "blender" "knife"   "cup"</span></span></code></pre></div>
+<span><span class="co">#&gt; $clothing</span></span>
+<span><span class="co">#&gt; [1] "shirt"    "trousers" "socks"    "gloves"   "hat"      "scarf"</span></span></code></pre></div>
 <p>Notice that <code>LinkMap</code> is two <code>factor</code> columns
 in a trench coat. We can inspect the levels as usual.</p>
 <p>We can see that we have several of these types of trade posts in our
@@ -164,16 +165,16 @@ data set. However, we also notice that the column names - the types of
 goods - can differ.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt;          quartz utensils</span></span>
-<span><span class="co">#&gt; 9     carnelian    whisk</span></span>
-<span><span class="co">#&gt; 12        agate    whisk</span></span>
-<span><span class="co">#&gt; 15    carnelian    sieve</span></span>
-<span><span class="co">#&gt; 24        agate  blender</span></span>
-<span><span class="co">#&gt; 29         onyx    knife</span></span>
-<span><span class="co">#&gt; 32      citrine      cup</span></span>
-<span><span class="co">#&gt; 33    carnelian      cup</span></span>
-<span><span class="co">#&gt; 34 rock crystal      cup</span></span>
-<span><span class="co">#&gt; 36        agate      cup</span></span>
+<span><span class="co">#&gt;    instruments clothing</span></span>
+<span><span class="co">#&gt; 9         drum trousers</span></span>
+<span><span class="co">#&gt; 12        harp trousers</span></span>
+<span><span class="co">#&gt; 15        drum    socks</span></span>
+<span><span class="co">#&gt; 24        harp   gloves</span></span>
+<span><span class="co">#&gt; 29      fiddle      hat</span></span>
+<span><span class="co">#&gt; 32      guitar    scarf</span></span>
+<span><span class="co">#&gt; 33        drum    scarf</span></span>
+<span><span class="co">#&gt; 34   accordion    scarf</span></span>
+<span><span class="co">#&gt; 36        harp    scarf</span></span>
 <span><span class="va">tp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt;        fruit        marbles</span></span>
 <span><span class="co">#&gt; 3     cherry     red marble</span></span>
@@ -185,6 +186,11 @@ goods - can differ.</p>
 <span><span class="co">#&gt; 26      pear  yellow marble</span></span>
 <span><span class="co">#&gt; 33    cherry spotted marble</span></span>
 <span><span class="co">#&gt; 36 blueberry spotted marble</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="visual-representation-of-the-linkmaps-in-our-data-set-">Visual representation of the LinkMaps in our data set.<a class="anchor" aria-label="anchor" href="#visual-representation-of-the-linkmaps-in-our-data-set-"></a>
+</h4>
+<p><img src="MultiFactor_files/figure-html/plot-LinkMap-1.png" class="r-plt" alt="" width="768"></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="multifactor">MultiFactor<a class="anchor" aria-label="anchor" href="#multifactor"></a>
@@ -201,21 +207,21 @@ the <code>LinkMaps</code> we just investigated, is in fact a
 <span><span class="co">#&gt; A MultiFactor::MultiFactor list S7_object,</span></span>
 <span><span class="co">#&gt;     5 feature types across 5 LinkMaps.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;                    furniture utensils quartz fruit marbles</span></span>
-<span><span class="co">#&gt; furniture2utensils         5        5      .     .       .</span></span>
-<span><span class="co">#&gt; quartz2utensils            .        5      5     .       .</span></span>
-<span><span class="co">#&gt; fruit2marbles              .        .      .     5       5</span></span>
-<span><span class="co">#&gt; quartz2marbles             .        .      5     .       6</span></span>
-<span><span class="co">#&gt; utensils2marbles           .        6      .     .       4</span></span>
+<span><span class="co">#&gt;                      furniture clothing instruments fruit marbles</span></span>
+<span><span class="co">#&gt; furniture2clothing           5        5           .     .       .</span></span>
+<span><span class="co">#&gt; instruments2clothing         .        5           5     .       .</span></span>
+<span><span class="co">#&gt; fruit2marbles                .        .           .     5       5</span></span>
+<span><span class="co">#&gt; instruments2marbles          .        .           5     .       6</span></span>
+<span><span class="co">#&gt; clothing2marbles             .        6           .     .       4</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Values represent unique feature names in that LinkMap.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Levels:</span></span>
-<span><span class="co">#&gt; furniture : 6 Levels: chair ... chest </span></span>
-<span><span class="co">#&gt; utensils  : 6 Levels: spatula ... cup </span></span>
-<span><span class="co">#&gt; quartz    : 6 Levels: amethyst ... agate </span></span>
-<span><span class="co">#&gt; fruit     : 6 Levels: apple ... blueberry </span></span>
-<span><span class="co">#&gt; marbles   : 6 Levels: red marble ... spotted marble</span></span></code></pre></div>
+<span><span class="co">#&gt; furniture   : 6 Levels: chair ... chest </span></span>
+<span><span class="co">#&gt; clothing    : 6 Levels: shirt ... scarf </span></span>
+<span><span class="co">#&gt; instruments : 6 Levels: trumpet ... harp </span></span>
+<span><span class="co">#&gt; fruit       : 6 Levels: apple ... blueberry </span></span>
+<span><span class="co">#&gt; marbles     : 6 Levels: red marble ... spotted marble</span></span></code></pre></div>
 <p>Notice that a <code>MultiFactor</code> summarizes information across
 the component <code>LinkMaps</code> in several ways. First, The matrix
 shows the types of goods as columns and the component
@@ -236,21 +242,20 @@ well as access the component levels:</p>
 <span><span class="co">#&gt; [1] 5 5</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; [1] "furniture2utensils" "quartz2utensils"    "fruit2marbles"     </span></span>
-<span><span class="co">#&gt; [4] "quartz2marbles"     "utensils2marbles"  </span></span>
+<span><span class="co">#&gt; [1] "furniture2clothing"   "instruments2clothing" "fruit2marbles"       </span></span>
+<span><span class="co">#&gt; [4] "instruments2marbles"  "clothing2marbles"    </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
-<span><span class="co">#&gt; [1] "furniture" "utensils"  "quartz"    "fruit"     "marbles"</span></span>
+<span><span class="co">#&gt; [1] "furniture"   "clothing"    "instruments" "fruit"       "marbles"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $furniture</span></span>
 <span><span class="co">#&gt; [1] "chair"  "table"  "desk"   "bed"    "drawer" "chest" </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $utensils</span></span>
-<span><span class="co">#&gt; [1] "spatula" "whisk"   "sieve"   "blender" "knife"   "cup"    </span></span>
+<span><span class="co">#&gt; $clothing</span></span>
+<span><span class="co">#&gt; [1] "shirt"    "trousers" "socks"    "gloves"   "hat"      "scarf"   </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $quartz</span></span>
-<span><span class="co">#&gt; [1] "amethyst"     "citrine"      "carnelian"    "rock crystal" "onyx"        </span></span>
-<span><span class="co">#&gt; [6] "agate"       </span></span>
+<span><span class="co">#&gt; $instruments</span></span>
+<span><span class="co">#&gt; [1] "trumpet"   "guitar"    "drum"      "accordion" "fiddle"    "harp"     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $fruit</span></span>
 <span><span class="co">#&gt; [1] "apple"     "pear"      "cherry"    "orange"    "melon"     "blueberry"</span></span>
@@ -259,8 +264,8 @@ well as access the component levels:</p>
 <span><span class="co">#&gt; [1] "red marble"     "green marble"   "purple marble"  "blue marble"   </span></span>
 <span><span class="co">#&gt; [5] "yellow marble"  "spotted marble"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; furniture  utensils    quartz     fruit   marbles </span></span>
-<span><span class="co">#&gt;         6         6         6         6         6</span></span></code></pre></div>
+<span><span class="co">#&gt;   furniture    clothing instruments       fruit     marbles </span></span>
+<span><span class="co">#&gt;           6           6           6           6           6</span></span></code></pre></div>
 <p>Note that levels of the same type are automatically unified across
 all component LinkMaps with that type of level.</p>
 </div>
@@ -301,7 +306,7 @@ several paths exist, all will be traversed and included into one
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/select_path.html">select_path</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
-<span><span class="co">#&gt; [1] "fruit"     "marbles"   "utensils"  "furniture"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "fruit"     "marbles"   "clothing"  "furniture"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -331,11 +336,11 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 2b80ee1 UN-- 5 5 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 1abf3b8 UN-- 5 5 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c)</span></span>
-<span><span class="co">#&gt; + edges from 2b80ee1 (vertex names):</span></span>
-<span><span class="co">#&gt; [1] furniture--utensils quartz   --utensils fruit    --marbles </span></span>
-<span><span class="co">#&gt; [4] quartz   --marbles  utensils --marbles</span></span>
+<span><span class="co">#&gt; + edges from 1abf3b8 (vertex names):</span></span>
+<span><span class="co">#&gt; [1] furniture  --clothing instruments--clothing fruit      --marbles </span></span>
+<span><span class="co">#&gt; [4] instruments--marbles  clothing   --marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MultiFactor_files/figure-html/igraph-multifactor-sp-1.png" class="r-plt" alt="" width="576"></p>
@@ -348,9 +353,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 6623ace UN-B 12 9 -- </span></span>
+<span><span class="co">#&gt; IGRAPH c703c4a UN-B 12 9 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 6623ace (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from c703c4a (vertex names):</span></span>
 <span><span class="co">#&gt; [1] cherry   --chair melon    --chair blueberry--chair cherry   --table</span></span>
 <span><span class="co">#&gt; [5] melon    --table pear     --desk  cherry   --desk  melon    --desk </span></span>
 <span><span class="co">#&gt; [9] blueberry--desk</span></span>
@@ -435,7 +440,7 @@ formula:</p>
 <span><span class="co"># </span></span>
 <span><span class="fu"><a href="../reference/subgroup_apply.html">subgroup_apply</a></span><span class="op">(</span></span>
 <span>  <span class="va">furniture_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">furniture</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw">if</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="cn">NULL</span> <span class="op">)</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span> <span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="cn">NULL</span> <span class="op">)</span></span>
 <span>    <span class="co"># else: </span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">V1</span> <span class="op">~</span> <span class="va">V2</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op">)</span></span>
 <span>    <span class="op">}</span></span>
@@ -524,9 +529,7 @@ read from file (or URL).</p>
 generated above.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use igraph to deconstruct a graph into an adjacency list, coerce to characters</span></span>
-<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://r.igraph.org/reference/as_adj_list.html" class="external-link">as_adj_list</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span><span class="op">)</span>, <span class="va">as_ids</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span> <span class="fu"><a href="https://r.igraph.org/reference/as_adj_list.html" class="external-link">as_adj_list</a></span><span class="op">(</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span> <span class="op">)</span>, <span class="va">as_ids</span> <span class="op">)</span></span>
 <span><span class="co"># Only keep the 'fruit' nodes that have more than one link for now</span></span>
 <span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fruit2furniture</span><span class="op">)</span><span class="op">$</span><span class="va">fruit</span> <span class="op">]</span></span>
 <span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">]</span></span>
@@ -594,18 +597,21 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] igraph_2.2.3      MultiFactor_0.1.2</span></span>
+<span><span class="co">#&gt; [1] igraph_2.2.3      ggplot2_4.0.2     MultiFactor_0.1.2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] cli_3.6.6         knitr_1.51        rlang_1.2.0       xfun_0.57        </span></span>
-<span><span class="co">#&gt;  [5] forcats_1.0.1     otel_0.2.0        textshaping_1.0.5 S7_0.2.1         </span></span>
-<span><span class="co">#&gt;  [9] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.9   ragg_1.5.2       </span></span>
-<span><span class="co">#&gt; [13] sass_0.4.10       rmarkdown_2.31    grid_4.7.0        evaluate_1.0.5   </span></span>
-<span><span class="co">#&gt; [17] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  </span></span>
-<span><span class="co">#&gt; [21] compiler_4.7.0    fs_2.0.1          pkgconfig_2.0.3   htmlwidgets_1.6.4</span></span>
-<span><span class="co">#&gt; [25] lattice_0.22-9    systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         </span></span>
-<span><span class="co">#&gt; [29] magrittr_2.0.5    bslib_0.10.0      Matrix_1.7-5      tools_4.7.0      </span></span>
-<span><span class="co">#&gt; [33] pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     dplyr_1.2.1       </span></span>
+<span><span class="co">#&gt;  [5] compiler_4.7.0     tidyselect_1.2.1   jquerylib_0.1.4    systemfonts_1.3.2 </span></span>
+<span><span class="co">#&gt;  [9] scales_1.4.0       textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     </span></span>
+<span><span class="co">#&gt; [13] lattice_0.22-9     R6_2.6.1           labeling_0.4.3     generics_0.1.4    </span></span>
+<span><span class="co">#&gt; [17] knitr_1.51         forcats_1.0.1      htmlwidgets_1.6.4  tibble_3.3.1      </span></span>
+<span><span class="co">#&gt; [21] desc_1.4.3         bslib_0.10.0       pillar_1.11.1      RColorBrewer_1.1-3</span></span>
+<span><span class="co">#&gt; [25] rlang_1.2.0        cachem_1.1.0       xfun_0.57          fs_2.0.1          </span></span>
+<span><span class="co">#&gt; [29] sass_0.4.10        S7_0.2.1           otel_0.2.0         cli_3.6.6         </span></span>
+<span><span class="co">#&gt; [33] withr_3.0.2        pkgdown_2.2.0      magrittr_2.0.5     digest_0.6.39     </span></span>
+<span><span class="co">#&gt; [37] grid_4.7.0         lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5    </span></span>
+<span><span class="co">#&gt; [41] glue_1.8.0         farver_2.1.2       ragg_1.5.2         rmarkdown_2.31    </span></span>
+<span><span class="co">#&gt; [45] tools_4.7.0        pkgconfig_2.0.3    htmltools_0.5.9</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

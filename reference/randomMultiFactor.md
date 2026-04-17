@@ -454,19 +454,19 @@ trade_posts()
 #> A MultiFactor::MultiFactor list S7_object,
 #>     5 feature types across 5 LinkMaps.
 #> 
-#>                  furniture quartz fruit utensils marbles
-#> furniture2quartz         5      4     .        .       .
-#> fruit2utensils           .      .     5        4       .
-#> quartz2utensils          .      5     .        5       .
-#> fruit2marbles            .      .     5        .       4
-#> quartz2marbles           .      4     .        .       6
+#>                       furniture instruments fruit clothing marbles
+#> furniture2instruments         5           4     .        .       .
+#> fruit2clothing                .           .     5        4       .
+#> instruments2clothing          .           5     .        5       .
+#> fruit2marbles                 .           .     5        .       4
+#> instruments2marbles           .           4     .        .       6
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
 #> Levels:
-#> furniture : 6 Levels: chair ... chest 
-#> quartz    : 6 Levels: amethyst ... agate 
-#> fruit     : 6 Levels: apple ... blueberry 
-#> utensils  : 6 Levels: spatula ... cup 
-#> marbles   : 6 Levels: red marble ... spotted marble 
+#> furniture   : 6 Levels: chair ... chest 
+#> instruments : 6 Levels: trumpet ... harp 
+#> fruit       : 6 Levels: apple ... blueberry 
+#> clothing    : 6 Levels: shirt ... scarf 
+#> marbles     : 6 Levels: red marble ... spotted marble 
 ```

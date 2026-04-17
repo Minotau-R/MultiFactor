@@ -43,6 +43,7 @@ library(MultiFactor)
 #> The following object is masked from 'package:base':
 #> 
 #>     nlevels
+library(ggplot2)
 
 # Load demo data
 set.seed(010292)
@@ -71,16 +72,16 @@ are traded for types of utensils.
 
 linkmap <- tp[[1]]
 linkmap
-#>    furniture utensils
-#> 3       desk  spatula
-#> 6      chest  spatula
-#> 9       desk    whisk
-#> 13     chair    sieve
-#> 15      desk    sieve
-#> 19     chair  blender
-#> 20     table  blender
-#> 33      desk      cup
-#> 35    drawer      cup
+#>    furniture clothing
+#> 3       desk    shirt
+#> 6      chest    shirt
+#> 9       desk trousers
+#> 13     chair    socks
+#> 15      desk    socks
+#> 19     chair   gloves
+#> 20     table   gloves
+#> 33      desk    scarf
+#> 35    drawer    scarf
 ```
 
 The two types of goods are captured by the two columns, with column
@@ -94,8 +95,8 @@ levels( linkmap )
 #> $furniture
 #> [1] "chair"  "table"  "desk"   "bed"    "drawer" "chest" 
 #> 
-#> $utensils
-#> [1] "spatula" "whisk"   "sieve"   "blender" "knife"   "cup"
+#> $clothing
+#> [1] "shirt"    "trousers" "socks"    "gloves"   "hat"      "scarf"
 ```
 
 Notice that `LinkMap` is two `factor` columns in a trench coat. We can
@@ -108,16 +109,16 @@ goods - can differ.
 ``` r
 
 tp[[2]]
-#>          quartz utensils
-#> 9     carnelian    whisk
-#> 12        agate    whisk
-#> 15    carnelian    sieve
-#> 24        agate  blender
-#> 29         onyx    knife
-#> 32      citrine      cup
-#> 33    carnelian      cup
-#> 34 rock crystal      cup
-#> 36        agate      cup
+#>    instruments clothing
+#> 9         drum trousers
+#> 12        harp trousers
+#> 15        drum    socks
+#> 24        harp   gloves
+#> 29      fiddle      hat
+#> 32      guitar    scarf
+#> 33        drum    scarf
+#> 34   accordion    scarf
+#> 36        harp    scarf
 tp[[3]]
 #>        fruit        marbles
 #> 3     cherry     red marble
@@ -130,6 +131,10 @@ tp[[3]]
 #> 33    cherry spotted marble
 #> 36 blueberry spotted marble
 ```
+
+#### Visual representation of the LinkMaps in our data set.
+
+![](MultiFactor_files/figure-html/plot-LinkMap-1.png)
 
 ### MultiFactor
 
@@ -145,21 +150,21 @@ tp
 #> A MultiFactor::MultiFactor list S7_object,
 #>     5 feature types across 5 LinkMaps.
 #> 
-#>                    furniture utensils quartz fruit marbles
-#> furniture2utensils         5        5      .     .       .
-#> quartz2utensils            .        5      5     .       .
-#> fruit2marbles              .        .      .     5       5
-#> quartz2marbles             .        .      5     .       6
-#> utensils2marbles           .        6      .     .       4
+#>                      furniture clothing instruments fruit marbles
+#> furniture2clothing           5        5           .     .       .
+#> instruments2clothing         .        5           5     .       .
+#> fruit2marbles                .        .           .     5       5
+#> instruments2marbles          .        .           5     .       6
+#> clothing2marbles             .        6           .     .       4
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
 #> Levels:
-#> furniture : 6 Levels: chair ... chest 
-#> utensils  : 6 Levels: spatula ... cup 
-#> quartz    : 6 Levels: amethyst ... agate 
-#> fruit     : 6 Levels: apple ... blueberry 
-#> marbles   : 6 Levels: red marble ... spotted marble
+#> furniture   : 6 Levels: chair ... chest 
+#> clothing    : 6 Levels: shirt ... scarf 
+#> instruments : 6 Levels: trumpet ... harp 
+#> fruit       : 6 Levels: apple ... blueberry 
+#> marbles     : 6 Levels: red marble ... spotted marble
 ```
 
 Notice that a `MultiFactor` summarizes information across the component
@@ -184,21 +189,20 @@ dim(tp)
 #> [1] 5 5
 dimnames(tp)
 #> [[1]]
-#> [1] "furniture2utensils" "quartz2utensils"    "fruit2marbles"     
-#> [4] "quartz2marbles"     "utensils2marbles"  
+#> [1] "furniture2clothing"   "instruments2clothing" "fruit2marbles"       
+#> [4] "instruments2marbles"  "clothing2marbles"    
 #> 
 #> [[2]]
-#> [1] "furniture" "utensils"  "quartz"    "fruit"     "marbles"
+#> [1] "furniture"   "clothing"    "instruments" "fruit"       "marbles"
 levels(tp)
 #> $furniture
 #> [1] "chair"  "table"  "desk"   "bed"    "drawer" "chest" 
 #> 
-#> $utensils
-#> [1] "spatula" "whisk"   "sieve"   "blender" "knife"   "cup"    
+#> $clothing
+#> [1] "shirt"    "trousers" "socks"    "gloves"   "hat"      "scarf"   
 #> 
-#> $quartz
-#> [1] "amethyst"     "citrine"      "carnelian"    "rock crystal" "onyx"        
-#> [6] "agate"       
+#> $instruments
+#> [1] "trumpet"   "guitar"    "drum"      "accordion" "fiddle"    "harp"     
 #> 
 #> $fruit
 #> [1] "apple"     "pear"      "cherry"    "orange"    "melon"     "blueberry"
@@ -207,8 +211,8 @@ levels(tp)
 #> [1] "red marble"     "green marble"   "purple marble"  "blue marble"   
 #> [5] "yellow marble"  "spotted marble"
 lengths(levels(tp))
-#> furniture  utensils    quartz     fruit   marbles 
-#>         6         6         6         6         6
+#>   furniture    clothing instruments       fruit     marbles 
+#>           6           6           6           6           6
 ```
 
 Note that levels of the same type are automatically unified across all
@@ -257,7 +261,7 @@ included into one `LinkMap`.
 
 select_path(tp, fruit ~ furniture)
 #> [[1]]
-#> [1] "fruit"     "marbles"   "utensils"  "furniture"
+#> [1] "fruit"     "marbles"   "clothing"  "furniture"
 ```
 
 ## Compatibility with `igraph` and `Matrix`
@@ -285,11 +289,11 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH 2b80ee1 UN-- 5 5 -- 
+#> IGRAPH 1abf3b8 UN-- 5 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from 2b80ee1 (vertex names):
-#> [1] furniture--utensils quartz   --utensils fruit    --marbles 
-#> [4] quartz   --marbles  utensils --marbles
+#> + edges from 1abf3b8 (vertex names):
+#> [1] furniture  --clothing instruments--clothing fruit      --marbles 
+#> [4] instruments--marbles  clothing   --marbles
 # Plot graph across data types
 plot(g)
 ```
@@ -303,9 +307,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2furniture)
 lg
-#> IGRAPH 6623ace UN-B 12 9 -- 
+#> IGRAPH c703c4a UN-B 12 9 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 6623ace (vertex names):
+#> + edges from c703c4a (vertex names):
 #> [1] cherry   --chair melon    --chair blueberry--chair cherry   --table
 #> [5] melon    --table pear     --desk  cherry   --desk  melon    --desk 
 #> [9] blueberry--desk
@@ -392,7 +396,7 @@ subgroup_apply(
 # 
 subgroup_apply(
   furniture_table, tp, fruit ~ furniture, FUN = function(x) {
-    if( NROW(x) <= 2) return( NULL )
+    if( NROW(x) <= 2 ) return( NULL )
     # else: 
     summary( lm(V1 ~ V2, data = x) )
     }
@@ -486,9 +490,7 @@ above.
 ``` r
 
 # Use igraph to deconstruct a graph into an adjacency list, coerce to characters
-adj <- lapply(
-  as_adj_list(as.igraph(fruit2furniture)), as_ids
-  )
+adj <- lapply( as_adj_list( as.igraph(fruit2furniture) ), as_ids )
 # Only keep the 'fruit' nodes that have more than one link for now
 adj <- adj[ levels(fruit2furniture)$fruit ]
 adj <- adj[ lengths(adj) > 0 ]
@@ -560,16 +562,19 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] igraph_2.2.3      MultiFactor_0.1.2
+#> [1] igraph_2.2.3      ggplot2_4.0.2     MultiFactor_0.1.2
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] cli_3.6.6         knitr_1.51        rlang_1.2.0       xfun_0.57        
-#>  [5] forcats_1.0.1     otel_0.2.0        textshaping_1.0.5 S7_0.2.1         
-#>  [9] jsonlite_2.0.0    glue_1.8.0        htmltools_0.5.9   ragg_1.5.2       
-#> [13] sass_0.4.10       rmarkdown_2.31    grid_4.7.0        evaluate_1.0.5   
-#> [17] jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  
-#> [21] compiler_4.7.0    fs_2.0.1          pkgconfig_2.0.3   htmlwidgets_1.6.4
-#> [25] lattice_0.22-9    systemfonts_1.3.2 digest_0.6.39     R6_2.6.1         
-#> [29] magrittr_2.0.5    bslib_0.10.0      Matrix_1.7-5      tools_4.7.0      
-#> [33] pkgdown_2.2.0     cachem_1.1.0      desc_1.4.3
+#>  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     dplyr_1.2.1       
+#>  [5] compiler_4.7.0     tidyselect_1.2.1   jquerylib_0.1.4    systemfonts_1.3.2 
+#>  [9] scales_1.4.0       textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0     
+#> [13] lattice_0.22-9     R6_2.6.1           labeling_0.4.3     generics_0.1.4    
+#> [17] knitr_1.51         forcats_1.0.1      htmlwidgets_1.6.4  tibble_3.3.1      
+#> [21] desc_1.4.3         bslib_0.10.0       pillar_1.11.1      RColorBrewer_1.1-3
+#> [25] rlang_1.2.0        cachem_1.1.0       xfun_0.57          fs_2.0.1          
+#> [29] sass_0.4.10        S7_0.2.1           otel_0.2.0         cli_3.6.6         
+#> [33] withr_3.0.2        pkgdown_2.2.0      magrittr_2.0.5     digest_0.6.39     
+#> [37] grid_4.7.0         lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5    
+#> [41] glue_1.8.0         farver_2.1.2       ragg_1.5.2         rmarkdown_2.31    
+#> [45] tools_4.7.0        pkgconfig_2.0.3    htmltools_0.5.9
 ```
