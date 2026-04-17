@@ -59,9 +59,8 @@ furniture <- c("🪑", "🚪", "🛋", "🛏️", "🗄️", "🧰")
 clothing <- c("👕", "👖", "🧦", "🧤", "🎩", "🧣")
 marbles <- c("🔴", "🟢", "🟣", "🔵", "🟡", "🪩")
 instruments <- c("🎺", "🎸", "🥁", "🪗", "🎻", "🪉")
-
-
 ```
+
 # MultiFactor and LinkMap objects
 ## LinkMap
 The basic object in the `MultiFactor` package is the `LinkMap`, which contains 
