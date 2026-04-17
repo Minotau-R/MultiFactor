@@ -67,10 +67,10 @@ trade_posts <- function(raw.list = FALSE) {
     trade_goods <- list(
         fruit = c("apple", "pear", "cherry", "orange", "melon", "blueberry"),
         furniture = c("chair", "table", "desk", "bed", "drawer", "chest"),
-        quartz = c(
-            "amethyst", "citrine", "carnelian", "rock crystal", "onyx", "agate"
+        instruments = c(
+            "trumpet", "guitar", "drum", "accordion", "fiddle", "harp"
         ),
-        utensils = c("spatula", "whisk", "sieve", "blender", "knife", "cup"),
+        clothing = c("shirt", "trousers", "socks", "gloves", "hat", "scarf"),
         marbles = paste(
             c("red", "green", "purple", "blue", "yellow", "spotted"), "marble"
         )
