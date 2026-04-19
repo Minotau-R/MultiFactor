@@ -57,28 +57,19 @@ randomMultiFactor <- function(layout = NULL, n_features = 10, sparseness = 0.75)
 
 #' @rdname randomMultiFactor
 #' @name trade_posts
-#' @param raw.list `Boolean`, Whether to return the list of goods rather than
-#'     the default `MultiFactor`.
+#' @param raw.data `Boolean`, Whether to return the `data.frame` of goods rather
+#' than the default `MultiFactor`.
 #' @importFrom igraph as_edgelist sample_gnm
 #' @export
 #'
-trade_posts <- function(raw.list = FALSE) {
-    # Small dummy data; five factors of length six
-    trade_goods <- list(
-        fruit = c("apple", "pear", "cherry", "orange", "melon", "blueberry"),
-        furniture = c("chair", "table", "desk", "bed", "drawer", "chest"),
-        instruments = c(
-            "trumpet", "guitar", "drum", "accordion", "fiddle", "harp"
-        ),
-        clothing = c("shirt", "trousers", "socks", "gloves", "hat", "scarf"),
-        marbles = paste(
-            c("red", "green", "purple", "blue", "yellow", "spotted"), "marble"
-        )
-    )
-    if(raw.list) return(trade_goods)
+trade_posts <- function(raw.data = FALSE) {
+    # Small dummy data; six factors of length six
+    trade_goods <- .emoji_data()
+    # Finish immediately if raw.data is toggled.
+    if(raw.data) return(trade_goods)
+    trade_goods <- split(trade_goods[, -4], trade_goods[, 4])
     layout <- igraph::sample_gnm(length(trade_goods), length(trade_goods))
     el <- igraph::as_edgelist(layout)
-    lv_list <- trade_goods
     out <- apply(el, 1L, function(i) randomLinkMap(
         trade_goods[c(i[1], i[2])], sparseness = 3/4
     ), simplify = FALSE
@@ -87,6 +78,37 @@ trade_posts <- function(raw.list = FALSE) {
     MultiFactor(out)
 
 }
+
+.emoji_data <- function() data.frame(
+    name = c(
+        "apples", "pears", "cherries", "oranges", "melons", "grapes",
+        "couch", "cabinet", "wastebin", "bed", "box", "door",
+        "trumpet", "guitar", "drum", "keyboard", "fiddle", "saxophone",
+        "t-shirt", "dress", "socks", "gloves", "hat", "scarf",
+        paste( c("red", "white", "black", "blue", "8", "sparkly"), "marble" ),
+        paste( c("fancy", "green", "red", "blue", "orange", "plain"), "book" )
+    ),
+    emoji = c(
+        "🍎", "🍐", "🍒", "🍊", "🍈", "🍇",
+        "🛋", "🗄", "🗑", "🛏", "🧰", "🚪",
+        "🎺", "🎸", "🥁", "🎹", "🎻", "🎷",
+        "👕", "👗", "🧦", "🧤", "🎩", "🧣",
+        "🔴", "⚪", "⚫", "🔵", "🎱", "🔮",
+        "📔", "📗", "📕", "📘", "📙", "📓"
+    ),
+    runes = c(
+        "1F34E", "1F350", "1F352", "1F34A", "1F348", "1F347",
+        "1F6CB", "1F5C4", "1F5D1", "1F6CF", "1F9F0", "1F6AA",
+        "1F3BA", "1F3B8", "1F941", "1F3B9", "1F3BB", "1F3B7",
+        "1F455", "1F457", "1F9E6", "1F9E4", "1F3A9", "1F9E3",
+        "1F534", "26AA",  "26AB",  "1F535", "1F3B1", "1F52E",
+        "1F4D4", "1F4D7", "1F4D5", "1F4D8", "1F4D9", "1F4D3"
+    ),
+    group = rep(
+        c("fruit", "furniture", "instruments", "clothing", "marbles", "books"),
+        each = 6
+        )
+)
 
 .randomMultiFactor.auto <- function(n_features, sparseness) {
     n_types <- 6
@@ -152,9 +174,39 @@ stopifnot("If provided, 'x' must be a list of two named character vectors" =
 #' @noRd
 #'
 .randomLinkDF <- function(l, r, l_id, r_id, p) {
-    len <- length(l) * length(r)
-    ind <- sort(sample(seq_len(len), size = ceiling(p * len)))
-    out <- expand.grid(l, r, KEEP.OUT.ATTRS = FALSE)[ind, ]
-    names(out) <- c(l_id, r_id)
-    out
+    # Ensure l and r are data.frames with properly named columns
+    if( NCOL( l <- data.frame(l) ) == 1L ) {
+        colnames(l) <- l_id
+    } else {
+        colnames(l) <- c( l_id, paste(l_id, colnames(l)[-1], sep = "_") )
+    }
+    if( NCOL( r <- data.frame(r) ) == 1L ) {
+        colnames(r) <- r_id
+    } else {
+        colnames(r) <- c( r_id, paste(r_id, colnames(r)[-1], sep = "_") )
+    }
+
+    ind <- expand.grid( seq_len(NROW(l)), seq_len(NROW(r)) )
+    len <- NROW(ind)
+    keep <- sort(sample(seq_len(len), size = ceiling(p * len)))
+    ind <- ind[keep, ]
+
+    out <- data.frame(
+        l[ind[["Var1"]], , drop = FALSE],
+        r[ind[["Var2"]], , drop = FALSE]
+        )
+    # Rearrange columns
+    if( NCOL(l) > 1 ) {
+        r_idx <- 1 + NCOL(l)
+        if( NCOL(r) == 1L ) {
+            col.order <- c( 1, r_idx, seq(from = 2, to = NCOL(l)) )
+        } else {
+            col.order <- c(
+                1, r_idx, seq(from = 2, to = NCOL(l)),
+                seq(from = r_idx + 1L, to = NCOL(out))
+            )
+        }
+        out <- out[, col.order]
+    }
+    return(out)
 }

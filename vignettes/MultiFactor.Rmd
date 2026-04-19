@@ -55,11 +55,8 @@ tp <- trade_posts()
 ```
 
 ```{r 'prep-plot', echo = FALSE}
-fruits <- c("🍎", "🍐", "🍒", "🍊", "🍈", "🫐")
-furniture <- c("🪑", "🚪", "🛋", "🛏️", "🗄️", "🧰")
-clothing <- c("👕", "👖", "🧦", "🧤", "🎩", "🧣")
-marbles <- c("🔴", "🟢", "🟣", "🔵", "🟡", "🪩")
-instruments <- c("🎺", "🎸", "🥁", "🪗", "🎻", "🪉")
+
+
 ```
 
 # MultiFactor and LinkMap objects
