@@ -217,13 +217,13 @@ our data set, there aren't any trade post that deals in that particular pair of
 goods. 
 However, we could imagine trading our fruit for clothing in steps: We can trade
 our fruit for a different good, which we trade for another one, until we reach a
-good that we can trade for clothing The `weave()` function does exactly this: 
+good that we can trade for clothing. The `weave()` function does exactly this: 
 ```{r 'weave'}
 fruit2clothing <- weave(tp, fruit ~ clothing)
 fruit2clothing
 ```
 We receive a new `LinkMap` containing all fruits that could be traded for 
-furniture. 
+clothing. 
 
 ## Selecting a path
 We can use `select_path()` to find the types of traded goods in order,
@@ -293,8 +293,8 @@ subgroup_apply(
   )
 
 # More complex example: 
-# For all subgroups of furniture corresponding to one particular food, if that 
-# group has more than two rows (types of furniture), fit a statistical model. 
+# For all subgroups of clothing corresponding to one particular fruit, if that 
+# group has more than two rows (types of clothing), fit a statistical model. 
 # 
 subgroup_apply(
   clothing_table, tp, fruit ~ clothing, FUN = function(x) {
