@@ -46,7 +46,8 @@ LinkMap <- S7::new_class(
         stopifnot(.check_input_df(x))
 
         # Factorize x
-        x[c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
+        x[ c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
+        x <- x[ !duplicated(x[, c(1, 2)]), ]
 
         S7::new_object(x)
     },

@@ -56,8 +56,11 @@ S7::method(weave, MultiFactor) <- function(
       if(out.format == "LinkMap") {
           cn <- vapply(lapply(terms, unique), paste, collapse = ".", "")
           res <- do.call(rbind.data.frame, lapply(res, `colnames<-`, cn))
-          res <- unique(res)
       }
+    }
+    # Remove duplicates
+    if(out.format == "LinkMap") {
+    res <- res[ !duplicated(res[, c(1, 2)]), ]
     }
 
     return(res)

@@ -64,10 +64,13 @@ randomMultiFactor <- function(layout = NULL, n_features = 10, sparseness = 0.75)
 #'
 trade_posts <- function(raw.data = FALSE) {
     # Small dummy data; six factors of length six
-    trade_goods <- .emoji_data()
+    trade_goods <- .load_trade_goods()
     # Finish immediately if raw.data is toggled.
     if(raw.data) return(trade_goods)
-    trade_goods <- split(trade_goods[, -4], trade_goods[, 4])
+    # Split and trim row.names
+    trade_goods <- tapply(
+        trade_goods[, -4], trade_goods[, 4], `rownames<-`, NULL
+        )
     layout <- igraph::sample_gnm(length(trade_goods), length(trade_goods))
     el <- igraph::as_edgelist(layout)
     out <- apply(el, 1L, function(i) randomLinkMap(
@@ -79,36 +82,13 @@ trade_posts <- function(raw.data = FALSE) {
 
 }
 
-.emoji_data <- function() data.frame(
-    name = c(
-        "apples", "pears", "cherries", "oranges", "melons", "grapes",
-        "couch", "cabinet", "wastebin", "bed", "box", "door",
-        "trumpet", "guitar", "drum", "keyboard", "fiddle", "saxophone",
-        "t-shirt", "dress", "socks", "gloves", "hat", "scarf",
-        paste( c("red", "white", "black", "blue", "8", "sparkly"), "marble" ),
-        paste( c("fancy", "green", "red", "blue", "orange", "plain"), "book" )
-    ),
-    emoji = c(
-        "🍎", "🍐", "🍒", "🍊", "🍈", "🍇",
-        "🛋", "🗄", "🗑", "🛏", "🧰", "🚪",
-        "🎺", "🎸", "🥁", "🎹", "🎻", "🎷",
-        "👕", "👗", "🧦", "🧤", "🎩", "🧣",
-        "🔴", "⚪", "⚫", "🔵", "🎱", "🔮",
-        "📔", "📗", "📕", "📘", "📙", "📓"
-    ),
-    runes = c(
-        "1F34E", "1F350", "1F352", "1F34A", "1F348", "1F347",
-        "1F6CB", "1F5C4", "1F5D1", "1F6CF", "1F9F0", "1F6AA",
-        "1F3BA", "1F3B8", "1F941", "1F3B9", "1F3BB", "1F3B7",
-        "1F455", "1F457", "1F9E6", "1F9E4", "1F3A9", "1F9E3",
-        "1F534", "26AA",  "26AB",  "1F535", "1F3B1", "1F52E",
-        "1F4D4", "1F4D7", "1F4D5", "1F4D8", "1F4D9", "1F4D3"
-    ),
-    group = rep(
-        c("fruit", "furniture", "instruments", "clothing", "marbles", "books"),
-        each = 6
-        )
-)
+#' @importFrom utils data
+.load_trade_goods <- function() local({
+    utils::data("trade_goods", package = "MultiFactor", envir = environment())
+    trade_goods <- get("trade_goods")
+
+    return(trade_goods)
+})
 
 .randomMultiFactor.auto <- function(n_features, sparseness) {
     n_types <- 6

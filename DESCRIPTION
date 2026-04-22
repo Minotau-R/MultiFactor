@@ -19,11 +19,14 @@ Imports:
 Depends: 
     R (>= 4.1.0)
 License: GPL-3
+LazyData: false
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests: 
     anansi,
+    ggplot2,
+    ragg,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
