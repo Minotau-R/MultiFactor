@@ -46,7 +46,8 @@ LinkMap <- S7::new_class(
         stopifnot(.check_input_df(x))
 
         # Factorize x
-        x[c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
+        x[ c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
+        x <- x[ !duplicated(x[, c(1, 2)]), ]
 
         S7::new_object(x)
     },
@@ -165,7 +166,7 @@ MultiFactor <- S7::new_class(
     if(! length(colnames(x)[seq_len(2L)]) == 2L ) {
         stop("Both key columns must be named. ")
     }
-    return(TRUE)
+    return( TRUE )
 }
 
 
@@ -174,7 +175,8 @@ MultiFactor <- S7::new_class(
 .squash_meta <- function(x) {
     names <- paste(colnames(x), collapse = "2")
     res <- lapply(x@metadata, unique)
-    res <- if (length(res) <= 1L ) res else length(res)
+    mult <- lengths(res) > 1L
+    res[mult] <- lengths(res)[mult]
 
     res <- c(name = names, res)
     `class<-`(`attr<-`(res, "row.names", names), "data.frame")
@@ -197,7 +199,7 @@ MultiFactor <- S7::new_class(
     mx <- switch(mode,
                  "counts" = unlist(
                      lapply(x, function(y) {
-                         lapply(y, function(z) length(unique(z)))
+                         lapply(y[seq_len(2L)], function(z) length(unique(z)))
                      }),
                      use.names = FALSE
                  ),
@@ -311,6 +313,6 @@ MultiFactor <- S7::new_class(
     is.data.frame(x) &&
         NCOL(x) == 2L &&
         length(colnames(x)) == 2L &&
-        all(vapply(x, is.factor, NA, USE.NAMES = FALSE))
+        all(vapply(x[seq_len(2L)], is.factor, NA, USE.NAMES = FALSE))
 }
 

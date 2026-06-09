@@ -8,7 +8,7 @@
 \usage{
 randomMultiFactor(layout = NULL, n_features = 10, sparseness = 0.75)
 
-trade_posts(raw.list = FALSE)
+trade_posts(raw.data = FALSE)
 
 randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 }
@@ -20,8 +20,8 @@ randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 \item{sparseness}{\verb{Numeric scalar}, proportion: How rare are connections.
 Default is \code{0.5}.}
 
-\item{raw.list}{\code{Boolean}, Whether to return the list of goods rather than
-the default \code{MultiFactor}.}
+\item{raw.data}{\code{Boolean}, Whether to return the \code{data.frame} of goods rather
+than the default \code{MultiFactor}.}
 
 \item{x}{optional list of two named vectors of features to use. Default is
 \code{list(lower = letters, UPPER = LETTERS)}.}

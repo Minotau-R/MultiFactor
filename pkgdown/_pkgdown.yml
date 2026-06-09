@@ -38,8 +38,11 @@ reference:
   - as.igraph.LinkMap
   - as.matrix.LinkMap
   - mf_as_graph_df
-- title: Utils
+- title: Datasets
 - contents:
   - randomMultiFactor
   - randomLinkMap
+  - trade_goods
+- title: Utils
+- contents:
   - read_adjacency_list

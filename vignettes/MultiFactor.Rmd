@@ -48,18 +48,41 @@ remotes::install_github("minotau-R/MultiFactor")
 ```{r 'setup-multifactor'}
 library(MultiFactor)
 library(ggplot2)
+library(dplyr)
 
 # Load demo data
-set.seed(010292)
+set.seed(2612)
 tp <- trade_posts()
 ```
 
 ```{r 'prep-plot', echo = FALSE}
-fruits <- c("🍎", "🍐", "🍒", "🍊", "🍈", "🫐")
-furniture <- c("🪑", "🚪", "🛋", "🛏️", "🗄️", "🧰")
-clothing <- c("👕", "👖", "🧦", "🧤", "🎩", "🧣")
-marbles <- c("🔴", "🟢", "🟣", "🔵", "🟡", "🪩")
-instruments <- c("🎺", "🎸", "🥁", "🪗", "🎻", "🪉")
+e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
+
+.to_plot_df <- function(x, e) {
+  l <- colnames(x)[[1L]]
+  r <- colnames(x)[[2L]]
+  res <- rbind(
+  data.frame(
+  rbind(
+    e[[l]][match(x[[l]], levels(x)[[l]]), ],
+    e[[r]][match(x[[r]], levels(x)[[r]]), ]
+    ), 
+  y = rep(seq_len(NROW(x)), 2), 
+  x = rep(c(-1, -1/2), each = NROW(x))
+  ), 
+  data.frame(
+    name = c(l, r), 
+    emoji = c("", ""), 
+    runes = c("", ""),
+    y = NROW(x) + 1, 
+    x = c(-1, -1/2)
+    )
+  )
+  res[["header"]] <- res[["name"]] %in% names(e)
+  return(res)
+}
+
+
 ```
 
 # MultiFactor and LinkMap objects
@@ -73,8 +96,8 @@ additional columns are considered metadata.
 
 Let's use an example data set to take a closer look at `LinkMap`. The 
 `trade_posts()` function generates data about fictional trade posts, where one 
-type of good is traded for another. In this particular case, types of furniture 
-are traded for types of utensils. 
+type of good is traded for another. In this particular case, types of books are 
+traded for types of furniture. 
 ```{r 'linkmap-object-start'}
 linkmap <- tp[[1]]
 linkmap
@@ -99,125 +122,45 @@ tp[[3]]
 ### Visual representation of the LinkMaps in our data set. 
 ```{r, 'plot-LinkMap', echo=FALSE, fig.width=8, fig.height = 4}
 
-df_linkmap <- rbind(
-  data.frame(
-  label = c(
-    furniture[match(linkmap$furniture, levels(linkmap)$furniture)],
-    clothing[match(linkmap$clothing, levels(linkmap)$clothing)]
-    ), 
-  y = rep(seq_len(NROW(linkmap)), 2), 
-  x = rep(c(-1, -1/2), each = NROW(linkmap))
-  ), 
-  data.frame(
-    label = c("furniture", "clothing"), 
-    y = NROW(linkmap) + 1, 
-    x = c(-1, -1/2)
-    )
-  )
+plot_dfs <- lapply(tp, .to_plot_df, e)
 
+plot_dfs[[2]]$x <- plot_dfs[[2]]$x + 1 + 2/3
+plot_dfs[[2]]$y <- plot_dfs[[2]]$y -20/13
 
+plot_dfs[[3]]$x <- plot_dfs[[3]]$x + 1 + 3/3
+plot_dfs[[3]]$y <- plot_dfs[[3]]$y -10/13
 
-df_extra_1 <- rbind(
-  data.frame(
-  label = c(
-    clothing[match(tp[[2L]]$clothing, levels(tp[[2L]])$clothing)],
-    instruments[match(tp[[2L]]$instruments, levels(tp[[2L]])$instruments)]
-    ), 
-  y = rep(seq_len(NROW(tp[[2L]])), 2),
-  x = rep(c(-1, -1/2), each = NROW(tp[[2L]]))
-  ), 
-  data.frame(
-    label = c("clothing", "instruments"), 
-    y = NROW(tp[[2L]]) + 1, 
-    x = c(-1, -1/2)
-    )
-  )
+plot_dfs[[4]]$x <- plot_dfs[[4]]$x + 1 + 4/3
+plot_dfs[[4]]$y <- plot_dfs[[4]]$y
 
-df_extra_2 <- rbind(
-  data.frame(
-  label = c(
-    fruits[match(tp[[3L]]$fruit, levels(tp[[3L]])$fruit)],
-    marbles[match(tp[[3L]]$marbles, levels(tp[[3L]])$marbles)]
-    ), 
-  y = rep(seq_len(NROW(tp[[3L]])), 2), 
-  x = rep(c(-1, -1/2), each = NROW(tp[[3L]]))
-  ), 
-  data.frame(
-    label = c("fruit", "marbles"), 
-    y = NROW(tp[[3L]]) + 1, 
-    x = c(-1, -1/2) 
-    )
-  )
+plot_dfs[[5]]$x <- plot_dfs[[5]]$x + 1 + 5/3
+plot_dfs[[5]]$y <- plot_dfs[[5]]$y + 10/13
 
-df_extra_3 <- rbind(
-  data.frame(
-  label = c(
-    fruits[match(tp[[4L]]$instruments, levels(tp[[4L]])$instruments)],
-    marbles[match(tp[[4L]]$marbles, levels(tp[[4L]])$marbles)]
-    ), 
-  y = rep(seq_len(NROW(tp[[4L]])), 2), 
-  x = rep(c(-1, -1/2), each = NROW(tp[[4L]]))
-  ), 
-  data.frame(
-    label = c("instruments", "marbles"), 
-    y = NROW(tp[[4L]]) + 1, 
-    x = c(-1, -1/2) 
-    )
-  )
-  
-df_extra_4 <- rbind(
-  data.frame(
-  label = c(
-    clothing[match(tp[[5L]]$clothing, levels(tp[[5L]])$clothing)],
-    marbles[match(tp[[5L]]$marbles, levels(tp[[5L]])$marbles)]
-    ), 
-  y = rep(seq_len(NROW(tp[[5L]])), 2), 
-  x = rep(c(-1, -1/2), each = NROW(tp[[4L]]))
-  ), 
-  data.frame(
-    label = c("clothing", "marbles"), 
-    y = NROW(tp[[5L]]) + 1, 
-    x = c(-1, -1/2) 
-    )
-  )
+plot_dfs[[6]]$x <- plot_dfs[[6]]$x + 1 + 6/3
+plot_dfs[[6]]$y <- plot_dfs[[6]]$y + 20/13
 
-df_extra_1$x <- df_extra_1$x + 1 + 2/3
-df_extra_1$y <- df_extra_1$y -15/13
-
-df_extra_2$x <- df_extra_2$x + 1 + 3/3
-df_extra_2$y <- df_extra_2$y -5/13
-
-df_extra_3$x <- df_extra_3$x + 1 + 4/3
-df_extra_3$y <- df_extra_3$y + 5/13
-
-df_extra_4$x <- df_extra_4$x + 1 + 5/3
-df_extra_4$y <- df_extra_4$y + 15/13
+first_linkmap <- plot_dfs[[1L]]
+other_linkmap <- do.call(rbind, plot_dfs[-1L])
 
 ggplot() +
   aes(
     x = x, y = y, 
-    fill = label %in% c("fruit", "clothing", "marbles", "instruments", "furniture")
     ) +
 
   # Bunched LinkMaps
-  geom_tile(data = df_extra_4, colour = "black", linewidth = 1/2) +
-  geom_text(data = df_extra_4, aes(label = label), size = 4.5) +
-  
-  geom_tile(data = df_extra_3, colour = "black", linewidth = 1/2) +
-  geom_text(data = df_extra_3, aes(label = label), size = 4.5) +
-  
-  geom_tile(data = df_extra_2, colour = "black", linewidth = 1/2) +
-  geom_text(data = df_extra_2, aes(label = label), size = 4.5) +
-  
-  geom_tile(data = df_extra_1, colour = "black", linewidth = 1/2) +
-  geom_text(data = df_extra_1, aes(label = label), size = 4.5) +
-  
-  geom_tile(data = df_linkmap, colour = "black", linewidth = 1/2) +
-  geom_text(data = df_linkmap, aes(label = label), size = 5) +
-  
+  lapply(
+    rev(plot_dfs[-1]), function(x) list(
+      geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
+      geom_text(data = filter(x, header),  aes(label = name), size = 5),
+      geom_text(data = filter(x, !header), aes(label = emoji), size = 5)
+      )
+) +
+  geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
+  geom_text( data = filter(first_linkmap, header), aes(label = name), size = 5 ) +
+  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5 ) +
   scale_fill_manual(values = c("TRUE" = "lightgray", "FALSE" = "white")) +
   guides(fill = "none") +
-
+   
   theme_void()
 
 ```
@@ -240,9 +183,9 @@ in that particular `LinkMap` - and that are therefore linked to the second featu
 in the `LinkMap`. 
 
 For instance, in the top-left corner of the matrix, we can see that the first 
-`LinkMap` links furniture and utensils and is aptly named `furniture2utensils`.
-Notice that five unique types of furniture as well as five types of utensils are
-mentioned in `furniture2utensils`.  
+`LinkMap` links books and furniture and is aptly named `books2furniture`.
+Notice that five unique types of books as well as five types of furniture are
+mentioned in `books2furniture`.  
 
 Though `MultiFactor` is a list of `LinkMap`s under the hood, we can also 
 interact with its matrix representation, as well as access the component levels:  
@@ -265,43 +208,29 @@ main_graph <- data.frame(
 ```
 # weave() a path
 Going back to our trading post example, let's say we'd want to get some new 
-chairs, but we only have fruit. While both fruit and furniture are available in 
+hats, but we only have fruit. While both fruit and clothing are available in 
 our data set, there aren't any trade post that deals in that particular pair of 
 goods. 
-However, we could imagine trading our fruit for furniture in steps: We can trade
+However, we could imagine trading our fruit for clothing in steps: We can trade
 our fruit for a different good, which we trade for another one, until we reach a
-good that we can trade for furniture. The `weave()` function does exactly this: 
+good that we can trade for clothing. The `weave()` function does exactly this: 
 ```{r 'weave'}
-fruit2furniture <- weave(tp, fruit ~ furniture)
-fruit2furniture
+fruit2clothing <- weave(tp, fruit ~ clothing)
+fruit2clothing
 ```
 We receive a new `LinkMap` containing all fruits that could be traded for 
-furniture. 
+clothing. 
 
 ## Selecting a path
 We can use `select_path()` to find the types of traded goods in order,
 or more generally, the paths that were traversed. If several paths exist, all 
 will be traversed and included into one `LinkMap`. 
 ```{r 'weave-sp'}
-select_path(tp, fruit ~ furniture)
+select_path(tp, fruit ~ clothing)
 ```
 
 ```{r 'weave-plot', echo = FALSE}
-df_weave <- rbind(
-  data.frame(
-  label = c(
-    fruits[match(fruit2furniture$fruit, levels(fruit2furniture)$fruit)],
-    furniture[match(fruit2furniture$furniture, levels(fruit2furniture)$furniture)]
-    ), 
-  y = rep(seq_len(NROW(fruit2furniture)), 2), 
-  x = rep(c(4, 9/2), each = NROW(fruit2furniture))
-  ), 
-  data.frame(
-    label = c("fruit", "furniture"), 
-    y = NROW(fruit2furniture) + 1, 
-    x = c(4, 9/2)
-    )
-  )
+df_weave <- .to_plot_df(fruit2clothing, e)
 
 ```
 
@@ -324,7 +253,7 @@ plot(g)
 ### Convert `LinkMap` relational information to `igraph` object
 ```{r 'igraph-linkmap-sp', fig.height=6, fig.width = 6}
 # Convert to an igraph object
-lg <- as.igraph(fruit2furniture)
+lg <- as.igraph(fruit2clothing)
 lg
 # Same information as the LinkMap: 
 plot(lg)
@@ -333,7 +262,7 @@ plot(lg)
 # Convert `LinkMap` linkage information to sparse adjacency `Matrix`
 ```{r 'Matrix-sp'}
 # Convert to an igraph object
-m <- as.matrix(fruit2furniture, dimnames = levels(fruit2furniture))
+m <- as.matrix(fruit2clothing, dimnames = levels(fruit2clothing))
 m
 ```
 
@@ -343,11 +272,12 @@ with features (rows) of the appropriate type.
 
 ```{r 'prep-apply'}
 # Generate small example table
-furniture_table <- as.data.frame(
-  replicate( 10, rbinom(6, rbinom(6, 100, runif(6)), runif(6)) ) 
+n <- length(levels(tp)$clothing)
+clothing_table <- as.data.frame(
+  replicate( 10, rbinom(n, rbinom(n, 100, runif(n)), runif(n)) ) 
   )
-rownames(furniture_table) <- levels(tp)$furniture
-furniture_table
+rownames(clothing_table) <- levels(tp)$clothing
+clothing_table
 ```
 
 ## subgroup_apply
@@ -355,15 +285,15 @@ furniture_table
 groupings on the left hand of the formula:  
 ```{r 'subgroup-apply'}
 subgroup_apply(
-  X = furniture_table, LINK = tp, BY = fruit ~ furniture, FUN = as.data.frame
+  X = clothing_table, LINK = tp, BY = fruit ~ clothing, FUN = as.data.frame
   )
 
 # More complex example: 
-# For all subgroups of furniture corresponding to one particular food, if that 
-# group has more than two rows (types of furniture), fit a statistical model. 
+# For all subgroups of clothing corresponding to one particular fruit, if that 
+# group has more than two rows (types of clothing), fit a statistical model. 
 # 
 subgroup_apply(
-  furniture_table, tp, fruit ~ furniture, FUN = function(x) {
+  clothing_table, tp, fruit ~ clothing, FUN = function(x) {
     if( NROW(x) <= 2 ) return( NULL )
     # else: 
     summary( lm(V1 ~ V2, data = x) )
@@ -375,7 +305,7 @@ subgroup_apply(
 For those who prefer to use `tidyverse`, `subgroup_to_tbl()` returns a tidy 
 wide-format table, ready to be grouped based on the first two columns. 
 ```{r 'subgroup-tbl'}
-subgroup_to_tbl(furniture_table, tp, fruit ~ furniture)
+subgroup_to_tbl(clothing_table, tp, fruit ~ clothing)
 ```
 
 ## Reading and parsing adjaceny list-formatted files
@@ -390,9 +320,9 @@ to be read from file (or URL).
 We'll format the `LinkMap` from fruit to furniture that we generated above. 
 ```{r}
 # Use igraph to deconstruct a graph into an adjacency list, coerce to characters
-adj <- lapply( as_adj_list( as.igraph(fruit2furniture) ), as_ids )
+adj <- lapply( as_adj_list( as.igraph(fruit2clothing) ), as_ids )
 # Only keep the 'fruit' nodes that have more than one link for now
-adj <- adj[ levels(fruit2furniture)$fruit ]
+adj <- adj[ levels(fruit2clothing)$fruit ]
 adj <- adj[ lengths(adj) > 0 ]
 # collapse names to first elements of character vectors
 adj <- mapply(c, names(adj), adj, USE.NAMES = FALSE)
