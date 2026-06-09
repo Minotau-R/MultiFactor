@@ -48,6 +48,7 @@ remotes::install_github("minotau-R/MultiFactor")
 ```{r 'setup-multifactor'}
 library(MultiFactor)
 library(ggplot2)
+library(dplyr)
 
 # Load demo data
 set.seed(2612)
@@ -78,9 +79,6 @@ e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
     )
   )
   res[["header"]] <- res[["name"]] %in% names(e)
-  res[["runes"]][res[["runes"]] != ""] <- 
-    paste0("\\", "U", res[["runes"]][res[["runes"]] != ""])
-  res[["runes"]][res[["runes"]] == ""] <- res[["name"]][res[["runes"]] == ""]
   return(res)
 }
 
@@ -153,18 +151,16 @@ ggplot() +
   lapply(
     rev(plot_dfs[-1]), function(x) list(
       geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
-      geom_text(data = x, aes(label = runes), size = 5)
+      geom_text(data = filter(x, header),  aes(label = name), size = 5),
+      geom_text(data = filter(x, !header), aes(label = emoji), size = 5)
       )
 ) +
-  geom_tile(
-    data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2
-    ) +
-  geom_text(
-    data = first_linkmap, aes(label = iconv(runes)), size = 5
-    ) +
+  geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
+  geom_text( data = filter(first_linkmap, header), aes(label = name), size = 5 ) +
+  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5 ) +
   scale_fill_manual(values = c("TRUE" = "lightgray", "FALSE" = "white")) +
   guides(fill = "none") +
-
+   
   theme_void()
 
 ```
