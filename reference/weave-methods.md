@@ -47,20 +47,17 @@ x <- MultiFactor(list(a2b, a2c))
 # Weave new b2c LinkMap
 weave(x, b ~ c)
 #>   b c
-#> 1 A x
-#> 2 B x
-#> 3 C x
-#> 4 A y
-#> 5 B y
-#> 6 C y
-#> 7 A z
-#> 8 B z
-#> 9 C z
+#> 1 B x
+#> 2 C x
+#> 3 C y
+#> 4 A z
+#> 5 B z
+#> 6 C z
 weave(x, b ~ a, out.format = "matrix")
 #> 3 x 3 sparse Matrix of class "ngCMatrix"
 #>    a
 #> b   a b c
-#>   A | | .
-#>   B . . |
-#>   C . | |
+#>   A . . |
+#>   B . | |
+#>   C | . |
 ```

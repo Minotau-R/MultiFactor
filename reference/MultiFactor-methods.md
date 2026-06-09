@@ -73,13 +73,10 @@ x[["a2c"]]
 #>    a c
 #> 1  a A
 #> 2  c A
-#> 3  c A
 #> 4  b A
 #> 5  a C
-#> 6  c A
 #> 7  a B
 #> 8  c C
-#> 9  a C
 #> 10 b B
 
 # Subset by a path

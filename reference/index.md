@@ -52,11 +52,16 @@
 - [`mf_as_graph_df()`](https://minotau-r.github.io/MultiFactor/reference/mf_as_graph_df.md)
   : Convert a MultiFactor to relational graph format.
 
-## Utils
+## Datasets
 
 - [`randomMultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
   [`trade_posts()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
   [`randomLinkMap()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
   : Generate a random MultiFactor or LinkMap
+- [`trade_goods`](https://minotau-r.github.io/MultiFactor/reference/trade_goods.md)
+  : Small data set of six types of goods.
+
+## Utils
+
 - [`read_adjacency_list()`](https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.md)
   : Read Relational Data Values

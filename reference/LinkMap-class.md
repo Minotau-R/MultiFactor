@@ -54,8 +54,6 @@ LinkMap(x)
 #> 4  a C
 #> 5  b A
 #> 6  c B
-#> 7  c B
-#> 8  c C
 #> 9  b C
 #> 10 a B
 ```
