@@ -14,22 +14,21 @@
 #'     path definition.
 #' @returns a `LinkMap` or `sparse Matrix`.
 #' @examples
-#' # Generate pair of random linkage input
-#' a2b <- data.frame(
-#'    a = sample(letters[seq(3)], 10, replace = TRUE),
-#'    b = sample(LETTERS[seq(3)], 10, replace = TRUE)
-#' )
-#' a2c <- data.frame(
-#'     a = sample(letters[seq(3)], 10, replace = TRUE),
-#'     c = sample(c("x", "y", "z"), 10, replace = TRUE)
-#' )
-#'
-#' # Create MultiFactor
-#' x <- MultiFactor(list(a2b, a2c))
+#' # Generate a random MultiFactor
+#' x <- randomMultiFactor()
 #'
 #' # Weave new b2c LinkMap
 #' weave(x, b ~ c)
 #' weave(x, b ~ a, out.format = "matrix")
+#'
+#' # Merge variables with "+" operator, new names get concatenated with ".":
+#' weave(x, b ~ c + d)
+#'
+#' # Control intermediate variable types "~", returning a MultiFactor:
+#' weave(x, a ~ c ~ e )
+#'
+#' # Combine merging and intermediate stops:
+#' weave(x, a ~ b + c ~ d + e ~ f )
 #'
 NULL
 
@@ -39,54 +38,42 @@ S7::method(weave, MultiFactor) <- function(
     x, .by, out.format = c("LinkMap", "matrix"),
     include = NULL, exclude = NULL, exact = NULL
 ) {
-    out.format <- match.arg(out.format, c("LinkMap", "matrix"))
-    terms <- .by_terms(.by)
-
-    # Simple case
-    if (all (lengths(terms) == 1L)) {
-      res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
-      if( out.format == "matrix" ) {
-        res <- `as.matrix.MultiFactor::LinkMap`(res, dimnames = levels(res))
-      }
-    }
-
-    # Multiple variable case
-    if( any(lengths(terms) > 1L) ) {
-      res <- .weave_mult(terms, x, out.format)
-      if(out.format == "LinkMap") {
-          cn <- vapply(lapply(terms, unique), paste, collapse = ".", "")
-          res <- do.call(rbind.data.frame, lapply(res, `colnames<-`, cn))
-      }
-    }
-    # Remove duplicates
-    if(out.format == "LinkMap") {
-    res <- res[ !duplicated(res[, c(1, 2)]), ]
-    }
-
+  if(.by_is_complex(.by)) {
+    .by_list <- .by_prep_complex_call(.by)
+    res <- lapply(
+      .by_list, weave, x = x,
+      out.format = out.format,
+      include = include, exclude = exclude, exact = NULL
+      )
+    res <- MultiFactor(res)
     return(res)
-}
+  }
 
-#' @export
-#' @importFrom utils stack
-#'
-S7::method(stack, MultiFactor) <- function(x, .by, out.format = c("LinkMap", "matrix"), ...) {
-    out.format <- match.arg(out.format, c("LinkMap", "matrix"))
-    terms <- .by_terms(.by)
+  out.format <- match.arg(out.format, c("LinkMap", "matrix"))
+  terms <- .by_terms(.by)
 
-    #Stacking case
-    if( all( lengths(terms) == 1L ) ) stop(
-        "At least one side of formula argument `'.by' ",
-        "must contain more than one variable."
-    )
-
-    x <- .stack_by_character(x, terms[[1L]], terms[[2L]])
-    if(out.format == "matrix") {
-        res <- `as.matrix.MultiFactor::LinkMap`(x)
-        dimnames(res) <- levels(x)[vapply(terms, paste, collapse = ".", "")]
-        return(res)
+  # Simple case
+  if ( all( lengths(terms) == 1L) ) {
+    res <- .weave_simple(terms[[1L]], terms[[2L]], x, out.format)
+    if( out.format == "matrix" ) {
+      res <- `as.matrix.MultiFactor::LinkMap`(res, dimnames = levels(res))
     }
-    if( out.format == "LinkMap" ) return(x)
+  }
 
+  # Multiple variable case
+  if( any( lengths(terms) > 1L) ) {
+    res <- .weave_mult(terms, x, out.format)
+    if(out.format == "LinkMap") {
+      cn <- vapply(lapply(terms, unique), paste, collapse = ".", "")
+      res <- do.call(rbind.data.frame, lapply(res, `colnames<-`, cn))
+    }
+  }
+  # Remove duplicates
+  if(out.format == "LinkMap") {
+    res <- res[ !duplicated(res[, c(1, 2)]), ]
+  }
+
+  return(res)
 }
 
 
