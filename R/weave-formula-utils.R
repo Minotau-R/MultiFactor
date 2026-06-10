@@ -17,7 +17,32 @@
     }
 }
 
+#' @returns BOOL
+#' @noRd
+#' @importFrom rlang as_label
+#'
+.by_is_complex <- function(.by) {
+    # Only support complex through formula
+    if(is.character(.by)) return(FALSE)
 
+    stopifnot(
+        "'.by' must be a character vector or a formula." =
+            inherits(.by, c("character", "formula"))
+    )
+    # Returns TRUE if more than one "~" seen.
+    length(unlist(strsplit(rlang::as_label(.by), "~", fixed = TRUE))) > 2L
+}
+
+#' @importFrom stats reformulate
+#' @noRd
+#' @returns a list of step-wise formulae.
+.by_prep_complex_call <- function(.by) {
+    all_terms <- unlist(strsplit(rlang::as_label(.by), "~", fixed = TRUE))
+    lapply(
+        seq_len(length(all_terms) -1L),
+        function(i) stats::reformulate(all_terms[i+1L], all_terms[i])
+        )
+    }
 
 
 #' Standardize terms

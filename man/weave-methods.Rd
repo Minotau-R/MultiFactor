@@ -24,21 +24,20 @@ given \code{MultiFactor}. Elements can be merged by including several names,
 separated by the plus (\code{+}) sign. See examples.
 }
 \examples{
-# Generate pair of random linkage input
-a2b <- data.frame(
-   a = sample(letters[seq(3)], 10, replace = TRUE),
-   b = sample(LETTERS[seq(3)], 10, replace = TRUE)
-)
-a2c <- data.frame(
-    a = sample(letters[seq(3)], 10, replace = TRUE),
-    c = sample(c("x", "y", "z"), 10, replace = TRUE)
-)
-
-# Create MultiFactor
-x <- MultiFactor(list(a2b, a2c))
+# Generate a random MultiFactor
+x <- randomMultiFactor()
 
 # Weave new b2c LinkMap
 weave(x, b ~ c)
 weave(x, b ~ a, out.format = "matrix")
+
+# Merge variables with "+" operator, new names get concatenated with ".":
+weave(x, b ~ c + d)
+
+# Control intermediate variable types "~", returning a MultiFactor:
+weave(x, a ~ c ~ e )
+
+# Combine merging and intermediate stops:
+weave(x, a ~ b + c ~ d + e ~ f )
 
 }

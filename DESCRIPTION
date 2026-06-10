@@ -26,6 +26,7 @@ RoxygenNote: 7.3.3
 Suggests: 
     anansi,
     ggplot2,
+    dplyr, 
     ragg,
     knitr,
     rmarkdown,
