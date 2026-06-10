@@ -321,13 +321,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH 9da0aa5 UN-- 6 6 -- 
+#> IGRAPH fd006ed UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from 9da0aa5 (vertex names):
+#> + edges from fd006ed (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -343,9 +343,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH 0fd43eb UN-B 10 18 -- 
+#> IGRAPH a120f87 UN-B 10 18 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 0fd43eb (vertex names):
+#> + edges from a120f87 (vertex names):
 #>  [1] apples --dress   grapes --dress   melons --dress   oranges--dress  
 #>  [5] apples --gloves  pears  --gloves  apples --hat     grapes --hat    
 #>  [9] melons --hat     oranges--hat     pears  --hat     apples --scarf  
