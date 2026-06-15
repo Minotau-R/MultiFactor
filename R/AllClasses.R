@@ -89,6 +89,8 @@ LinkMap <- S7::new_class(
 #' @slot levels `Named list of character vectors`. Accessed through `levels(x)`
 #' @slot map `(sparse) Matrix` specifying which elements contain which levels.
 #' @param x a `LinkMap`, or named list of `LinkMap` objects.
+#' @param levels Optional. A `named list of character vectors`, to be used as
+#'     levels.
 #' @returns a `MultiFactor` object.
 #' @seealso [MultiFactor-methods()]
 #' @importFrom S7 new_class new_property
@@ -112,7 +114,9 @@ MultiFactor <- S7::new_class(
     package = "MultiFactor",
     parent = S7::class_list,
     properties  = list(
-        levels = S7::new_property(getter = function(self) lapply(self, levels)),
+        levels = S7::new_property(
+            class = S7::class_list, getter = function(self) self@levels
+            ),
         map = S7::new_property(
             getter = function(self) .mapMultiFactor(self, mode = "counts")
         ),
@@ -122,7 +126,7 @@ MultiFactor <- S7::new_class(
             )
         )
     ),
-    constructor = function(x) {
+    constructor = function(x, levels = NULL) {
         # Check input
         if(is.data.frame(x)) x <- LinkMap(x)
         if(S7::S7_inherits(x, LinkMap)) x <- list(x = x)
@@ -131,10 +135,13 @@ MultiFactor <- S7::new_class(
                 all(vapply(x, .check_input_df, FALSE))
         )
         x <- lapply(x, LinkMap)
+        # In case of identical pair names, merge.
         names(x) <- paste0("x_", seq_along(x))
-        # Extract levels
         x   <- .merge_linkmaps(x)
-        x   <- .unify_levels(x)
+
+        if(is.null(levels))  levels <- .build_levels(x)
+        x <- .unify_levels(x, levels)
+
         names(x) <- vapply(
             x,
             function(x) paste(names(x), collapse = "2"),
@@ -142,7 +149,8 @@ MultiFactor <- S7::new_class(
         )
 
         S7::new_object(
-            .parent = x
+            .parent = x,
+            levels = levels
         )
     },
     validator = function(self) {
@@ -294,19 +302,36 @@ MultiFactor <- S7::new_class(
     return(x)
 }
 
-.unify_levels <- function(x) {
-    map <- .mapMultiFactor(x, "pattern")
-    repeats <- Matrix::colSums(map) >= 2L
-    if(sum(repeats) == 0L) return(x)
-
-    for(id in names(which(repeats))) {
-        fct_in <- lapply(x[map[,id]], \(x) x[,id])
-        fct_rep <- forcats::fct_unify(fct_in)
-        for(fct in seq_along(fct_rep)){
-            x[map[,id]][[fct]][,id] <- fct_rep[[fct]]
+#' Given a list of linkmaps x, return a unified and sorted list of levels.
+#' @importFrom forcats lvls_union
+#' @noRd
+.build_levels <- function(x) {
+    all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))
+    lvs <- lapply(
+        all_lvs,
+        function(lv) {
+            fct_in <- lapply(x, `[[`, lv)
+            fct_in <- fct_in[ !vapply(fct_in, is.null, FUN.VALUE = TRUE) ]
+            res <- forcats::lvls_union(fct_in)
+            sort(res)
         }
-    }
-    x
+    )
+    names(lvs) <- all_lvs
+    return(lvs)
+}
+
+#' Given a list of linkmaps x and named list of chars levels, unify all levels
+#' across x.
+#' @noRd
+.unify_levels <- function(x, levels) lapply(x, .unify_levels_LinkMap, levels)
+
+#' @importFrom forcats lvls_expand
+#'
+.unify_levels_LinkMap <- function(x, levels) {
+    x[] <- mapply(
+        forcats::lvls_expand, x[seq_len(2L)], levels[colnames(x)], SIMPLIFY = FALSE
+    )
+    return(x)
 }
 
 .validLinkMap <- function(x) {

@@ -37,21 +37,29 @@ randomMultiFactor <- function(layout = NULL, n_features = 10, sparseness = 0.75)
         "'sparseness' must be a proportion [0-1]." =
             sparseness <= 1 && sparseness > 0
     )
-    if(is.null(layout)) return(.randomMultiFactor.auto(n_features, sparseness))
+    if(is.null(layout)) {
+        res <- .randomMultiFactor.auto( n_features, sparseness )
+    } else {
+    res <- .randomMultiFactor.layout( layout, n_features, sparseness )
+    }
+    return(res)
+}
+
+
+.randomMultiFactor.layout <- function(layout, n_features, sparseness) {
     stopifnot("'layout' must be an igraph object." = inherits(layout, "igraph"))
     el <- igraph::as_edgelist(layout)
     edge_names <- unique(c(el))
+    if(is.numeric(edge_names)) edge_names <- paste0("v", edge_names)
     lv_list <- .feature_names(edge_names, n_features)
     names(lv_list) <- edge_names
     out <- apply(el, 1L, function(i) randomLinkMap(
         lv_list[c(i[1], i[2])], sparseness = sparseness
-        ), simplify = FALSE
-        )
+    ), simplify = FALSE
+    )
 
     names(out) <- apply(el, 1L, paste, collapse = "2")
-
-    return( MultiFactor(out) )
-
+    return( MultiFactor(out, levels = lv_list) )
 
 }
 
@@ -72,15 +80,18 @@ trade_posts <- function(raw.data = FALSE) {
         trade_goods[, -4], trade_goods[, 4], `rownames<-`, NULL
         )
     layout <- igraph::sample_gnm(length(trade_goods), length(trade_goods))
+
     el <- igraph::as_edgelist(layout)
+
     out <- apply(el, 1L, function(i) randomLinkMap(
         trade_goods[c(i[1], i[2])], sparseness = 3/4
     ), simplify = FALSE
     )
 
-    MultiFactor(out)
+    MultiFactor(out, levels = lapply(trade_goods, `[[`, "name"))
 
 }
+
 
 #' @importFrom utils data
 .load_trade_goods <- function() local({
@@ -107,16 +118,13 @@ trade_posts <- function(raw.data = FALSE) {
         )
     })
     names(out) <- out_names
+    names(id_list) <- ids
 
-    return( MultiFactor(out) )
+    return( MultiFactor(out, levels = id_list) )
 }
 
 .feature_names <- function(y, n_features) lapply(y, function(x) {
-    paste(
-        x,
-        formatC(seq_len(n_features), digits = 2, flag = "0"),
-        sep = "_"
-    )
+    paste0( x, "_", formatC(seq_len(n_features), digits = 2, flag = "0") )
 })
 
 #' @rdname randomMultiFactor

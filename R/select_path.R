@@ -175,12 +175,12 @@ select_path <- function(
 
 
 .weave_mult <- function(terms, x, out.format) apply(
-    expand.grid(terms), 1L, .weave_simple_df,
+    expand.grid(terms), 1L, .weave_ordinary_terms_df,
     x = x, out.format = out.format, simplify = FALSE
 )
 
-.weave_simple_df <- function(df, x, out.format) .weave_simple(
-    df[1], df[2], x, out.format
+.weave_ordinary_terms_df <- function(df, x, out.format) .weave_ordinary_terms(
+    x, df[1], df[2], out.format
 )
 
 
@@ -253,13 +253,13 @@ subsetByPath <- function(link, all_terms) {
 }
 
 #' Generate dictionary Matrix from link input
-#' @inheritParams weaveWeb
+#' @param link `MultiFactor`
 #' @param all_terms `Character vector` of all path terms in sequence.
 #'     `termSeq(x, y, link)`
 #' @importMethodsFrom Matrix %&%
 #' @noRd
 #'
-dictionaryMatrix <- function(link, all_terms) {
+.weave_to_dictionary_matrix <- function(link, all_terms) {
     term_list <- lapply(
         seq_len(length(all_terms) - 1L),
         FUN = function(x) all_terms[c(x, x + 1L)]

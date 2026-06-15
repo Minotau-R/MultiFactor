@@ -76,29 +76,29 @@ S7::method(as.LinkMap, S7::class_list) <- function(
     return(x2y)
 }
 
-S7::method(as.LinkMap, S7::class_logical) <- function(x, edge.names = NULL){
-    # Check that x is a matrix
-    if( !is.matrix(x) ){
-        stop("'x' must be a matrix.", call. = FALSE)
+S7::method( as.LinkMap, S7::class_logical) <- function(x, edge.names = NULL){
+        # Check that x is a matrix
+        if( !is.matrix(x) ){
+            stop("'x' must be a matrix.", call. = FALSE)
+        }
+        if( is.null(rownames(x)) || is.null(colnames(x)) ){
+            stop("'x' must have rownames and colnames.", call. = FALSE)
+        }
+        # Find link indices
+        idx <- which(x, arr.ind = TRUE)
+        # Find link pairs
+        x2y <- data.frame(
+            x = rownames(x)[idx[, 2]],
+            y = colnames(x)[idx[, 1]]
+        )
+        # Assign custom edge names
+        if( !is.null(edge.names) ){
+            names(x2y) <- edge.names
+        }
+        # Convert to LinkMap
+        x2y <- LinkMap(x2y)
+        return(x2y)
     }
-    if( is.null(rownames(x)) || is.null(colnames(x)) ){
-        stop("'x' must have rownames and colnames.", call. = FALSE)
-    }
-    # Find link indices
-    idx <- which(x, arr.ind = TRUE)
-    # Find link pairs
-    x2y <- data.frame(
-        x = rownames(x)[idx[, 2]],
-        y = colnames(x)[idx[, 1]]
-    )
-    # Assign custom edge names
-    if( !is.null(edge.names) ){
-        names(x2y) <- edge.names
-    }
-    # Convert to LinkMap
-    x2y <- LinkMap(x2y)
-    return(x2y)
-}
 
 S7::method(as.MultiFactor, S7::class_any) <- function(x, edge.names = NULL){
         if( is.null(edge.names) ){
