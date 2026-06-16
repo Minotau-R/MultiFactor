@@ -1,12 +1,39 @@
+.check_by_terms <- function(.by) {
+    res <- c("single", "character")
+    #Some grace for select_path output
+    if(is.list(.by)) {
+        stopifnot(
+            "'.by' must be a formula or character vector." = length(.by) == 1L
+        )
+        .by <- .by[[1L]]
+    }
+    stopifnot(
+        "'.by' must be a character vector or a formula." =
+            inherits(.by, c("character", "formula"))
+    )
+    if(is.character(.by)) {
+        if(length(.by) < 2L) stop(
+            "Length of '.by' is must be at least 2 using character input. "
+        )
+        if(length(.by) >= 3L ) res[1L] <- "full"
+    }
+    if(inherits(.by, "formula")) {
+        res[2L] <- "formula"
+        if(.by_is_complex(.by)) {
+            res[1L] <- "complex"
+        }
+    }
+    return(res)
+}
+
+
 #' Standardize terms
 #' @returns a length 2 character vector of y, x.
 #' @noRd
 #'
 .by_terms <- function(.by) {
-    stopifnot(
-        "'.by' must be a character vector or a formula." =
-            inherits(.by, c("character", "formula"))
-    )
+
+
     if(inherits(.by, "formula")) return(.weave_parse_formula(.by))
 
     if(inherits(.by, "character")) {

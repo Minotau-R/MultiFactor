@@ -51,10 +51,11 @@ as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
 #' @param .by either a `formula` or a `character vector`` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param ... additional arguments
+#' @importFrom S7 S7_dispatch
 #' @examples
 #' # Available methods:
 #' weave
 #'
 weave <- S7::new_generic("weave", "x", function(x, .by, ...) {
-    S7_dispatch()
+    S7::S7_dispatch()
 })

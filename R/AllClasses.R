@@ -115,7 +115,8 @@ MultiFactor <- S7::new_class(
     parent = S7::class_list,
     properties  = list(
         levels = S7::new_property(
-            class = S7::class_list, getter = function(self) self@levels
+            class = S7::class_list, getter = function(self) self@levels,
+             setter = function(self, value) .set_levels_MultiFactor(self, value)
             ),
         map = S7::new_property(
             getter = function(self) .mapMultiFactor(self, mode = "counts")
@@ -303,12 +304,19 @@ MultiFactor <- S7::new_class(
 }
 
 #' Given a list of linkmaps x, return a unified and sorted list of levels.
-#' @importFrom forcats lvls_union
 #' @noRd
 .build_levels <- function(x) {
     all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))
-    lvs <- lapply(
-        all_lvs,
+    lvs <- .gather_all_levels(x, all_lvs)
+    return(lvs)
+}
+
+#' @importFrom forcats lvls_union
+#' @noRd
+#'
+.gather_all_levels <- function(x, levels) {
+    res <- lapply(
+        levels,
         function(lv) {
             fct_in <- lapply(x, `[[`, lv)
             fct_in <- fct_in[ !vapply(fct_in, is.null, FUN.VALUE = TRUE) ]
@@ -316,8 +324,9 @@ MultiFactor <- S7::new_class(
             sort(res)
         }
     )
-    names(lvs) <- all_lvs
-    return(lvs)
+    names(res) <- levels
+    return( res )
+
 }
 
 #' Given a list of linkmaps x and named list of chars levels, unify all levels

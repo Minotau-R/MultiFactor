@@ -107,65 +107,36 @@ test_set_enrichment <- function(
     }
 
 
-#' @importFrom Matrix crossprod colSums
-.weave_full_coverage <- function(seen, full, to, from, shared) {
+
+
+#' @importFrom Matrix crossprod colSums t
+#'
+.weave_summarize_links <- function(
+        x, all_terms, metric = c("count", "coverage", "complete")
+        ) {
+    metric <- match.arg(metric, c("count", "coverage", "complete"))
+    seen <- x[[1L]]
+    full <- x[[2L]]
+    # All steps in order
+    from <- all_terms[[1L]]
+    shared <- all_terms[[2L]]
+    to <- all_terms[[3L]]
+
     # Ensure LinkMap order
     shared2from <- as.matrix(seen[, c(shared, from)])
     shared2to <- as.matrix(full[, c(shared, to)])
     # Link observed features to sets
     res <- Matrix::crossprod(
-        shared2to, shared2from !=0L
-    ) == Matrix::colSums(shared2to)
-    Matrix::Matrix(
-        ,
-        sparse = TRUE
+        shared2to, shared2from != 0L
     )
+    if(metric != "count") tot_set <- pmax(Matrix::colSums(shared2to), 1L)
+    if(metric == "coverage") res <- res/tot_set
+    if(metric == "complete") res <- res == tot_set
+
+    res <- Matrix::t( Matrix::Matrix( res, sparse = TRUE ) )
+    return(res)
 }
 
-# seen <- x[[1]]
-# full <- x[[2L]]
-# to = "c"
-# from = "a"
-# shared = "b"
-
-#' @importFrom Matrix crossprod colSums t
-.weave_to_coverage <- function(x, all_terms) {
-    seen <- x[[1L]]
-    full <- x[[2L]]
-    # All steps in order
-    from <- all_terms[[1L]]
-    shared <- all_terms[[2L]]
-    to <- all_terms[[3L]]
-
-    # Ensure LinkMap order
-    shared2from <- as.matrix(seen[, c(shared, from)])
-    shared2to <- as.matrix(full[, c(shared, to)])
-    # Link observed features to sets
-    res <- Matrix::crossprod(
-        shared2to, shared2from != 0L
-        ) / Matrix::colSums(shared2to)
-
-    Matrix::t( Matrix::Matrix( res, sparse = TRUE ) )
-}
-
-#' @importFrom Matrix crossprod colSums t
-.weave_complete_coverage <- function(x, all_terms) {
-    seen <- x[[1L]]
-    full <- x[[2L]]
-    # All steps in order
-    from <- all_terms[[1L]]
-    shared <- all_terms[[2L]]
-    to <- all_terms[[3L]]
-
-    # Ensure LinkMap order
-    shared2from <- as.matrix(seen[, c(shared, from)])
-    shared2to <- as.matrix(full[, c(shared, to)])
-    # Link observed features to sets
-    res <- Matrix::crossprod(
-        shared2to, shared2from != 0L
-        ) == Matrix::colSums(shared2to)
-    Matrix::t( Matrix::Matrix( res, sparse = TRUE ) )
-}
 
 # .weave_calc_coverage <- function(seen, full, to, from, shared) {
 #     # Ensure LinkMap order
