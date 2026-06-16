@@ -174,13 +174,23 @@ select_path <- function(
 }
 
 
-.weave_mult <- function(terms, x, out.format) apply(
+.weave_mult <- function(x, terms, out.format) {
+    res <- apply(
     expand.grid(terms), 1L, .weave_ordinary_terms_df,
     x = x, out.format = out.format, simplify = FALSE
-)
+    )
+    if(out.format == "LinkMap") {
+        cn <- vapply(lapply(terms, unique), paste, collapse = ".", "")
+        res <- do.call( rbind.data.frame, lapply(res, `colnames<-`, cn) )
+        res <- LinkMap(res)
+    }
+    return(res)
+    }
+
+
 
 .weave_ordinary_terms_df <- function(df, x, out.format) .weave_ordinary_terms(
-    x, df[1], df[2], out.format
+    x, c(df[seq_len(2L)]), out.format
 )
 
 

@@ -102,9 +102,13 @@ S7::method(print, MultiFactor) <- function(x, ...) {
 }
 
 S7::method(levels, MultiFactor) <- function(x) {
-    lvs <- unlist(unname(lapply(x, levels)), recursive = FALSE)
-    lvs[!duplicated(names(lvs))]
+    x@levels
 }
+
+#' @export
+`levels<-.MultiFactor::MultiFactor` <- function(x, value)
+    .set_levels_MultiFactor(x, value)
+
 
 S7::method(dimnames, MultiFactor) <- function(x) {
     dimnames(x@map)
@@ -140,8 +144,41 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 #' @export
 #'
 `c.MultiFactor::MultiFactor` <- function(...) {
-    x <- unlist(lapply(list(...), S7::S7_data), recursive = FALSE)
-    MultiFactor(x)
+    x <- list(...)
+    # Figure out content
+    lms <- vapply(x, S7::S7_inherits, LinkMap, FUN.VALUE = FALSE)
+    mfs <- vapply(x, S7::S7_inherits, MultiFactor, FUN.VALUE = FALSE)
+    stopifnot(
+        "Arguments must be MultiFactor or LinkMap" = sum(lms, mfs) == length(x)
+        )
+    # Gather all levels
+    lv_list <- lapply(x[mfs], levels)
+    if(any(lms)) {
+        lm_lst <- x[lms]
+        lv_list <- c(lv_list, list(.build_levels(lm_lst)))
+    }
+    all_lvs <- unique(unlist(lapply(lv_list, names), FALSE, FALSE))
+    all_lvs <- .reduce_level_list(lv_list, all_lvs)
+
+    # Construct main data
+    x <- lapply(x[mfs], S7::S7_data)
+    if(any(lms)) x <- c(x, list(lm_lst))
+    x <- unlist(x, FALSE, FALSE)
+    # PLug both into MultiFactor
+    MultiFactor(x, levels = all_lvs)
+}
+
+.reduce_level_list <- function(lv_list, all_lvs) {
+   res <-  lapply(
+        all_lvs,
+        function(lv) {
+            res <- lapply(lv_list, `[[`, lv)
+            res <- Reduce(union, res, init = character())
+            return( sort(res) )
+        }
+    )
+    names(res) <- all_lvs
+    return(res)
 }
 
 #' @export
