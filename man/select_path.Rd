@@ -6,7 +6,7 @@
 \usage{
 select_path(
   x,
-  .by,
+  .path,
   include = NULL,
   exclude = NULL,
   exact = NULL,
@@ -16,7 +16,7 @@ select_path(
 \arguments{
 \item{x}{a \code{MultiFactor}}
 
-\item{.by}{Either a \code{formula} or a \verb{character vector} of length 2 with the
+\item{.path}{Either a \code{formula} or a \verb{character vector} of length 2 with the
 names of the desired combination of feature types.}
 
 \item{include, exclude, exact}{\verb{Character vectors} Should feature types be

@@ -6,7 +6,7 @@
 #'     given `MultiFactor`. Elements can be merged by including several names,
 #'     separated by the plus (`+`) sign. See examples.
 #' @param x a `MultiFactor`
-#' @param .by Either a `formula` or a `character vector` of length 2 with the
+#' @param .path Either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
 #' @param include,exclude,exact `Character vectors` Should feature types be
@@ -35,7 +35,7 @@ NULL
 #' @export
 #'
 S7::method(weave, MultiFactor) <- function(
-    x, .by, out.format = c("LinkMap", "matrix", "MultiFactor"),
+    x, .path, out.format = c("LinkMap", "matrix", "MultiFactor"),
     include = NULL, exclude = NULL, exact = NULL
 ) {
   out.format <- match.arg(out.format, c("LinkMap", "matrix", "MultiFactor"))
@@ -44,18 +44,18 @@ S7::method(weave, MultiFactor) <- function(
   if(out.MF) {
     out.format <- "LinkMap"
   }
-  .by_type <- .check_by_terms(.by)
+  .path_type <- .check_by_terms(.path)
 
-  if(.by_type[1] == "complex") {
+  if(.path_type[1] == "complex") {
     out.MF <- TRUE
-    res <- .weave_complex_formula(x, .by, "LinkMap")
+    res <- .weave_complex_formula(x, .path, "LinkMap")
     lv_list <- .weave_complex_formula_lvs(res, lv_list)
   }
-  if(.by_type[1] == "full") {
-    res <- .weave_single_path(x, .by, out.format)
+  if(.path_type[1] == "full") {
+    res <- .weave_single_path(x, .path, out.format)
   }
-  if( .by_type[1L] == "single" ) {
-    terms <- if( .by_type[2L] == "formula" ) .weave_parse_formula(.by) else .by
+  if( .path_type[1L] == "single" ) {
+    terms <- if( .path_type[2L] == "formula" ) .weave_parse_formula(.path) else .path
 
     if ( all( lengths(terms) == 1L) ) {
       res <- .weave_ordinary_terms(x, unlist(terms), out.format)
@@ -123,9 +123,9 @@ path_coverage <- function(x, path, out.format = "matrix") {
 
 }
 
-.weave_complex_formula <- function(x, .by, out.format) {
-  .by_list <- .by_prep_complex_call(.by)
-  res <- lapply( .by_list, weave, x = x, out.format = out.format )
+.weave_complex_formula <- function(x, .path, out.format) {
+  .path_list <- .path_prep_complex_call(.path)
+  res <- lapply( .path_list, weave, x = x, out.format = out.format )
 }
 
 .weave_complex_formula_lvs <- function(x, lv_list) {

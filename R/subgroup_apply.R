@@ -75,25 +75,25 @@ subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) 
 #' corresponding row indices of that table as columns.
 #'
 #' @param link a `MultiFactor` object.
-#' @param .by either a `formula` or a `character vector`` of length 2 with the
+#' @param .path either a `formula` or a `character vector`` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @noRd
 #' @examples
 #' # Utilities
 #' .index_tbl_by(x, link, ec ~ ko)
 #'
-.index_tbl_by <- function(X, link, .by, .i = "row.names", ...) {
+.index_tbl_by <- function(X, link, .path, .i = "row.names", ...) {
     # Ensure link is a MultiFactor
     link <- MultiFactor(link)
 
-    terms <- .by_terms(.by)
+    terms <- .path_terms(.path)
     X <- .index_tbl(X, type = terms[[2L]], .i = .i)
     terms[[2L]] <- colnames(X)[[2L]]
     X <- MultiFactor(X)
 
     X <- `c.MultiFactor::MultiFactor`(link, X)
 
-    weave(X, .by, ...)
+    weave(X, .path, ...)
 
 }
 

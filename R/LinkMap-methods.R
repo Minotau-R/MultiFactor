@@ -65,7 +65,6 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
 #' @param ... additional arguments. Not used.
 #' @importFrom Matrix sparseMatrix
 #' @returns a sparse biadjacency `Matrix` with
-#' @importFrom Matrix sparseMatrix
 #' @export
 #' @seealso [Matrix::sparseMatrix()]
 #'

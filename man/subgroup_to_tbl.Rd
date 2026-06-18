@@ -4,7 +4,7 @@
 \alias{subgroup_to_tbl}
 \title{Expand a table based on possibly overlapping group membership.}
 \usage{
-subgroup_to_tbl(x, link, .by, .index = "row.names")
+subgroup_to_tbl(x, link, .path, .index = "row.names")
 }
 \arguments{
 \item{x}{\verb{A table}. A \code{data.frame}, \code{matrix}, other object with rows and
@@ -12,7 +12,7 @@ columns. Should have a \code{cbind} method.}
 
 \item{link}{a \code{MultiFactor}.}
 
-\item{.by}{either a \code{formula} or a `character vector`` of length 2 with the
+\item{.path}{either a \code{formula} or a `character vector`` of length 2 with the
 names of the desired combination of feature types.}
 
 \item{.index}{\verb{Character scalar} Column to look for feature IDs to link.
@@ -30,6 +30,6 @@ Expand a table into a tidy table suitable for tidyverse-stype operations.
 link <- anansi::kegg_link()
 data("FMT_data", package = "anansi")
 x <- FMT_KOs
-subgroup_to_tbl(x, link, .by = ec ~ ko)
+subgroup_to_tbl(x, link, .path = ec ~ ko)
 
 }

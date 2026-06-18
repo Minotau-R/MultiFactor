@@ -3,6 +3,7 @@
 #' @param levels A `named list of character vectors`, to be used as
 #'     replacement levels.
 #' @returns a MultiFactor with updated levels.
+#' @noRd
 #'
 .set_levels_MultiFactor <- function(x, levels) {
     all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))

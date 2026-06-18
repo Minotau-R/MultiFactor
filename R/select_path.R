@@ -25,9 +25,9 @@
 #' @export
 #'
 select_path <- function(
-        x, .by, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
+        x, .path, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
 ) {
-    paths <- .select_path(x, .by_terms(.by), include, exclude, exact)
+    paths <- .select_path(x, .path_terms(.path), include, exclude, exact)
 
     if( as.edges ) paths <- lapply(paths, .V_path_as_E_path)
     return(paths)
@@ -38,7 +38,7 @@ select_path <- function(
 ) {
     g <- `as.igraph.MultiFactor::MultiFactor`(x)
     g <- .subset_paths(g, include, exclude, exact)
-    # Use apply + unlist to support multiple variables on either side of .by
+    # Use apply + unlist to support multiple variables on either side of .path
     term.grid <- expand.grid(as.list(terms))
     if( !is.null(include) ) {
         paths <- .shortest_path_include(term.grid, g, include)

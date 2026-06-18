@@ -5,7 +5,7 @@
 #' @param x `A table`. A `data.frame`, `matrix`, other object with rows and
 #'     columns. Should have a `cbind` method.
 #' @param link a `MultiFactor`.
-#' @param .by either a `formula` or a `character vector`` of length 2 with the
+#' @param .path either a `formula` or a `character vector`` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param .index `Character scalar` Column to look for feature IDs to link.
 #'     Default: "row.names".
@@ -17,17 +17,17 @@
 #' link <- anansi::kegg_link()
 #' data("FMT_data", package = "anansi")
 #' x <- FMT_KOs
-#' subgroup_to_tbl(x, link, .by = ec ~ ko)
+#' subgroup_to_tbl(x, link, .path = ec ~ ko)
 #'
 #' @export
 #'
-subgroup_to_tbl <- function(x, link, .by, .index = "row.names") {
-   out <- .index_tbl_by(x, link, .by, .index)
+subgroup_to_tbl <- function(x, link, .path, .index = "row.names") {
+   out <- .index_tbl_by(x, link, .path, .index)
    out[[2L]] <- as.integer(out[[2L]])
    xcol <- if(.index == "row.names") row.names(x) else x[[.index]]
 
    subgroup <- data.frame(y = out[1L], x = xcol[out[[2L]]])
-   colnames(subgroup) <- if(inherits(.by, "formula")) all.vars(.by) else .by
+   colnames(subgroup) <- if(inherits(.path, "formula")) all.vars(.path) else .path
 
    out <- data.frame(subgroup, x[out[[2L]], ])
    row.names(out) <- NULL
