@@ -39,8 +39,8 @@ x <- randomMultiFactor()
 
 # Make igraph object:
 igraph::as.igraph(x)
-#> IGRAPH cf6096b UN-- 6 5 -- 
+#> IGRAPH 040240d UN-- 6 5 -- 
 #> + attr: name (v/c), name (e/c)
-#> + edges from cf6096b (vertex names):
+#> + edges from 040240d (vertex names):
 #> [1] a--b b--c c--d d--e e--f
 ```
