@@ -4,12 +4,12 @@
 \alias{weave}
 \title{Convert common classes to MultiFactor}
 \usage{
-weave(x, .by, ...)
+weave(x, .path, ...)
 }
 \arguments{
 \item{x}{input object}
 
-\item{.by}{either a \code{formula} or a `character vector`` of length 2 with the
+\item{.path}{either a \code{formula} or a \verb{character vector} of length 2 with the
 names of the desired combination of feature types.}
 
 \item{...}{additional arguments}

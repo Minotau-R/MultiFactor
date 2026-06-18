@@ -164,7 +164,7 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     x <- lapply(x[mfs], S7::S7_data)
     if(any(lms)) x <- c(x, list(lm_lst))
     x <- unlist(x, FALSE, FALSE)
-    # PLug both into MultiFactor
+    # Plug both into MultiFactor
     MultiFactor(x, levels = all_lvs)
 }
 
@@ -181,30 +181,5 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     return(res)
 }
 
-#' @export
-#' @aliases subset.MultiFactor
-#'
-`subset.MultiFactor::MultiFactor` <- function(
-        x, subset = NULL, by_path = TRUE, drop.unmatched = TRUE, ...
-        ) {
-    if(drop.unmatched) x <- .trimMultiFactor(x)
-    if(is.null(subset)) return(x)
-    if(by_path){
-        subset <- unlist(.by_terms(subset))
-        stopifnot("Argument `subset` must be length 2 if by_path` is TRUE" =
-                      length(subset) == 2L)
-        subset <- termSeq(subset, x)
-        # Determine required ids in order, keep relevant elements of MultiFactor
-        return(subsetByPath(x, subset))
-    } else `[`(x, subset)
-}
 
-#' @export
-#'
-method(subset, MultiFactor) <-
-    function(
-        x, subset = NULL, by_path = TRUE, drop.unmatched = TRUE, ...
-        ) `subset.MultiFactor::MultiFactor`(
-            x, subset, by_path, drop.unmatched, ...
-            )
 

@@ -7,11 +7,11 @@
 #' @param alternative `Character scalar` indicates the alternative hypothesis
 #'     and must be one of "two.sided", "greater" or "less".
 #' @param raw `Boolean scalar`. Whether to return the 'untidy' list or call
-#'     `broom::tidy` on the result (default).
+#'     `tidy` on the result (default).
 #' @returns a data.frame containing enrichment ratios and p-value following a
 #'     hypergeometric test. see ?phyper
-#' @importFrom broom tidy
 #' @importFrom stats fisher.test
+#' @importFrom generics tidy
 #' @examples
 #' # Generate random data
 #' x <- randomMultiFactor(n_features = 20)
@@ -44,7 +44,7 @@ test_set_enrichment <- function(
 
     cont_mats <- apply(param_df, 1L, .as_cont_matrix, simplify = FALSE)
     res <- lapply(cont_mats, fisher.test, alternative = alternative)
-    if(!raw) res <- dplyr::bind_rows(lapply(res, broom::tidy), .id = "term")
+    if(!raw) res <- dplyr::bind_rows(lapply(res, tidy), .id = "term")
 
     return(res)
 }

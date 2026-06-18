@@ -12,10 +12,10 @@ Description: An S7 framework to organize and manage multiple sets of factors,
     Methods for MultiFactor aim to follow factor behaviour.
 Imports:
     S7, 
-    rlang, 
+    rlang,
+    generics,
     Matrix, 
     forcats, 
-    broom, 
     igraph
 Depends: 
     R (>= 4.1.0)
