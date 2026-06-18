@@ -5,7 +5,7 @@ Convert common classes to MultiFactor
 ## Usage
 
 ``` r
-weave(x, .by, ...)
+weave(x, .path, ...)
 ```
 
 ## Arguments
@@ -14,9 +14,9 @@ weave(x, .by, ...)
 
   input object
 
-- .by:
+- .path:
 
-  either a `formula` or a \`character vector“ of length 2 with the names
+  either a `formula` or a `character vector` of length 2 with the names
   of the desired combination of feature types.
 
 - ...:
@@ -28,6 +28,6 @@ weave(x, .by, ...)
 ``` r
 # Available methods:
 weave
-#> <S7_generic> weave(x, .by, ...) with 1 methods:
+#> <S7_generic> weave(x, .path, ...) with 1 methods:
 #> 1: method(weave, MultiFactor::MultiFactor)
 ```

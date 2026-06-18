@@ -7,7 +7,7 @@ databases. Methods for `MultiFactor` aim to follow `factor` behaviour.
 ## Usage
 
 ``` r
-MultiFactor(x)
+MultiFactor(x, levels = NULL)
 ```
 
 ## Arguments
@@ -15,6 +15,10 @@ MultiFactor(x)
 - x:
 
   a `LinkMap`, or named list of `LinkMap` objects.
+
+- levels:
+
+  Optional. A `named list of character vectors`, to be used as levels.
 
 ## Value
 

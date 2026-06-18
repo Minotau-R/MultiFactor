@@ -19,6 +19,8 @@
   : MultiFactor S7 container class
 - [`MultiFactor-methods`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-methods.md)
   : Methods for MultiFactor S7 container class
+- [`augment(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-wrangle-methods.md)
+  : Tools to modify MultiFactors
 - [`LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.md)
   : LinkMap S7 container class
 - [`LinkMap-methods`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-methods.md)

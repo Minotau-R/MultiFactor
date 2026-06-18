@@ -7,7 +7,7 @@ Define a path through a MultiFactor object.
 ``` r
 select_path(
   x,
-  .by,
+  .path,
   include = NULL,
   exclude = NULL,
   exact = NULL,
@@ -21,7 +21,7 @@ select_path(
 
   a `MultiFactor`
 
-- .by:
+- .path:
 
   Either a `formula` or a `character vector` of length 2 with the names
   of the desired combination of feature types.
