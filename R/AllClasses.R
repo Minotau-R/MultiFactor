@@ -115,9 +115,13 @@ MultiFactor <- S7::new_class(
     parent = S7::class_list,
     properties  = list(
         levels = S7::new_property(
-            class = S7::class_list, getter = function(self) self@levels,
-             setter = function(self, value) .set_levels_MultiFactor(self, value)
-            ),
+            class = S7::class_list,
+            getter = function(self) self@levels,
+            setter = function(self, value) {
+                self <- .set_levels_MultiFactor(self, value, merge = FALSE)
+                return( self )
+             }
+        ),
         map = S7::new_property(
             getter = function(self) .mapMultiFactor(self, mode = "counts")
         ),
@@ -127,7 +131,7 @@ MultiFactor <- S7::new_class(
             )
         )
     ),
-    constructor = function(x, levels = NULL) {
+    constructor = function(x, levels = list()) {
         # Check input
         if(is.data.frame(x)) x <- LinkMap(x)
         if(S7::S7_inherits(x, LinkMap)) x <- list(x = x)
@@ -140,7 +144,7 @@ MultiFactor <- S7::new_class(
         names(x) <- paste0("x_", seq_along(x))
         x   <- .merge_linkmaps(x)
 
-        if(is.null(levels))  levels <- .build_levels(x)
+        if(!length(levels)) { levels <- .build_levels(x) }
         x <- .unify_levels(x, levels)
 
         names(x) <- vapply(
@@ -338,7 +342,8 @@ MultiFactor <- S7::new_class(
 #'
 .unify_levels_LinkMap <- function(x, levels) {
     x[] <- mapply(
-        forcats::lvls_expand, x[seq_len(2L)], levels[colnames(x)], SIMPLIFY = FALSE
+        forcats::lvls_expand, x[seq_len(2L)],
+        levels[colnames(x)], SIMPLIFY = FALSE
     )
     return(x)
 }

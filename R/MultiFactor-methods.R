@@ -106,8 +106,9 @@ S7::method(levels, MultiFactor) <- function(x) {
 }
 
 #' @export
-`levels<-.MultiFactor::MultiFactor` <- function(x, value)
+`levels<-.MultiFactor::MultiFactor` <- function(x, value) {
     .set_levels_MultiFactor(x, value)
+}
 
 
 S7::method(dimnames, MultiFactor) <- function(x) {
