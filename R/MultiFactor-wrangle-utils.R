@@ -33,7 +33,7 @@ NULL
     if(drop.unmatched) x <- .trimMultiFactor(x)
     if(is.null(subset)) return(x)
     if(by_path){
-        subset <- unlist(.path_terms(subset))
+        subset <- unlist(.path_parse(subset))
         stopifnot("Argument `subset` must be length 2 if by_path` is TRUE" =
                       length(subset) == 2L)
         subset <- termSeq(subset, x)

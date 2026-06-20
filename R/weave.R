@@ -21,56 +21,32 @@
 #' weave(x, b ~ c)
 #' weave(x, b ~ a, out.format = "matrix")
 #'
-#' # Merge variables with "+" operator, new names get concatenated with ".":
-#' weave(x, b ~ c + d)
-#'
-#' # Control intermediate variable types "~", returning a MultiFactor:
-#' weave(x, a ~ c ~ e )
-#'
-#' # Combine merging and intermediate stops:
-#' weave(x, a ~ b + c ~ d + e ~ f )
-#'
 NULL
 
 #' @export
 #'
 S7::method(weave, MultiFactor) <- function(
-    x, .path, out.format = c("LinkMap", "matrix", "MultiFactor"),
+    x, .path, out.format = c("LinkMap", "matrix"),
     include = NULL, exclude = NULL, exact = NULL
 ) {
-  out.format <- match.arg(out.format, c("LinkMap", "matrix", "MultiFactor"))
+  out.format <- match.arg(out.format, c("LinkMap", "matrix"))
   lv_list <- levels(x)
-  out.MF <- out.format == "MultiFactor"
-  if(out.MF) {
-    out.format <- "LinkMap"
-  }
-  .path_type <- .check_by_terms(.path)
 
-  if(.path_type[1] == "complex") {
-    out.MF <- TRUE
-    res <- .weave_complex_formula(x, .path, "LinkMap")
-    lv_list <- .weave_complex_formula_lvs(res, lv_list)
-  }
-  if(.path_type[1] == "full") {
-    res <- .weave_single_path(x, .path, out.format)
-  }
-  if( .path_type[1L] == "single" ) {
-    terms <- if( .path_type[2L] == "formula" ) .weave_parse_formula(.path) else .path
+  .p_check <- .check_path(.path)
 
-    if ( all( lengths(terms) == 1L) ) {
-      res <- .weave_ordinary_terms(x, unlist(terms), out.format)
-    } else {
-      res <- .weave_mult(x, terms, out.format)
-    }
+  if(.p_check["vars"] == "complex") {
+    stop("weave() '.path' cannot contain '+'. Use stack() to prepare input.")
   }
-  if( out.MF ) {
-    res <- MultiFactor(res, lv_list)
-  } else if( out.format == "LinkMap" ) {
+    full_path <- .path_ordinary_to_full(x, .path)[[1L]]
+    res <- .weave_full_path(x, full_path, out.format)
+
+  if( out.format == "LinkMap" ) {
     res <- LinkMap(res)
   }
 
   return(res)
 }
+
 
 weave_along_path <- function(x, path, out.format = "LinkMap") {
   # tolerate single path result in list
@@ -83,7 +59,7 @@ weave_along_path <- function(x, path, out.format = "LinkMap") {
     "All entries in 'path' must be found in colnames(x)." =
       all( path %in% colnames(x) )
   )
-  res <- .weave_single_path(x, path, out.format)
+  res <- .weave_full_path(x, path, out.format)
   # Remove duplicates
   if(out.format == "LinkMap") {
     res <- res[ !duplicated(res[, c(1, 2)]), ]
@@ -124,7 +100,7 @@ path_coverage <- function(x, path, out.format = "matrix") {
 }
 
 .weave_complex_formula <- function(x, .path, out.format) {
-  .path_list <- .path_prep_complex_call(.path)
+  .path_list <- .path_prep_complex(.path)
   res <- lapply( .path_list, weave, x = x, out.format = out.format )
 }
 
@@ -149,7 +125,7 @@ path_coverage <- function(x, path, out.format = "matrix") {
   lv_list <- levels(x)
   # Determine required ids in order, only keep relevant elements of link.
   all_terms <- .select_path(x, terms, include = NULL, exclude = NULL, exact = NULL)
-  res <- lapply(all_terms, .weave_single_path, x = x, out.format = "LinkMap")
+  res <- lapply(all_terms, .weave_full_path, x = x, out.format = "LinkMap")
   res <- do.call(
     rbind.data.frame,
     c(res, make.row.names = FALSE, stringsAsFactors = TRUE)
@@ -164,7 +140,7 @@ path_coverage <- function(x, path, out.format = "matrix") {
 }
 
 
-.weave_single_path <- function(x, all_terms, out.format) {
+.weave_full_path <- function(x, all_terms, out.format) {
   x <- subsetByPath(x, all_terms)
   terms <- all_terms[c(1L, length(all_terms))]
   # Construct dictionary

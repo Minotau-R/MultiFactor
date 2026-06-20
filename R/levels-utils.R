@@ -41,8 +41,8 @@
     } else {
         new_levels <- .set_levels_replace(old_levels, levels)
     }
-
     old_levels[changed] <- new_levels[names(old_levels)[changed]]
+
     return(old_levels)
 }
 

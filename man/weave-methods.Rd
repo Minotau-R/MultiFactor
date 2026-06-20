@@ -31,13 +31,4 @@ x <- randomMultiFactor()
 weave(x, b ~ c)
 weave(x, b ~ a, out.format = "matrix")
 
-# Merge variables with "+" operator, new names get concatenated with ".":
-weave(x, b ~ c + d)
-
-# Control intermediate variable types "~", returning a MultiFactor:
-weave(x, a ~ c ~ e )
-
-# Combine merging and intermediate stops:
-weave(x, a ~ b + c ~ d + e ~ f )
-
 }
