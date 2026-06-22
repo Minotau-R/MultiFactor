@@ -44,6 +44,7 @@ LinkMap <- S7::new_class(
     constructor = function(x) {
         if(S7::S7_inherits(x, LinkMap)) return(x)
         stopifnot(.check_input_df(x))
+        x <- `row.names<-.data.frame`(x, NULL)
 
         # Factorize x
         x[ c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
@@ -61,7 +62,7 @@ LinkMap <- S7::new_class(
         if(!length(colnames(self)) == 2L) {
             "Both columns must be named. "
         }
-        if(!all(vapply(self[c(1, 2)], is.factor, NA, USE.NAMES = FALSE))){
+        if(!all(vapply(self, is.factor, NA, USE.NAMES = FALSE)[c(1, 2)])){
             "Both columns must be factors. "
         }
     }
@@ -147,11 +148,7 @@ MultiFactor <- S7::new_class(
         if(!length(levels)) { levels <- .build_levels(x) }
         x <- .unify_levels(x, levels)
 
-        names(x) <- vapply(
-            x,
-            function(x) paste(names(x), collapse = "2"),
-            FUN.VALUE = "", USE.NAMES = FALSE
-        )
+        names(x) <- vapply(x, .linkmap2name, FUN.VALUE = "", USE.NAMES = FALSE)
 
         S7::new_object(
             .parent = x,
@@ -212,7 +209,8 @@ MultiFactor <- S7::new_class(
     mx <- switch(mode,
                  "counts" = unlist(
                      lapply(x, function(y) {
-                         lapply(y[seq_len(2L)], function(z) length(unique(z)))
+                         lapply(S7::S7_data(y)[seq_len(2L)],
+                                function(z) length(unique(z)))
                      }),
                      use.names = FALSE
                  ),
@@ -336,15 +334,36 @@ MultiFactor <- S7::new_class(
 #' Given a list of linkmaps x and named list of chars levels, unify all levels
 #' across x.
 #' @noRd
-.unify_levels <- function(x, levels) lapply(x, .unify_levels_LinkMap, levels)
+.unify_levels <- function(x, levels) {
+    is_s7 <- all(vapply(x, S7::S7_inherits, LinkMap, FUN.VALUE = FALSE))
+    if(is_s7) {
+        res <- lapply(x, .unify_levels_LinkMap, levels)
+    } else {
+        res <- lapply(x, .unify_levels_data.frame, levels)
+    }
+    return(res)
+}
+
+#' @importFrom forcats lvls_expand
+#'
+.unify_levels_data.frame <- function(x, levels) {
+    x[seq_len(2L)] <- mapply(
+        forcats::lvls_expand, x[seq_len(2L)],
+        levels, SIMPLIFY = FALSE
+    )
+    return(x)
+}
 
 #' @importFrom forcats lvls_expand
 #'
 .unify_levels_LinkMap <- function(x, levels) {
-    x[] <- mapply(
-        forcats::lvls_expand, x[seq_len(2L)],
-        levels[colnames(x)], SIMPLIFY = FALSE
+    old <- S7::S7_data(x)
+
+    old[seq_len(2L)] <- mapply(
+        forcats::lvls_expand, old[seq_len(2L)],
+        levels[names(old)[seq_len(2L)]], SIMPLIFY = FALSE
     )
+    S7::S7_data(x) <- `class<-`(old, "data.frame")
     return(x)
 }
 

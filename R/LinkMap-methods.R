@@ -44,7 +44,7 @@ S7::method(str, LinkMap) <- function(object, ...) str(
     `class<-`(S7::S7_data(object), "data.frame")
 )
 
-S7::method(levels, LinkMap) <- function(x) lapply(x[c(1, 2)], levels)
+S7::method(levels, LinkMap) <- function(x) x@levels
 
 #' @param use.names `Boolean scalar` Should names be provided.
 #'     (Default: `TRUE`)
@@ -77,3 +77,38 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
     dims = dims, dimnames = dimnames,
     ...
 )
+
+
+#' @export
+`[.MultiFactor::LinkMap` <- function(x, i, ...) .single_index_LinkMap(x, i, ...)
+
+
+.single_index_LinkMap <- function(x, i, ...) {
+    if (!missing(...)) {
+        stop("'[' can only index a LinkMap by row. Use '[[' to select columns.")
+    }
+    if(!missing(i)) {
+      old <- `class<-`(S7::S7_data(x), "data.frame")
+      old <- old[i, ]
+      print(old)
+        # new <- `[.data.frame`(old, i, , drop = FALSE)
+      S7::S7_data(x) <- unclass(old)
+
+        #x <- LinkMap(new)
+    }
+    return(x)
+}
+
+##### LinkMap utils
+
+#' @noRd
+.formula2name <- function(.path) {
+   var_list <- .path_parse_formula(.path)
+   var_vctr <- vapply(var_list, paste, collapse = ".", FUN.VALUE = character(1L))
+   var_name <- paste(var_vctr, collapse = "2")
+   return(var_name)
+}
+
+.colnames2name <- function(x) paste(x, collapse = "2")
+
+.linkmap2name <- function(x) paste(names(x), collapse = "2")
