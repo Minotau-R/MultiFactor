@@ -45,9 +45,9 @@ x <- randomLinkMap()
 
 # Make igraph object:
 igraph::as.igraph(x)
-#> IGRAPH e88906d UN-B 52 338 -- 
+#> IGRAPH 0440fd7 UN-B 52 338 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from e88906d (vertex names):
+#> + edges from 0440fd7 (vertex names):
 #>   [1] d--A e--A f--A g--A h--A j--A k--A l--A m--A n--A p--A q--A r--A s--A t--A
 #>  [16] v--A w--A a--B b--B c--B f--B g--B h--B i--B j--B k--B m--B o--B p--B q--B
 #>  [31] r--B s--B z--B c--C e--C f--C i--C o--C q--C s--C t--C u--C v--C w--C z--C
