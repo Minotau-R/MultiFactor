@@ -4,11 +4,14 @@
 \alias{LinkMap}
 \title{LinkMap S7 container class}
 \usage{
-LinkMap(x)
+LinkMap(x, metadata = NULL)
 }
 \arguments{
 \item{x}{\code{data.frame} with two named columns that can be coerced to factors.
 Optionally, additional columns will be stored as metadata.}
+
+\item{metadata}{Optional \code{data.frame} with same number of rows as x. Contains
+information about the feature link in that row.}
 }
 \value{
 a \code{LinkMap} object.

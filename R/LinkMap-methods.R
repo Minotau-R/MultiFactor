@@ -24,28 +24,6 @@
 #' @returns A `LinkMap`
 NULL
 
-S7::method(names, LinkMap) <- function(x) names(
-    S7::S7_data(x)[c(1, 2)]
-    )
-
-S7::method(dimnames, LinkMap) <- function(x) dimnames(
-    `class<-`(S7::S7_data(x), "data.frame")[c(1, 2)]
-    )
-
-S7::method(dim, LinkMap) <- function(x) dim(
-    `class<-`(S7::S7_data(x), "data.frame")[c(1, 2)]
-    )
-
-S7::method(print, LinkMap) <- function(x, ...) print(
-    `class<-`(S7::S7_data(x), "data.frame")[c(1, 2)], ...
-)
-
-S7::method(str, LinkMap) <- function(object, ...) str(
-    `class<-`(S7::S7_data(object), "data.frame")
-)
-
-S7::method(levels, LinkMap) <- function(x) lapply(x[c(1, 2)], levels)
-
 #' @param use.names `Boolean scalar` Should names be provided.
 #'     (Default: `TRUE`)
 #' @noRd
@@ -53,6 +31,45 @@ S7::method(levels, LinkMap) <- function(x) lapply(x[c(1, 2)], levels)
 S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
     levels(x), use.names
     )
+
+S7::method(levels, LinkMap) <- function(x) x@levels
+
+#' @export
+#'
+`levels<-.MultiFactor::LinkMap` <- function(x, value) {
+    x@levels <- value
+    return(x)
+}
+
+# S7::method(`levels<-`, LinkMap) <- function(x, value) {
+#     `levels<-.MultiFactor::LinkMap`(x, value)
+# }
+
+
+#' @importFrom rlang check_dots_empty0 is_missing
+#' @export
+#'
+`[.MultiFactor::LinkMap` <- function(x, i, ...) {
+    rlang::check_dots_empty0(...)
+    if(! rlang::is_missing(i))  {
+        metadata <- x@metadata
+        metadata <- `[.data.frame`(metadata, i, , drop = FALSE)
+
+        x <- `class<-`(S7::S7_data(x), "data.frame")
+        x <- `[.data.frame`(x, i, , drop = FALSE)
+
+        x <- LinkMap(x, metadata)
+        }
+    return(x)
+}
+
+S7::method(`[`, MultiFactor) <- function(x, i) {
+
+    MultiFactor(base::`[`(S7::S7_data(x), i))
+}
+
+S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
+
 
 #' @title Convert a LinkMap to a sparse matrix.
 #' Convert a LinkMap to a sparse matrix object from the `Matrix` package.
@@ -69,8 +86,8 @@ S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
 #' @seealso [Matrix::sparseMatrix()]
 #'
 `as.matrix.MultiFactor::LinkMap` <- function(
-        x, terms = colnames(x),
-        dims = nlevels(x[terms]), dimnames = levels(x)[terms],
+        x, terms = colnames(x)[seq_len(2L)],
+        dims = nlevels(x)[terms], dimnames = levels(x)[terms],
         ...
 ) Matrix::sparseMatrix(
     i = x[[terms[1L]]], j = x[[terms[2L]]],

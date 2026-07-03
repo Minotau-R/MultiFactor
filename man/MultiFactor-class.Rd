@@ -4,7 +4,7 @@
 \alias{MultiFactor}
 \title{MultiFactor S7 container class}
 \usage{
-MultiFactor(x, levels = NULL)
+MultiFactor(x, levels = list())
 }
 \arguments{
 \item{x}{a \code{LinkMap}, or named list of \code{LinkMap} objects.}

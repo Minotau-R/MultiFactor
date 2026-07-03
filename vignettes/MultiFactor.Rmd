@@ -194,7 +194,7 @@ interact with its matrix representation, as well as access the component levels:
 dim(tp)
 dimnames(tp)
 levels(tp)
-lengths(levels(tp))
+nlevels(tp)
 ```
 Note that levels of the same type are automatically unified across all component
 LinkMaps with that type of level.
@@ -263,7 +263,7 @@ plot(lg)
 # Convert `LinkMap` linkage information to sparse adjacency `Matrix`
 ```{r 'Matrix-sp'}
 # Convert to an igraph object
-m <- as.matrix(fruit2clothing, dimnames = levels(fruit2clothing))
+m <- as.matrix(fruit2clothing)
 m
 ```
 

@@ -6,7 +6,7 @@
 #' @noRd
 #'
 .set_levels_MultiFactor <- function(x, levels) {
-    all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))
+    all_lvs <- colnames(x)
     matched_lvs <- names(levels) %in% all_lvs
 
     stopifnot( "No overlap in 'x' and 'levels'." = sum(matched_lvs) >= 1L )
@@ -17,13 +17,11 @@
     if( sum(unchanged) >= 1L ) {
         new_levels <- c( new_levels, .gather_all_levels(x, all_lvs[unchanged]) )
     }
+    S7::S7_data(x) <- .unify_levels(
+        `class<-`(S7::S7_data(x), "data.frame"),
+        new_levels
+        )
 
-    if(S7::S7_inherits(x, MultiFactor)) {
-        S7::S7_data(x) <- .unify_levels(S7::S7_data(x), new_levels)
-        x@levels <- new_levels
-    } else {
-        x <- MultiFactor(x, new_levels)
-    }
     return(x)
 }
 
