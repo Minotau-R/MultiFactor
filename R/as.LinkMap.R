@@ -45,19 +45,27 @@ NULL
 
 S7::method(as.LinkMap, LinkMap) <- function(x) x
 
+
 S7::method(as.LinkMap, S7::class_data.frame) <- function(
-    x, edge.names = NULL){
+        x, edge.names = NULL
+){
+    if( NCOL(x) >= 3L ) {
+        metadata <- x[, -seq_len(2L)]
+        x <- x[, seq_len(2L)]
+    } else {
+        metadata <- data.frame(row.names = seq_len(NROW(x)))
+        }
     # Assign custom edge names
     if( !is.null(edge.names) ){
         colnames(x) <- edge.names
     }
     # Convert to LinkMap
-    x2y <- LinkMap(x)
-    return(x2y)
+    x <- LinkMap(x, metadata)
+    return(x)
 }
 
 S7::method(as.LinkMap, S7::class_list) <- function(
-    x, y = NULL, edge.names = NULL){
+    x, y = NULL, edge.names = NULL ){
     # Use list names
     if( is.null(y) ){
         y <- names(x)

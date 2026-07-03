@@ -33,12 +33,17 @@ of row-based subsets of table \code{X}. Mimics lapply.
 
 # Prepare data
 
-link <- anansi::kegg_link()
-data("FMT_data", package = "anansi")
-x <- FMT_KOs
+link <- trade_posts()
+
+# Generate small example feature table 'x'.
+n <- nlevels(link)[["clothing"]]
+x <- replicate(10, rbinom(n, rbinom(n, 100, runif(n)), runif(n)))
+
+#' # Ensure rownames correspond to the second (RHS) variable in the formula.
+x <- as.data.frame(x, row.names = levels(link)$clothing)
 
 # Apply arbitrary code to x based on group membership
-subgroup_apply(x, link, BY =  ec ~ ko, FUN = function(x) dim(x))
+subgroup_apply(x, link, BY = fruit ~ clothing, FUN = function(x) colSums(x))
 
 }
 \seealso{

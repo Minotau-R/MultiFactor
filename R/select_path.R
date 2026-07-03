@@ -208,7 +208,7 @@ termSeq <- function(terms, x) {
         )
     )
     g <- igraph::graph_from_data_frame(
-        d = t(vapply(x, names, c(NA_character_, NA_character_))),
+        d = .all_names_in_list_mf(x),
         directed = FALSE
     )
     sp <- igraph::all_shortest_paths(
