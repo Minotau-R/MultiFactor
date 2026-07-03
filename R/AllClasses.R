@@ -11,6 +11,8 @@
 #'     application-specific tags.
 #' @param x `data.frame` with two named columns that can be coerced to factors.
 #'     Optionally, additional columns will be stored as metadata.
+#' @param metadata Optional `data.frame` with same number of rows as x. Contains
+#'     information about the feature link in that row.
 #' @returns a `LinkMap` object.
 #' @examples
 #' # Generate random linkage input
@@ -31,38 +33,47 @@ LinkMap <- S7::new_class(
     parent = S7::class_data.frame,
     properties = list(
         levels = S7::new_property(
-            getter = function(self) lapply(
-                S7::S7_data(self)[c(1, 2)], levels
-            )
+            getter = function(self) lapply(S7::S7_data(self), levels),
+            setter = function(self, value) {
+                x <- `class<-`(S7::S7_data(self), "data.frame")
+                S7::S7_data(self) <- .unify_levels_LinkMap(x, value)
+                return(self)
+            }
         ),
         metadata = S7::new_property(
-            getter = function(self) `class<-`(
-                S7::S7_data(self), "data.frame"
-            )[-c(1, 2)]
+            class = S7::class_data.frame,
+            getter = function(self) self@metadata
         )
     ),
-    constructor = function(x) {
-        if(S7::S7_inherits(x, LinkMap)) return(x)
+    constructor = function(x, metadata = NULL) {
+        # Check input
         stopifnot(.check_input_df(x))
-
+        if(S7::S7_inherits(x, LinkMap)) {
+            if( !NCOL(metadata) ) { metadata <- x@metadata }
+            x <- `class<-`(S7::S7_data(x), "data.frame")
+            }
+        if(!NCOL(metadata)) {
+            metadata <- data.frame(row.names = seq_len(NROW(x)))
+        } else {
+            stopifnot(
+                "Arg 'x' must have the same number of rows as 'metadata'" =
+                    NROW(x) == NROW(metadata)
+            )
+        }
         # Factorize x
-        x[ c(1, 2)] <- lapply(x[c(1, 2)], as.factor)
-        x <- x[ !duplicated(x[, c(1, 2)]), ]
+        x[] <- lapply(x, factor)
+        i <- !duplicated(x)
+        x <- x[i, , drop = FALSE]
+        metadata <- metadata[i, , drop = FALSE]
 
-        S7::new_object(x)
-    },
+        S7::new_object(x, metadata = metadata)
+        },
     validator = function(self) {
-        if(!is.data.frame(self)) {
-            "Must be a data.frame. "
-        }
-        if(! NCOL(self) == 2L) {
-            "Must be a data.frame with exactly two columns. "
-        }
-        if(!length(colnames(self)) == 2L) {
-            "Both columns must be named. "
-        }
-        if(!all(vapply(self[c(1, 2)], is.factor, NA, USE.NAMES = FALSE))){
-            "Both columns must be factors. "
+        if( !is.data.frame(self) ) { "Must be a data.frame." }
+        if( NCOL(self) != 2L ) { "Must be a data.frame with two columns." }
+        if( length(colnames(self)) != 2L ) { "Both columns must be named." }
+        if( !all(vapply(self, is.factor, NA, USE.NAMES = FALSE)) ) {
+            "Both columns must be factors."
         }
     }
 )
@@ -118,10 +129,16 @@ MultiFactor <- S7::new_class(
             class = S7::class_list,
             getter = function(self) self@levels,
             setter = function(self, value) {
-                self <- .set_levels_MultiFactor(self, value, merge = FALSE)
-                return( self )
-             }
-        ),
+                # If initializing, don't re-unify
+                if( !length(levels(self)) ) {
+                    self@levels <- value
+                } else {
+                    self <- .set_levels_MultiFactor(self, value)
+                }
+                return(self)
+            },
+            default = quote(as.list(colnames(self)))
+            ),
         map = S7::new_property(
             getter = function(self) .mapMultiFactor(self, mode = "counts")
         ),
@@ -144,7 +161,7 @@ MultiFactor <- S7::new_class(
         names(x) <- paste0("x_", seq_along(x))
         x   <- .merge_linkmaps(x)
 
-        if(!length(levels)) { levels <- .build_levels(x) }
+        if( !length(levels) )  levels <- .build_levels_from_linkmap_list(x)
         x <- .unify_levels(x, levels)
 
         names(x) <- vapply(
@@ -154,7 +171,7 @@ MultiFactor <- S7::new_class(
         )
 
         S7::new_object(
-            .parent = x,
+            x,
             levels = levels
         )
     },
@@ -173,10 +190,10 @@ MultiFactor <- S7::new_class(
     if(! is.data.frame(x) ) {
         stop("Must be a data.frame. ")
     }
-    if(! NCOL(x) >= 2L ) {
+    if(! NCOL(x) == 2L ) {
         stop("Must be a data.frame with at least two key columns. ")
     }
-    if(! length(colnames(x)[seq_len(2L)]) == 2L ) {
+    if(! length(colnames(x)) == 2L ) {
         stop("Both key columns must be named. ")
     }
     return( TRUE )
@@ -212,7 +229,7 @@ MultiFactor <- S7::new_class(
     mx <- switch(mode,
                  "counts" = unlist(
                      lapply(x, function(y) {
-                         lapply(y[seq_len(2L)], function(z) length(unique(z)))
+                         lapply(y, function(z) length(unique(z)))
                      }),
                      use.names = FALSE
                  ),
@@ -235,7 +252,7 @@ MultiFactor <- S7::new_class(
 
 
 .merge_linkmaps <- function(x) {
-    all_names <- lapply(x, \(x) sort(names(x)))
+    all_names <- lapply(x, function(x) sort(names(x)))
     if(!any(duplicated(all_names))) return(x)
 
     dup_names <- unique(all_names[duplicated(all_names)])
@@ -309,7 +326,15 @@ MultiFactor <- S7::new_class(
 
 #' Given a list of linkmaps x, return a unified and sorted list of levels.
 #' @noRd
-.build_levels <- function(x) {
+.build_levels_from_df_list <- function(x) {
+    all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))
+    lvs <- .gather_all_levels(x, all_lvs)
+    return(lvs)
+}
+
+#' Given a list of linkmaps x, return a unified and sorted list of levels.
+#' @noRd
+.build_levels_from_linkmap_list <- function(x) {
     all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))
     lvs <- .gather_all_levels(x, all_lvs)
     return(lvs)
@@ -338,12 +363,17 @@ MultiFactor <- S7::new_class(
 #' @noRd
 .unify_levels <- function(x, levels) lapply(x, .unify_levels_LinkMap, levels)
 
+
+# TODO metadata and .data are now separate props. Use lapply for indexing?
+# FIXME
 #' @importFrom forcats lvls_expand
 #'
 .unify_levels_LinkMap <- function(x, levels) {
     x[] <- mapply(
-        forcats::lvls_expand, x[seq_len(2L)],
-        levels[colnames(x)], SIMPLIFY = FALSE
+        forcats::lvls_expand,
+        x,
+        levels[colnames(x)],
+        SIMPLIFY = FALSE
     )
     return(x)
 }
@@ -352,6 +382,6 @@ MultiFactor <- S7::new_class(
     is.data.frame(x) &&
         NCOL(x) == 2L &&
         length(colnames(x)) == 2L &&
-        all(vapply(x[seq_len(2L)], is.factor, NA, USE.NAMES = FALSE))
+        all(vapply(x, is.factor, NA, USE.NAMES = FALSE))
 }
 

@@ -77,4 +77,15 @@ S7::method(augment, MultiFactor) <-
     return(x)
 }
 
+#' Safely get all names from a MultiFactor as a data.frame.
+#' @noRd
+#'
+.all_names_in_list_mf <- function(x) {
+    as.data.frame.matrix(
+        t(vapply(X = x,
+                 FUN = function(i) return(names(i)[seq_len(2L)]),
+                 FUN.VALUE = c(NA_character_, NA_character_))
+        )
+    )
+}
 
