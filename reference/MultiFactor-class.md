@@ -7,7 +7,7 @@ databases. Methods for `MultiFactor` aim to follow `factor` behaviour.
 ## Usage
 
 ``` r
-MultiFactor(x, levels = NULL)
+MultiFactor(x, levels = list())
 ```
 
 ## Arguments

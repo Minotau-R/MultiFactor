@@ -7,7 +7,7 @@ databases. Methods for `LinkMap` aim to follow `factor` behaviour.
 ## Usage
 
 ``` r
-LinkMap(x)
+LinkMap(x, metadata = NULL)
 ```
 
 ## Arguments
@@ -16,6 +16,11 @@ LinkMap(x)
 
   `data.frame` with two named columns that can be coerced to factors.
   Optionally, additional columns will be stored as metadata.
+
+- metadata:
+
+  Optional `data.frame` with same number of rows as x. Contains
+  information about the feature link in that row.
 
 ## Value
 

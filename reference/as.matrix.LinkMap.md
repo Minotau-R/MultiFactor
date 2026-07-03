@@ -9,8 +9,8 @@ matrix object from the `Matrix` package.
 # S3 method for class '`MultiFactor::LinkMap`'
 as.matrix(
   x,
-  terms = colnames(x),
-  dims = nlevels(x[terms]),
+  terms = colnames(x)[seq_len(2L)],
+  dims = nlevels(x)[terms],
   dimnames = levels(x)[terms],
   ...
 )

@@ -82,5 +82,5 @@ augment(x, a2b = NULL )
 #> c : 10 Levels: c_001 c_002 ... c_010 
 #> d : 10 Levels: d_001 d_002 ... d_010 
 #> e : 10 Levels: e_001 e_002 ... e_010 
-#> f : 10 Levels: f_001 f_002 ... f_010 
+#> f :  9 Levels: f_001 f_002 ... f_010 
 ```

@@ -281,7 +281,7 @@ well as access the component levels:</p>
 <span><span class="co">#&gt; $marbles</span></span>
 <span><span class="co">#&gt; [1] "red marble"     "white marble"   "black marble"   "blue marble"   </span></span>
 <span><span class="co">#&gt; [5] "8 marble"       "sparkly marble"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       books    clothing       fruit   furniture instruments     marbles </span></span>
 <span><span class="co">#&gt;           6           6           6           6           6           6</span></span></code></pre></div>
 <p>Note that levels of the same type are automatically unified across
@@ -369,13 +369,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH d48ff9f UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 6cbe055 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from d48ff9f (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 6cbe055 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -390,9 +390,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 3244c32 UN-B 12 18 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 5f912e7 UN-B 10 18 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 3244c32 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 5f912e7 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --dress   grapes --dress   melons --dress   oranges--dress  </span></span>
 <span><span class="co">#&gt;  [5] apples --gloves  pears  --gloves  apples --hat     grapes --hat    </span></span>
 <span><span class="co">#&gt;  [9] melons --hat     oranges--hat     pears  --hat     apples --scarf  </span></span>
@@ -410,17 +410,16 @@ representation.</p>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
-<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fruit2clothing</span>, dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">m</span></span>
-<span><span class="co">#&gt; 6 x 6 sparse Matrix of class "ngCMatrix"</span></span>
-<span><span class="co">#&gt;           clothing</span></span>
-<span><span class="co">#&gt; fruit      dress gloves hat scarf socks t-shirt</span></span>
-<span><span class="co">#&gt;   apples       |      |   |     |     .       |</span></span>
-<span><span class="co">#&gt;   cherries     .      .   .     .     .       .</span></span>
-<span><span class="co">#&gt;   grapes       |      .   |     |     .       .</span></span>
-<span><span class="co">#&gt;   melons       |      .   |     |     .       .</span></span>
-<span><span class="co">#&gt;   oranges      |      .   |     |     .       .</span></span>
-<span><span class="co">#&gt;   pears        .      |   |     |     .       |</span></span></code></pre></div>
+<span><span class="co">#&gt; 5 x 5 sparse Matrix of class "ngCMatrix"</span></span>
+<span><span class="co">#&gt;          clothing</span></span>
+<span><span class="co">#&gt; fruit     dress gloves hat scarf t-shirt</span></span>
+<span><span class="co">#&gt;   apples      |      |   |     |       |</span></span>
+<span><span class="co">#&gt;   grapes      |      .   |     |       .</span></span>
+<span><span class="co">#&gt;   melons      |      .   |     |       .</span></span>
+<span><span class="co">#&gt;   oranges     |      .   |     |       .</span></span>
+<span><span class="co">#&gt;   pears       .      |   |     |       |</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
@@ -437,12 +436,12 @@ type.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">clothing_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span></span>
 <span><span class="va">clothing_table</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; dress   16 11 34 40 35 63  2 28  0  42</span></span>
-<span><span class="co">#&gt; socks   20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; gloves   0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; hat      0 61  0  4  3  0  7 20 38  21</span></span>
-<span><span class="co">#&gt; scarf    4 80 47 72 29 55  4  4 16  25</span></span></code></pre></div>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; dress    5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; scarf   15 49 92 17  1 30 15 24 54  11</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="subgroup_apply">subgroup_apply<a class="anchor" aria-label="anchor" href="#subgroup_apply"></a>
 </h3>
@@ -455,36 +454,36 @@ formula:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $apples</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; dress   16 11 34 40 35 63  2 28  0  42</span></span>
-<span><span class="co">#&gt; socks   20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; gloves   0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; scarf    4 80 47 72 29 55  4  4 16  25</span></span>
-<span><span class="co">#&gt; t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
+<span><span class="co">#&gt; dress    5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $grapes</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; gloves   0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; socks   20 24 20 50  2  0 19  5 17  46</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melons</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; gloves   0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; socks   20 24 20 50  2  0 19  5 17  46</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $oranges</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; gloves   0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; socks   20 24 20 50  2  0 19  5 17  46</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pears</span></span>
 <span><span class="co">#&gt;        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; dress  16 11 34 40 35 63  2 28  0  42</span></span>
-<span><span class="co">#&gt; socks  20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; gloves  0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; scarf   4 80 47 72 29 55  4  4 16  25</span></span>
+<span><span class="co">#&gt; dress   5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; socks   9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat    37 40  0 61  5 10 19  2 11  22</span></span>
 <span></span>
 <span><span class="co"># More complex example: </span></span>
 <span><span class="co"># For all subgroups of clothing corresponding to one particular fruit, if that </span></span>
@@ -503,19 +502,17 @@ formula:</p>
 <span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;    dress    socks   gloves    scarf  t-shirt </span></span>
-<span><span class="co">#&gt;   1.5406   7.8726 -10.3336   1.9179  -0.9975 </span></span>
+<span><span class="co">#&gt;   dress   socks  gloves     hat t-shirt </span></span>
+<span><span class="co">#&gt; -21.415  -5.296  -3.038  16.644  13.106 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
-<span><span class="co">#&gt; (Intercept)  16.4326     5.3646   3.063   0.0549 .</span></span>
-<span><span class="co">#&gt; V2           -0.1794     0.1315  -1.364   0.2660  </span></span>
-<span><span class="co">#&gt; ---</span></span>
-<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; (Intercept)  31.3733    15.1192   2.075    0.130</span></span>
+<span><span class="co">#&gt; V2           -0.2754     0.4233  -0.651    0.562</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 7.655 on 3 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3827, Adjusted R-squared:  0.1769 </span></span>
-<span><span class="co">#&gt; F-statistic:  1.86 on 1 and 3 DF,  p-value: 0.266</span></span>
+<span><span class="co">#&gt; Residual standard error: 17.75 on 3 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1237, Adjusted R-squared:  -0.1684 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.4234 on 1 and 3 DF,  p-value: 0.5617</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $grapes</span></span>
@@ -525,16 +522,16 @@ formula:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;  gloves t-shirt   socks </span></span>
-<span><span class="co">#&gt;  -5.891  -3.682   9.574 </span></span>
+<span><span class="co">#&gt;  -7.003   5.153   1.850 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  21.3101    15.6048   1.366    0.402</span></span>
-<span><span class="co">#&gt; V2           -0.4535     0.6378  -0.711    0.607</span></span>
+<span><span class="co">#&gt; (Intercept)  41.8900     8.8178   4.751    0.132</span></span>
+<span><span class="co">#&gt; V2           -0.5603     0.2288  -2.448    0.247</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 11.83 on 1 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3358, Adjusted R-squared:  -0.3284 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.5056 on 1 and 1 DF,  p-value: 0.6065</span></span>
+<span><span class="co">#&gt; Residual standard error: 8.889 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 </span></span>
+<span><span class="co">#&gt; F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melons</span></span>
@@ -544,16 +541,16 @@ formula:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;  gloves t-shirt   socks </span></span>
-<span><span class="co">#&gt;  -5.891  -3.682   9.574 </span></span>
+<span><span class="co">#&gt;  -7.003   5.153   1.850 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  21.3101    15.6048   1.366    0.402</span></span>
-<span><span class="co">#&gt; V2           -0.4535     0.6378  -0.711    0.607</span></span>
+<span><span class="co">#&gt; (Intercept)  41.8900     8.8178   4.751    0.132</span></span>
+<span><span class="co">#&gt; V2           -0.5603     0.2288  -2.448    0.247</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 11.83 on 1 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3358, Adjusted R-squared:  -0.3284 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.5056 on 1 and 1 DF,  p-value: 0.6065</span></span>
+<span><span class="co">#&gt; Residual standard error: 8.889 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 </span></span>
+<span><span class="co">#&gt; F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $oranges</span></span>
@@ -563,16 +560,16 @@ formula:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;  gloves t-shirt   socks </span></span>
-<span><span class="co">#&gt;  -5.891  -3.682   9.574 </span></span>
+<span><span class="co">#&gt;  -7.003   5.153   1.850 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  21.3101    15.6048   1.366    0.402</span></span>
-<span><span class="co">#&gt; V2           -0.4535     0.6378  -0.711    0.607</span></span>
+<span><span class="co">#&gt; (Intercept)  41.8900     8.8178   4.751    0.132</span></span>
+<span><span class="co">#&gt; V2           -0.5603     0.2288  -2.448    0.247</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 11.83 on 1 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3358, Adjusted R-squared:  -0.3284 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.5056 on 1 and 1 DF,  p-value: 0.6065</span></span>
+<span><span class="co">#&gt; Residual standard error: 8.889 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 </span></span>
+<span><span class="co">#&gt; F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pears</span></span>
@@ -581,17 +578,17 @@ formula:</p>
 <span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;   dress   socks  gloves   scarf </span></span>
-<span><span class="co">#&gt;   1.008   7.480 -10.618   2.130 </span></span>
+<span><span class="co">#&gt;   dress   socks  gloves     hat </span></span>
+<span><span class="co">#&gt; -12.887  -9.787   4.011  18.663 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  17.0841     8.1554   2.095    0.171</span></span>
-<span><span class="co">#&gt; V2           -0.1902     0.1795  -1.059    0.401</span></span>
+<span><span class="co">#&gt; (Intercept) 17.51825   20.39781   0.859    0.481</span></span>
+<span><span class="co">#&gt; V2           0.02047    0.51410   0.040    0.972</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 9.334 on 2 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.3594, Adjusted R-squared:  0.03907 </span></span>
-<span><span class="co">#&gt; F-statistic: 1.122 on 1 and 2 DF,  p-value: 0.4005</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 17.7 on 2 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.000792,   Adjusted R-squared:  -0.4988 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.001585 on 1 and 2 DF,  p-value: 0.9719</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="compatibility-with-the-tidyverse-subgroup_to_tbl">Compatibility with the tidyverse: <code>subgroup_to_tbl</code><a class="anchor" aria-label="anchor" href="#compatibility-with-the-tidyverse-subgroup_to_tbl"></a>
@@ -602,24 +599,24 @@ to be grouped based on the first two columns.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl</a></span><span class="op">(</span><span class="va">clothing_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; 1   apples    dress 16 11 34 40 35 63  2 28  0  42</span></span>
-<span><span class="co">#&gt; 2    pears    dress 16 11 34 40 35 63  2 28  0  42</span></span>
-<span><span class="co">#&gt; 3   apples    socks 20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; 4    pears    socks 20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; 5   apples   gloves  0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; 6   grapes   gloves  0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; 7   melons   gloves  0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; 8  oranges   gloves  0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; 9    pears   gloves  0 34 10  2 21 30  0  3 13  16</span></span>
-<span><span class="co">#&gt; 10  apples    scarf  4 80 47 72 29 55  4  4 16  25</span></span>
-<span><span class="co">#&gt; 11   pears    scarf  4 80 47 72 29 55  4  4 16  25</span></span>
-<span><span class="co">#&gt; 12  apples  t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; 13  grapes  t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; 14  melons  t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; 15 oranges  t-shirt 14  8 34 72 47  4 32 50  0   5</span></span>
-<span><span class="co">#&gt; 16  grapes    socks 20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; 17  melons    socks 20 24 20 50  2  0 19  5 17  46</span></span>
-<span><span class="co">#&gt; 18 oranges    socks 20 24 20 50  2  0 19  5 17  46</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   apples    dress  5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; 2    pears    dress  5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; 3   apples    socks  9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; 4    pears    socks  9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; 5   apples   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 6   grapes   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 7   melons   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 8  oranges   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 9    pears   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 10  apples      hat 37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; 11   pears      hat 37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; 12  apples  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; 13  grapes  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; 14  melons  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; 15 oranges  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; 16  grapes    socks  9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; 17  melons    socks  9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; 18 oranges    socks  9 62  0 26 11 10 19 37 44   3</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="reading-and-parsing-adjaceny-list-formatted-files">Reading and parsing adjaceny list-formatted files<a class="anchor" aria-label="anchor" href="#reading-and-parsing-adjaceny-list-formatted-files"></a>
@@ -725,8 +722,8 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt; [13] R6_2.6.1           labeling_0.4.3     generics_0.1.4     knitr_1.51        </span></span>
 <span><span class="co">#&gt; [17] htmlwidgets_1.6.4  forcats_1.0.1      tibble_3.3.1       desc_1.4.3        </span></span>
 <span><span class="co">#&gt; [21] pillar_1.11.1      bslib_0.11.0       RColorBrewer_1.1-3 rlang_1.2.0       </span></span>
-<span><span class="co">#&gt; [25] cachem_1.1.0       xfun_0.58          fs_2.1.0           sass_0.4.10       </span></span>
-<span><span class="co">#&gt; [29] S7_0.2.2           otel_0.2.0         cli_3.6.6          withr_3.0.2       </span></span>
+<span><span class="co">#&gt; [25] cachem_1.1.0       xfun_0.59          fs_2.1.0           sass_0.4.10       </span></span>
+<span><span class="co">#&gt; [29] S7_0.2.2           otel_0.2.0         cli_3.6.6          withr_3.0.3       </span></span>
 <span><span class="co">#&gt; [33] pkgdown_2.2.0      magrittr_2.0.5     digest_0.6.39      grid_4.6.0        </span></span>
 <span><span class="co">#&gt; [37] lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1        </span></span>
 <span><span class="co">#&gt; [41] farver_2.1.2       ragg_1.5.2         rmarkdown_2.31     tools_4.6.0       </span></span>
