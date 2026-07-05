@@ -9,7 +9,7 @@ Convert a LinkMap to a sparse matrix object from the \code{Matrix} package.}
 \method{as.matrix}{`MultiFactor::LinkMap`}(
   x,
   terms = colnames(x),
-  dims = nlevels(x[terms]),
+  dims = nlevels(x)[terms],
   dimnames = levels(x)[terms],
   ...
 )

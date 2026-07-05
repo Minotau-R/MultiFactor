@@ -147,7 +147,7 @@ stopifnot("If provided, 'x' must be a list of two named character vectors" =
         "'sparseness' must be a proportion [0-1]. " = sparseness <= 1 &&
             sparseness > 0
     )
-    LinkMap(.randomLinkDF(
+    as.LinkMap(.randomLinkDF(
         x[[1]], x[[2]], names(x)[[1]], names(x)[[2]],
         p = 1 - sparseness
         ))

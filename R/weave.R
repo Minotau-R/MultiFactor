@@ -62,7 +62,7 @@ weave_along_path <- function(x, path, out.format = "LinkMap") {
   res <- .weave_full_path(x, path, out.format)
   # Remove duplicates
   if(out.format == "LinkMap") {
-    res <- res[ !duplicated(res[, c(1, 2)]), ]
+    res <- res[ !duplicated(res[, seq_len(2L)]), ]
   }
   res
 }
@@ -105,7 +105,7 @@ path_coverage <- function(x, path, out.format = "matrix") {
 }
 
 .weave_complex_formula_lvs <- function(x, lv_list) {
-  new_lvs <- .build_levels(x)
+  new_lvs <- .build_levels_from_linkmap_list(x)
   new_names <- names(new_lvs)
   kept <- intersect(new_names, names(lv_list))
   new_lvs <- list(lv_list[kept], new_lvs)
@@ -176,7 +176,7 @@ path_coverage <- function(x, path, out.format = "matrix") {
     )
   )
   g <- igraph::graph_from_data_frame(
-    d = t(vapply(x, names, c(NA_character_, NA_character_))),
+    d = .all_names_in_list_mf(x),
     directed = FALSE
   )
   igraph::all_shortest_paths(

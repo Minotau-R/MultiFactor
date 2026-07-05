@@ -104,12 +104,10 @@ S7::method(print, MultiFactor) <- function(x, ...) {
 S7::method(levels, MultiFactor) <- function(x) {
     x@levels
 }
-
 #' @export
 `levels<-.MultiFactor::MultiFactor` <- function(x, value) {
     .set_levels_MultiFactor(x, value)
 }
-
 
 S7::method(dimnames, MultiFactor) <- function(x) {
     dimnames(x@map)
@@ -128,6 +126,7 @@ S7::method(`[`, MultiFactor) <- function(x, i) {
 S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 
 })
+
 
 #' @export
 #'
@@ -156,7 +155,7 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     lv_list <- lapply(x[mfs], levels)
     if(any(lms)) {
         lm_lst <- x[lms]
-        lv_list <- c(lv_list, list(.build_levels(lm_lst)))
+        lv_list <- c(lv_list, list(.build_levels_from_linkmap_list(lm_lst)))
     }
     all_lvs <- unique(unlist(lapply(lv_list, names), FALSE, FALSE))
     all_lvs <- .reduce_level_list(lv_list, all_lvs)

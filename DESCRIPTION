@@ -10,20 +10,19 @@ Authors@R: c(
 Description: An S7 framework to organize and manage multiple sets of factors, 
     for instance when tracing or converting feature IDs across databases. 
     Methods for MultiFactor aim to follow factor behaviour.
-Imports:
-    S7, 
-    rlang,
-    generics,
-    Matrix, 
-    forcats, 
-    igraph
 Depends: 
     R (>= 4.1.0)
+Imports:
+    S7,
+    rlang,
+    generics,
+    Matrix,
+    forcats,
+    igraph
 License: GPL-3
 LazyData: false
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Suggests: 
     anansi,
     ggplot2,
@@ -36,3 +35,4 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://minotau-r.github.io/MultiFactor/
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0

@@ -83,14 +83,9 @@ S7::method(as.igraph, MultiFactor) <-
 #' x_df <- mf_as_graph_df(x)
 #'
 mf_as_graph_df <- function(x) {
-    x <- MultiFactor(x)
-
-    res <- as.data.frame.matrix(
-        t(vapply(x, names, c(NA_character_, NA_character_)))
-    )
-    cbind.data.frame(
-        res,
-        x@metadata
-    )
+    if(!S7::S7_inherits(x, MultiFactor)) x <- MultiFactor(x)
+    res <- as.data.frame.matrix( .all_names_in_list_mf(x) )
+    res <- cbind.data.frame(  res, x@metadata )
+    return(res)
 }
 

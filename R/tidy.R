@@ -14,19 +14,27 @@
 #' @importFrom Matrix which
 #' @examples
 #' # Prepare data
-#' link <- anansi::kegg_link()
-#' data("FMT_data", package = "anansi")
-#' x <- FMT_KOs
-#' subgroup_to_tbl(x, link, .path = ec ~ ko)
+#' link <- trade_posts()
+#'
+#' # Generate small example feature table 'x'.
+#' n <- nlevels(link)[["clothing"]]
+#' x <- replicate(10, rbinom(n, rbinom(n, 100, runif(n)), runif(n)))
+#'
+#' #' # Ensure rownames correspond to the second (RHS) variable in the formula.
+#' x <- as.data.frame(x, row.names = levels(link)$clothing)
+#'
+#' # Apply arbitrary code to x based on group membership
+#' subgroup_to_tbl(x, link, .path = fruit ~ clothing)
 #'
 #' @export
 #'
 subgroup_to_tbl <- function(x, link, .path, .index = "row.names") {
-   out <- .index_tbl_by(x, link, .path, .index)
+   out <- S7::S7_data( .index_tbl_by(x, link, .path, .index) )
+   class(out) <- "data.frame"
    out[[2L]] <- as.integer(out[[2L]])
    xcol <- if(.index == "row.names") row.names(x) else x[[.index]]
 
-   subgroup <- data.frame(y = out[1L], x = xcol[out[[2L]]])
+   subgroup <- data.frame(y = out[1L], x = xcol[out[[2L]]], check.rows = FALSE)
    colnames(subgroup) <- if(inherits(.path, "formula")) all.vars(.path) else .path
 
    out <- data.frame(subgroup, x[out[[2L]], ])
