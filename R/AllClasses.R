@@ -48,10 +48,13 @@ LinkMap <- S7::new_class(
     constructor = function(x, metadata = NULL) {
         # Check input
         stopifnot(.check_input_df(x))
+
+
         if(S7::S7_inherits(x, LinkMap)) {
             if( !NCOL(metadata) ) { metadata <- x@metadata }
             x <- `class<-`(S7::S7_data(x), "data.frame")
-            }
+        }
+        x <- `row.names<-.data.frame`(x, NULL)
         if(!NCOL(metadata)) {
             metadata <- data.frame(row.names = seq_len(NROW(x)))
         } else {
@@ -136,8 +139,7 @@ MultiFactor <- S7::new_class(
                     self <- .set_levels_MultiFactor(self, value)
                 }
                 return(self)
-            },
-            default = quote(as.list(colnames(self)))
+            }
             ),
         map = S7::new_property(
             getter = function(self) .mapMultiFactor(self, mode = "counts")
@@ -164,11 +166,7 @@ MultiFactor <- S7::new_class(
         if( !length(levels) )  levels <- .build_levels_from_linkmap_list(x)
         x <- .unify_levels(x, levels)
 
-        names(x) <- vapply(
-            x,
-            function(x) paste(names(x), collapse = "2"),
-            FUN.VALUE = "", USE.NAMES = FALSE
-        )
+        names(x) <- vapply(x, .linkmap2name, FUN.VALUE = "", USE.NAMES = FALSE)
 
         S7::new_object(
             x,
@@ -289,7 +287,7 @@ MultiFactor <- S7::new_class(
 
         # Filter feature ids in each df to only universally shared ones.
         x[ii] <- lapply(x[ii], function(df) {
-            return(df[df[[j]] %in% keep, ])
+            return(df[df[[j]] %in% keep ])
         })
     }
     return(x)
@@ -361,7 +359,25 @@ MultiFactor <- S7::new_class(
 #' Given a list of linkmaps x and named list of chars levels, unify all levels
 #' across x.
 #' @noRd
-.unify_levels <- function(x, levels) lapply(x, .unify_levels_LinkMap, levels)
+.unify_levels <- function(x, levels) {
+    is_s7 <- all(vapply(x, S7::S7_inherits, LinkMap, FUN.VALUE = FALSE))
+    if(is_s7) {
+        res <- lapply(x, .unify_levels_LinkMap, levels)
+    } else {
+        res <- lapply(x, .unify_levels_data.frame, levels)
+    }
+    return(res)
+}
+
+#' @importFrom forcats lvls_expand
+#'
+.unify_levels_data.frame <- function(x, levels) {
+    x <- mapply(
+        forcats::lvls_expand, x,
+        levels, SIMPLIFY = FALSE
+    )
+    return(x)
+}
 
 
 # TODO metadata and .data are now separate props. Use lapply for indexing?
@@ -369,19 +385,21 @@ MultiFactor <- S7::new_class(
 #' @importFrom forcats lvls_expand
 #'
 .unify_levels_LinkMap <- function(x, levels) {
+
     x[] <- mapply(
         forcats::lvls_expand,
         x,
         levels[colnames(x)],
         SIMPLIFY = FALSE
     )
+    #S7::S7_data(x) <- `class<-`(old, "data.frame")
     return(x)
 }
 
 .validLinkMap <- function(x) {
     is.data.frame(x) &&
-        NCOL(x) >= 2L &&
-        length(colnames(x)) >= 2L &&
-        all(vapply(x[seq_len(2L)], is.factor, NA, USE.NAMES = FALSE))
+        NCOL(x) == 2L &&
+        length(colnames(x)) == 2L &&
+        all(vapply(x, is.factor, NA, USE.NAMES = FALSE))
 }
 

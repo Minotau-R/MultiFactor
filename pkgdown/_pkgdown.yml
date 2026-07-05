@@ -19,6 +19,7 @@ reference:
 - contents:
   - weave
   - weave-methods
+  - stack
   - select_path
   - subgroup_apply
   - subgroup_to_tbl
@@ -26,7 +27,7 @@ reference:
 - contents:
   - MultiFactor
   - MultiFactor-methods
-  - MultiFactor-wrangle-methods
+  - augment-subset
   - LinkMap
   - LinkMap-methods
   - nlevels

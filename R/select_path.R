@@ -27,7 +27,7 @@
 select_path <- function(
         x, .path, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
 ) {
-    paths <- .select_path(x, .path_terms(.path), include, exclude, exact)
+    paths <- .select_path(x, .path_parse(.path), include, exclude, exact)
 
     if( as.edges ) paths <- lapply(paths, .V_path_as_E_path)
     return(paths)
@@ -46,6 +46,7 @@ select_path <- function(
         paths <- apply( term.grid, 1L, .apply_shortest_ps, g )
         paths <- lapply( unlist(paths, FALSE, FALSE), as_ids )
     }
+    return(paths)
 }
 
 .subset_paths <- function(g, include, exclude, exact) {
@@ -174,23 +175,12 @@ select_path <- function(
 }
 
 
-.weave_mult <- function(x, terms, out.format) {
-    res <- apply(
-    expand.grid(terms), 1L, .weave_ordinary_terms_df,
-    x = x, out.format = out.format, simplify = FALSE
-    )
-    if(out.format == "LinkMap") {
-        cn <- vapply(lapply(terms, unique), paste, collapse = ".", "")
-        res <- do.call( rbind.data.frame, lapply(res, `colnames<-`, cn) )
-        res <- LinkMap(res)
-    }
-    return(res)
-    }
+
 
 
 
 .weave_ordinary_terms_df <- function(df, x, out.format) .weave_ordinary_terms(
-    x, c(df[seq_len(2L)]), out.format
+    x, c(df), out.format
 )
 
 

@@ -105,8 +105,9 @@ S7::method(levels, MultiFactor) <- function(x) {
     x@levels
 }
 #' @export
-`levels<-.MultiFactor::MultiFactor` <- function(x, value)
+`levels<-.MultiFactor::MultiFactor` <- function(x, value) {
     .set_levels_MultiFactor(x, value)
+}
 
 S7::method(dimnames, MultiFactor) <- function(x) {
     dimnames(x@map)
@@ -125,6 +126,7 @@ S7::method(`[`, MultiFactor) <- function(x, i) {
 S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 
 })
+
 
 #' @export
 #'

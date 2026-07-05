@@ -22,7 +22,7 @@
 #' )
 #'
 #' # Now enrich test input
-#' weave(x, a ~ b ~ c) |>
+#' weave(x, a ~ b ~ c)
 #'     #test_set_enrichment()
 #' @noRd
 test_set_enrichment <- function(
