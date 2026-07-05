@@ -147,16 +147,16 @@ furniture.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">linkmap</span> <span class="op">&lt;-</span> <span class="va">tp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">linkmap</span></span>
-<span><span class="co">#&gt;          books furniture</span></span>
-<span><span class="co">#&gt; 3     red book     couch</span></span>
-<span><span class="co">#&gt; 2   green book   cabinet</span></span>
-<span><span class="co">#&gt; 6   plain book   cabinet</span></span>
-<span><span class="co">#&gt; 4    blue book  wastebin</span></span>
-<span><span class="co">#&gt; 6.1 plain book  wastebin</span></span>
-<span><span class="co">#&gt; 4.1  blue book       box</span></span>
-<span><span class="co">#&gt; 6.2 plain book       box</span></span>
-<span><span class="co">#&gt; 1   fancy book      door</span></span>
-<span><span class="co">#&gt; 4.2  blue book      door</span></span></code></pre></div>
+<span><span class="co">#&gt;        books furniture</span></span>
+<span><span class="co">#&gt; 1   red book     couch</span></span>
+<span><span class="co">#&gt; 2 green book   cabinet</span></span>
+<span><span class="co">#&gt; 3 plain book   cabinet</span></span>
+<span><span class="co">#&gt; 4  blue book  wastebin</span></span>
+<span><span class="co">#&gt; 5 plain book  wastebin</span></span>
+<span><span class="co">#&gt; 6  blue book       box</span></span>
+<span><span class="co">#&gt; 7 plain book       box</span></span>
+<span><span class="co">#&gt; 8 fancy book      door</span></span>
+<span><span class="co">#&gt; 9  blue book      door</span></span></code></pre></div>
 <p>The two types of goods are captured by the two columns, with column
 names representing the <em>types</em> of good and rows representing
 which specific <em>type-pairs</em> are traded at that trade post, or,
@@ -176,27 +176,27 @@ data set. However, we also notice that the column names - the types of
 goods - can differ.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt;     clothing furniture</span></span>
-<span><span class="co">#&gt; 6      scarf     couch</span></span>
-<span><span class="co">#&gt; 6.1    scarf   cabinet</span></span>
-<span><span class="co">#&gt; 4     gloves  wastebin</span></span>
-<span><span class="co">#&gt; 5        hat  wastebin</span></span>
-<span><span class="co">#&gt; 6.2    scarf  wastebin</span></span>
-<span><span class="co">#&gt; 2      dress       bed</span></span>
-<span><span class="co">#&gt; 1    t-shirt       box</span></span>
-<span><span class="co">#&gt; 6.3    scarf       box</span></span>
-<span><span class="co">#&gt; 5.1      hat      door</span></span>
+<span><span class="co">#&gt;   clothing furniture</span></span>
+<span><span class="co">#&gt; 1    scarf     couch</span></span>
+<span><span class="co">#&gt; 2    scarf   cabinet</span></span>
+<span><span class="co">#&gt; 3   gloves  wastebin</span></span>
+<span><span class="co">#&gt; 4      hat  wastebin</span></span>
+<span><span class="co">#&gt; 5    scarf  wastebin</span></span>
+<span><span class="co">#&gt; 6    dress       bed</span></span>
+<span><span class="co">#&gt; 7  t-shirt       box</span></span>
+<span><span class="co">#&gt; 8    scarf       box</span></span>
+<span><span class="co">#&gt; 9      hat      door</span></span>
 <span><span class="va">tp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt;           books instruments</span></span>
-<span><span class="co">#&gt; 2    green book     trumpet</span></span>
-<span><span class="co">#&gt; 3      red book      guitar</span></span>
-<span><span class="co">#&gt; 4     blue book      guitar</span></span>
-<span><span class="co">#&gt; 4.1   blue book        drum</span></span>
-<span><span class="co">#&gt; 2.1  green book    keyboard</span></span>
-<span><span class="co">#&gt; 5   orange book    keyboard</span></span>
-<span><span class="co">#&gt; 3.1    red book      fiddle</span></span>
-<span><span class="co">#&gt; 5.1 orange book   saxophone</span></span>
-<span><span class="co">#&gt; 6    plain book   saxophone</span></span></code></pre></div>
+<span><span class="co">#&gt;         books instruments</span></span>
+<span><span class="co">#&gt; 1  green book     trumpet</span></span>
+<span><span class="co">#&gt; 2    red book      guitar</span></span>
+<span><span class="co">#&gt; 3   blue book      guitar</span></span>
+<span><span class="co">#&gt; 4   blue book        drum</span></span>
+<span><span class="co">#&gt; 5  green book    keyboard</span></span>
+<span><span class="co">#&gt; 6 orange book    keyboard</span></span>
+<span><span class="co">#&gt; 7    red book      fiddle</span></span>
+<span><span class="co">#&gt; 8 orange book   saxophone</span></span>
+<span><span class="co">#&gt; 9  plain book   saxophone</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="visual-representation-of-the-linkmaps-in-our-data-set-">Visual representation of the LinkMaps in our data set.<a class="anchor" aria-label="anchor" href="#visual-representation-of-the-linkmaps-in-our-data-set-"></a>
 </h4>
@@ -313,14 +313,7 @@ this:</p>
 <span><span class="co">#&gt; 8  oranges    scarf</span></span>
 <span><span class="co">#&gt; 9    pears    scarf</span></span>
 <span><span class="co">#&gt; 10  apples  t-shirt</span></span>
-<span><span class="co">#&gt; 11   pears  t-shirt</span></span>
-<span><span class="co">#&gt; 12  apples    dress</span></span>
-<span><span class="co">#&gt; 13  grapes    dress</span></span>
-<span><span class="co">#&gt; 14  melons    dress</span></span>
-<span><span class="co">#&gt; 15 oranges    dress</span></span>
-<span><span class="co">#&gt; 17  grapes      hat</span></span>
-<span><span class="co">#&gt; 18  melons      hat</span></span>
-<span><span class="co">#&gt; 19 oranges      hat</span></span></code></pre></div>
+<span><span class="co">#&gt; 11   pears  t-shirt</span></span></code></pre></div>
 <p>We receive a new <code>LinkMap</code> containing all fruits that
 could be traded for clothing.</p>
 <div class="section level3">
@@ -369,13 +362,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 1e4ede9 UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH f81b2c4 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 1e4ede9 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from f81b2c4 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -390,14 +383,12 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 4bcf2d9 UN-B 10 18 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 4383a4f UN-B 9 11 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 4bcf2d9 (vertex names):</span></span>
-<span><span class="co">#&gt;  [1] apples --dress   grapes --dress   melons --dress   oranges--dress  </span></span>
-<span><span class="co">#&gt;  [5] apples --gloves  pears  --gloves  apples --hat     grapes --hat    </span></span>
-<span><span class="co">#&gt;  [9] melons --hat     oranges--hat     pears  --hat     apples --scarf  </span></span>
-<span><span class="co">#&gt; [13] grapes --scarf   melons --scarf   oranges--scarf   pears  --scarf  </span></span>
-<span><span class="co">#&gt; [17] apples --t-shirt pears  --t-shirt</span></span>
+<span><span class="co">#&gt; + edges from 4383a4f (vertex names):</span></span>
+<span><span class="co">#&gt;  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    </span></span>
+<span><span class="co">#&gt;  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  </span></span>
+<span><span class="co">#&gt;  [9] pears  --scarf   apples --t-shirt pears  --t-shirt</span></span>
 <span><span class="co"># Same information as the LinkMap: </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lg</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MultiFactor_files/figure-html/igraph-linkmap-sp-1.png" class="r-plt" alt="" width="576"></p>
@@ -412,14 +403,14 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">m</span></span>
-<span><span class="co">#&gt; 5 x 5 sparse Matrix of class "ngCMatrix"</span></span>
+<span><span class="co">#&gt; 5 x 4 sparse Matrix of class "ngCMatrix"</span></span>
 <span><span class="co">#&gt;          clothing</span></span>
-<span><span class="co">#&gt; fruit     dress gloves hat scarf t-shirt</span></span>
-<span><span class="co">#&gt;   apples      |      |   |     |       |</span></span>
-<span><span class="co">#&gt;   grapes      |      .   |     |       .</span></span>
-<span><span class="co">#&gt;   melons      |      .   |     |       .</span></span>
-<span><span class="co">#&gt;   oranges     |      .   |     |       .</span></span>
-<span><span class="co">#&gt;   pears       .      |   |     |       |</span></span></code></pre></div>
+<span><span class="co">#&gt; fruit     gloves hat scarf t-shirt</span></span>
+<span><span class="co">#&gt;   apples       |   |     |       |</span></span>
+<span><span class="co">#&gt;   grapes       .   .     |       .</span></span>
+<span><span class="co">#&gt;   melons       .   .     |       .</span></span>
+<span><span class="co">#&gt;   oranges      .   .     |       .</span></span>
+<span><span class="co">#&gt;   pears        |   |     |       |</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
@@ -436,12 +427,12 @@ type.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">clothing_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span></span>
 <span><span class="va">clothing_table</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; dress    5 18  0 69 36 28 36 44 51   7</span></span>
-<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
-<span><span class="co">#&gt; scarf   15 49 92 17  1 30 15 24 54  11</span></span></code></pre></div>
+<span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
+<span><span class="co">#&gt; dress    8  6 46 61 54  8  4 37  7  42</span></span>
+<span><span class="co">#&gt; socks   41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; gloves  63  7 24  6 26  6 21  7  0   8</span></span>
+<span><span class="co">#&gt; hat     13 29 16  1 22 36 64 35 20   0</span></span>
+<span><span class="co">#&gt; scarf   49 72  4 15  9 58  0 17 37  30</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="subgroup_apply">subgroup_apply<a class="anchor" aria-label="anchor" href="#subgroup_apply"></a>
 </h3>
@@ -454,36 +445,29 @@ formula:</p>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $apples</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; dress    5 18  0 69 36 28 36 44 51   7</span></span>
-<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
-<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
+<span><span class="co">#&gt; dress    8  6 46 61 54  8  4 37  7  42</span></span>
+<span><span class="co">#&gt; socks   41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; gloves  63  7 24  6 26  6 21  7  0   8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $grapes</span></span>
-<span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; socks 41 23  6 44 60 13 85 31  3  59</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melons</span></span>
-<span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; socks 41 23  6 44 60 13 85 31  3  59</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $oranges</span></span>
-<span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; socks 41 23  6 44 60 13 85 31  3  59</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pears</span></span>
-<span><span class="co">#&gt;        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; dress   5 18  0 69 36 28 36 44 51   7</span></span>
-<span><span class="co">#&gt; socks   9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; gloves 22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; hat    37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
+<span><span class="co">#&gt; dress    8  6 46 61 54  8  4 37  7  42</span></span>
+<span><span class="co">#&gt; socks   41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; gloves  63  7 24  6 26  6 21  7  0   8</span></span>
 <span></span>
 <span><span class="co"># More complex example: </span></span>
 <span><span class="co"># For all subgroups of clothing corresponding to one particular fruit, if that </span></span>
@@ -502,75 +486,27 @@ formula:</p>
 <span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;   dress   socks  gloves     hat t-shirt </span></span>
-<span><span class="co">#&gt; -21.415  -5.296  -3.038  16.644  13.106 </span></span>
+<span><span class="co">#&gt; t-shirt   dress   socks  gloves </span></span>
+<span><span class="co">#&gt;  -10.44  -27.43   10.03   27.84 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  31.3733    15.1192   2.075    0.130</span></span>
-<span><span class="co">#&gt; V2           -0.2754     0.4233  -0.651    0.562</span></span>
+<span><span class="co">#&gt; (Intercept)  37.0008    29.5159   1.254    0.337</span></span>
+<span><span class="co">#&gt; V2           -0.2623     1.6771  -0.156    0.890</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 17.75 on 3 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.1237, Adjusted R-squared:  -0.1684 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.4234 on 1 and 3 DF,  p-value: 0.5617</span></span>
+<span><span class="co">#&gt; Residual standard error: 29.47 on 2 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.01209,    Adjusted R-squared:  -0.4819 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.02447 on 1 and 2 DF,  p-value: 0.8901</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $grapes</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;  gloves t-shirt   socks </span></span>
-<span><span class="co">#&gt;  -7.003   5.153   1.850 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  41.8900     8.8178   4.751    0.132</span></span>
-<span><span class="co">#&gt; V2           -0.5603     0.2288  -2.448    0.247</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 8.889 on 1 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melons</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;  gloves t-shirt   socks </span></span>
-<span><span class="co">#&gt;  -7.003   5.153   1.850 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  41.8900     8.8178   4.751    0.132</span></span>
-<span><span class="co">#&gt; V2           -0.5603     0.2288  -2.448    0.247</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 8.889 on 1 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $oranges</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Call:</span></span>
-<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;  gloves t-shirt   socks </span></span>
-<span><span class="co">#&gt;  -7.003   5.153   1.850 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  41.8900     8.8178   4.751    0.132</span></span>
-<span><span class="co">#&gt; V2           -0.5603     0.2288  -2.448    0.247</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 8.889 on 1 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 </span></span>
-<span><span class="co">#&gt; F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pears</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -578,17 +514,17 @@ formula:</p>
 <span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt;   dress   socks  gloves     hat </span></span>
-<span><span class="co">#&gt; -12.887  -9.787   4.011  18.663 </span></span>
+<span><span class="co">#&gt; t-shirt   dress   socks  gloves </span></span>
+<span><span class="co">#&gt;  -10.44  -27.43   10.03   27.84 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept) 17.51825   20.39781   0.859    0.481</span></span>
-<span><span class="co">#&gt; V2           0.02047    0.51410   0.040    0.972</span></span>
+<span><span class="co">#&gt; (Intercept)  37.0008    29.5159   1.254    0.337</span></span>
+<span><span class="co">#&gt; V2           -0.2623     1.6771  -0.156    0.890</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 17.7 on 2 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.000792,   Adjusted R-squared:  -0.4988 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.001585 on 1 and 2 DF,  p-value: 0.9719</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 29.47 on 2 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.01209,    Adjusted R-squared:  -0.4819 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.02447 on 1 and 2 DF,  p-value: 0.8901</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="compatibility-with-the-tidyverse-subgroup_to_tbl">Compatibility with the tidyverse: <code>subgroup_to_tbl</code><a class="anchor" aria-label="anchor" href="#compatibility-with-the-tidyverse-subgroup_to_tbl"></a>
@@ -599,24 +535,17 @@ to be grouped based on the first two columns.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl</a></span><span class="op">(</span><span class="va">clothing_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; 1   apples    dress  5 18  0 69 36 28 36 44 51   7</span></span>
-<span><span class="co">#&gt; 2    pears    dress  5 18  0 69 36 28 36 44 51   7</span></span>
-<span><span class="co">#&gt; 3   apples    socks  9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; 4    pears    socks  9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; 5   apples   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; 6   grapes   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; 7   melons   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; 8  oranges   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; 9    pears   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
-<span><span class="co">#&gt; 10  apples      hat 37 40  0 61  5 10 19  2 11  22</span></span>
-<span><span class="co">#&gt; 11   pears      hat 37 40  0 61  5 10 19  2 11  22</span></span>
-<span><span class="co">#&gt; 12  apples  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; 13  grapes  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; 14  melons  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; 15 oranges  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
-<span><span class="co">#&gt; 16  grapes    socks  9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; 17  melons    socks  9 62  0 26 11 10 19 37 44   3</span></span>
-<span><span class="co">#&gt; 18 oranges    socks  9 62  0 26 11 10 19 37 44   3</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   apples  t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
+<span><span class="co">#&gt; 2    pears  t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
+<span><span class="co">#&gt; 3   apples    dress  8  6 46 61 54  8  4 37  7  42</span></span>
+<span><span class="co">#&gt; 4    pears    dress  8  6 46 61 54  8  4 37  7  42</span></span>
+<span><span class="co">#&gt; 5   apples    socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; 6   grapes    socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; 7   melons    socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; 8  oranges    socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; 9    pears    socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt; 10  apples   gloves 63  7 24  6 26  6 21  7  0   8</span></span>
+<span><span class="co">#&gt; 11   pears   gloves 63  7 24  6 26  6 21  7  0   8</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="reading-and-parsing-adjaceny-list-formatted-files">Reading and parsing adjaceny list-formatted files<a class="anchor" aria-label="anchor" href="#reading-and-parsing-adjaceny-list-formatted-files"></a>
@@ -659,24 +588,17 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="va">adj_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_adjacency_list.html">read_adjacency_list</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
 <span><span class="va">adj_data</span></span>
 <span><span class="co">#&gt;       id.x    id.y</span></span>
-<span><span class="co">#&gt; 1   apples   dress</span></span>
-<span><span class="co">#&gt; 2   apples  gloves</span></span>
-<span><span class="co">#&gt; 3   apples     hat</span></span>
-<span><span class="co">#&gt; 4   apples   scarf</span></span>
-<span><span class="co">#&gt; 5   apples t-shirt</span></span>
-<span><span class="co">#&gt; 6   grapes   dress</span></span>
-<span><span class="co">#&gt; 7   grapes     hat</span></span>
-<span><span class="co">#&gt; 8   grapes   scarf</span></span>
-<span><span class="co">#&gt; 9   melons   dress</span></span>
-<span><span class="co">#&gt; 10  melons     hat</span></span>
-<span><span class="co">#&gt; 11  melons   scarf</span></span>
-<span><span class="co">#&gt; 12 oranges   dress</span></span>
-<span><span class="co">#&gt; 13 oranges     hat</span></span>
-<span><span class="co">#&gt; 14 oranges   scarf</span></span>
-<span><span class="co">#&gt; 15   pears  gloves</span></span>
-<span><span class="co">#&gt; 16   pears     hat</span></span>
-<span><span class="co">#&gt; 17   pears   scarf</span></span>
-<span><span class="co">#&gt; 18   pears t-shirt</span></span>
+<span><span class="co">#&gt; 1   apples  gloves</span></span>
+<span><span class="co">#&gt; 2   apples     hat</span></span>
+<span><span class="co">#&gt; 3   apples   scarf</span></span>
+<span><span class="co">#&gt; 4   apples t-shirt</span></span>
+<span><span class="co">#&gt; 5   grapes   scarf</span></span>
+<span><span class="co">#&gt; 6   melons   scarf</span></span>
+<span><span class="co">#&gt; 7  oranges   scarf</span></span>
+<span><span class="co">#&gt; 8    pears  gloves</span></span>
+<span><span class="co">#&gt; 9    pears     hat</span></span>
+<span><span class="co">#&gt; 10   pears   scarf</span></span>
+<span><span class="co">#&gt; 11   pears t-shirt</span></span>
 <span></span>
 <span><span class="co"># Notice that the unlinked data types are no longer in the graph.  </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">adj_data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

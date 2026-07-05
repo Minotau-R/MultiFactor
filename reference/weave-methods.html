@@ -92,158 +92,46 @@ path definition.</p></dd>
 <span class="r-in"><span><span class="co"># Weave new b2c LinkMap</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">b</span> <span class="op">~</span> <span class="va">c</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        b     c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  b_004 c_001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  b_001 c_001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  b_006 c_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  b_001 c_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  b_008 c_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  b_005 c_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  b_010 c_003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  b_007 c_001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  b_005 c_002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  b_001 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  b_002 c_004</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7  b_003 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  b_004 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  b_005 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 b_007 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 b_005 c_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 b_002 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b_003 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b_004 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 b_008 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 b_009 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 b_003 c_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 b_010 c_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 b_001 c_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 b_005 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 b_006 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 b_007 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 b_004 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 b_007 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 b_010 c_010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  b_007 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  b_008 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 b_009 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 b_010 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 b_002 c_005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b_005 c_005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b_008 c_005</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15 b_003 c_006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16 b_010 c_006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17 b_002 c_007</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 b_008 c_007</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 b_009 c_007</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 b_005 c_008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 b_007 c_008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 b_009 c_008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23 b_010 c_008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24 b_007 c_009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25 b_001 c_010</span>
 <span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">b</span> <span class="op">~</span> <span class="va">a</span>, out.format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 10 sparse Matrix of class "ngCMatrix"</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   [[ suppressing 10 column names ‘a_001’, ‘a_002’, ‘a_003’ ... ]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_001 . | . | . . . . . |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_002 | . . . | | | . . |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_003 . . . . . . . | . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_004 | . | . . . | | | .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_005 | . . . . . . . . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_006 . | | . . . . . | .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_007 . . . . . | . | . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_008 | . . . . . . . . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_009 | . . . | . . | . |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_010 . . . . . . . . . .</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Merge variables with "+" operator, new names get concatenated with ".":</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">b</span> <span class="op">~</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        b   c.d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  b_004 c_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  b_006 c_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  b_001 c_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  b_008 c_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  b_005 c_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  b_010 c_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  b_003 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  b_004 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  b_005 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 b_007 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 b_005 c_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 b_002 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b_003 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b_004 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 b_008 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 b_009 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 b_003 c_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 b_010 c_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 b_001 c_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 b_005 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 b_006 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 b_007 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 b_004 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 b_007 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 b_010 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 b_001 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 b_005 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 b_010 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 b_002 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 b_003 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 b_004 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 b_005 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 b_006 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34 b_007 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35 b_008 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36 b_009 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 b_003 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 b_004 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39 b_005 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 b_006 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41 b_007 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42 b_003 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43 b_004 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44 b_005 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45 b_007 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46 b_010 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47 b_003 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48 b_004 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49 b_006 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50 b_010 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51 b_005 d_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52 b_001 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53 b_003 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54 b_004 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55 b_005 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56 b_007 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57 b_008 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58 b_010 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59 b_003 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60 b_010 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61 b_002 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62 b_003 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63 b_004 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64 b_005 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65 b_006 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66 b_007 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67 b_008 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68 b_009 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69 b_010 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70 b_001 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71 b_003 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72 b_005 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73 b_008 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74 b_010 d_010</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Control intermediate variable types "~", returning a MultiFactor:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span> <span class="op">~</span> <span class="va">c</span> <span class="op">~</span> <span class="va">e</span> <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3 feature types across 2 LinkMaps.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      a  c  e</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a2c 10 10  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c2e  . 10 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a : 10 Levels: a_001 a_002 ... a_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c : 10 Levels: c_001 c_002 ... c_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e : 10 Levels: e_001 e_002 ... e_010 </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Combine merging and intermediate stops:</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span> <span class="op">~</span> <span class="va">b</span> <span class="op">+</span> <span class="va">c</span> <span class="op">~</span> <span class="va">d</span> <span class="op">+</span> <span class="va">e</span> <span class="op">~</span> <span class="va">f</span> <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4 feature types across 3 LinkMaps.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          a b.c d.e  f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a2b.c   10  19   .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b.c2d.e  .  20  20  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d.e2f    .   .  19 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a   : 10 Levels: a_001 a_002 ... a_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b.c : 20 Levels: b_001 b_002 ... c_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d.e : 20 Levels: d_001 d_002 ... e_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> f   : 10 Levels: f_001 f_002 ... f_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_001 | . . . . . . . . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_002 | . . | . . . . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_003 . . . . . . . . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_004 . . | . . . | | | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_005 . . | | . . . . . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_006 | . . | . | . . . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_007 . . | . . . . . . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_008 | | . . . . | . . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_009 | . . . | . . . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_010 . . | | . . . | . .</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

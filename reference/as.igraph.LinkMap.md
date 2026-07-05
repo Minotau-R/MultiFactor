@@ -45,16 +45,16 @@ x <- randomLinkMap()
 
 # Make igraph object:
 igraph::as.igraph(x)
-#> IGRAPH 0440fd7 UN-B 52 338 -- 
+#> IGRAPH d496871 UN-B 52 338 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 0440fd7 (vertex names):
+#> + edges from d496871 (vertex names):
 #>   [1] d--A e--A f--A g--A h--A j--A k--A l--A m--A n--A p--A q--A r--A s--A t--A
-#>  [16] v--A w--A a--B b--B c--B f--B g--B h--B i--B j--B k--B m--B o--B p--B q--B
-#>  [31] r--B s--B z--B c--C e--C f--C i--C o--C q--C s--C t--C u--C v--C w--C z--C
-#>  [46] a--D d--D e--D f--D h--D i--D k--D n--D p--D r--D s--D u--D v--D z--D b--E
-#>  [61] e--E f--E g--E j--E l--E n--E p--E r--E t--E w--E e--F f--F g--F h--F i--F
-#>  [76] j--F k--F l--F r--F s--F u--F v--F x--F z--F a--G e--G f--G g--G n--G o--G
-#>  [91] p--G r--G t--G u--G v--G x--G y--G a--H d--H e--H j--H k--H l--H o--H p--H
-#> [106] q--H r--H u--H v--H w--H y--H a--I d--I g--I j--I n--I o--I p--I s--I v--I
+#>  [16] u--A x--A y--A a--B b--B c--B f--B h--B j--B k--B m--B n--B o--B p--B q--B
+#>  [31] r--B s--B t--B v--B w--B y--B z--B c--C d--C e--C f--C h--C i--C k--C o--C
+#>  [46] q--C s--C u--C v--C z--C a--D b--D d--D e--D i--D k--D m--D n--D q--D r--D
+#>  [61] s--D t--D u--D v--D z--D c--E e--E h--E i--E j--E m--E p--E t--E u--E w--E
+#>  [76] e--F f--F h--F i--F j--F k--F l--F m--F o--F s--F u--F v--F x--F z--F a--G
+#>  [91] d--G e--G g--G i--G l--G n--G o--G p--G t--G u--G v--G w--G a--H e--H j--H
+#> [106] k--H l--H o--H p--H r--H s--H u--H x--H y--H a--I d--I e--I j--I k--I q--I
 #> + ... omitted several edges
 ```

@@ -6,6 +6,8 @@
   : Convert common classes to MultiFactor
 - [`weave-methods`](https://minotau-r.github.io/MultiFactor/reference/weave-methods.md)
   : Weave a new LinkMap from a MultiFactor
+- [`stack(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/stack.MultiFactor.md)
+  : Combine levels across several LinkMaps in a MultiFactor
 - [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
   : Define a path through a MultiFactor object.
 - [`subgroup_apply()`](https://minotau-r.github.io/MultiFactor/reference/subgroup_apply.md)
@@ -19,7 +21,7 @@
   : MultiFactor S7 container class
 - [`MultiFactor-methods`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-methods.md)
   : Methods for MultiFactor S7 container class
-- [`augment(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-wrangle-methods.md)
+- [`augment(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
   : Tools to modify MultiFactors
 - [`LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.md)
   : LinkMap S7 container class

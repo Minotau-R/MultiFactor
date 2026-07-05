@@ -50,13 +50,13 @@ x <- as.data.frame(x, row.names = levels(link)$clothing)
 # Apply arbitrary code to x based on group membership
 subgroup_to_tbl(x, link, .path = fruit ~ clothing)
 #>      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> 1  oranges  t-shirt 44  9 11  8 27 39 41  4  2  43
-#> 2    pears  t-shirt 44  9 11  8 27 39 41  4  2  43
-#> 3  oranges    dress 61 26  5 22 12 40  5 22 20  62
-#> 4    pears    socks  5 65 38  0 31 66 42  2  3   6
-#> 5   melons   gloves 18  6 59 12  3  5 26  5 35   9
-#> 6  oranges   gloves 18  6 59 12  3  5 26  5 35   9
-#> 7    pears   gloves 18  6 59 12  3  5 26  5 35   9
-#> 8 cherries      hat  5 56 23  8 46 15  5  0 25   6
-#> 9   grapes      hat  5 56 23  8 46 15  5  0 25   6
+#> 1    pears  t-shirt 43  3 26 21 32  0  0 65 22   0
+#> 2   grapes    dress  5  0 15 84 68 26 15 39  0   0
+#> 3   melons    socks 54  7  1 35 15  7 14 10  8  17
+#> 4  oranges    socks 54  7  1 35 15  7 14 10  8  17
+#> 5   apples   gloves  6  1 14  2 33 22 32 67  1  52
+#> 6 cherries   gloves  6  1 14  2 33 22 32 67  1  52
+#> 7  oranges   gloves  6  1 14  2 33 22 32 67  1  52
+#> 8  oranges      hat 13 27 14 16 40 20 32  9 12  36
+#> 9    pears    scarf 14 29 67  3 17  4 27  3  7   5
 ```

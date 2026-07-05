@@ -67,26 +67,22 @@ x <- as.data.frame(x, row.names = levels(link)$clothing)
 subgroup_apply(x, link, BY = fruit ~ clothing, FUN = function(x) colSums(x))
 #> $apples
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  86  60 110  87  38  65 104 118  11 162 
+#> 142  39  90  49  91  85 120 134  37  29 
 #> 
 #> $cherries
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  64   2  39  15   1  57  12   6  11  21 
+#>  95   4  18  36  39 131 103  97   6  43 
 #> 
 #> $grapes
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  61  54  97  56  29  39 104  68   9 118 
-#> 
-#> $melons
-#>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  61  54  97  56  29  39 104  68   9 118 
+#>  64   2  18  15  18  41  47  71   6   0 
 #> 
 #> $oranges
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#> 150  62 149 102  39 122 116 124  22 183 
+#>  20  28  58  21  63  37  56  14  11  26 
 #> 
 #> $pears
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  90  65  96  20  62  91  37  50  28  98 
+#>  68  55  42  41  13  14  18  51  23  66 
 #> 
 ```

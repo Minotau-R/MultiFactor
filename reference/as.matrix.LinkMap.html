@@ -57,7 +57,7 @@ Convert a LinkMap to a sparse matrix object from the <code>Matrix</code> package
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class '`MultiFactor::LinkMap`'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">2L</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>  terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>  dims <span class="op">=</span> <span class="fu"><a href="nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
 <span>  <span class="va">...</span></span>

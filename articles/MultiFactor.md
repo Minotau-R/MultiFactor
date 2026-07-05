@@ -82,16 +82,16 @@ traded for types of furniture.
 
 linkmap <- tp[[1]]
 linkmap
-#>          books furniture
-#> 3     red book     couch
-#> 2   green book   cabinet
-#> 6   plain book   cabinet
-#> 4    blue book  wastebin
-#> 6.1 plain book  wastebin
-#> 4.1  blue book       box
-#> 6.2 plain book       box
-#> 1   fancy book      door
-#> 4.2  blue book      door
+#>        books furniture
+#> 1   red book     couch
+#> 2 green book   cabinet
+#> 3 plain book   cabinet
+#> 4  blue book  wastebin
+#> 5 plain book  wastebin
+#> 6  blue book       box
+#> 7 plain book       box
+#> 8 fancy book      door
+#> 9  blue book      door
 ```
 
 The two types of goods are captured by the two columns, with column
@@ -120,27 +120,27 @@ goods - can differ.
 ``` r
 
 tp[[2]]
-#>     clothing furniture
-#> 6      scarf     couch
-#> 6.1    scarf   cabinet
-#> 4     gloves  wastebin
-#> 5        hat  wastebin
-#> 6.2    scarf  wastebin
-#> 2      dress       bed
-#> 1    t-shirt       box
-#> 6.3    scarf       box
-#> 5.1      hat      door
+#>   clothing furniture
+#> 1    scarf     couch
+#> 2    scarf   cabinet
+#> 3   gloves  wastebin
+#> 4      hat  wastebin
+#> 5    scarf  wastebin
+#> 6    dress       bed
+#> 7  t-shirt       box
+#> 8    scarf       box
+#> 9      hat      door
 tp[[3]]
-#>           books instruments
-#> 2    green book     trumpet
-#> 3      red book      guitar
-#> 4     blue book      guitar
-#> 4.1   blue book        drum
-#> 2.1  green book    keyboard
-#> 5   orange book    keyboard
-#> 3.1    red book      fiddle
-#> 5.1 orange book   saxophone
-#> 6    plain book   saxophone
+#>         books instruments
+#> 1  green book     trumpet
+#> 2    red book      guitar
+#> 3   blue book      guitar
+#> 4   blue book        drum
+#> 5  green book    keyboard
+#> 6 orange book    keyboard
+#> 7    red book      fiddle
+#> 8 orange book   saxophone
+#> 9  plain book   saxophone
 ```
 
 #### Visual representation of the LinkMaps in our data set.
@@ -264,13 +264,6 @@ fruit2clothing
 #> 9    pears    scarf
 #> 10  apples  t-shirt
 #> 11   pears  t-shirt
-#> 12  apples    dress
-#> 13  grapes    dress
-#> 14  melons    dress
-#> 15 oranges    dress
-#> 17  grapes      hat
-#> 18  melons      hat
-#> 19 oranges      hat
 ```
 
 We receive a new `LinkMap` containing all fruits that could be traded
@@ -322,13 +315,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH 1e4ede9 UN-- 6 6 -- 
+#> IGRAPH f81b2c4 UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from 1e4ede9 (vertex names):
+#> + edges from f81b2c4 (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -344,14 +337,12 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH 4bcf2d9 UN-B 10 18 -- 
+#> IGRAPH 4383a4f UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 4bcf2d9 (vertex names):
-#>  [1] apples --dress   grapes --dress   melons --dress   oranges--dress  
-#>  [5] apples --gloves  pears  --gloves  apples --hat     grapes --hat    
-#>  [9] melons --hat     oranges--hat     pears  --hat     apples --scarf  
-#> [13] grapes --scarf   melons --scarf   oranges--scarf   pears  --scarf  
-#> [17] apples --t-shirt pears  --t-shirt
+#> + edges from 4383a4f (vertex names):
+#>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
+#>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
+#>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
 # Same information as the LinkMap: 
 plot(lg)
 ```
@@ -365,14 +356,14 @@ plot(lg)
 # Convert to an igraph object
 m <- as.matrix(fruit2clothing)
 m
-#> 5 x 5 sparse Matrix of class "ngCMatrix"
+#> 5 x 4 sparse Matrix of class "ngCMatrix"
 #>          clothing
-#> fruit     dress gloves hat scarf t-shirt
-#>   apples      |      |   |     |       |
-#>   grapes      |      .   |     |       .
-#>   melons      |      .   |     |       .
-#>   oranges     |      .   |     |       .
-#>   pears       .      |   |     |       |
+#> fruit     gloves hat scarf t-shirt
+#>   apples       |   |     |       |
+#>   grapes       .   .     |       .
+#>   melons       .   .     |       .
+#>   oranges      .   .     |       .
+#>   pears        |   |     |       |
 ```
 
 ## Utilities
@@ -390,12 +381,12 @@ clothing_table <- as.data.frame(
 rownames(clothing_table) <- levels(tp)$clothing
 clothing_table
 #>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> t-shirt 42  9 41 66  2  8 18  2 14   1
-#> dress    5 18  0 69 36 28 36 44 51   7
-#> socks    9 62  0 26 11 10 19 37 44   3
-#> gloves  22 23 21 38 21  1 61 16 44   8
-#> hat     37 40  0 61  5 10 19  2 11  22
-#> scarf   15 49 92 17  1 30 15 24 54  11
+#> t-shirt 20 25  9 84 62 40 10 13 11  44
+#> dress    8  6 46 61 54  8  4 37  7  42
+#> socks   41 23  6 44 60 13 85 31  3  59
+#> gloves  63  7 24  6 26  6 21  7  0   8
+#> hat     13 29 16  1 22 36 64 35 20   0
+#> scarf   49 72  4 15  9 58  0 17 37  30
 ```
 
 ### subgroup_apply
@@ -410,36 +401,29 @@ subgroup_apply(
   )
 #> $apples
 #>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> dress    5 18  0 69 36 28 36 44 51   7
-#> socks    9 62  0 26 11 10 19 37 44   3
-#> gloves  22 23 21 38 21  1 61 16 44   8
-#> hat     37 40  0 61  5 10 19  2 11  22
-#> t-shirt 42  9 41 66  2  8 18  2 14   1
+#> t-shirt 20 25  9 84 62 40 10 13 11  44
+#> dress    8  6 46 61 54  8  4 37  7  42
+#> socks   41 23  6 44 60 13 85 31  3  59
+#> gloves  63  7 24  6 26  6 21  7  0   8
 #> 
 #> $grapes
-#>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> gloves  22 23 21 38 21  1 61 16 44   8
-#> t-shirt 42  9 41 66  2  8 18  2 14   1
-#> socks    9 62  0 26 11 10 19 37 44   3
+#>       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> socks 41 23  6 44 60 13 85 31  3  59
 #> 
 #> $melons
-#>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> gloves  22 23 21 38 21  1 61 16 44   8
-#> t-shirt 42  9 41 66  2  8 18  2 14   1
-#> socks    9 62  0 26 11 10 19 37 44   3
+#>       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> socks 41 23  6 44 60 13 85 31  3  59
 #> 
 #> $oranges
-#>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> gloves  22 23 21 38 21  1 61 16 44   8
-#> t-shirt 42  9 41 66  2  8 18  2 14   1
-#> socks    9 62  0 26 11 10 19 37 44   3
+#>       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> socks 41 23  6 44 60 13 85 31  3  59
 #> 
 #> $pears
-#>        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> dress   5 18  0 69 36 28 36 44 51   7
-#> socks   9 62  0 26 11 10 19 37 44   3
-#> gloves 22 23 21 38 21  1 61 16 44   8
-#> hat    37 40  0 61  5 10 19  2 11  22
+#>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
+#> t-shirt 20 25  9 84 62 40 10 13 11  44
+#> dress    8  6 46 61 54  8  4 37  7  42
+#> socks   41 23  6 44 60 13 85 31  3  59
+#> gloves  63  7 24  6 26  6 21  7  0   8
 
 # More complex example: 
 # For all subgroups of clothing corresponding to one particular fruit, if that 
@@ -458,75 +442,27 @@ subgroup_apply(
 #> lm(formula = V1 ~ V2, data = x)
 #> 
 #> Residuals:
-#>   dress   socks  gloves     hat t-shirt 
-#> -21.415  -5.296  -3.038  16.644  13.106 
+#> t-shirt   dress   socks  gloves 
+#>  -10.44  -27.43   10.03   27.84 
 #> 
 #> Coefficients:
 #>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept)  31.3733    15.1192   2.075    0.130
-#> V2           -0.2754     0.4233  -0.651    0.562
+#> (Intercept)  37.0008    29.5159   1.254    0.337
+#> V2           -0.2623     1.6771  -0.156    0.890
 #> 
-#> Residual standard error: 17.75 on 3 degrees of freedom
-#> Multiple R-squared:  0.1237, Adjusted R-squared:  -0.1684 
-#> F-statistic: 0.4234 on 1 and 3 DF,  p-value: 0.5617
+#> Residual standard error: 29.47 on 2 degrees of freedom
+#> Multiple R-squared:  0.01209,    Adjusted R-squared:  -0.4819 
+#> F-statistic: 0.02447 on 1 and 2 DF,  p-value: 0.8901
 #> 
 #> 
 #> $grapes
-#> 
-#> Call:
-#> lm(formula = V1 ~ V2, data = x)
-#> 
-#> Residuals:
-#>  gloves t-shirt   socks 
-#>  -7.003   5.153   1.850 
-#> 
-#> Coefficients:
-#>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept)  41.8900     8.8178   4.751    0.132
-#> V2           -0.5603     0.2288  -2.448    0.247
-#> 
-#> Residual standard error: 8.889 on 1 degrees of freedom
-#> Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 
-#> F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468
-#> 
+#> NULL
 #> 
 #> $melons
-#> 
-#> Call:
-#> lm(formula = V1 ~ V2, data = x)
-#> 
-#> Residuals:
-#>  gloves t-shirt   socks 
-#>  -7.003   5.153   1.850 
-#> 
-#> Coefficients:
-#>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept)  41.8900     8.8178   4.751    0.132
-#> V2           -0.5603     0.2288  -2.448    0.247
-#> 
-#> Residual standard error: 8.889 on 1 degrees of freedom
-#> Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 
-#> F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468
-#> 
+#> NULL
 #> 
 #> $oranges
-#> 
-#> Call:
-#> lm(formula = V1 ~ V2, data = x)
-#> 
-#> Residuals:
-#>  gloves t-shirt   socks 
-#>  -7.003   5.153   1.850 
-#> 
-#> Coefficients:
-#>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept)  41.8900     8.8178   4.751    0.132
-#> V2           -0.5603     0.2288  -2.448    0.247
-#> 
-#> Residual standard error: 8.889 on 1 degrees of freedom
-#> Multiple R-squared:  0.857,  Adjusted R-squared:  0.7141 
-#> F-statistic: 5.995 on 1 and 1 DF,  p-value: 0.2468
-#> 
+#> NULL
 #> 
 #> $pears
 #> 
@@ -534,17 +470,17 @@ subgroup_apply(
 #> lm(formula = V1 ~ V2, data = x)
 #> 
 #> Residuals:
-#>   dress   socks  gloves     hat 
-#> -12.887  -9.787   4.011  18.663 
+#> t-shirt   dress   socks  gloves 
+#>  -10.44  -27.43   10.03   27.84 
 #> 
 #> Coefficients:
 #>             Estimate Std. Error t value Pr(>|t|)
-#> (Intercept) 17.51825   20.39781   0.859    0.481
-#> V2           0.02047    0.51410   0.040    0.972
+#> (Intercept)  37.0008    29.5159   1.254    0.337
+#> V2           -0.2623     1.6771  -0.156    0.890
 #> 
-#> Residual standard error: 17.7 on 2 degrees of freedom
-#> Multiple R-squared:  0.000792,   Adjusted R-squared:  -0.4988 
-#> F-statistic: 0.001585 on 1 and 2 DF,  p-value: 0.9719
+#> Residual standard error: 29.47 on 2 degrees of freedom
+#> Multiple R-squared:  0.01209,    Adjusted R-squared:  -0.4819 
+#> F-statistic: 0.02447 on 1 and 2 DF,  p-value: 0.8901
 ```
 
 ### Compatibility with the tidyverse: `subgroup_to_tbl`
@@ -558,24 +494,17 @@ two columns.
 
 subgroup_to_tbl(clothing_table, tp, fruit ~ clothing)
 #>      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
-#> 1   apples    dress  5 18  0 69 36 28 36 44 51   7
-#> 2    pears    dress  5 18  0 69 36 28 36 44 51   7
-#> 3   apples    socks  9 62  0 26 11 10 19 37 44   3
-#> 4    pears    socks  9 62  0 26 11 10 19 37 44   3
-#> 5   apples   gloves 22 23 21 38 21  1 61 16 44   8
-#> 6   grapes   gloves 22 23 21 38 21  1 61 16 44   8
-#> 7   melons   gloves 22 23 21 38 21  1 61 16 44   8
-#> 8  oranges   gloves 22 23 21 38 21  1 61 16 44   8
-#> 9    pears   gloves 22 23 21 38 21  1 61 16 44   8
-#> 10  apples      hat 37 40  0 61  5 10 19  2 11  22
-#> 11   pears      hat 37 40  0 61  5 10 19  2 11  22
-#> 12  apples  t-shirt 42  9 41 66  2  8 18  2 14   1
-#> 13  grapes  t-shirt 42  9 41 66  2  8 18  2 14   1
-#> 14  melons  t-shirt 42  9 41 66  2  8 18  2 14   1
-#> 15 oranges  t-shirt 42  9 41 66  2  8 18  2 14   1
-#> 16  grapes    socks  9 62  0 26 11 10 19 37 44   3
-#> 17  melons    socks  9 62  0 26 11 10 19 37 44   3
-#> 18 oranges    socks  9 62  0 26 11 10 19 37 44   3
+#> 1   apples  t-shirt 20 25  9 84 62 40 10 13 11  44
+#> 2    pears  t-shirt 20 25  9 84 62 40 10 13 11  44
+#> 3   apples    dress  8  6 46 61 54  8  4 37  7  42
+#> 4    pears    dress  8  6 46 61 54  8  4 37  7  42
+#> 5   apples    socks 41 23  6 44 60 13 85 31  3  59
+#> 6   grapes    socks 41 23  6 44 60 13 85 31  3  59
+#> 7   melons    socks 41 23  6 44 60 13 85 31  3  59
+#> 8  oranges    socks 41 23  6 44 60 13 85 31  3  59
+#> 9    pears    socks 41 23  6 44 60 13 85 31  3  59
+#> 10  apples   gloves 63  7 24  6 26  6 21  7  0   8
+#> 11   pears   gloves 63  7 24  6 26  6 21  7  0   8
 ```
 
 ### Reading and parsing adjaceny list-formatted files
@@ -624,24 +553,17 @@ close(t.con)
 adj_data <- read_adjacency_list(temp)
 adj_data
 #>       id.x    id.y
-#> 1   apples   dress
-#> 2   apples  gloves
-#> 3   apples     hat
-#> 4   apples   scarf
-#> 5   apples t-shirt
-#> 6   grapes   dress
-#> 7   grapes     hat
-#> 8   grapes   scarf
-#> 9   melons   dress
-#> 10  melons     hat
-#> 11  melons   scarf
-#> 12 oranges   dress
-#> 13 oranges     hat
-#> 14 oranges   scarf
-#> 15   pears  gloves
-#> 16   pears     hat
-#> 17   pears   scarf
-#> 18   pears t-shirt
+#> 1   apples  gloves
+#> 2   apples     hat
+#> 3   apples   scarf
+#> 4   apples t-shirt
+#> 5   grapes   scarf
+#> 6   melons   scarf
+#> 7  oranges   scarf
+#> 8    pears  gloves
+#> 9    pears     hat
+#> 10   pears   scarf
+#> 11   pears t-shirt
 
 # Notice that the unlinked data types are no longer in the graph.  
 plot(as.igraph(adj_data))
