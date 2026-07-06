@@ -110,11 +110,27 @@ test_set_enrichment <- function(
 
 
 #' @importFrom Matrix crossprod colSums t
+#' @importFrom S7 S7_data
+#'
+#' @noRd
+#' @examples
+#' x <- randomMultiFactor()[seq_len(2L)]
+#' at <- c("a", "b", "c")
+#' x.cov <- .weave_summarize_links(x, all_terms = at, metric = "coverage")
+#' x.cnt <- .weave_summarize_links(x, all_terms = at, metric = "count")
+#' x.cpt <- .weave_summarize_links(x, all_terms = at, metric = "complete")
+#'
+#' x.cov@metadata
+#' x.cnt@metadata
+#' x.cpt@metadata
 #'
 .weave_summarize_links <- function(
-        x, all_terms, metric = c("count", "coverage", "complete")
+        x, all_terms, metric = c("count", "coverage", "complete"),
+        out.format = c("LinkMap", "matrix")
         ) {
     metric <- match.arg(metric, c("count", "coverage", "complete"))
+    out.format <- match.arg(out.format, c("LinkMap", "matrix"))
+
     seen <- x[[1L]]
     full <- x[[2L]]
     # All steps in order
@@ -123,8 +139,8 @@ test_set_enrichment <- function(
     to <- all_terms[[3L]]
 
     # Ensure LinkMap order
-    shared2from <- as.matrix(seen[, c(shared, from)])
-    shared2to <- as.matrix(full[, c(shared, to)])
+    shared2from <- as.matrix(seen, terms = c(shared, from))
+    shared2to <- as.matrix(full, terms = c(shared, to))
     # Link observed features to sets
     res <- Matrix::crossprod(
         shared2to, shared2from != 0L
@@ -134,6 +150,13 @@ test_set_enrichment <- function(
     if(metric == "complete") res <- res == tot_set
 
     res <- Matrix::t( Matrix::Matrix( res, sparse = TRUE ) )
+    if(out.format == "LinkMap") {
+        val <- data.frame(res@x)
+        colnames(val) <- metric
+
+        res <- .res_weave_matrix_to_LinkMap(res, levels(x)[c(from, to)])
+        res <- LinkMap(res, metadata = val)
+    }
     return(res)
 }
 

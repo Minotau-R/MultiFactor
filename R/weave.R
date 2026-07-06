@@ -160,7 +160,8 @@ path_coverage <- function(x, path, out.format = "matrix") {
 #' @importFrom Matrix which
 #'
 .res_weave_matrix_to_LinkMap <- function(res, lvs) {
-  res <- as.data.frame.matrix(Matrix::which(res, arr.ind = TRUE))
+
+  res <- as.data.frame.matrix(Matrix::which(res > 0L, arr.ind = TRUE))
   res[] <- mapply(FUN = function(x, y) {
     attr(x, "levels") <- y
     `class<-`(x, "factor")
