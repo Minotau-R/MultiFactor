@@ -110,7 +110,7 @@ version of <code>MultiFactor</code>:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     nlevels</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome" class="external-link">fontawesome</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/systemfonts" class="external-link">systemfonts</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
@@ -120,7 +120,6 @@ version of <code>MultiFactor</code>:</p>
 <span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span></span>
 <span><span class="co"># Load demo data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2612</span><span class="op">)</span></span>
 <span><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/randomMultiFactor.html">trade_posts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -362,13 +361,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 656d7ce UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 6059c11 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 656d7ce (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 6059c11 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -383,9 +382,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 856f914 UN-B 9 11 -- </span></span>
+<span><span class="co">#&gt; IGRAPH a9d6a9a UN-B 9 11 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 856f914 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from a9d6a9a (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    </span></span>
 <span><span class="co">#&gt;  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  </span></span>
 <span><span class="co">#&gt;  [9] pears  --scarf   apples --t-shirt pears  --t-shirt</span></span>
@@ -634,22 +633,22 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] igraph_2.3.2      dplyr_1.2.1       fontawesome_0.5.3 ggplot2_4.0.3    </span></span>
+<span><span class="co">#&gt; [1] igraph_2.3.2      dplyr_1.2.1       systemfonts_1.3.2 ggplot2_4.0.3    </span></span>
 <span><span class="co">#&gt; [5] MultiFactor_0.1.2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     compiler_4.6.1    </span></span>
-<span><span class="co">#&gt;  [5] tidyselect_1.2.1   jquerylib_0.1.4    systemfonts_1.3.2  scales_1.4.0      </span></span>
-<span><span class="co">#&gt;  [9] textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9    </span></span>
-<span><span class="co">#&gt; [13] R6_2.6.1           labeling_0.4.3     generics_0.1.4     knitr_1.51        </span></span>
-<span><span class="co">#&gt; [17] htmlwidgets_1.6.4  forcats_1.0.1      tibble_3.3.1       desc_1.4.3        </span></span>
-<span><span class="co">#&gt; [21] pillar_1.11.1      bslib_0.11.0       RColorBrewer_1.1-3 rlang_1.3.0       </span></span>
-<span><span class="co">#&gt; [25] cachem_1.1.0       xfun_0.59          fs_2.1.0           sass_0.4.10       </span></span>
-<span><span class="co">#&gt; [29] S7_0.2.2           otel_0.2.0         cli_3.6.6          withr_3.0.3       </span></span>
-<span><span class="co">#&gt; [33] pkgdown_2.2.1      magrittr_2.0.5     digest_0.6.39      grid_4.6.1        </span></span>
-<span><span class="co">#&gt; [37] lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1        </span></span>
-<span><span class="co">#&gt; [41] farver_2.1.2       ragg_1.5.2         rmarkdown_2.31     tools_4.6.1       </span></span>
-<span><span class="co">#&gt; [45] pkgconfig_2.0.3    htmltools_0.5.9</span></span></code></pre></div>
+<span><span class="co">#&gt;  [5] tidyselect_1.2.1   jquerylib_0.1.4    scales_1.4.0       textshaping_1.0.5 </span></span>
+<span><span class="co">#&gt;  [9] yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9     R6_2.6.1          </span></span>
+<span><span class="co">#&gt; [13] labeling_0.4.3     generics_0.1.4     knitr_1.51         htmlwidgets_1.6.4 </span></span>
+<span><span class="co">#&gt; [17] forcats_1.0.1      tibble_3.3.1       desc_1.4.3         pillar_1.11.1     </span></span>
+<span><span class="co">#&gt; [21] bslib_0.11.0       RColorBrewer_1.1-3 rlang_1.3.0        cachem_1.1.0      </span></span>
+<span><span class="co">#&gt; [25] xfun_0.59          fs_2.1.0           sass_0.4.10        S7_0.2.2          </span></span>
+<span><span class="co">#&gt; [29] otel_0.2.0         cli_3.6.6          withr_3.0.3        pkgdown_2.2.1     </span></span>
+<span><span class="co">#&gt; [33] magrittr_2.0.5     digest_0.6.39      grid_4.6.1         lifecycle_1.0.5   </span></span>
+<span><span class="co">#&gt; [37] vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1         farver_2.1.2      </span></span>
+<span><span class="co">#&gt; [41] ragg_1.5.2         rmarkdown_2.31     tools_4.6.1        pkgconfig_2.0.3   </span></span>
+<span><span class="co">#&gt; [45] htmltools_0.5.9</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
