@@ -59,7 +59,7 @@ set.seed(2612)
 tp <- trade_posts()
 ```
 
-    #> Trying Google Fonts... Found! Downloading font to /tmp/Rtmp2n9SgB
+    #> Trying Google Fonts... Found! Downloading font to /tmp/RtmpsTApbB
 
 ## MultiFactor and LinkMap objects
 
@@ -145,6 +145,9 @@ tp[[3]]
 ```
 
 #### Visual representation of the LinkMaps in our data set.
+
+    #> ✔ Created directory: /__w/MultiFactor/MultiFactor/docs/articles/MultiFactor_files/figure-html.
+    #> Saving 8 x 4 in image
 
 ![](MultiFactor_files/figure-html/plot-LinkMap-1.png)
 
@@ -316,13 +319,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH fa82f2e UN-- 6 6 -- 
+#> IGRAPH e457788 UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from fa82f2e (vertex names):
+#> + edges from e457788 (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -338,9 +341,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH 12a06ae UN-B 9 11 -- 
+#> IGRAPH 8ccda13 UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 12a06ae (vertex names):
+#> + edges from 8ccda13 (vertex names):
 #>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
 #>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
 #>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
