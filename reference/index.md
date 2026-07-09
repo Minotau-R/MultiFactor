@@ -6,6 +6,8 @@
   : Convert common classes to MultiFactor
 - [`weave-methods`](https://minotau-r.github.io/MultiFactor/reference/weave-methods.md)
   : Weave a new LinkMap from a MultiFactor
+- [`weave_coverage()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
+  : Perform enrichtment analysis from a weave
 - [`stack(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/stack.MultiFactor.md)
   : Combine levels across several LinkMaps in a MultiFactor
 - [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
