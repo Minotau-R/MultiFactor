@@ -28,7 +28,7 @@ Suggests:
     ggplot2,
     dplyr, 
     ragg,
-    fontawesome,
+    systemfonts,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
