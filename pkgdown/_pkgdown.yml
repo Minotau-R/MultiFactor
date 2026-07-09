@@ -19,6 +19,7 @@ reference:
 - contents:
   - weave
   - weave-methods
+  - weave_coverage
   - stack
   - select_path
   - subgroup_apply
