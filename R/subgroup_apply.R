@@ -49,8 +49,9 @@ subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) 
 #' @name .index_tbl_by
 #' @rdname index_tbl
 #' @description
-#' `.index_tbl_by()` finds row indices for input table `x`, based on a
-#' user-defined path through a MultiFactor (`link` arg).
+#' `.index_tbl()` is a utility function that flexibly takes a table as input and
+#' returns a special `LinkMap` object that has (1) row names and (2)
+#' corresponding row indices of that table as columns.
 #'
 #' @param type `Character scalar` Specifies name of the feature type, will be
 #'     used as name of the first column in output.
@@ -75,9 +76,8 @@ subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) 
 #' @name .index_tbl_by
 #' @rdname index_tbl
 #' @description
-#' `.index_tbl()` is a utility function that flexibly takes a table as input and
-#' returns a special `LinkMap` object that has (1) row names and (2)
-#' corresponding row indices of that table as columns.
+#' `.index_tbl_by()` finds row indices for input table `x`, based on a
+#' user-defined path through a MultiFactor (`link` arg).
 #'
 #' @param link a `MultiFactor` object.
 #' @param .path either a `formula` or a `character vector`` of length 2 with the
@@ -107,5 +107,21 @@ subgroup_apply <- function( X, LINK, BY, FUN = NULL, ..., INDEX = "row.names" ) 
     as.integer(x[[2L]]), x[[1L]], drop
     )
 
-
+#' Take the coverage .data arg and return a character vector.
+#' @noRd
+#'
+.data_coverage_to_vector <- function(.data, .i = "row.names") {
+    if( !length(.data) ) {
+        res <- NULL
+    } else if( is.character(.data) ) {
+        res <- .data
+    } else {
+        if( .i == "row.names") {
+            res <- row.names(.data)
+        } else {
+            res <- .data[[.i]]
+        }
+    }
+    return(res)
+}
 

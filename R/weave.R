@@ -67,37 +67,6 @@ weave_along_path <- function(x, path, out.format = "LinkMap") {
   res
 }
 
-path_coverage <- function(x, path, out.format = "matrix") {
-  # rename to all_terms for internal consistency with .weave_*
-  all_terms <- path
-  # tolerate single path result in list
-  if(length(all_terms) == 1L && is.list(all_terms)) all_terms <- all_terms[[1L]]
-  stopifnot(
-    "'path' must be a character vector of steps to take, in order." =
-      is.character(all_terms)
-  )
-  stopifnot(
-    "All entries in 'path' must be found in colnames(x)." =
-      all( all_terms %in% colnames(x) )
-  )
-  stopifnot("length( path ) must be 3." = length( all_terms ) == 3L )
-
-  x <- subsetByPath(x, all_terms)
-  terms <- all_terms[c(1L, length(all_terms))]
-  # Compute coverage
-  res <- .weave_summarize_links(x, all_terms, "coverage")
-
-  # Check if we're done
-  if(out.format == "matrix") {
-    dimnames(res) <- levels(x)[terms]
-    return(res)
-  }
-  # Otherwise, make a LinkMap
-  res <- .res_weave_matrix_to_LinkMap(res, levels(x)[terms])
-
-  return(res)
-
-}
 
 .weave_complex_formula <- function(x, .path, out.format) {
   .path_list <- .path_prep_complex(.path)
@@ -160,7 +129,8 @@ path_coverage <- function(x, path, out.format = "matrix") {
 #' @importFrom Matrix which
 #'
 .res_weave_matrix_to_LinkMap <- function(res, lvs) {
-  res <- as.data.frame.matrix(Matrix::which(res, arr.ind = TRUE))
+
+  res <- as.data.frame.matrix(Matrix::which(res > 0L, arr.ind = TRUE))
   res[] <- mapply(FUN = function(x, y) {
     attr(x, "levels") <- y
     `class<-`(x, "factor")

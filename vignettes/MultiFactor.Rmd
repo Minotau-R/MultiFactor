@@ -68,7 +68,7 @@ e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
     e[[l]][match(x[[l]], levels(x)[[l]]), ],
     e[[r]][match(x[[r]], levels(x)[[r]]), ]
     ), 
-  y = rep(seq_len(NROW(x)), 2), 
+  y = rep(rev(seq_len(NROW(x))), 2), 
   x = rep(c(-1, -1/2), each = NROW(x))
   ), 
   data.frame(
@@ -153,8 +153,8 @@ ggplot() +
     rev(plot_dfs[-1]), function(x) list(
       geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
       geom_text(data = filter(x, header),  aes(label = name), size = 4),
-      geom_text(data = filter(x, !header), aes(label = emoji), size = 5)
-      )
+      geom_text(data = filter(x, !header), aes(label = emoji), size = 5, family = "Noto Color Emoji")
+      ) 
 ) +
   geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
   geom_text( data = filter(first_linkmap, header), aes(label = name), size = 4 ) +
