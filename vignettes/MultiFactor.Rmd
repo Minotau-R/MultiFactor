@@ -57,9 +57,8 @@ tp <- trade_posts()
 
 ```{r 'prep-plot', echo = FALSE}
 require_font(
-  "Noto Color Emoji", repositories = "Google Fonts", verbose = FALSE
-  )
-get_from_google_fonts("Noto Color Emoji")
+    "Noto Color Emoji", repositories = "Google Fonts"
+)
 
 e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
 
@@ -157,12 +156,13 @@ ggplot() +
     rev(plot_dfs[-1]), function(x) list(
       geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
       geom_text(data = filter(x, header),  aes(label = name), size = 4),
-      geom_text(data = filter(x, !header), aes(label = emoji), size = 5)
+      geom_text(data = filter(x, !header), aes(label = emoji), size = 5, 
+                family = "Noto Color Emoji")
       ) 
 ) +
   geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
   geom_text( data = filter(first_linkmap, header), aes(label = name), size = 4 ) +
-  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5 ) +
+  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5) +
   scale_fill_manual(values = c("TRUE" = "lightgray", "FALSE" = "white")) +
   guides(fill = "none") +
    
