@@ -146,7 +146,7 @@ plot_dfs[[6]]$y <- plot_dfs[[6]]$y + 20/12
 first_linkmap <- plot_dfs[[1L]]
 other_linkmap <- do.call(rbind, plot_dfs[-1L])
 
-ggplot() +
+p <- ggplot() +
   aes(
     x = x, y = y, 
     ) +
@@ -167,6 +167,10 @@ ggplot() +
   guides(fill = "none") +
    
   theme_void()
+
+pngfile <- knitr::fig_path(suffix = ".png")
+ggsave(pngfile, p, device = ragg::agg_png, create.dir = TRUE)
+knitr::include_graphics(pngfile)
 
 ```
 
