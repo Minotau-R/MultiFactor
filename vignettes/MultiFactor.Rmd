@@ -1,5 +1,7 @@
 ---
 title: "MultiFactor"
+resource_files:
+  - images/plot-LinkMap.png
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{MultiFactor}
@@ -174,9 +176,9 @@ p <- ggplot() +
    
   theme_void()
 
-pngfile <- file.path("vignettes", "images", "plot-LinkMap.png")
+pngfile <- file.path("images", "plot-LinkMap.png")
 ggsave(pngfile, p, device = ragg::agg_png)
-knitr::include_graphics("figures/plot-LinkMap.png")
+knitr::include_graphics("images/plot-LinkMap.png")
 print(pngfile)
 
 ```
