@@ -45,7 +45,7 @@ remotes::install_github("minotau-R/MultiFactor")
 
 ## Setup 
 
-```{r 'setup-multifactor'}
+```{r 'setup-multifactor', message = FALSE}
 library(MultiFactor)
 
 # Wrangling
@@ -63,7 +63,7 @@ tp <- trade_posts()
 
 ```{r 'prep-plot', echo = FALSE}
 require_font(
-    "Noto Color Emoji", repositories = "Google Fonts"
+    "Noto Color Emoji", repositories = "Google Fonts", verbose = FALSE
 )
 
 e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
@@ -333,7 +333,7 @@ to be read from file (or URL).
 
 ### Example of adjacency list formatted data
 We'll format the `LinkMap` from fruit to furniture that we generated above. 
-```{r}
+```{r 'adj-example'}
 # Use igraph to deconstruct a graph into an adjacency list, coerce to characters
 adj <- lapply( as_adj_list( as.igraph(fruit2clothing) ), as_ids )
 # Only keep the 'fruit' nodes that have more than one link for now
