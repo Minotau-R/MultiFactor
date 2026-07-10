@@ -168,14 +168,14 @@ p <- ggplot() +
 ) +
   geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
   geom_text( data = filter(first_linkmap, header), aes(label = name), size = 4 ) +
-  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5) +
+  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5, family = "emoji") +
   scale_fill_manual(values = c("TRUE" = "lightgray", "FALSE" = "white")) +
   guides(fill = "none") +
    
   theme_void()
 
-pngfile <- fs::path(knitr::fig_path(), "plot-LinkMap-1.png")
-ggsave(pngfile, p, device = ragg::agg_png, create.dir = TRUE)
+pngfile <- file.path(knitr::fig_path(".png"))
+ggsave(pngfile, p, device = ragg::agg_png)
 knitr::include_graphics(pngfile)
 print(pngfile)
 
