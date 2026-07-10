@@ -174,9 +174,9 @@ p <- ggplot() +
    
   theme_void()
 
-pngfile <- file.path(knitr::fig_path(".png"))
+pngfile <- file.path("vignettes", "images", "plot-LinkMap.png")
 ggsave(pngfile, p, device = ragg::agg_png)
-knitr::include_graphics(pngfile)
+knitr::include_graphics("figures/plot-LinkMap.png")
 print(pngfile)
 
 ```
