@@ -38,22 +38,9 @@ remotes::install_github("minotau-R/MultiFactor")
 ``` r
 
 library(MultiFactor)
-#> 
-#> Attaching package: 'MultiFactor'
-#> The following object is masked from 'package:base':
-#> 
-#>     nlevels
 
 # Wrangling
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
 # Plotting
 library(ggplot2)
@@ -64,8 +51,6 @@ library(ragg)
 set.seed(2612)
 tp <- trade_posts()
 ```
-
-    #> Trying Google Fonts... Found! Downloading font to /tmp/RtmpZvgBz0
 
 ## MultiFactor and LinkMap objects
 
@@ -322,13 +307,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH 689c581 UN-- 6 6 -- 
+#> IGRAPH 9a3a45a UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from 689c581 (vertex names):
+#> + edges from 9a3a45a (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -344,9 +329,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH a1643f7 UN-B 9 11 -- 
+#> IGRAPH 570ecd1 UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from a1643f7 (vertex names):
+#> + edges from 570ecd1 (vertex names):
 #>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
 #>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
 #>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
