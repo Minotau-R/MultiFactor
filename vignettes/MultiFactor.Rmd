@@ -179,7 +179,6 @@ p <- ggplot() +
 pngfile <- file.path("images", "plot-LinkMap.png")
 ggsave(pngfile, p, device = ragg::agg_png)
 knitr::include_graphics("images/plot-LinkMap.png")
-print(pngfile)
 
 ```
 
