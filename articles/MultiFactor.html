@@ -192,7 +192,8 @@ goods - can differ.</p>
 <div class="section level4">
 <h4 id="visual-representation-of-the-linkmaps-in-our-data-set-">Visual representation of the LinkMaps in our data set.<a class="anchor" aria-label="anchor" href="#visual-representation-of-the-linkmaps-in-our-data-set-"></a>
 </h4>
-<p><img src="MultiFactor_files/figure-html/plot-LinkMap-1.png"><!-- --></p>
+<p><img src="MultiFactor_files/figure-html/plot-LinkMap-1/plot-LinkMap-1.png"><!-- --></p>
+<pre><code><span><span class="co">#&gt; <span style="color: #BB00BB; font-weight: bold;">/__w/MultiFactor/MultiFactor/docs/articles/MultiFactor_files/figure-html/plot-LinkMap-1/plot-LinkMap-1.png</span></span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -205,7 +206,7 @@ representation of the relational graph formed by combining those
 <code>LinkMaps</code>. The full object <code>tp</code>, which contains
 the <code>LinkMaps</code> we just investigated, is in fact a
 <code>MultiFactor</code> object:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span></span>
 <span><span class="co">#&gt; A MultiFactor::MultiFactor list S7_object,</span></span>
 <span><span class="co">#&gt;     6 feature types across 6 LinkMaps.</span></span>
@@ -242,7 +243,7 @@ books as well as five types of furniture are mentioned in
 <p>Though <code>MultiFactor</code> is a list of <code>LinkMap</code>s
 under the hood, we can also interact with its matrix representation, as
 well as access the component levels:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 6 6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
@@ -291,7 +292,7 @@ fruit for clothing in steps: We can trade our fruit for a different
 good, which we trade for another one, until we reach a good that we can
 trade for clothing. The <code><a href="../reference/weave-generic.html">weave()</a></code> function does exactly
 this:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fruit2clothing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave-generic.html">weave</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="va">fruit2clothing</span></span>
 <span><span class="co">#&gt;      fruit clothing</span></span>
@@ -315,7 +316,7 @@ could be traded for clothing.</p>
 goods in order, or more generally, the paths that were traversed. If
 several paths exist, all will be traversed and included into one
 <code>LinkMap</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/select_path.html">select_path</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] "fruit"       "instruments" "books"       "furniture"   "clothing"   </span></span>
@@ -338,7 +339,7 @@ representation.</p>
 <h4 id="convert-multifactor-main-graph-representation-to-igraph-object">Convert <code>MultiFactor</code> main graph representation to
 <code>igraph</code> object<a class="anchor" aria-label="anchor" href="#convert-multifactor-main-graph-representation-to-igraph-object"></a>
 </h4>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'igraph'</span></span>
@@ -354,13 +355,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 9a3a45a UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH c827871 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 9a3a45a (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from c827871 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -371,13 +372,13 @@ representation.</p>
 <h4 id="convert-linkmap-relational-information-to-igraph-object">Convert <code>LinkMap</code> relational information to
 <code>igraph</code> object<a class="anchor" aria-label="anchor" href="#convert-linkmap-relational-information-to-igraph-object"></a>
 </h4>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 570ecd1 UN-B 9 11 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 36cff46 UN-B 9 11 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 570ecd1 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 36cff46 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    </span></span>
 <span><span class="co">#&gt;  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  </span></span>
 <span><span class="co">#&gt;  [9] pears  --scarf   apples --t-shirt pears  --t-shirt</span></span>
@@ -391,7 +392,7 @@ representation.</p>
 <h2 id="convert-linkmap-linkage-information-to-sparse-adjacency-matrix">Convert <code>LinkMap</code> linkage information to sparse adjacency
 <code>Matrix</code><a class="anchor" aria-label="anchor" href="#convert-linkmap-linkage-information-to-sparse-adjacency-matrix"></a>
 </h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">m</span></span>
@@ -410,7 +411,7 @@ representation.</p>
 <p><code>MultiFactor</code> also provides some utility functions for
 data wrangling on tables with features (rows) of the appropriate
 type.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate small example table</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="va">clothing_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span></span>
@@ -431,7 +432,7 @@ type.</p>
 <p><code>subgroup_apply</code> allows us to run arbitrary code on
 subsets of a table, based on groupings on the left hand of the
 formula:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_apply.html">subgroup_apply</a></span><span class="op">(</span></span>
 <span>  X <span class="op">=</span> <span class="va">clothing_table</span>, LINK <span class="op">=</span> <span class="va">tp</span>, BY <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, FUN <span class="op">=</span> <span class="va">as.data.frame</span></span>
 <span>  <span class="op">)</span></span>
@@ -524,7 +525,7 @@ formula:</p>
 <p>For those who prefer to use <code>tidyverse</code>,
 <code><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl()</a></code> returns a tidy wide-format table, ready
 to be grouped based on the first two columns.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl</a></span><span class="op">(</span><span class="va">clothing_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
 <span><span class="co">#&gt; 1   apples  t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
@@ -554,7 +555,7 @@ read from file (or URL).</p>
 </h4>
 <p>We’ll format the <code>LinkMap</code> from fruit to furniture that we
 generated above.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use igraph to deconstruct a graph into an adjacency list, coerce to characters</span></span>
 <span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span> <span class="fu"><a href="https://r.igraph.org/reference/as_adj_list.html" class="external-link">as_adj_list</a></span><span class="op">(</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span> <span class="op">)</span>, <span class="va">as_ids</span> <span class="op">)</span></span>
 <span><span class="co"># Only keep the 'fruit' nodes that have more than one link for now</span></span>
@@ -569,7 +570,7 @@ this:</p>
 cherry\tchair\ttable\tdesk
 melon\tchair\ttable\tdesk 
 blueberry\tchair\tdesk</code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create some temporary file to read from:</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># fill the temp file with the adjacency list we just constructed </span></span>
@@ -601,7 +602,7 @@ blueberry\tchair\tdesk</code></pre>
 <div class="section level2">
 <h2 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h2>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; R version 4.6.1 (2026-06-24)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
@@ -630,17 +631,18 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt; [5] dplyr_1.2.1       MultiFactor_0.1.2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     compiler_4.6.1    </span></span>
-<span><span class="co">#&gt;  [5] tidyselect_1.2.1   jquerylib_0.1.4    scales_1.4.0       textshaping_1.0.5 </span></span>
-<span><span class="co">#&gt;  [9] yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9     R6_2.6.1          </span></span>
-<span><span class="co">#&gt; [13] labeling_0.4.3     generics_0.1.4     knitr_1.51         htmlwidgets_1.6.4 </span></span>
-<span><span class="co">#&gt; [17] forcats_1.0.1      tibble_3.3.1       desc_1.4.3         RColorBrewer_1.1-3</span></span>
-<span><span class="co">#&gt; [21] bslib_0.11.0       pillar_1.11.1      rlang_1.3.0        cachem_1.1.0      </span></span>
-<span><span class="co">#&gt; [25] xfun_0.59          fs_2.1.0           sass_0.4.10        S7_0.2.2          </span></span>
-<span><span class="co">#&gt; [29] otel_0.2.0         cli_3.6.6          withr_3.0.3        pkgdown_2.2.1     </span></span>
-<span><span class="co">#&gt; [33] magrittr_2.0.5     digest_0.6.39      grid_4.6.1         lifecycle_1.0.5   </span></span>
-<span><span class="co">#&gt; [37] vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1         farver_2.1.2      </span></span>
-<span><span class="co">#&gt; [41] rmarkdown_2.31     tools_4.6.1        pkgconfig_2.0.3    htmltools_0.5.9</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     crayon_1.5.3      </span></span>
+<span><span class="co">#&gt;  [5] compiler_4.6.1     tidyselect_1.2.1   jquerylib_0.1.4    scales_1.4.0      </span></span>
+<span><span class="co">#&gt;  [9] textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9    </span></span>
+<span><span class="co">#&gt; [13] R6_2.6.1           labeling_0.4.3     generics_0.1.4     knitr_1.51        </span></span>
+<span><span class="co">#&gt; [17] htmlwidgets_1.6.4  forcats_1.0.1      tibble_3.3.1       desc_1.4.3        </span></span>
+<span><span class="co">#&gt; [21] RColorBrewer_1.1-3 bslib_0.11.0       pillar_1.11.1      rlang_1.3.0       </span></span>
+<span><span class="co">#&gt; [25] cachem_1.1.0       xfun_0.59          fs_2.1.0           sass_0.4.10       </span></span>
+<span><span class="co">#&gt; [29] S7_0.2.2           otel_0.2.0         cli_3.6.6          withr_3.0.3       </span></span>
+<span><span class="co">#&gt; [33] pkgdown_2.2.1      magrittr_2.0.5     digest_0.6.39      grid_4.6.1        </span></span>
+<span><span class="co">#&gt; [37] lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1        </span></span>
+<span><span class="co">#&gt; [41] farver_2.1.2       rmarkdown_2.31     tools_4.6.1        pkgconfig_2.0.3   </span></span>
+<span><span class="co">#&gt; [45] htmltools_0.5.9</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

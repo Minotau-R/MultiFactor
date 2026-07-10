@@ -137,7 +137,9 @@ tp[[3]]
 
 #### Visual representation of the LinkMaps in our data set.
 
-![](MultiFactor_files/figure-html/plot-LinkMap-1.png)
+![](MultiFactor_files/figure-html/plot-LinkMap-1/plot-LinkMap-1.png)
+
+    #> /__w/MultiFactor/MultiFactor/docs/articles/MultiFactor_files/figure-html/plot-LinkMap-1/plot-LinkMap-1.png
 
 ### MultiFactor
 
@@ -307,13 +309,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH 9a3a45a UN-- 6 6 -- 
+#> IGRAPH c827871 UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from 9a3a45a (vertex names):
+#> + edges from c827871 (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -329,9 +331,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH 570ecd1 UN-B 9 11 -- 
+#> IGRAPH 36cff46 UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 570ecd1 (vertex names):
+#> + edges from 36cff46 (vertex names):
 #>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
 #>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
 #>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
@@ -595,15 +597,16 @@ sessionInfo()
 #> [5] dplyr_1.2.1       MultiFactor_0.1.2
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     compiler_4.6.1    
-#>  [5] tidyselect_1.2.1   jquerylib_0.1.4    scales_1.4.0       textshaping_1.0.5 
-#>  [9] yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9     R6_2.6.1          
-#> [13] labeling_0.4.3     generics_0.1.4     knitr_1.51         htmlwidgets_1.6.4 
-#> [17] forcats_1.0.1      tibble_3.3.1       desc_1.4.3         RColorBrewer_1.1-3
-#> [21] bslib_0.11.0       pillar_1.11.1      rlang_1.3.0        cachem_1.1.0      
-#> [25] xfun_0.59          fs_2.1.0           sass_0.4.10        S7_0.2.2          
-#> [29] otel_0.2.0         cli_3.6.6          withr_3.0.3        pkgdown_2.2.1     
-#> [33] magrittr_2.0.5     digest_0.6.39      grid_4.6.1         lifecycle_1.0.5   
-#> [37] vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1         farver_2.1.2      
-#> [41] rmarkdown_2.31     tools_4.6.1        pkgconfig_2.0.3    htmltools_0.5.9
+#>  [1] Matrix_1.7-5       gtable_0.3.6       jsonlite_2.0.0     crayon_1.5.3      
+#>  [5] compiler_4.6.1     tidyselect_1.2.1   jquerylib_0.1.4    scales_1.4.0      
+#>  [9] textshaping_1.0.5  yaml_2.3.12        fastmap_1.2.0      lattice_0.22-9    
+#> [13] R6_2.6.1           labeling_0.4.3     generics_0.1.4     knitr_1.51        
+#> [17] htmlwidgets_1.6.4  forcats_1.0.1      tibble_3.3.1       desc_1.4.3        
+#> [21] RColorBrewer_1.1-3 bslib_0.11.0       pillar_1.11.1      rlang_1.3.0       
+#> [25] cachem_1.1.0       xfun_0.59          fs_2.1.0           sass_0.4.10       
+#> [29] S7_0.2.2           otel_0.2.0         cli_3.6.6          withr_3.0.3       
+#> [33] pkgdown_2.2.1      magrittr_2.0.5     digest_0.6.39      grid_4.6.1        
+#> [37] lifecycle_1.0.5    vctrs_0.7.3        evaluate_1.0.5     glue_1.8.1        
+#> [41] farver_2.1.2       rmarkdown_2.31     tools_4.6.1        pkgconfig_2.0.3   
+#> [45] htmltools_0.5.9
 ```
