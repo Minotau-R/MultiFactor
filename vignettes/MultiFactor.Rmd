@@ -130,8 +130,8 @@ tp[[3]]
 ```
 
 ### Visual representation of the LinkMaps in our data set. 
-```{r, 'plot-LinkMap', message=FALSE, echo=FALSE, fig.width=8, fig.height = 4}
-
+```{r, 'plot-LinkMap'}
+#| message=FALSE, echo=FALSE, fig.width=8, fig.height=4, dev='ragg_png'
 plot_dfs <- lapply(tp, .to_plot_df, e)
 
 plot_dfs[[2]]$x <- plot_dfs[[2]]$x + 1 + 2/3.5
@@ -163,7 +163,7 @@ p <- ggplot() +
       geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
       geom_text(data = filter(x, header),  aes(label = name), size = 4),
       geom_text(data = filter(x, !header), aes(label = emoji), size = 5, 
-                family = "Noto Color Emoji")
+                family = "emoji")
       ) 
 ) +
   geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
