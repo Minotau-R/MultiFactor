@@ -47,9 +47,15 @@ remotes::install_github("minotau-R/MultiFactor")
 
 ```{r 'setup-multifactor'}
 library(MultiFactor)
+
+# Wrangling
+library(dplyr)
+
+# Plotting
 library(ggplot2)
 library(systemfonts)
-library(dplyr)
+library(ragg)
+
 # Load demo data
 set.seed(2612)
 tp <- trade_posts()
@@ -124,7 +130,7 @@ tp[[3]]
 ```
 
 ### Visual representation of the LinkMaps in our data set. 
-```{r, 'plot-LinkMap', echo=FALSE, fig.width=8, fig.height = 4}
+```{r, 'plot-LinkMap', message=FALSE, echo=FALSE, fig.width=8, fig.height = 4}
 
 plot_dfs <- lapply(tp, .to_plot_df, e)
 

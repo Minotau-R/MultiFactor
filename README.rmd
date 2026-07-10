@@ -13,6 +13,7 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
     collapse = TRUE,
+    dev="ragg_png", 
     comment = "#>",
     fig.path = "man/figures/README-",
     out.width = "100%",
