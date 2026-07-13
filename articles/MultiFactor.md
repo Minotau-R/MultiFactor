@@ -74,6 +74,7 @@ traded for types of furniture.
 
 linkmap <- tp[[1]]
 linkmap
+#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.
 #>        books furniture
 #> 1   red book     couch
 #> 2 green book   cabinet
@@ -84,6 +85,9 @@ linkmap
 #> 7 plain book       box
 #> 8 fancy book      door
 #> 9  blue book      door
+#> Levels:
+#> books     : 6 Levels: fancy book ... plain book 
+#> furniture : 6 Levels: couch ... door
 ```
 
 The two types of goods are captured by the two columns, with column
@@ -112,6 +116,7 @@ goods - can differ.
 ``` r
 
 tp[[2]]
+#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.
 #>   clothing furniture
 #> 1    scarf     couch
 #> 2    scarf   cabinet
@@ -122,7 +127,11 @@ tp[[2]]
 #> 7  t-shirt       box
 #> 8    scarf       box
 #> 9      hat      door
+#> Levels:
+#> clothing  : 6 Levels: t-shirt ... scarf 
+#> furniture : 6 Levels: couch ... door
 tp[[3]]
+#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.
 #>         books instruments
 #> 1  green book     trumpet
 #> 2    red book      guitar
@@ -133,6 +142,9 @@ tp[[3]]
 #> 7    red book      fiddle
 #> 8 orange book   saxophone
 #> 9  plain book   saxophone
+#> Levels:
+#> books       : 6 Levels: fancy book ... plain book 
+#> instruments : 6 Levels: trumpet ... saxophone
 ```
 
 #### Visual representation of the LinkMaps in our data set.
@@ -244,6 +256,7 @@ function does exactly this:
 
 fruit2clothing <- weave(tp, fruit ~ clothing)
 fruit2clothing
+#> A MultiFactor::LinkMap data.frame S7_object: 11 rows.
 #>      fruit clothing
 #> 1   apples   gloves
 #> 2    pears   gloves
@@ -255,7 +268,10 @@ fruit2clothing
 #> 8  oranges    scarf
 #> 9    pears    scarf
 #> 10  apples  t-shirt
-#> 11   pears  t-shirt
+#>  + 1 more rows. Use `print(n = ...)` to see more rows.
+#> Levels:
+#> fruit    : 5 Levels: apples ... pears 
+#> clothing : 4 Levels: gloves hat scarf t-shirt
 ```
 
 We receive a new `LinkMap` containing all fruits that could be traded
@@ -307,13 +323,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH c45489d UN-- 6 6 -- 
+#> IGRAPH 0124a91 UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from c45489d (vertex names):
+#> + edges from 0124a91 (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -329,9 +345,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH 17a2e39 UN-B 9 11 -- 
+#> IGRAPH 471d1ae UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 17a2e39 (vertex names):
+#> + edges from 471d1ae (vertex names):
 #>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
 #>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
 #>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
@@ -544,6 +560,7 @@ close(t.con)
 
 adj_data <- read_adjacency_list(temp)
 adj_data
+#> A MultiFactor::LinkMap data.frame S7_object: 11 rows.
 #>       id.x    id.y
 #> 1   apples  gloves
 #> 2   apples     hat
@@ -555,7 +572,10 @@ adj_data
 #> 8    pears  gloves
 #> 9    pears     hat
 #> 10   pears   scarf
-#> 11   pears t-shirt
+#>  + 1 more rows. Use `print(n = ...)` to see more rows.
+#> Levels:
+#> id.x : 5 Levels: apples grapes ... pears 
+#> id.y : 4 Levels: gloves hat scarf t-shirt
 
 # Notice that the unlinked data types are no longer in the graph.  
 plot(as.igraph(adj_data))

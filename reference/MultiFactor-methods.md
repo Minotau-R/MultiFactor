@@ -70,6 +70,7 @@ x["a2b"]
 
 # Or extract individual LinkMaps using `[[`
 x[["a2c"]]
+#> A MultiFactor::LinkMap data.frame S7_object: 7 rows.
 #>    a c
 #> 1  a A
 #> 2  c A
@@ -78,6 +79,9 @@ x[["a2c"]]
 #> 7  a B
 #> 8  c C
 #> 10 b B
+#> Levels:
+#> a : 3 Levels: a b c 
+#> c : 3 Levels: A B C 
 
 # Subset by a path
 subset(x, a ~ c)

@@ -94,6 +94,7 @@ respectively.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="randomMultiFactor.html">randomMultiFactor</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Merge variables with "+" operator, new names get concatenated with ".":</span></span></span>
 <span class="r-in"><span><span class="fu">stack</span><span class="op">(</span><span class="va">x</span>, <span class="va">b</span> <span class="op">~</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::LinkMap data.frame S7_object: 80 rows.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        b   c.d</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  b_001 c_001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  b_004 c_001</span>
@@ -105,76 +106,10 @@ respectively.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8  b_009 c_002</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  b_007 c_003</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 b_002 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 b_003 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 b_002 c_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 b_006 c_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 b_003 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15 b_005 c_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16 b_004 c_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17 b_010 c_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18 b_007 c_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19 b_003 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20 b_004 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21 b_008 c_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22 b_002 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23 b_004 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24 b_005 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 b_010 c_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26 b_003 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27 b_004 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28 b_008 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29 b_010 d_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30 b_001 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31 b_003 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32 b_004 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 b_008 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34 b_010 d_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35 b_003 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36 b_004 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37 b_007 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 b_009 d_003</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39 b_002 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40 b_003 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41 b_004 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42 b_005 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43 b_006 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44 b_007 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45 b_009 d_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46 b_002 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47 b_003 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48 b_004 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49 b_005 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50 b_007 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51 b_008 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52 b_009 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 53 b_010 d_005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 54 b_002 d_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 55 b_006 d_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 56 b_007 d_006</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 57 b_002 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 58 b_003 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 59 b_004 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 60 b_005 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 61 b_006 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 62 b_007 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 63 b_009 d_007</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 64 b_003 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 65 b_004 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 66 b_007 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 67 b_008 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 68 b_009 d_008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 69 b_002 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 70 b_003 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 71 b_004 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 72 b_005 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 73 b_007 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 74 b_009 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 75 b_010 d_009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 76 b_003 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 77 b_004 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 78 b_005 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 79 b_007 d_010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 80 b_009 d_010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  + 70 more rows. Use `print(n = ...)` to see more rows.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b   : 10 Levels: b_001 b_002 ... b_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c.d : 20 Levels: c_001 c_002 ... d_010 </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

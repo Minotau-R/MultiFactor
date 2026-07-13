@@ -139,6 +139,7 @@ furniture.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">linkmap</span> <span class="op">&lt;-</span> <span class="va">tp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">linkmap</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
 <span><span class="co">#&gt;        books furniture</span></span>
 <span><span class="co">#&gt; 1   red book     couch</span></span>
 <span><span class="co">#&gt; 2 green book   cabinet</span></span>
@@ -148,7 +149,10 @@ furniture.</p>
 <span><span class="co">#&gt; 6  blue book       box</span></span>
 <span><span class="co">#&gt; 7 plain book       box</span></span>
 <span><span class="co">#&gt; 8 fancy book      door</span></span>
-<span><span class="co">#&gt; 9  blue book      door</span></span></code></pre></div>
+<span><span class="co">#&gt; 9  blue book      door</span></span>
+<span><span class="co">#&gt; Levels:</span></span>
+<span><span class="co">#&gt; books     : 6 Levels: fancy book ... plain book </span></span>
+<span><span class="co">#&gt; furniture : 6 Levels: couch ... door</span></span></code></pre></div>
 <p>The two types of goods are captured by the two columns, with column
 names representing the <em>types</em> of good and rows representing
 which specific <em>type-pairs</em> are traded at that trade post, or,
@@ -168,6 +172,7 @@ data set. However, we also notice that the column names - the types of
 goods - can differ.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
 <span><span class="co">#&gt;   clothing furniture</span></span>
 <span><span class="co">#&gt; 1    scarf     couch</span></span>
 <span><span class="co">#&gt; 2    scarf   cabinet</span></span>
@@ -178,7 +183,11 @@ goods - can differ.</p>
 <span><span class="co">#&gt; 7  t-shirt       box</span></span>
 <span><span class="co">#&gt; 8    scarf       box</span></span>
 <span><span class="co">#&gt; 9      hat      door</span></span>
+<span><span class="co">#&gt; Levels:</span></span>
+<span><span class="co">#&gt; clothing  : 6 Levels: t-shirt ... scarf </span></span>
+<span><span class="co">#&gt; furniture : 6 Levels: couch ... door</span></span>
 <span><span class="va">tp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
 <span><span class="co">#&gt;         books instruments</span></span>
 <span><span class="co">#&gt; 1  green book     trumpet</span></span>
 <span><span class="co">#&gt; 2    red book      guitar</span></span>
@@ -188,7 +197,10 @@ goods - can differ.</p>
 <span><span class="co">#&gt; 6 orange book    keyboard</span></span>
 <span><span class="co">#&gt; 7    red book      fiddle</span></span>
 <span><span class="co">#&gt; 8 orange book   saxophone</span></span>
-<span><span class="co">#&gt; 9  plain book   saxophone</span></span></code></pre></div>
+<span><span class="co">#&gt; 9  plain book   saxophone</span></span>
+<span><span class="co">#&gt; Levels:</span></span>
+<span><span class="co">#&gt; books       : 6 Levels: fancy book ... plain book </span></span>
+<span><span class="co">#&gt; instruments : 6 Levels: trumpet ... saxophone</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="visual-representation-of-the-linkmaps-in-our-data-set-">Visual representation of the LinkMaps in our data set.<a class="anchor" aria-label="anchor" href="#visual-representation-of-the-linkmaps-in-our-data-set-"></a>
 </h4>
@@ -294,6 +306,7 @@ this:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fruit2clothing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave-generic.html">weave</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="va">fruit2clothing</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 11 rows.</span></span>
 <span><span class="co">#&gt;      fruit clothing</span></span>
 <span><span class="co">#&gt; 1   apples   gloves</span></span>
 <span><span class="co">#&gt; 2    pears   gloves</span></span>
@@ -305,7 +318,10 @@ this:</p>
 <span><span class="co">#&gt; 8  oranges    scarf</span></span>
 <span><span class="co">#&gt; 9    pears    scarf</span></span>
 <span><span class="co">#&gt; 10  apples  t-shirt</span></span>
-<span><span class="co">#&gt; 11   pears  t-shirt</span></span></code></pre></div>
+<span><span class="co">#&gt;  + 1 more rows. Use `print(n = ...)` to see more rows.</span></span>
+<span><span class="co">#&gt; Levels:</span></span>
+<span><span class="co">#&gt; fruit    : 5 Levels: apples ... pears </span></span>
+<span><span class="co">#&gt; clothing : 4 Levels: gloves hat scarf t-shirt</span></span></code></pre></div>
 <p>We receive a new <code>LinkMap</code> containing all fruits that
 could be traded for clothing.</p>
 <div class="section level3">
@@ -354,13 +370,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH c45489d UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 0124a91 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from c45489d (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 0124a91 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -375,9 +391,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 17a2e39 UN-B 9 11 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 471d1ae UN-B 9 11 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 17a2e39 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 471d1ae (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    </span></span>
 <span><span class="co">#&gt;  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  </span></span>
 <span><span class="co">#&gt;  [9] pears  --scarf   apples --t-shirt pears  --t-shirt</span></span>
@@ -579,6 +595,7 @@ blueberry\tchair\tdesk</code></pre>
 <span></span>
 <span><span class="va">adj_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_adjacency_list.html">read_adjacency_list</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
 <span><span class="va">adj_data</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 11 rows.</span></span>
 <span><span class="co">#&gt;       id.x    id.y</span></span>
 <span><span class="co">#&gt; 1   apples  gloves</span></span>
 <span><span class="co">#&gt; 2   apples     hat</span></span>
@@ -590,7 +607,10 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt; 8    pears  gloves</span></span>
 <span><span class="co">#&gt; 9    pears     hat</span></span>
 <span><span class="co">#&gt; 10   pears   scarf</span></span>
-<span><span class="co">#&gt; 11   pears t-shirt</span></span>
+<span><span class="co">#&gt;  + 1 more rows. Use `print(n = ...)` to see more rows.</span></span>
+<span><span class="co">#&gt; Levels:</span></span>
+<span><span class="co">#&gt; id.x : 5 Levels: apples grapes ... pears </span></span>
+<span><span class="co">#&gt; id.y : 4 Levels: gloves hat scarf t-shirt</span></span>
 <span></span>
 <span><span class="co"># Notice that the unlinked data types are no longer in the graph.  </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">adj_data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
