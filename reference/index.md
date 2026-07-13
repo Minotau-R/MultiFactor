@@ -55,17 +55,25 @@
   Convert a LinkMap to a sparse matrix. Convert a LinkMap to a sparse
   matrix object from the `Matrix` package.
 
+- [`as.data.frame(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.data.frame.LinkMap.md)
+  : Convert a LinkMap to a data.frame Convert a LinkMap back to a
+  regular data.frame. Metadata is included.
+
 - [`mf_as_graph_df()`](https://minotau-r.github.io/MultiFactor/reference/mf_as_graph_df.md)
   : Convert a MultiFactor to relational graph format.
 
 ## Datasets
 
-- [`randomMultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
+- [`draw_cards()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
+  [`poker_scores()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
+  [`randomMultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
   [`trade_posts()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
   [`randomLinkMap()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
-  : Generate a random MultiFactor or LinkMap
+  : Generate and optionally draw from a poker deck.
 - [`trade_goods`](https://minotau-r.github.io/MultiFactor/reference/trade_goods.md)
   : Small data set of six types of goods.
+- [`playing_cards`](https://minotau-r.github.io/MultiFactor/reference/playing_cards.md)
+  : Basic names of entities in a card deck.
 
 ## Utils
 

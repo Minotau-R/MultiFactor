@@ -12,6 +12,8 @@ as.matrix(
   terms = colnames(x),
   dims = nlevels(x)[terms],
   dimnames = levels(x)[terms],
+  value_id = NULL,
+  force_pattern = is.null(value_id),
   ...
 )
 ```
@@ -33,6 +35,15 @@ as.matrix(
 - dimnames:
 
   list of dimnames. (Default: `levels(x)`).
+
+- value_id:
+
+  Name or index of column in metadata to use as matrix values.
+
+- force_pattern:
+
+  `Boolean`. Whether to ignore value and return a sparse pattern matrix.
+  (Default: FALSE)
 
 - ...:
 

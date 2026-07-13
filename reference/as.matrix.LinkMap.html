@@ -60,6 +60,8 @@ Convert a LinkMap to a sparse matrix object from the <code>Matrix</code> package
 <span>  terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>  dims <span class="op">=</span> <span class="fu"><a href="nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
+<span>  value_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  force_pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">value_id</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -83,6 +85,15 @@ Default: <code>colnames(x)</code></p></dd>
 
 <dt id="arg-dimnames">dimnames<a class="anchor" aria-label="anchor" href="#arg-dimnames"></a></dt>
 <dd><p>list of dimnames. (Default: <code>levels(x)</code>).</p></dd>
+
+
+<dt id="arg-value-id">value_id<a class="anchor" aria-label="anchor" href="#arg-value-id"></a></dt>
+<dd><p>Name or index of column in metadata to use as matrix values.</p></dd>
+
+
+<dt id="arg-force-pattern">force_pattern<a class="anchor" aria-label="anchor" href="#arg-force-pattern"></a></dt>
+<dd><p><code>Boolean</code>. Whether to ignore value and return a sparse
+pattern matrix. (Default: FALSE)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

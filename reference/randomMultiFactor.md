@@ -1,4 +1,4 @@
-# Generate a random MultiFactor or LinkMap
+# Generate and optionally draw from a poker deck.
 
 Randomly generate a valid `MultiFactor` or `LinkMap` object.
 `randomMultiFactor` can optionally take am `igraph` object to determine
@@ -10,6 +10,10 @@ called by `randomMultiFactor`, shouldn't be called by user.
 ## Usage
 
 ``` r
+draw_cards(draw = NULL)
+
+poker_scores()
+
 randomMultiFactor(layout = NULL, n_features = 10, sparseness = 0.75)
 
 trade_posts(raw.data = FALSE)
@@ -18,6 +22,10 @@ randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 ```
 
 ## Arguments
+
+- draw:
+
+  Optional `integer`. How many cards to draw from the deck.
 
 - layout:
 
@@ -47,6 +55,8 @@ randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 a randomly generated object of the specified class.
 
 ## See also
+
+[playing_cards](https://minotau-r.github.io/MultiFactor/reference/playing_cards.md)
 
 [`MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-class.md)
 
@@ -469,4 +479,22 @@ trade_posts()
 #> instruments : 6 Levels: trumpet ... saxophone 
 #> marbles     : 6 Levels: red marble ... sparkly marble 
 #> furniture   : 6 Levels: couch ... door 
+
+# Playing cards
+draw_cards(5)
+#> [1] "7♣️"    "9♦️"    "King♦️" "4♣️"    "8♥️"   
+poker_scores()
+#> A MultiFactor::MultiFactor list S7_object,
+#>     3 feature types across 2 LinkMaps.
+#> 
+#>           card rank suit
+#> card2rank   52   13    .
+#> card2suit   52    .    4
+#> 
+#> Values represent unique feature names in that LinkMap.
+#> 
+#> Levels:
+#> card : 52 Levels: Ace♥️ 2♥️ ... King♣️ 
+#> rank : 13 Levels: Ace 2 ... King 
+#> suit :  4 Levels: hearts spades diamonds clubs 
 ```
