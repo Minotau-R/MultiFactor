@@ -18,16 +18,16 @@ Imports:
     generics,
     Matrix,
     forcats,
-    igraph
+    igraph,
+    BiocStyle
 License: GPL-3
 LazyData: false
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
-    BiocStyle,
     anansi,
     fs,
-    dplyr, 
+    dplyr,
     ggplot2,
     ragg,
     systemfonts,
