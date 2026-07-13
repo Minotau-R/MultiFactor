@@ -162,16 +162,18 @@ draw_cards(5)
 #> [1] "7♣️"    "9♦️"    "King♦️" "4♣️"    "8♥️"   
 poker_scores()
 #> A MultiFactor::MultiFactor list S7_object,
-#>     3 feature types across 2 LinkMaps.
+#>     4 feature types across 3 LinkMaps.
 #> 
-#>           card rank suit
-#> card2rank   52   13    .
-#> card2suit   52    .    4
+#>               card rank suit straight
+#> card2rank       52   13    .        .
+#> card2suit       52    .    4        .
+#> rank2straight    .   13    .       10
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
 #> Levels:
-#> card : 52 Levels: Ace♥️ 2♥️ ... King♣️ 
-#> rank : 13 Levels: Ace 2 ... King 
-#> suit :  4 Levels: hearts spades diamonds clubs 
+#> card     : 52 Levels: Ace♥️ ... King♣️ 
+#> rank     : 13 Levels: Ace ... King 
+#> suit     :  4 Levels: hearts spades diamonds clubs 
+#> straight : 10 Levels: Ace to 5 ... Royal straight 
 ```

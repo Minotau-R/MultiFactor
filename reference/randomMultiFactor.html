@@ -218,18 +218,20 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7♣️"    "9♦️"    "King♦️" "4♣️"    "8♥️"   </span>
 <span class="r-in"><span><span class="fu">poker_scores</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3 feature types across 2 LinkMaps.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4 feature types across 3 LinkMaps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           card rank suit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> card2rank   52   13    .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> card2suit   52    .    4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               card rank suit straight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> card2rank       52   13    .        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> card2suit       52    .    4        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rank2straight    .   13    .       10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> card : 52 Levels: Ace♥️ 2♥️ ... King♣️ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> rank : 13 Levels: Ace 2 ... King </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suit :  4 Levels: hearts spades diamonds clubs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> card     : 52 Levels: Ace♥️ ... King♣️ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rank     : 13 Levels: Ace ... King </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> suit     :  4 Levels: hearts spades diamonds clubs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> straight : 10 Levels: Ace to 5 ... Royal straight </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
