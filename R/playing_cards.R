@@ -40,19 +40,28 @@ poker_scores <- function() {
     # Define scores as lists
     multiples <- split(deck, f = rep(ranks, length(suits)))
     flushes   <- split(deck, f = rep(names(suits), each = length(ranks)))
+    straights <- lapply(
+        seq_len(10L),
+        function(i) ranks[pmax(1L, (seq(from = 0L, to = 4L) + i) %% 14)]
+        )
+    names(straights) <- lapply(straights, function(x) paste(x[1L], "to", x[5L]))
+    names(straights)[10L] <- "Royal straight"
 
     # Convert to LinkMaps
     card2rank <- as.LinkMap(multiples, edge.names = c("card", "rank"))
     card2suit <- as.LinkMap(flushes, edge.names = c("card", "suit"))
+    rank2straights <- as.LinkMap(straights, edge.names = c("rank", "straight"))
 
     x <- list(
         card2rank,
-        card2suit
+        card2suit,
+        rank2straights
     )
     levels <- list(
         card = deck,
         rank = ranks,
-        suit = names(suits)
+        suit = names(suits),
+        straight = names(straights)
         )
     MultiFactor(x, levels)
 }
