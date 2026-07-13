@@ -24,6 +24,7 @@ LazyData: false
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
+    BiocStyle,
     anansi,
     fs,
     dplyr, 

@@ -8,7 +8,7 @@ weave_coverage(
   x,
   .path,
   .data = NULL,
-  metric = c("count", "coverage", "complete"),
+  metric = c("count", "size", "coverage", "complete"),
   out.format = c("LinkMap", "matrix"),
   .data_column = "row.names"
 )

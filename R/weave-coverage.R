@@ -28,10 +28,14 @@
 #' as.data.frame(result)
 #'
 weave_coverage <- function(
-        x, .path, .data = NULL, metric = c("count", "coverage", "complete"),
+        x, .path, .data = NULL,
+        metric = c("count", "size", "coverage", "complete"),
         out.format = c("LinkMap", "matrix"), .data_column = "row.names"
 ) {
-    metric <- match.arg(metric, c("count", "coverage", "complete"))
+    metric <- match.arg(
+        metric, c("count", "size", "coverage", "complete"),
+        several.ok = TRUE
+    )
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
     .p_check <- .check_path(.path)
@@ -179,21 +183,23 @@ weave_coverage <- function(
     } else {
         obs <- bg
     }
-    tot_set <- pmax.int(c(tapply(bg, INDEX = reformulate(set_full), FUN = NROW)), 1L)
+    tot_set <- pmax.int(
+        c(tapply(bg, INDEX = reformulate(set_full), FUN = NROW)), 1L
+        )
     obs_set <- c(tapply(obs, INDEX = reformulate(set_full), FUN = NROW))
-    val <- switch(
-        metric,
-        count = obs_set,
-        coverage = obs_set/tot_set,
+    val <- data.frame(
+        count    = obs_set,
+        size     = tot_set,
+        coverage = obs_set / tot_set,
         complete =  obs_set == tot_set
-    )
-    val <- val[match(bg[[set_full]], names(val))]
-    metadata <- data.frame(val)
-    colnames(metadata) <- metric
+    )[metric]
+
+    metadata <- val[match(bg[[set_full]], row.names(val)), , drop = FALSE]
+    row.names(metadata) <- NULL
     res <- LinkMap(x.lm, metadata)
 
     if( out.format == "matrix" ) {
-        res <- `as.matrix.MultiFactor::LinkMap`(res, value_id = metric)
+        res <- `as.matrix.MultiFactor::LinkMap`(res, value_id = metric[[1L]])
     }
     return(res)
 }
