@@ -69,7 +69,7 @@ S7::method(augment, MultiFactor) <-
     dots <- rlang::dots_list(...)
     dot_names <- names(dots)
     for ( i in seq_along(dot_names) ) {
-        res <- eval(dots[[i]])
+        res <- eval(dots[[i]], envir = x, enclos = parent.frame())
         res_name <- dot_names[i]
         if(res_name == "") { res_name <- .linkmap2name(res) }
 

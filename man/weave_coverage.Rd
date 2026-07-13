@@ -40,15 +40,16 @@ the @metadata slot.
 Perform enrichtment analysis from a weave
 }
 \examples{
-# Generate random data
-x <- randomMultiFactor(n_features = 20)
+set.seed(2612)
+# Draw five cards from a deck
+drawn  <- draw_cards(5); drawn
+scores <- poker_scores()
 
-# Spike in a lower number of a observations
-x <- MultiFactor(
-    list(x[[1]][sample(size = 5, 1:NROW(x[[1]])),], x[[2]])
+# Now enrich input
+result <- weave_coverage(
+    x = scores, .path = card ~ suit, .data = drawn, metric = "count"
 )
-
-# Now enrich test input
-weave_coverage(x, a ~ b ~ c)
+# show result plus metadata
+as.data.frame(result)
 
 }

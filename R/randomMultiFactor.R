@@ -19,6 +19,11 @@
 #'
 #' # Make a random MultiFactor with the trading goods from the vignettes
 #' trade_posts()
+#'
+#' # Playing cards
+#' draw_cards(5)
+#' poker_scores()
+#'
 #' @seealso [MultiFactor()]
 #' @seealso [LinkMap()]
 #'

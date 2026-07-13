@@ -75,6 +75,9 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 #' @param dims length-2 integer vector of matrix dimensions.
 #'     Default: `colnames(x)`
 #' @param dimnames list of dimnames. (Default: `levels(x)`).
+#' @param value_id Name or index of column in metadata to use as matrix values.
+#' @param force_pattern `Boolean`. Whether to ignore value and return a sparse
+#'     pattern matrix. (Default: FALSE)
 #' @param ... additional arguments. Not used.
 #' @importFrom Matrix sparseMatrix
 #' @returns a sparse biadjacency `Matrix` with
@@ -84,12 +87,36 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 `as.matrix.MultiFactor::LinkMap` <- function(
         x, terms = colnames(x),
         dims = nlevels(x)[terms], dimnames = levels(x)[terms],
+        value_id = NULL, force_pattern = is.null(value_id),
         ...
-) Matrix::sparseMatrix(
-    i = x[[terms[1L]]], j = x[[terms[2L]]],
-    dims = dims, dimnames = dimnames,
-    ...
-)
+) if( force_pattern ) {
+  Matrix::sparseMatrix(
+      i = x[[terms[1L]]], j = x[[terms[2L]]],
+      dims = dims, dimnames = dimnames, ...
+    )
+  } else {
+    if( !length(value_id) ) value_id <- 1L
+    value <- x@metadata[[value_id]]
+    Matrix::sparseMatrix(
+      i = x[[terms[1L]]], j = x[[terms[2L]]], x = value,
+      dims = dims, dimnames = dimnames, ...
+    )
+  }
+
+
+#' @title Convert a LinkMap to a data.frame
+#' Convert a LinkMap back to a regular data.frame. Metadata is included.
+#' @name as.data.frame.LinkMap
+#' @param x a `LinkMap` object.
+#' @param row.names,optional,... For compatibility, not currently used.
+#' @importFrom S7 S7_data
+#' @returns a `data.frame`
+#' @export
+#'
+`as.data.frame.MultiFactor::LinkMap` <- function(
+    x, row.names, optional, ...
+    ) cbind(S7::S7_data(x), x@metadata)
+
 
 
 

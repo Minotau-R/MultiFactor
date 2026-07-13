@@ -10,3 +10,14 @@
 #' @usage data("trade_goods", package = "MultiFactor")
 #'
 "trade_goods"
+
+#' Basic names of entities in a card deck.
+#' @name playing_cards
+#' @rdname playing_cards
+#' @format `playing_cards`: A list with two character vectors; contains the
+#'     four `suits` and thirteen `ranks` of a standard poker deck. Used in the
+#'     vignette.
+#' @source `playing_cards`: Manual input.
+#' @usage data("playing_cards", package = "MultiFactor")
+#'
+"playing_cards"

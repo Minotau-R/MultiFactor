@@ -40,12 +40,14 @@ reference:
   - as.igraph.MultiFactor
   - as.igraph.LinkMap
   - as.matrix.LinkMap
+  - as.data.frame.LinkMap
   - mf_as_graph_df
 - title: Datasets
 - contents:
   - randomMultiFactor
   - randomLinkMap
   - trade_goods
+  - playing_cards
 - title: Utils
 - contents:
   - read_adjacency_list

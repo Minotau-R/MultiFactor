@@ -6,6 +6,7 @@
 ^README_files$
 ^man-roxygen$
 ^doc$
+^images$
 ^docs$
 ^Meta$
 ^pkgdown$

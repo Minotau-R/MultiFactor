@@ -11,6 +11,8 @@ Convert a LinkMap to a sparse matrix object from the \code{Matrix} package.}
   terms = colnames(x),
   dims = nlevels(x)[terms],
   dimnames = levels(x)[terms],
+  value_id = NULL,
+  force_pattern = is.null(value_id),
   ...
 )
 }
@@ -23,6 +25,11 @@ Convert a LinkMap to a sparse matrix object from the \code{Matrix} package.}
 Default: \code{colnames(x)}}
 
 \item{dimnames}{list of dimnames. (Default: \code{levels(x)}).}
+
+\item{value_id}{Name or index of column in metadata to use as matrix values.}
+
+\item{force_pattern}{\code{Boolean}. Whether to ignore value and return a sparse
+pattern matrix. (Default: FALSE)}
 
 \item{...}{additional arguments. Not used.}
 }

@@ -15,16 +15,17 @@
 #'     the @metadata slot.
 #' @export
 #' @examples
-#' # Generate random data
-#' x <- randomMultiFactor(n_features = 20)
+#' set.seed(2612)
+#' # Draw five cards from a deck
+#' drawn  <- draw_cards(5); drawn
+#' scores <- poker_scores()
 #'
-#' # Spike in a lower number of a observations
-#' x <- MultiFactor(
-#'     list(x[[1]][sample(size = 5, 1:NROW(x[[1]])),], x[[2]])
+#' # Now enrich input
+#' result <- weave_coverage(
+#'     x = scores, .path = card ~ suit, .data = drawn, metric = "count"
 #' )
-#'
-#' # Now enrich test input
-#' weave_coverage(x, a ~ b ~ c)
+#' # show result plus metadata
+#' as.data.frame(result)
 #'
 weave_coverage <- function(
         x, .path, .data = NULL, metric = c("count", "coverage", "complete"),
@@ -44,7 +45,7 @@ weave_coverage <- function(
     stopifnot(
         "weave_coverage() '.path' must be 2 or 3 steps long." =
             length(full_path) %in% c(2L, 3L)
-        )
+    )
     x <- subsetByPath(x, full_path)
 
     .data <- .data_coverage_to_vector(.data, .data_column)
@@ -95,7 +96,7 @@ weave_coverage <- function(
     stopifnot(
         "Both set and observed must be found in 'x'" =
             all(c(shared, set) %in% colnames(x))
-              )
+    )
     full <- weave(x, reformulate(to, shared))
     hits <- full[full[[shared]] %in% observed[[1L]] ,]
 
@@ -115,7 +116,7 @@ weave_coverage <- function(
 
     matrix(c(q, m-q, k-q, n-(k-q)), 2, 2)
 
-    }
+}
 
 
 
@@ -137,7 +138,7 @@ weave_coverage <- function(
 #'
 .weave_coverage_three <- function(
         x, all_terms, .data, metric, out.format
-        ) {
+) {
     # All steps in order
     from <- all_terms[[1L]]
     shared <- all_terms[[2L]]
@@ -164,21 +165,35 @@ weave_coverage <- function(
     return(res)
 }
 
+#' @importFrom Matrix colSums
+#'
 .weave_coverage_two <- function(
         x, all_terms, .data, metric, out.format
 ) {
-    bg <- as.matrix(x[[1L]], terms = all_terms)
+    set_unit <- all_terms[[1L]]
+    set_full <- all_terms[[2L]]
+    x.lm <-x[[1L]]
+    bg <- `class<-`(S7::S7_data(x.lm), "data.frame")
     if( length(.data) ) {
-        obs <- bg[.data, ]
+        obs <- bg[bg[[set_unit]] %in% .data , ]
     } else {
         obs <- bg
     }
-    res <- .calc_coverage(obs, bg, metric)
-    if( out.format == "LinkMap" ) {
-        val <- data.frame(res@x)
-        colnames(val) <- metric
-        res <- .res_weave_matrix_to_LinkMap(res, levels(x)[all_terms])
-        res <- LinkMap(res, metadata = val)
+    tot_set <- pmax.int(c(tapply(bg, INDEX = reformulate(set_full), FUN = NROW)), 1L)
+    obs_set <- c(tapply(obs, INDEX = reformulate(set_full), FUN = NROW))
+    val <- switch(
+        metric,
+        count = obs_set,
+        coverage = obs_set/tot_set,
+        complete =  obs_set == tot_set
+    )
+    val <- val[match(bg[[set_full]], names(val))]
+    metadata <- data.frame(val)
+    colnames(metadata) <- metric
+    res <- LinkMap(x.lm, metadata)
+
+    if( out.format == "matrix" ) {
+        res <- `as.matrix.MultiFactor::LinkMap`(res, value_id = metric)
     }
     return(res)
 }
@@ -188,11 +203,14 @@ weave_coverage <- function(
 #' @importFrom Matrix colSums t Matrix
 #'
 .calc_coverage <- function(res, bg, metric) {
-    if( metric != "count" ) tot_set <- pmax(Matrix::colSums(bg), 1L)
+    # if (metric != "count")
+    tot_set <- pmax(Matrix::colSums(bg), 1L)
+
     if( metric == "coverage" ) res <- res/tot_set
     if( metric == "complete" ) res <- res == tot_set
 
     res <- Matrix::t( Matrix::Matrix( res, sparse = TRUE ) )
+
     return(res)
 }
 
