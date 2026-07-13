@@ -3,11 +3,7 @@ title: "MultiFactor"
 resource_files:
   - images/plot-LinkMap.png
 output: 
-  BiocStyle::html_document:
-      toc: true
-      toc_float: true
-      toc_depth: 2
-      number_sections: true
+  rmarkdown::html_document
 vignette: >
   %\VignetteIndexEntry{1. Getting started with MultiFactor}
   %\VignetteEngine{knitr::rmarkdown}

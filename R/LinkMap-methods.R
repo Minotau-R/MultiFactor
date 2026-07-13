@@ -24,6 +24,22 @@
 #' @returns A `LinkMap`
 NULL
 
+S7::method(print, LinkMap) <- function(x, n = 10L, ...) {
+  nr <- NROW(x)
+  nrn <- nr - n
+  cat("A ", paste(class(x), collapse = " "), ": ", nr, " rows.\n", sep = "")
+  # Factor columns
+  if(  n < nr ) {
+    print(`class<-`(S7::S7_data(x[seq_len(n)]), "data.frame"))
+    cat( " +", nrn, "more rows. Use `print(n = ...)` to see more rows.\n" )
+  } else {
+    print(`class<-`(S7::S7_data(x), "data.frame"))
+  }
+  # Levels
+  cat("Levels:\n")
+  .print_levels(x)
+}
+
 #' @param use.names `Boolean scalar` Should names be provided.
 #'     (Default: `TRUE`)
 #' @noRd

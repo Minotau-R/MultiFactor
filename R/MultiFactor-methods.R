@@ -69,9 +69,17 @@ S7::method(print, MultiFactor) <- function(x, ...) {
         "Levels:\n",
         sep = ""
     )
+    .print_levels(x)
+
+    invisible(NULL)
+}
+
+.print_levels <- function(x) {
+    # Establish print sizes
     id_w <- max(nchar(colnames(x)))
     nm_w <- max(nchar(lengths(levels(x), use.names = FALSE)))
     fr_w <- getOption("width") -id_w -nm_w -12
+
     for (id in colnames(x)) {
         num_lvs <- length(levels(x)[[id]])
         cat(
@@ -98,7 +106,6 @@ S7::method(print, MultiFactor) <- function(x, ...) {
             cat(levels(x)[[id]], "\n", sep = " ")
         }
     }
-    invisible(NULL)
 }
 
 S7::method(levels, MultiFactor) <- function(x) {
