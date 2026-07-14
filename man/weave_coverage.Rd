@@ -42,14 +42,23 @@ Perform enrichtment analysis from a weave
 \examples{
 set.seed(2612)
 # Draw five cards from a deck
-drawn  <- draw_cards(5); drawn
+drawn  <- draw_cards(5)
+drawn
 scores <- poker_scores()
+scores
 
 # Now enrich input
 result <- weave_coverage(
     x = scores, .path = card ~ suit, .data = drawn, metric = "count"
 )
-# show result plus metadata
-as.data.frame(result)
+
+result
+
+# Now let's spike a hand
+cheat <- draw_cards()[c(1, 10, 11, 12, 13)]
+cheat
+
+.path = c("card", "rank", "straight")
+weave_coverage(scores, c("card", "rank", "straight"), .data = cheat)
 
 }

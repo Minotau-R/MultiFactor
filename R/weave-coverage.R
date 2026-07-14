@@ -17,15 +17,24 @@
 #' @examples
 #' set.seed(2612)
 #' # Draw five cards from a deck
-#' drawn  <- draw_cards(5); drawn
+#' drawn  <- draw_cards(5)
+#' drawn
 #' scores <- poker_scores()
+#' scores
 #'
 #' # Now enrich input
 #' result <- weave_coverage(
 #'     x = scores, .path = card ~ suit, .data = drawn, metric = "count"
 #' )
-#' # show result plus metadata
-#' as.data.frame(result)
+#'
+#' result
+#'
+#' # Now let's spike a hand
+#' cheat <- draw_cards()[c(1, 10, 11, 12, 13)]
+#' cheat
+#'
+#' .path = c("card", "rank", "straight")
+#' weave_coverage(scores, c("card", "rank", "straight"), .data = cheat)
 #'
 weave_coverage <- function(
         x, .path, .data = NULL,
@@ -158,13 +167,24 @@ weave_coverage <- function(
     if( length(.data) ) { shared2from <- shared2from[, .data] }
     # Link observed features to sets
     res <- Matrix::crossprod( shared2to, shared2from != 0L )
-    res <- .calc_coverage(res, bg = shared2to, metric)
+    res <- Matrix::t(Matrix::Matrix( res, sparse = TRUE ))
+    obs_set <- Matrix::colSums(res)
+
+    tot_set <- pmax(Matrix::colSums(shared2to), 1L)
+
+    metadata <- data.frame(
+        count    = obs_set,
+        size     = tot_set,
+        coverage = obs_set / tot_set,
+        complete = obs_set == tot_set
+    )
 
     if( out.format == "LinkMap" ) {
-        val <- data.frame(res@x)
-        colnames(val) <- metric
         res <- .res_weave_matrix_to_LinkMap(res, levels(x)[c(from, to)])
-        res <- LinkMap(res, metadata = val)
+        metadata <- metadata[as.integer(res[[to]]), metric]
+        res <- LinkMap(res, metadata)
+    } else if (out.format == "matrix") {
+        res@x <- metadata[as.integer(res[[to]]), metric]
     }
     return(res)
 }
@@ -203,53 +223,3 @@ weave_coverage <- function(
     }
     return(res)
 }
-
-#' res (observed) and bg (background) are two sparse matrices.
-#' @noRd
-#' @importFrom Matrix colSums t Matrix
-#'
-.calc_coverage <- function(res, bg, metric) {
-    # if (metric != "count")
-    tot_set <- pmax(Matrix::colSums(bg), 1L)
-
-    if( metric == "coverage" ) res <- res/tot_set
-    if( metric == "complete" ) res <- res == tot_set
-
-    res <- Matrix::t( Matrix::Matrix( res, sparse = TRUE ) )
-
-    return(res)
-}
-
-
-# Legacy
-# path_coverage <- function(x, path, out.format = "matrix") {
-#     # rename to all_terms for internal consistency with .weave_*
-#     all_terms <- path
-#     # tolerate single path result in list
-#     if(length(all_terms) == 1L && is.list(all_terms)) all_terms <- all_terms[[1L]]
-#     stopifnot(
-#         "'path' must be a character vector of steps to take, in order." =
-#             is.character(all_terms)
-#     )
-#     stopifnot(
-#         "All entries in 'path' must be found in colnames(x)." =
-#             all( all_terms %in% colnames(x) )
-#     )
-#     stopifnot("length( path ) must be 3." = length( all_terms ) == 3L )
-#
-#     x <- subsetByPath(x, all_terms)
-#     terms <- all_terms[c(1L, length(all_terms))]
-#     # Compute coverage
-#     res <- .weave_coverage_three(x, all_terms, .data, "coverage")
-#
-#     # Check if we're done
-#     if(out.format == "matrix") {
-#         dimnames(res) <- levels(x)[terms]
-#         return(res)
-#     }
-#     # Otherwise, make a LinkMap
-#     res <- .res_weave_matrix_to_LinkMap(res, levels(x)[terms])
-#
-#     return(res)
-#
-# }

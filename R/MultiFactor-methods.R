@@ -66,7 +66,7 @@ S7::method(print, MultiFactor) <- function(x, ...) {
     Matrix::printSpMatrix(x@map)
     cat(
         "\nValues represent unique feature names in that LinkMap.\n\n",
-        "Levels:\n",
+        "@ levels:\n",
         sep = ""
     )
     .print_levels(x)
@@ -78,11 +78,12 @@ S7::method(print, MultiFactor) <- function(x, ...) {
     # Establish print sizes
     id_w <- max(nchar(colnames(x)))
     nm_w <- max(nchar(lengths(levels(x), use.names = FALSE)))
-    fr_w <- getOption("width") -id_w -nm_w -12
+    fr_w <- getOption("width") -id_w -nm_w -15
 
     for (id in colnames(x)) {
         num_lvs <- length(levels(x)[[id]])
         cat(
+            " $ ",
             format(id, width = id_w),
             " : ",
             format(num_lvs, width = nm_w),

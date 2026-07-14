@@ -35,10 +35,20 @@ S7::method(print, LinkMap) <- function(x, n = 10L, ...) {
   } else {
     print(`class<-`(S7::S7_data(x), "data.frame"))
   }
+
   # Levels
-  cat("Levels:\n")
+  cat("\n@ levels:  ", length(levels(x)), "variables: \n")
   .print_levels(x)
+
+  # Metadata
+  if( prod(dim(m <- x@metadata)) ) {
+    cat("\n@ metadata:", NCOL(m), "variables: \n")
+    # Dodge data.frame str header by forcing str.default:
+    str(`class<-`(m, "default"), give.attr = FALSE, give.length = FALSE)
+  }
+
 }
+
 
 #' @param use.names `Boolean scalar` Should names be provided.
 #'     (Default: `TRUE`)
