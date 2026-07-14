@@ -55,7 +55,8 @@ stack(x, b ~ c + d)
 #> 9  b_007 c_003
 #> 10 b_002 c_004
 #>  + 70 more rows. Use `print(n = ...)` to see more rows.
-#> Levels:
-#> b   : 10 Levels: b_001 b_002 ... b_010 
-#> c.d : 20 Levels: c_001 c_002 ... d_010 
+#> 
+#> @ levels:   2 variables: 
+#>  $ b   : 10 Levels: b_001 b_002 ... b_010 
+#>  $ c.d : 20 Levels: c_001 c_002 ... d_010 
 ```

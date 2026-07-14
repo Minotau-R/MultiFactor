@@ -85,9 +85,17 @@ linkmap
 #> 7 plain book       box
 #> 8 fancy book      door
 #> 9  blue book      door
-#> Levels:
-#> books     : 6 Levels: fancy book ... plain book 
-#> furniture : 6 Levels: couch ... door
+#> 
+#> @ levels:   2 variables: 
+#>  $ books     : 6 Levels: fancy book ... plain book 
+#>  $ furniture : 6 Levels: couch ... door 
+#> 
+#> @ metadata: 4 variables: 
+#> List of 4
+#>  $ books_emoji    : chr  "📕" "📗" "📓" "📘" ...
+#>  $ books_runes    : chr  "1F4D5" "1F4D7" "1F4D3" "1F4D8" ...
+#>  $ furniture_emoji: chr  "🛋" "🗄" "🗄" "🗑" ...
+#>  $ furniture_runes: chr  "1F6CB" "1F5C4" "1F5C4" "1F5D1" ...
 ```
 
 The two types of goods are captured by the two columns, with column
@@ -127,9 +135,17 @@ tp[[2]]
 #> 7  t-shirt       box
 #> 8    scarf       box
 #> 9      hat      door
-#> Levels:
-#> clothing  : 6 Levels: t-shirt ... scarf 
-#> furniture : 6 Levels: couch ... door
+#> 
+#> @ levels:   2 variables: 
+#>  $ clothing  : 6 Levels: t-shirt ... scarf 
+#>  $ furniture : 6 Levels: couch ... door 
+#> 
+#> @ metadata: 4 variables: 
+#> List of 4
+#>  $ clothing_emoji : chr  "🧣" "🧣" "🧤" "🎩" ...
+#>  $ clothing_runes : chr  "1F9E3" "1F9E3" "1F9E4" "1F3A9" ...
+#>  $ furniture_emoji: chr  "🛋" "🗄" "🗑" "🗑" ...
+#>  $ furniture_runes: chr  "1F6CB" "1F5C4" "1F5D1" "1F5D1" ...
 tp[[3]]
 #> A MultiFactor::LinkMap data.frame S7_object: 9 rows.
 #>         books instruments
@@ -142,9 +158,17 @@ tp[[3]]
 #> 7    red book      fiddle
 #> 8 orange book   saxophone
 #> 9  plain book   saxophone
-#> Levels:
-#> books       : 6 Levels: fancy book ... plain book 
-#> instruments : 6 Levels: trumpet ... saxophone
+#> 
+#> @ levels:   2 variables: 
+#>  $ books       : 6 Levels: fancy book ... plain book 
+#>  $ instruments : 6 Levels: trumpet ... saxophone 
+#> 
+#> @ metadata: 4 variables: 
+#> List of 4
+#>  $ books_emoji      : chr  "📗" "📕" "📘" "📘" ...
+#>  $ books_runes      : chr  "1F4D7" "1F4D5" "1F4D8" "1F4D8" ...
+#>  $ instruments_emoji: chr  "🎺" "🎸" "🎸" "🥁" ...
+#>  $ instruments_runes: chr  "1F3BA" "1F3B8" "1F3B8" "1F941" ...
 ```
 
 #### Visual representation of the LinkMaps in our data set.
@@ -175,13 +199,13 @@ tp
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> books       : 6 Levels: fancy book ... plain book 
-#> furniture   : 6 Levels: couch ... door 
-#> clothing    : 6 Levels: t-shirt ... scarf 
-#> instruments : 6 Levels: trumpet ... saxophone 
-#> fruit       : 6 Levels: apples ... grapes 
-#> marbles     : 6 Levels: red marble ... sparkly marble
+#> @ levels:
+#>  $ books       : 6 Levels: fancy book ... plain book 
+#>  $ furniture   : 6 Levels: couch ... door 
+#>  $ clothing    : 6 Levels: t-shirt ... scarf 
+#>  $ instruments : 6 Levels: trumpet ... saxophone 
+#>  $ fruit       : 6 Levels: apples ... grapes 
+#>  $ marbles     : 6 Levels: red marble ... sparkly marble
 ```
 
 Notice that a `MultiFactor` summarizes information across the component
@@ -269,9 +293,10 @@ fruit2clothing
 #> 9    pears    scarf
 #> 10  apples  t-shirt
 #>  + 1 more rows. Use `print(n = ...)` to see more rows.
-#> Levels:
-#> fruit    : 5 Levels: apples ... pears 
-#> clothing : 4 Levels: gloves hat scarf t-shirt
+#> 
+#> @ levels:   2 variables: 
+#>  $ fruit    : 5 Levels: apples ... pears 
+#>  $ clothing : 4 Levels: gloves hat scarf t-shirt
 ```
 
 We receive a new `LinkMap` containing all fruits that could be traded
@@ -323,13 +348,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH fbcbb81 UN-- 6 6 -- 
+#> IGRAPH bfcbff6 UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from fbcbb81 (vertex names):
+#> + edges from bfcbff6 (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -345,9 +370,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH dbefe15 UN-B 9 11 -- 
+#> IGRAPH 6f91cbb UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from dbefe15 (vertex names):
+#> + edges from 6f91cbb (vertex names):
 #>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
 #>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
 #>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
@@ -573,9 +598,10 @@ adj_data
 #> 9    pears     hat
 #> 10   pears   scarf
 #>  + 1 more rows. Use `print(n = ...)` to see more rows.
-#> Levels:
-#> id.x : 5 Levels: apples grapes ... pears 
-#> id.y : 4 Levels: gloves hat scarf t-shirt
+#> 
+#> @ levels:   2 variables: 
+#>  $ id.x : 5 Levels: apples grapes ... pears 
+#>  $ id.y : 4 Levels: gloves hat scarf t-shirt
 
 # Notice that the unlinked data types are no longer in the graph.  
 plot(as.igraph(adj_data))

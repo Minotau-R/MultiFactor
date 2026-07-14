@@ -49,9 +49,10 @@ weave(x, b ~ c)
 #> 9  b_008 c_004
 #> 10 b_009 c_004
 #>  + 15 more rows. Use `print(n = ...)` to see more rows.
-#> Levels:
-#> b : 9 Levels: b_001 b_002 ... b_010 
-#> c : 9 Levels: c_001 c_002 ... c_010 
+#> 
+#> @ levels:   2 variables: 
+#>  $ b : 9 Levels: b_001 b_002 ... b_010 
+#>  $ c : 9 Levels: c_001 c_002 ... c_010 
 weave(x, b ~ a, out.format = "matrix")
 #> 10 x 10 sparse Matrix of class "ngCMatrix"
 #>   [[ suppressing 10 column names ‘a_001’, ‘a_002’, ‘a_003’ ... ]]

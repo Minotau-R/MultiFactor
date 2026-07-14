@@ -105,69 +105,86 @@ the @metadata slot.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2612</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Draw five cards from a deck</span></span></span>
-<span class="r-in"><span><span class="va">drawn</span>  <span class="op">&lt;-</span> <span class="fu"><a href="randomMultiFactor.html">draw_cards</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>; <span class="va">drawn</span></span></span>
+<span class="r-in"><span><span class="va">drawn</span>  <span class="op">&lt;-</span> <span class="fu"><a href="randomMultiFactor.html">draw_cards</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">drawn</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Jack♦️" "5♥️"    "King♠️" "7♥️"    "6♦️"   </span>
 <span class="r-in"><span><span class="va">scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="randomMultiFactor.html">poker_scores</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">scores</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4 feature types across 3 LinkMaps.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               card rank suit straight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> card2rank       52   13    .        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> card2suit       52    .    4        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rank2straight    .   13    .       10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ card     : 52 Levels: Ace♥️ ... King♣️ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ rank     : 13 Levels: Ace ... King </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ suit     :  4 Levels: hearts spades diamonds clubs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ straight : 10 Levels: Ace to 5 ... Royal straight </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Now enrich input</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">weave_coverage</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    x <span class="op">=</span> <span class="va">scores</span>, .path <span class="op">=</span> <span class="va">card</span> <span class="op">~</span> <span class="va">suit</span>, .data <span class="op">=</span> <span class="va">drawn</span>, metric <span class="op">=</span> <span class="st">"count"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># show result plus metadata</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      card     suit count</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    Ace♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      7♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      8♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      9♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  Jack♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 Queen♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  King♣️    clubs     0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14   Ace♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     2♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     3♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     4♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     5♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     6♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     7♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     8♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     9♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23    10♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24  Jack♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25 Queen♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26  King♦️ diamonds     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27   Ace♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28     2♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29     3♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30     4♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 31     5♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 32     6♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33     7♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 34     8♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 35     9♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 36    10♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37  Jack♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 38 Queen♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 39  King♥️   hearts     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 40   Ace♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41     2♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 42     3♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 43     4♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 44     5♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45     6♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 46     7♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 47     8♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 48     9♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 49    10♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 50  Jack♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 51 Queen♠️   spades     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 52  King♠️   spades     1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">result</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::LinkMap data.frame S7_object: 52 rows.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    card  suit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  Ace♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    4♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    5♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    6♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7    7♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8    8♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9    9♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  10♣️ clubs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  + 42 more rows. Use `print(n = ...)` to see more rows.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:   2 variables: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ card : 52 Levels: 10♠️ ... Queen♦️ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ suit :  4 Levels: clubs diamonds hearts spades </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ metadata: 1 variables: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ count: int  0 0 0 0 0 0 0 0 0 0 ...</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Now let's spike a hand</span></span></span>
+<span class="r-in"><span><span class="va">cheat</span> <span class="op">&lt;-</span> <span class="fu"><a href="randomMultiFactor.html">draw_cards</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">11</span>, <span class="fl">12</span>, <span class="fl">13</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">cheat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Ace♥️"   "10♥️"    "Jack♥️"  "Queen♥️" "King♥️" </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">.path</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"card"</span>, <span class="st">"rank"</span>, <span class="st">"straight"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">weave_coverage</span><span class="op">(</span><span class="va">scores</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"card"</span>, <span class="st">"rank"</span>, <span class="st">"straight"</span><span class="op">)</span>, .data <span class="op">=</span> <span class="va">cheat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::LinkMap data.frame S7_object: 16 rows.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    card   straight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   10♣️    6 to 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   10♣️  7 to Jack</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   10♥️  7 to Jack</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   10♣️ 8 to Queen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   10♥️ 8 to Queen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   10♦️ 8 to Queen</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   10♣️  9 to King</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   10♥️  9 to King</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   10♦️  9 to King</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10   2♠️  9 to King</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  + 6 more rows. Use `print(n = ...)` to see more rows.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:   2 variables: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ card     : 5 Levels: 10♠️ ... 2♠️ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ straight : 6 Levels: 6 to 10 ... Royal straight </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ metadata: 4 variables: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ count   : num  1 2 2 3 3 3 4 4 4 4 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ size    : int  5 5 5 5 5 5 5 5 5 5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ coverage: num  0.2 0.4 0.4 0.6 0.6 0.6 0.8 0.8 0.8 0.8 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ complete: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

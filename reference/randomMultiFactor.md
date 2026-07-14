@@ -79,13 +79,13 @@ randomMultiFactor()
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> a : 10 Levels: a_001 a_002 ... a_010 
-#> b : 10 Levels: b_001 b_002 ... b_010 
-#> c : 10 Levels: c_001 c_002 ... c_010 
-#> d : 10 Levels: d_001 d_002 ... d_010 
-#> e : 10 Levels: e_001 e_002 ... e_010 
-#> f : 10 Levels: f_001 f_002 ... f_010 
+#> @ levels:
+#>  $ a : 10 Levels: a_001 a_002 ... a_010 
+#>  $ b : 10 Levels: b_001 b_002 ... b_010 
+#>  $ c : 10 Levels: c_001 c_002 ... c_010 
+#>  $ d : 10 Levels: d_001 d_002 ... d_010 
+#>  $ e : 10 Levels: e_001 e_002 ... e_010 
+#>  $ f : 10 Levels: f_001 f_002 ... f_010 
 
 # Use a (possibly random) igraph as input:
 randomMultiFactor( igraph::sample_gnp(6, 2/3) )
@@ -107,13 +107,13 @@ randomMultiFactor( igraph::sample_gnp(6, 2/3) )
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> v1 : 10 Levels: v1_001 v1_002 ... v1_010 
-#> v2 : 10 Levels: v2_001 v2_002 ... v2_010 
-#> v4 : 10 Levels: v4_001 v4_002 ... v4_010 
-#> v3 : 10 Levels: v3_001 v3_002 ... v3_010 
-#> v5 : 10 Levels: v5_001 v5_002 ... v5_010 
-#> v6 : 10 Levels: v6_001 v6_002 ... v6_010 
+#> @ levels:
+#>  $ v1 : 10 Levels: v1_001 v1_002 ... v1_010 
+#>  $ v2 : 10 Levels: v2_001 v2_002 ... v2_010 
+#>  $ v4 : 10 Levels: v4_001 v4_002 ... v4_010 
+#>  $ v3 : 10 Levels: v3_001 v3_002 ... v3_010 
+#>  $ v5 : 10 Levels: v5_001 v5_002 ... v5_010 
+#>  $ v6 : 10 Levels: v6_001 v6_002 ... v6_010 
 
 # Make a random LinkMap object
 randomLinkMap()
@@ -130,9 +130,10 @@ randomLinkMap()
 #> 9      p     A
 #> 10     q     A
 #>  + 328 more rows. Use `print(n = ...)` to see more rows.
-#> Levels:
-#> lower : 26 Levels: a b ... z 
-#> UPPER : 26 Levels: A B ... Z 
+#> 
+#> @ levels:   2 variables: 
+#>  $ lower : 26 Levels: a ... z 
+#>  $ UPPER : 26 Levels: A ... Z 
 
 # Make a random MultiFactor with the trading goods from the vignettes
 trade_posts()
@@ -149,13 +150,13 @@ trade_posts()
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> books       : 6 Levels: fancy book ... plain book 
-#> clothing    : 6 Levels: t-shirt ... scarf 
-#> fruit       : 6 Levels: apples ... grapes 
-#> instruments : 6 Levels: trumpet ... saxophone 
-#> marbles     : 6 Levels: red marble ... sparkly marble 
-#> furniture   : 6 Levels: couch ... door 
+#> @ levels:
+#>  $ books       : 6 Levels: fancy book ... plain book 
+#>  $ clothing    : 6 Levels: t-shirt ... scarf 
+#>  $ fruit       : 6 Levels: apples ... grapes 
+#>  $ instruments : 6 Levels: trumpet ... saxophone 
+#>  $ marbles     : 6 Levels: red marble ... sparkly marble 
+#>  $ furniture   : 6 Levels: couch ... door 
 
 # Playing cards
 draw_cards(5)
@@ -171,9 +172,9 @@ poker_scores()
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> card     : 52 Levels: Ace♥️ ... King♣️ 
-#> rank     : 13 Levels: Ace ... King 
-#> suit     :  4 Levels: hearts spades diamonds clubs 
-#> straight : 10 Levels: Ace to 5 ... Royal straight 
+#> @ levels:
+#>  $ card     : 52 Levels: Ace♥️ ... King♣️ 
+#>  $ rank     : 13 Levels: Ace ... King 
+#>  $ suit     :  4 Levels: hearts spades diamonds clubs 
+#>  $ straight : 10 Levels: Ace to 5 ... Royal straight 
 ```

@@ -64,9 +64,9 @@ x["a2b"]
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> a : 3 Levels: a b c 
-#> b : 3 Levels: A B C 
+#> @ levels:
+#>  $ a : 3 Levels: a b c 
+#>  $ b : 3 Levels: A B C 
 
 # Or extract individual LinkMaps using `[[`
 x[["a2c"]]
@@ -79,9 +79,10 @@ x[["a2c"]]
 #> 7  a B
 #> 8  c C
 #> 10 b B
-#> Levels:
-#> a : 3 Levels: a b c 
-#> c : 3 Levels: A B C 
+#> 
+#> @ levels:   2 variables: 
+#>  $ a : 3 Levels: a b c 
+#>  $ c : 3 Levels: A B C 
 
 # Subset by a path
 subset(x, a ~ c)
@@ -93,9 +94,9 @@ subset(x, a ~ c)
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> a : 3 Levels: a b c 
-#> c : 3 Levels: A B C 
+#> @ levels:
+#>  $ a : 3 Levels: a b c 
+#>  $ c : 3 Levels: A B C 
 
 # Unused features will be dropped unless specified:
 subset(x, a ~ c, drop.unmatched = FALSE)
@@ -107,9 +108,9 @@ subset(x, a ~ c, drop.unmatched = FALSE)
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> a : 3 Levels: a b c 
-#> c : 3 Levels: A B C 
+#> @ levels:
+#>  $ a : 3 Levels: a b c 
+#>  $ c : 3 Levels: A B C 
 
 # Combine using `c`:
 c(x[2], x[1])
@@ -122,8 +123,8 @@ c(x[2], x[1])
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
-#> Levels:
-#> a : 3 Levels: a b c 
-#> c : 3 Levels: A B C 
-#> b : 3 Levels: A B C 
+#> @ levels:
+#>  $ a : 3 Levels: a b c 
+#>  $ c : 3 Levels: A B C 
+#>  $ b : 3 Levels: A B C 
 ```

@@ -135,13 +135,13 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a : 10 Levels: a_001 a_002 ... a_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b : 10 Levels: b_001 b_002 ... b_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c : 10 Levels: c_001 c_002 ... c_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d : 10 Levels: d_001 d_002 ... d_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e : 10 Levels: e_001 e_002 ... e_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> f : 10 Levels: f_001 f_002 ... f_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ a : 10 Levels: a_001 a_002 ... a_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b : 10 Levels: b_001 b_002 ... b_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ c : 10 Levels: c_001 c_002 ... c_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ d : 10 Levels: d_001 d_002 ... d_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ e : 10 Levels: e_001 e_002 ... e_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ f : 10 Levels: f_001 f_002 ... f_010 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use a (possibly random) igraph as input:</span></span></span>
 <span class="r-in"><span><span class="fu">randomMultiFactor</span><span class="op">(</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/sample_gnp.html" class="external-link">sample_gnp</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">)</span></span></span>
@@ -163,13 +163,13 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v1 : 10 Levels: v1_001 v1_002 ... v1_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v2 : 10 Levels: v2_001 v2_002 ... v2_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v4 : 10 Levels: v4_001 v4_002 ... v4_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v3 : 10 Levels: v3_001 v3_002 ... v3_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v5 : 10 Levels: v5_001 v5_002 ... v5_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v6 : 10 Levels: v6_001 v6_002 ... v6_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ v1 : 10 Levels: v1_001 v1_002 ... v1_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ v2 : 10 Levels: v2_001 v2_002 ... v2_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ v4 : 10 Levels: v4_001 v4_002 ... v4_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ v3 : 10 Levels: v3_001 v3_002 ... v3_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ v5 : 10 Levels: v5_001 v5_002 ... v5_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ v6 : 10 Levels: v6_001 v6_002 ... v6_010 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Make a random LinkMap object</span></span></span>
 <span class="r-in"><span><span class="fu">randomLinkMap</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -186,9 +186,10 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      p     A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     q     A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  + 328 more rows. Use `print(n = ...)` to see more rows.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lower : 26 Levels: a b ... z </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> UPPER : 26 Levels: A B ... Z </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:   2 variables: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ lower : 26 Levels: a ... z </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ UPPER : 26 Levels: A ... Z </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Make a random MultiFactor with the trading goods from the vignettes</span></span></span>
 <span class="r-in"><span><span class="fu">trade_posts</span><span class="op">(</span><span class="op">)</span></span></span>
@@ -205,13 +206,13 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> books       : 6 Levels: fancy book ... plain book </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clothing    : 6 Levels: t-shirt ... scarf </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fruit       : 6 Levels: apples ... grapes </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> instruments : 6 Levels: trumpet ... saxophone </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> marbles     : 6 Levels: red marble ... sparkly marble </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> furniture   : 6 Levels: couch ... door </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ books       : 6 Levels: fancy book ... plain book </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ clothing    : 6 Levels: t-shirt ... scarf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fruit       : 6 Levels: apples ... grapes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ instruments : 6 Levels: trumpet ... saxophone </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ marbles     : 6 Levels: red marble ... sparkly marble </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ furniture   : 6 Levels: couch ... door </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Playing cards</span></span></span>
 <span class="r-in"><span><span class="fu">draw_cards</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
@@ -227,11 +228,11 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> card     : 52 Levels: Ace♥️ ... King♣️ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> rank     : 13 Levels: Ace ... King </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suit     :  4 Levels: hearts spades diamonds clubs </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> straight : 10 Levels: Ace to 5 ... Royal straight </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ card     : 52 Levels: Ace♥️ ... King♣️ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ rank     : 13 Levels: Ace ... King </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ suit     :  4 Levels: hearts spades diamonds clubs </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ straight : 10 Levels: Ace to 5 ... Royal straight </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

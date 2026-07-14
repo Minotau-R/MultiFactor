@@ -62,7 +62,8 @@ LinkMap(x)
 #> 6  c B
 #> 9  b C
 #> 10 a B
-#> Levels:
-#> a : 3 Levels: a b c 
-#> A : 3 Levels: A B C 
+#> 
+#> @ levels:   2 variables: 
+#>  $ a : 3 Levels: a b c 
+#>  $ A : 3 Levels: A B C 
 ```
