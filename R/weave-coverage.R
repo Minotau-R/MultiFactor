@@ -47,13 +47,12 @@ weave_coverage <- function(
     )
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
-    .p_check <- .check_path(.path)
+    path_check <- .check_path(.path)
 
-    if(.p_check["vars"] == "complex") {
-        stop("weave_coverage() '.path' cannot contain '+'.\n",
-             "Use stack() to prepare input.")
-    }
-    full_path <- .path_ordinary_to_full(x, .path)[[1L]]
+    .path_check_valid_coverage(path_check)
+
+    path_list <- .std_path_to_list(x, .path, path_check)
+    full_path <- .select_std_path(x, path_list)[[1L]]
 
     stopifnot(
         "weave_coverage() '.path' must be 2 or 3 steps long." =
@@ -73,6 +72,12 @@ weave_coverage <- function(
 
 }
 
+.path_check_valid_coverage <- function(path_check) {
+    if(path_check[["complex"]]) {
+        stop("weave_coverage() '.path' cannot contain '+'.\n",
+             "Use stack() to prepare input.")
+    }
+}
 
 .weave_contingency_params <- function(x) {
     shared <- do.call(intersect, unname(lapply(x, names)))

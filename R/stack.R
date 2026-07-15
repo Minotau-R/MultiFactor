@@ -34,25 +34,29 @@ S7::method(stack, MultiFactor) <- function(
         x, .path, out.format = c("LinkMap", "matrix"), ...
 ) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
-    .p_check <- .check_path(.path)
-    stopifnot(
-        "stack does not support '.path' with multiple tildes " =
-            .p_check["info"] == "minimal"
-        )
-    if( .p_check["class"] == "formula" ) {
-        terms <- .path_parse_formula(.path)
-    }  else {
-        terms <- .path
-    }
-    stopifnot(
-        "At least one side of '.path' must include several variables." =
-            any( lengths(terms) != 1L)
-        )
+    # Handle .path arg
+    path_check <- .check_path(.path)
+    .path_check_valid_stack(path_check)
+    path_list <- .std_path_to_list(x, .path, path_check)
+
+    terms <-  .parse_stack_std_path(path_list)
+
     res <- .stack_terms(x, terms, out.format = "LinkMap")
     if(out.format == "matrix") {
         res <- `as.matrix.MultiFactor::LinkMap`(res)
     }
     return(res)
+}
+
+.path_check_valid_stack <- function(path_check) {
+    stopifnot(
+        "stack does not support '.path' with multiple tildes " =
+            path_check[["info"]] == "minimal"
+    )
+    stopifnot(
+        "At least one side of '.path' must include variables combined by '+'." =
+            path_check[["complex"]]
+    )
 }
 
 .stack_terms <- function(x, terms, out.format) {

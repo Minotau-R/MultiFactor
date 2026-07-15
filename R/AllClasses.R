@@ -54,7 +54,6 @@ LinkMap <- S7::new_class(
             if( !NCOL(metadata) ) { metadata <- x@metadata }
             x <- `class<-`(S7::S7_data(x), "data.frame")
         }
-        x <- `row.names<-.data.frame`(x, NULL)
         if(!NCOL(metadata)) {
             metadata <- data.frame(row.names = seq_len(NROW(x)))
         } else {
@@ -67,8 +66,9 @@ LinkMap <- S7::new_class(
         x[] <- lapply(x, factor)
         i <- !duplicated(x)
         x <- x[i, , drop = FALSE]
+        x <- `row.names<-.data.frame`(x, NULL)
         metadata <- metadata[i, , drop = FALSE]
-
+        metadata <- `row.names<-.data.frame`(metadata, NULL)
         S7::new_object(x, metadata = metadata)
         },
     validator = function(self) {
