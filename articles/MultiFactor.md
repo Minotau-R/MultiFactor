@@ -348,13 +348,13 @@ library(igraph)
 # Convert to an igraph object
 g <- as.igraph(tp)
 g
-#> IGRAPH bfcbff6 UN-- 6 6 -- 
+#> IGRAPH 9a9add2 UN-- 6 6 -- 
 #> + attr: name (v/c), name (e/c), instruments_emoji (e/n),
 #> | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),
 #> | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),
 #> | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),
 #> | fruit_emoji (e/n), fruit_runes (e/n)
-#> + edges from bfcbff6 (vertex names):
+#> + edges from 9a9add2 (vertex names):
 #> [1] books      --furniture   clothing   --furniture   books      --instruments
 #> [4] fruit      --instruments furniture  --marbles     instruments--marbles
 # Plot graph across data types
@@ -370,9 +370,9 @@ plot(g)
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-#> IGRAPH 6f91cbb UN-B 9 11 -- 
+#> IGRAPH 3acb898 UN-B 9 11 -- 
 #> + attr: type (v/l), name (v/c)
-#> + edges from 6f91cbb (vertex names):
+#> + edges from 3acb898 (vertex names):
 #>  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    
 #>  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  
 #>  [9] pears  --scarf   apples --t-shirt pears  --t-shirt
@@ -407,11 +407,12 @@ tables with features (rows) of the appropriate type.
 ``` r
 
 # Generate small example table
-n <- length(levels(tp)$clothing)
-clothing_table <- as.data.frame(
-  replicate( 10, rbinom(n, rbinom(n, 100, runif(n)), runif(n)) ) 
-  )
+generate_sample <- function(n) rbinom(n, rbinom(n, 100, runif(n)), runif(n))
+n <- nlevels(tp)[["clothing"]]
+
+clothing_table <- as.data.frame( replicate( 10,  generate_sample(n)) )
 rownames(clothing_table) <- levels(tp)$clothing
+
 clothing_table
 #>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10
 #> t-shirt 20 25  9 84 62 40 10 13 11  44

@@ -395,13 +395,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH bfcbff6 UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 9a9add2 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from bfcbff6 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 9a9add2 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -416,9 +416,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 6f91cbb UN-B 9 11 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 3acb898 UN-B 9 11 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 6f91cbb (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 3acb898 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    </span></span>
 <span><span class="co">#&gt;  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  </span></span>
 <span><span class="co">#&gt;  [9] pears  --scarf   apples --t-shirt pears  --t-shirt</span></span>
@@ -453,11 +453,12 @@ data wrangling on tables with features (rows) of the appropriate
 type.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate small example table</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span><span class="op">)</span></span>
-<span><span class="va">clothing_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span> <span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span> </span>
-<span>  <span class="op">)</span></span>
+<span><span class="va">generate_sample</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">[[</span><span class="st">"clothing"</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">clothing_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span> <span class="fl">10</span>,  <span class="fu">generate_sample</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">clothing_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span></span>
+<span></span>
 <span><span class="va">clothing_table</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
 <span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
