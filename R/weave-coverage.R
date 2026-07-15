@@ -47,12 +47,13 @@ weave_coverage <- function(
     )
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
-    .p_check <- .check_path(.path)
+    path_check <- .check_path(.path)
 
-    if(.p_check["vars"] == "complex") {
+    if(path_check[["complex"]]) {
         stop("weave_coverage() '.path' cannot contain '+'.\n",
              "Use stack() to prepare input.")
     }
+
     full_path <- .path_ordinary_to_full(x, .path)[[1L]]
 
     stopifnot(

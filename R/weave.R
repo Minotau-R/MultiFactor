@@ -32,13 +32,13 @@ S7::method(weave, MultiFactor) <- function(
   out.format <- match.arg(out.format, c("LinkMap", "matrix"))
   lv_list <- levels(x)
 
-  .p_check <- .check_path(.path)
+  path_check <- .check_path(.path)
 
-  if(.p_check["vars"] == "complex") {
-    stop("weave() '.path' cannot contain '+'. Use stack() to prepare input.")
-  }
-    full_path <- .path_ordinary_to_full(x, .path)[[1L]]
-    res <- .weave_full_path(x, full_path, out.format)
+  .path_check_valid_weave(path_check)
+  path_list <- .std_path_to_list(x, .path, path_check)
+  full_path <- .select_std_path(x, path_list)[[1L]]
+  # full_path <- .path_ordinary_to_full(x, .path)[[1L]]
+  res <- .weave_full_path(x, full_path, out.format)
 
   if( out.format == "LinkMap" ) {
     res <- LinkMap(res)
@@ -46,6 +46,13 @@ S7::method(weave, MultiFactor) <- function(
 
   return(res)
 }
+
+.path_check_valid_weave <- function(path_check) {
+  if(path_check[["complex"]]) {
+    stop("weave() '.path' cannot contain '+'. Use stack() to prepare input.")
+  }
+}
+
 
 
 weave_along_path <- function(x, path, out.format = "LinkMap") {
@@ -67,28 +74,6 @@ weave_along_path <- function(x, path, out.format = "LinkMap") {
   res
 }
 
-
-.weave_complex_formula <- function(x, .path, out.format) {
-  .path_list <- .path_prep_complex(.path)
-  res <- lapply( .path_list, weave, x = x, out.format = out.format )
-}
-
-.weave_complex_formula_lvs <- function(x, lv_list) {
-  new_lvs <- .build_levels_from_linkmap_list(x)
-  new_names <- names(new_lvs)
-  kept <- intersect(new_names, names(lv_list))
-  new_lvs <- list(lv_list[kept], new_lvs)
-  lv_list <- lapply(
-    new_names,
-    function(lv) {
-      x <- lapply(new_lvs, `[[`, lv)
-      x <- Reduce(union, x, init = character())
-      return( sort(x) )
-    }
-  )
-  names(lv_list) <- new_names
-  return(lv_list)
-}
 
 .weave_ordinary_terms <- function(x, terms, out.format) {
   lv_list <- levels(x)
