@@ -62,6 +62,8 @@
     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
     if(!length(include)) { include <- NULL }
     full_path <- .select_path( x, terms, include )
+
+    return(full_path)
 }
 
 
@@ -107,6 +109,21 @@
     }
 }
 
+#' Standardize terms
+#' @importFrom rlang f_lhs f_rhs
+#' @returns a list of length 2 containing character vectors of y, x.
+#' @noRd
+#'
+.path_parse_formula <- function(.path) {
+    stopifnot( "'.path' must be a formula." = inherits(.path, "formula"))
+    y_vars <- rlang::f_lhs(.path)
+    x_vars <- rlang::f_rhs(.path)
+    if( is.null(y_vars) || is.null(x_vars) ) {
+        stop("Neither formula side can be empty.")
+    }
+    lapply(list(y_vars, x_vars), all.vars)
+}
+
 
 #' @importFrom rlang as_label
 #' @noRd
@@ -129,18 +146,5 @@
 }
 
 
-#' Standardize terms
-#' @importFrom rlang f_lhs f_rhs
-#' @returns a list of length 2 containing character vectors of y, x.
-#' @noRd
-#'
-.path_parse_formula <- function(.path) {
-    stopifnot( "'.path' must be a formula." = inherits(.path, "formula"))
-    y_vars <- rlang::f_lhs(.path)
-    x_vars <- rlang::f_rhs(.path)
-    if( is.null(y_vars) || is.null(x_vars) ) {
-        stop("Neither formula side can be empty.")
-    }
-    lapply(list(y_vars, x_vars), all.vars)
-}
+
 

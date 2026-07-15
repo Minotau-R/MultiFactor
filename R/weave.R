@@ -33,8 +33,8 @@ S7::method(weave, MultiFactor) <- function(
   lv_list <- levels(x)
 
   path_check <- .check_path(.path)
-
   .path_check_valid_weave(path_check)
+
   path_list <- .std_path_to_list(x, .path, path_check)
   full_path <- .select_std_path(x, path_list)[[1L]]
   # full_path <- .path_ordinary_to_full(x, .path)[[1L]]

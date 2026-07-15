@@ -20,7 +20,7 @@ test_that("Ordinary .check_path() classes are equivalent", {
 })
 
 
-# Only two formats can express complex paths
+# Only two formats (formula & list) can express complex paths
 c_fm <- a + b ~ c + d ~ d + e
 c_ls <- list(c("a", "b"), c("c", "d"), c("d", "e"))
 

@@ -27,7 +27,13 @@
 select_path <- function(
         x, .path, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
 ) {
-    paths <- .select_path(x, .path_parse(.path), include, exclude, exact)
+    path_check <- .check_path(.path)
+    .path_check_valid_weave(path_check)
+
+    path_list <- .std_path_to_list(x, .path, path_check)
+    paths <- .select_std_path(x, path_list)
+
+    #paths <- .select_path(x, .path_parse(.path), include, exclude, exact)
 
     if( as.edges ) paths <- lapply(paths, .V_path_as_E_path)
     return(paths)
