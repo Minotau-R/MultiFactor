@@ -291,11 +291,12 @@ with features (rows) of the appropriate type.
 
 ```{r 'prep-apply'}
 # Generate small example table
-n <- length(levels(tp)$clothing)
-clothing_table <- as.data.frame(
-  replicate( 10, rbinom(n, rbinom(n, 100, runif(n)), runif(n)) ) 
-  )
+generate_sample <- function(n) rbinom(n, rbinom(n, 100, runif(n)), runif(n))
+n <- nlevels(tp)[["clothing"]]
+
+clothing_table <- as.data.frame( replicate( 10,  generate_sample(n)) )
 rownames(clothing_table) <- levels(tp)$clothing
+
 clothing_table
 ```
 

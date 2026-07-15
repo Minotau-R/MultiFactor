@@ -3,9 +3,6 @@ name: R-BiocCheck
   pull_request:
     branches:
     - devel
-  push:
-    branches:
-    - devel
 env:
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 jobs:
