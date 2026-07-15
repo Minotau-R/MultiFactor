@@ -53,15 +53,15 @@ x <- data.frame(
 # Create LinkMap
 LinkMap(x)
 #> A MultiFactor::LinkMap data.frame S7_object: 8 rows.
-#>    a A
-#> 1  a A
-#> 2  c A
-#> 3  c C
-#> 4  a C
-#> 5  b A
-#> 6  c B
-#> 9  b C
-#> 10 a B
+#>   a A
+#> 1 a A
+#> 2 c A
+#> 3 c C
+#> 4 a C
+#> 5 b A
+#> 6 c B
+#> 7 b C
+#> 8 a B
 #> 
 #> @ levels:   2 variables: 
 #>  $ a : 3 Levels: a b c 

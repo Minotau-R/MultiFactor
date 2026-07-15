@@ -71,14 +71,14 @@ x["a2b"]
 # Or extract individual LinkMaps using `[[`
 x[["a2c"]]
 #> A MultiFactor::LinkMap data.frame S7_object: 7 rows.
-#>    a c
-#> 1  a A
-#> 2  c A
-#> 4  b A
-#> 5  a C
-#> 7  a B
-#> 8  c C
-#> 10 b B
+#>   a c
+#> 1 a A
+#> 2 c A
+#> 3 b A
+#> 4 a C
+#> 5 a B
+#> 6 c C
+#> 7 b B
 #> 
 #> @ levels:   2 variables: 
 #>  $ a : 3 Levels: a b c 
