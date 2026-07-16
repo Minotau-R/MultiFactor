@@ -3,8 +3,7 @@
 #' @rdname weave-methods
 #' @description
 #' Generates a new `LinkMap` object by cross-referencing the elements of a
-#'     given `MultiFactor`. Elements can be merged by including several names,
-#'     separated by the plus (`+`) sign. See examples.
+#'     given `MultiFactor`.
 #' @param x a `MultiFactor`
 #' @param .path Either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
@@ -23,8 +22,6 @@
 #'
 NULL
 
-#' @export
-#'
 S7::method(weave, MultiFactor) <- function(
     x, .path, out.format = c("LinkMap", "matrix"),
     include = NULL, exclude = NULL, exact = NULL

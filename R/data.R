@@ -8,6 +8,7 @@
 #'     prefix.
 #' @source `trade_goods`: Curated using the `emo` package.
 #' @usage data("trade_goods", package = "MultiFactor")
+#' @keywords datasets
 #'
 "trade_goods"
 
@@ -19,5 +20,6 @@
 #'     vignette.
 #' @source `playing_cards`: Manual input.
 #' @usage data("playing_cards", package = "MultiFactor")
+#' @keywords datasets
 #'
 "playing_cards"

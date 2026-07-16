@@ -20,3 +20,7 @@ a \code{data.frame}
 Convert a LinkMap to a data.frame
 Convert a LinkMap back to a regular data.frame. Metadata is included.
 }
+\examples{
+x <- randomLinkMap()
+as.data.frame(x)
+}

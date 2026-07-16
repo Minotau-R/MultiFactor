@@ -1,9 +1,7 @@
 #' Combine levels across several LinkMaps in a MultiFactor
-#' @name stack
-#' @rdname stack.MultiFactor
-#' @description
-#' Generates a new `LinkMap` object by cross-referencing the elements of a
-#'     given `MultiFactor`. Elements can be merged by including several names,
+#' @name stack-methods
+#' @rdname stack-methods
+#' @description Generates a new `LinkMap` object by merging levels by name,
 #'     separated by the plus (`+`) sign. See examples.
 #' @param x a `MultiFactor`
 #' @param .path a `formula` of length 2 with with levels to be merged separated
@@ -13,22 +11,23 @@
 #' @param ... Additional arguments (unused.)
 #' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
 #' @returns a `LinkMap` or `sparse Matrix`.
+#' @importFrom utils stack
 #' @examples
+#' # Only necessary in example code
+#' require(utils)
+#'
 #' x <- randomMultiFactor()
 #' # Merge variables with "+" operator, new names get concatenated with ".":
 #' stack(x, b ~ c + d)
 #'
 NULL
 
-#' @export
-#'
 S7::method(stack, MultiFactor) <- function(
         x, .path, out.format = c("LinkMap", "matrix"), ...
         ) `stack.MultiFactor::MultiFactor`(x, .path, out.format, ...)
 
 #' @importFrom utils stack
 #' @export
-#' @rdname stack.MultiFactor
 #'
 `stack.MultiFactor::MultiFactor` <- function(
         x, .path, out.format = c("LinkMap", "matrix"), ...

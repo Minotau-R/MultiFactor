@@ -11,6 +11,9 @@ as.MultiFactor(x, ...)
 
 \item{...}{additional arguments}
 }
+\value{
+a \code{MultiFactor}.
+}
 \description{
 Convert common classes to MultiFactor
 }
@@ -21,5 +24,5 @@ as.MultiFactor
 
 }
 \seealso{
-\link{as.LinkMap-methods}
+\link{as.LinkMap}
 }

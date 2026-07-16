@@ -1,11 +1,14 @@
 #' Define a path through a MultiFactor object.
-#' @rdname select_path
-#' @name select_path
-#' @inheritParams weave-methods
+#' @name select_path-method
+#' @rdname select_path-method
+#' @param x input object
+#' @param .path either a `formula` or a `character vector` of length 2 with the
+#'     names of the desired combination of feature types.
+#' @param include,exclude,exact `Character vectors` Should feature types be
+#'     included or excluded from the available paths? Exact allows for exact
+#'     path definition.
 #' @param as.edges `Boolean scalar` Whether to return names of edges or nodes
 #'     (Default) in the path.
-#' @returns a list of character vectors.
-#' @importFrom igraph as_ids
 #' @examples
 #' #' # Generate pair of random linkage input
 #' a2b <- data.frame(
@@ -22,10 +25,14 @@
 #'
 #' # Inspect a path between data types
 #' select_path(x, b ~ c)
-#' @export
 #'
-select_path <- function(
-        x, .path, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
+NULL
+
+#' @importFrom igraph as_ids
+#'
+S7::method(select_path, MultiFactor) <- function(
+        x, .path,  ...,
+        include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
 ) {
     path_check <- .check_path(.path)
     .path_check_valid_weave(path_check)

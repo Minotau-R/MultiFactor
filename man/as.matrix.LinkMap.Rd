@@ -40,6 +40,11 @@ a sparse biadjacency \code{Matrix} with
 Convert a LinkMap to a sparse matrix.
 Convert a LinkMap to a sparse matrix object from the \code{Matrix} package.
 }
+\examples{
+x <- randomLinkMap()
+as.matrix(x)
+
+}
 \seealso{
 \code{\link[Matrix:sparseMatrix]{Matrix::sparseMatrix()}}
 }
