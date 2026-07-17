@@ -18,7 +18,8 @@ Imports:
     generics,
     Matrix,
     forcats,
-    igraph
+    igraph, 
+    doclisting
 License: GPL-3
 LazyData: false
 Encoding: UTF-8
@@ -29,7 +30,6 @@ Suggests:
     ggplot2,
     ragg,
     systemfonts,
-    doclisting,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
