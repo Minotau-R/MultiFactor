@@ -48,8 +48,7 @@ as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
 #' @rdname weave-generic
 #' @name weave-generic
 #' @description `weave()` is an S7 generic that finds a path through a
-#'     relational object with methods available for the following classes:
-#'     `r doclisting::methods_list("weave")`
+#'     relational object.
 #'
 #' @param x input object
 #' @param .path either a `formula` or a `character vector` of length 2 with the
@@ -71,8 +70,7 @@ weave <- S7::new_generic("weave", "x", function(x, .path, ...) {
 #' @name weave_apply-generic
 #' @description `weave_apply()` is an S7 generic that finds a path through a
 #'     relational object and evaluates provided code to each corresponding
-#'     subset of an input table. It is available for the following classes:
-#'     `r doclisting::methods_list("weave_apply")`
+#'     subset of an input table.
 #'
 #' @param .x input relational object to dispatch on.
 #' @param .path either a `formula` or a `character vector` of length 2 with the
@@ -97,9 +95,8 @@ weave_apply <- S7::new_generic(
 #' @name select_path-generic
 #' @rdname select_path-generic
 #' @description `select_path()` is an S7 generic that finds and returns a path
-#'     through a relational object, with methods available for the following
-#'     classes:
-#'     `r doclisting::methods_list("select_path")`
+#'     through a relational object.
+#'
 #' @param x input object
 #' @param .path either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.

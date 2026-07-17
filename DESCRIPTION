@@ -18,8 +18,7 @@ Imports:
     generics,
     Matrix,
     forcats,
-    igraph, 
-    doclisting
+    igraph
 License: GPL-3
 LazyData: false
 Encoding: UTF-8

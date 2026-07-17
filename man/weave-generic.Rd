@@ -20,10 +20,7 @@ a \code{LinkMap} or \code{matrix}.
 }
 \description{
 \code{weave()} is an S7 generic that finds a path through a
-relational object with methods available for the following classes:
-\itemize{
-\item \code{MultiFactor::MultiFactor}
-}
+relational object.
 }
 \examples{
 # Available methods:

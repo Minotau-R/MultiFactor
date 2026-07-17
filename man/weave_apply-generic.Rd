@@ -25,10 +25,7 @@ a list containing the results of \code{.fun}.
 \description{
 \code{weave_apply()} is an S7 generic that finds a path through a
 relational object and evaluates provided code to each corresponding
-subset of an input table. It is available for the following classes:
-\itemize{
-\item \code{MultiFactor::MultiFactor}
-}
+subset of an input table.
 }
 \examples{
 # Available methods:

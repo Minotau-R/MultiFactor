@@ -20,11 +20,7 @@ a (list of) character vector(s).
 }
 \description{
 \code{select_path()} is an S7 generic that finds and returns a path
-through a relational object, with methods available for the following
-classes:
-\itemize{
-\item \code{MultiFactor::MultiFactor}
-}
+through a relational object.
 }
 \examples{
 # Available methods:
