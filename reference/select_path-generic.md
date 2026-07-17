@@ -1,12 +1,12 @@
 # Weave a path through an object
 
-`weave()` is an S7 generic that finds a path through a relational
-object.
+`select_path()` is an S7 generic that finds and returns a path through a
+relational object.
 
 ## Usage
 
 ``` r
-weave(x, .path, ...)
+select_path(x, .path, ...)
 ```
 
 ## Arguments
@@ -26,13 +26,13 @@ weave(x, .path, ...)
 
 ## Value
 
-a `LinkMap` or `matrix`.
+a (list of) character vector(s).
 
 ## Examples
 
 ``` r
 # Available methods:
-weave
-#> <S7_generic> weave(x, .path, ...) with 1 methods:
-#> 1: method(weave, MultiFactor::MultiFactor)
+select_path
+#> <S7_generic> select_path(x, .path, ...) with 1 methods:
+#> 1: method(select_path, MultiFactor::MultiFactor)
 ```

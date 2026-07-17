@@ -3,18 +3,18 @@
 ## Operations
 
 - [`weave()`](https://minotau-r.github.io/MultiFactor/reference/weave-generic.md)
-  : Convert common classes to MultiFactor
+  : Weave a path through an object
 - [`weave-methods`](https://minotau-r.github.io/MultiFactor/reference/weave-methods.md)
   : Weave a new LinkMap from a MultiFactor
 - [`weave_coverage()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
   : Perform enrichtment analysis from a weave
-- [`stack(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/stack.MultiFactor.md)
+- [`stack-methods`](https://minotau-r.github.io/MultiFactor/reference/stack-methods.md)
   : Combine levels across several LinkMaps in a MultiFactor
-- [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path.md)
-  : Define a path through a MultiFactor object.
-- [`subgroup_apply()`](https://minotau-r.github.io/MultiFactor/reference/subgroup_apply.md)
+- [`weave_apply()`](https://minotau-r.github.io/MultiFactor/reference/weave_apply-generic.md)
   : Index a table and apply arbitrary code to it
-- [`subgroup_to_tbl()`](https://minotau-r.github.io/MultiFactor/reference/subgroup_to_tbl.md)
+- [`weave_apply-methods`](https://minotau-r.github.io/MultiFactor/reference/weave_apply-methods.md)
+  : Index a table by a MultiFactor and apply arbitrary code to it
+- [`weave_to_tbl()`](https://minotau-r.github.io/MultiFactor/reference/weave_to_tbl.md)
   : Expand a table based on possibly overlapping group membership.
 
 ## Classes
@@ -29,15 +29,23 @@
   : LinkMap S7 container class
 - [`LinkMap-methods`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-methods.md)
   : Methods for LinkMap S7 container class
-- [`nlevels()`](https://minotau-r.github.io/MultiFactor/reference/nlevels-generic.md)
+- [`nlevels()`](https://minotau-r.github.io/MultiFactor/reference/nlevels.md)
   : The Number of Levels of an Object
+- [`factor_path()`](https://minotau-r.github.io/MultiFactor/reference/factor_path-class.md)
+  : factor_path S7 class
+- [`factor_path-methods`](https://minotau-r.github.io/MultiFactor/reference/factor_path-methods.md)
+  : Methods for factor_path S7 class
+- [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path-generic.md)
+  : Weave a path through an object
+- [`select_path-methods`](https://minotau-r.github.io/MultiFactor/reference/select_path-methods.md)
+  : Define a path through a MultiFactor object.
 
 ## Converters
 
-- [`as.MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/as.MultiFactor-generic.md)
+- [`as.MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/as.MultiFactor.md)
   : Convert common classes to MultiFactor
 
-- [`as.LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-generic.md)
+- [`as.LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap.md)
   : Convert common classes to LinkMap
 
 - [`as.LinkMap-methods`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-methods.md)

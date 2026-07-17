@@ -70,12 +70,12 @@ randomMultiFactor()
 #> A MultiFactor::MultiFactor list S7_object,
 #>     6 feature types across 5 LinkMaps.
 #> 
-#>     a b  c  d  e  f
-#> a2b 8 9  .  .  .  .
-#> b2c . 9  9  .  .  .
-#> c2d . . 10  9  .  .
-#> d2e . .  . 10 10  .
-#> e2f . .  .  .  9 10
+#>     a  b c  d  e f
+#> a2b 8 10 .  .  . .
+#> b2c . 10 9  .  . .
+#> c2d .  . 9 10  . .
+#> d2e .  . .  9 10 .
+#> e2f .  . .  . 10 8
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
@@ -90,20 +90,15 @@ randomMultiFactor()
 # Use a (possibly random) igraph as input:
 randomMultiFactor( igraph::sample_gnp(6, 2/3) )
 #> A MultiFactor::MultiFactor list S7_object,
-#>     6 feature types across 11 LinkMaps.
+#>     6 feature types across 6 LinkMaps.
 #> 
 #>       v1 v2 v4 v3 v5 v6
-#> v12v2 10 10  .  .  .  .
-#> v12v4  9  .  8  .  .  .
-#> v22v4  . 10 10  .  .  .
-#> v12v3 10  .  . 10  .  .
-#> v22v3  . 10  .  9  .  .
-#> v12v5  9  .  .  .  9  .
-#> v32v5  .  .  . 10  9  .
-#> v12v6  9  .  .  .  . 10
-#> v22v6  .  9  .  .  . 10
-#> v42v6  .  .  9  .  . 10
-#> v52v6  .  .  .  . 10 10
+#> v12v2  9  9  .  .  .  .
+#> v12v4  9  .  9  .  .  .
+#> v22v4  .  9 10  .  .  .
+#> v32v5  .  .  .  9  9  .
+#> v42v5  .  .  9  . 10  .
+#> v42v6  .  . 10  .  .  9
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
@@ -122,13 +117,13 @@ randomLinkMap()
 #> 1      a     A
 #> 2      c     A
 #> 3      d     A
-#> 4      f     A
-#> 5      i     A
-#> 6      l     A
-#> 7      n     A
-#> 8      o     A
-#> 9      p     A
-#> 10     q     A
+#> 4      e     A
+#> 5      f     A
+#> 6      h     A
+#> 7      j     A
+#> 8      l     A
+#> 9      m     A
+#> 10     n     A
 #>  + 328 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
@@ -140,27 +135,27 @@ trade_posts()
 #> A MultiFactor::MultiFactor list S7_object,
 #>     6 feature types across 6 LinkMaps.
 #> 
-#>                      books clothing fruit instruments marbles furniture
-#> books2clothing           4        6     .           .       .         .
-#> clothing2fruit           .        4     6           .       .         .
-#> clothing2instruments     .        5     .           6       .         .
-#> clothing2marbles         .        5     .           .       5         .
-#> fruit2marbles            .        .     5           .       4         .
-#> furniture2marbles        .        .     .           .       5         5
+#>                     books fruit furniture instruments marbles clothing
+#> books2fruit             6     6         .           .       .        .
+#> books2furniture         6     .         5           .       .        .
+#> books2instruments       6     .         .           4       .        .
+#> books2marbles           3     .         .           .       5        .
+#> clothing2marbles        .     .         .           .       4        6
+#> instruments2marbles     .     .         .           6       6        .
 #> 
 #> Values represent unique feature names in that LinkMap.
 #> 
 #> @ levels:
 #>  $ books       : 6 Levels: fancy book ... plain book 
-#>  $ clothing    : 6 Levels: t-shirt ... scarf 
 #>  $ fruit       : 6 Levels: apples ... grapes 
+#>  $ furniture   : 6 Levels: couch ... door 
 #>  $ instruments : 6 Levels: trumpet ... saxophone 
 #>  $ marbles     : 6 Levels: red marble ... sparkly marble 
-#>  $ furniture   : 6 Levels: couch ... door 
+#>  $ clothing    : 6 Levels: t-shirt ... scarf 
 
 # Playing cards
 draw_cards(5)
-#> [1] "7♣️"    "9♦️"    "King♦️" "4♣️"    "8♥️"   
+#> [1] "9♦️"     "Ace♠️"   "3♠️"     "Queen♣️" "4♥️"    
 poker_scores()
 #> A MultiFactor::MultiFactor list S7_object,
 #>     4 feature types across 3 LinkMaps.

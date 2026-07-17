@@ -6,10 +6,8 @@
     }
   };
 </script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Weave a new LinkMap from a MultiFactor — weave-methods"><meta name="description" content="Generates a new LinkMap object by cross-referencing the elements of a
-given MultiFactor. Elements can be merged by including several names,
-separated by the plus (+) sign. See examples."><meta property="og:description" content="Generates a new LinkMap object by cross-referencing the elements of a
-given MultiFactor. Elements can be merged by including several names,
-separated by the plus (+) sign. See examples."></head><body>
+given MultiFactor."><meta property="og:description" content="Generates a new LinkMap object by cross-referencing the elements of a
+given MultiFactor."></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -51,8 +49,7 @@ separated by the plus (+) sign. See examples."></head><body>
 
     <div class="ref-description section level2">
     <p>Generates a new <code>LinkMap</code> object by cross-referencing the elements of a
-given <code>MultiFactor</code>. Elements can be merged by including several names,
-separated by the plus (<code>+</code>) sign. See examples.</p>
+given <code>MultiFactor</code>.</p>
     </div>
 
 
@@ -93,36 +90,35 @@ path definition.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">b</span> <span class="op">~</span> <span class="va">c</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::LinkMap data.frame S7_object: 25 rows.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        b     c</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  b_001 c_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  b_006 c_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  b_007 c_001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  b_005 c_002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  b_001 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  b_002 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  b_003 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  b_007 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  b_008 c_004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 b_009 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  b_005 c_001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  b_009 c_001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  b_001 c_002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  b_005 c_003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  b_006 c_003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  b_007 c_003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  b_009 c_003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  b_010 c_003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  b_006 c_004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 b_001 c_005</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  + 15 more rows. Use `print(n = ...)` to see more rows.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:   2 variables: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b : 9 Levels: b_001 b_002 ... b_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ c : 9 Levels: c_001 c_002 ... c_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b :  9 Levels: b_001 b_002 ... b_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ c : 10 Levels: c_001 c_002 ... c_010 </span>
 <span class="r-in"><span><span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">b</span> <span class="op">~</span> <span class="va">a</span>, out.format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 10 sparse Matrix of class "ngCMatrix"</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   [[ suppressing 10 column names ‘a_001’, ‘a_002’, ‘a_003’ ... ]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 x 8 sparse Matrix of class "ngCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_001 | . . . . . . . . |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_002 | . . | . . . . | .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_003 . . . . . . . . | .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_004 . . | . . . | | | .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_005 . . | | . . . . . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_006 | . . | . | . . . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_007 . . | . . . . . . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_008 | | . . . . | . . .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_009 | . . . | . . . | .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   b_010 . . | | . . . | . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b       a_001 a_003 a_004 a_005 a_007 a_008 a_009 a_010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_001     .     .     .     .     .     .     .     |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_002     .     .     .     .     .     .     .     |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_003     |     .     .     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_004     |     |     .     .     .     .     |     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_005     |     .     .     .     |     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_006     |     .     .     .     |     .     |     |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_007     .     |     .     |     |     |     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_008     .     |     .     |     .     |     |     |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_009     |     |     |     .     .     .     .     .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   b_010     .     .     .     .     .     .     |     .</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

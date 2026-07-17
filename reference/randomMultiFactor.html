@@ -126,12 +126,12 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     6 feature types across 5 LinkMaps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     a b  c  d  e  f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a2b 8 9  .  .  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b2c . 9  9  .  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c2d . . 10  9  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d2e . .  . 10 10  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e2f . .  .  .  9 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a  b c  d  e f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a2b 8 10 .  .  . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b2c . 10 9  .  . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c2d .  . 9 10  . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d2e .  . .  9 10 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e2f .  . .  . 10 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -146,20 +146,15 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-in"><span><span class="co"># Use a (possibly random) igraph as input:</span></span></span>
 <span class="r-in"><span><span class="fu">randomMultiFactor</span><span class="op">(</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://r.igraph.org/reference/sample_gnp.html" class="external-link">sample_gnp</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">2</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     6 feature types across 11 LinkMaps.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     6 feature types across 6 LinkMaps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       v1 v2 v4 v3 v5 v6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v12v2 10 10  .  .  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v12v4  9  .  8  .  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v22v4  . 10 10  .  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v12v3 10  .  . 10  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v22v3  . 10  .  9  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v12v5  9  .  .  .  9  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v32v5  .  .  . 10  9  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v12v6  9  .  .  .  . 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v22v6  .  9  .  .  . 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v42v6  .  .  9  .  . 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> v52v6  .  .  .  . 10 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v12v2  9  9  .  .  .  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v12v4  9  .  9  .  .  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v22v4  .  9 10  .  .  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v32v5  .  .  .  9  9  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v42v5  .  .  9  . 10  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> v42v6  .  . 10  .  .  9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -178,13 +173,13 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      a     A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      c     A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      d     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      f     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      i     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      l     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      n     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      o     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      p     A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     q     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      e     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      f     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      h     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      j     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      l     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      m     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     n     A</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  + 328 more rows. Use `print(n = ...)` to see more rows.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:   2 variables: </span>
@@ -196,27 +191,27 @@ than the default <code>MultiFactor</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     6 feature types across 6 LinkMaps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                      books clothing fruit instruments marbles furniture</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> books2clothing           4        6     .           .       .         .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clothing2fruit           .        4     6           .       .         .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clothing2instruments     .        5     .           6       .         .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> clothing2marbles         .        5     .           .       5         .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fruit2marbles            .        .     5           .       4         .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> furniture2marbles        .        .     .           .       5         5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     books fruit furniture instruments marbles clothing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> books2fruit             6     6         .           .       .        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> books2furniture         6     .         5           .       .        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> books2instruments       6     .         .           4       .        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> books2marbles           3     .         .           .       5        .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> clothing2marbles        .     .         .           .       4        6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> instruments2marbles     .     .         .           6       6        .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ books       : 6 Levels: fancy book ... plain book </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ clothing    : 6 Levels: t-shirt ... scarf </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ fruit       : 6 Levels: apples ... grapes </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ furniture   : 6 Levels: couch ... door </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ instruments : 6 Levels: trumpet ... saxophone </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ marbles     : 6 Levels: red marble ... sparkly marble </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ furniture   : 6 Levels: couch ... door </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ clothing    : 6 Levels: t-shirt ... scarf </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Playing cards</span></span></span>
 <span class="r-in"><span><span class="fu">draw_cards</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7♣️"    "9♦️"    "King♦️" "4♣️"    "8♥️"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "9♦️"     "Ace♠️"   "3♠️"     "Queen♣️" "4♥️"    </span>
 <span class="r-in"><span><span class="fu">poker_scores</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     4 feature types across 3 LinkMaps.</span>

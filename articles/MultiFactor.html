@@ -309,7 +309,7 @@ well as access the component levels:</p>
 <span><span class="co">#&gt; $marbles</span></span>
 <span><span class="co">#&gt; [1] "red marble"     "white marble"   "black marble"   "blue marble"   </span></span>
 <span><span class="co">#&gt; [5] "8 marble"       "sparkly marble"</span></span>
-<span><span class="fu"><a href="../reference/nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       books    clothing       fruit   furniture instruments     marbles </span></span>
 <span><span class="co">#&gt;           6           6           6           6           6           6</span></span></code></pre></div>
 <p>Note that levels of the same type are automatically unified across
@@ -330,7 +330,7 @@ this:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fruit2clothing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave-generic.html">weave</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="va">fruit2clothing</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 11 rows.</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 18 rows.</span></span>
 <span><span class="co">#&gt;      fruit clothing</span></span>
 <span><span class="co">#&gt; 1   apples   gloves</span></span>
 <span><span class="co">#&gt; 2    pears   gloves</span></span>
@@ -342,22 +342,23 @@ this:</p>
 <span><span class="co">#&gt; 8  oranges    scarf</span></span>
 <span><span class="co">#&gt; 9    pears    scarf</span></span>
 <span><span class="co">#&gt; 10  apples  t-shirt</span></span>
-<span><span class="co">#&gt;  + 1 more rows. Use `print(n = ...)` to see more rows.</span></span>
+<span><span class="co">#&gt;  + 8 more rows. Use `print(n = ...)` to see more rows.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; @ levels:   2 variables: </span></span>
 <span><span class="co">#&gt;  $ fruit    : 5 Levels: apples ... pears </span></span>
-<span><span class="co">#&gt;  $ clothing : 4 Levels: gloves hat scarf t-shirt</span></span></code></pre></div>
+<span><span class="co">#&gt;  $ clothing : 5 Levels: dress ... t-shirt</span></span></code></pre></div>
 <p>We receive a new <code>LinkMap</code> containing all fruits that
 could be traded for clothing.</p>
 <div class="section level3">
 <h3 id="selecting-a-path">Selecting a path<a class="anchor" aria-label="anchor" href="#selecting-a-path"></a>
 </h3>
-<p>We can use <code><a href="../reference/select_path.html">select_path()</a></code> to find the types of traded
+<p>We can use <code><a href="../reference/select_path-generic.html">select_path()</a></code> to find the types of traded
 goods in order, or more generally, the paths that were traversed. If
 several paths exist, all will be traversed and included into one
 <code>LinkMap</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/select_path.html">select_path</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/select_path-generic.html">select_path</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
+<span><span class="co">#&gt; A MultiFactor::factor_path S7_object from `fruit` to `clothing` with 2 sub-paths:</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt; [1] "fruit"       "instruments" "books"       "furniture"   "clothing"   </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -395,13 +396,13 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH af9b69d UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 6d9ef7d UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | instruments_runes (e/n), marbles_emoji (e/n), marbles_runes (e/n),</span></span>
 <span><span class="co">#&gt; | furniture_emoji (e/n), furniture_runes (e/n), books_emoji (e/n),</span></span>
 <span><span class="co">#&gt; | books_runes (e/n), clothing_emoji (e/n), clothing_runes (e/n),</span></span>
 <span><span class="co">#&gt; | fruit_emoji (e/n), fruit_runes (e/n)</span></span>
-<span><span class="co">#&gt; + edges from af9b69d (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 6d9ef7d (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -416,12 +417,14 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH b4ddd06 UN-B 9 11 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 0542766 UN-B 10 18 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from b4ddd06 (vertex names):</span></span>
-<span><span class="co">#&gt;  [1] apples --gloves  pears  --gloves  apples --hat     pears  --hat    </span></span>
-<span><span class="co">#&gt;  [5] apples --scarf   grapes --scarf   melons --scarf   oranges--scarf  </span></span>
-<span><span class="co">#&gt;  [9] pears  --scarf   apples --t-shirt pears  --t-shirt</span></span>
+<span><span class="co">#&gt; + edges from 0542766 (vertex names):</span></span>
+<span><span class="co">#&gt;  [1] apples --dress   grapes --dress   melons --dress   oranges--dress  </span></span>
+<span><span class="co">#&gt;  [5] apples --gloves  pears  --gloves  apples --hat     grapes --hat    </span></span>
+<span><span class="co">#&gt;  [9] melons --hat     oranges--hat     pears  --hat     apples --scarf  </span></span>
+<span><span class="co">#&gt; [13] grapes --scarf   melons --scarf   oranges--scarf   pears  --scarf  </span></span>
+<span><span class="co">#&gt; [17] apples --t-shirt pears  --t-shirt</span></span>
 <span><span class="co"># Same information as the LinkMap: </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lg</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MultiFactor_files/figure-html/igraph-linkmap-sp-1.png" class="r-plt" alt="" width="576"></p>
@@ -436,14 +439,14 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">m</span></span>
-<span><span class="co">#&gt; 5 x 4 sparse Matrix of class "ngCMatrix"</span></span>
+<span><span class="co">#&gt; 5 x 5 sparse Matrix of class "ngCMatrix"</span></span>
 <span><span class="co">#&gt;          clothing</span></span>
-<span><span class="co">#&gt; fruit     gloves hat scarf t-shirt</span></span>
-<span><span class="co">#&gt;   apples       |   |     |       |</span></span>
-<span><span class="co">#&gt;   grapes       .   .     |       .</span></span>
-<span><span class="co">#&gt;   melons       .   .     |       .</span></span>
-<span><span class="co">#&gt;   oranges      .   .     |       .</span></span>
-<span><span class="co">#&gt;   pears        |   |     |       |</span></span></code></pre></div>
+<span><span class="co">#&gt; fruit     dress gloves hat scarf t-shirt</span></span>
+<span><span class="co">#&gt;   apples      |      |   |     |       |</span></span>
+<span><span class="co">#&gt;   grapes      |      .   |     |       .</span></span>
+<span><span class="co">#&gt;   melons      |      .   |     |       .</span></span>
+<span><span class="co">#&gt;   oranges     |      .   |     |       .</span></span>
+<span><span class="co">#&gt;   pears       .      |   |     |       |</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
@@ -454,61 +457,68 @@ type.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate small example table</span></span>
 <span><span class="va">generate_sample</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">[[</span><span class="st">"clothing"</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">[[</span><span class="st">"clothing"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">clothing_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span> <span class="fl">10</span>,  <span class="fu">generate_sample</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">clothing_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span></span>
 <span></span>
 <span><span class="va">clothing_table</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
-<span><span class="co">#&gt; dress    8  6 46 61 54  8  4 37  7  42</span></span>
-<span><span class="co">#&gt; socks   41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; gloves  63  7 24  6 26  6 21  7  0   8</span></span>
-<span><span class="co">#&gt; hat     13 29 16  1 22 36 64 35 20   0</span></span>
-<span><span class="co">#&gt; scarf   49 72  4 15  9 58  0 17 37  30</span></span></code></pre></div>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; dress    5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; scarf   15 49 92 17  1 30 15 24 54  11</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="subgroup_apply">subgroup_apply<a class="anchor" aria-label="anchor" href="#subgroup_apply"></a>
+<h3 id="weave_apply">weave_apply<a class="anchor" aria-label="anchor" href="#weave_apply"></a>
 </h3>
-<p><code>subgroup_apply</code> allows us to run arbitrary code on
-subsets of a table, based on groupings on the left hand of the
-formula:</p>
+<p><code>weave_apply</code> allows us to run arbitrary code on subsets
+of a table, based on groupings on the left hand of the formula:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_apply.html">subgroup_apply</a></span><span class="op">(</span></span>
-<span>  X <span class="op">=</span> <span class="va">clothing_table</span>, LINK <span class="op">=</span> <span class="va">tp</span>, BY <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, FUN <span class="op">=</span> <span class="va">as.data.frame</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/weave_apply-generic.html">weave_apply</a></span><span class="op">(</span></span>
+<span>  .x <span class="op">=</span> <span class="va">tp</span>, .path <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, </span>
+<span>  .data <span class="op">=</span> <span class="va">clothing_table</span>, .fun <span class="op">=</span> <span class="va">as.data.frame</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; $apples</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
-<span><span class="co">#&gt; dress    8  6 46 61 54  8  4 37  7  42</span></span>
-<span><span class="co">#&gt; socks   41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; gloves  63  7 24  6 26  6 21  7  0   8</span></span>
+<span><span class="co">#&gt; dress    5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $grapes</span></span>
-<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt;        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; dress   5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat    37 40  0 61  5 10 19  2 11  22</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melons</span></span>
-<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt;        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; dress   5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat    37 40  0 61  5 10 19  2 11  22</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $oranges</span></span>
-<span><span class="co">#&gt;       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; socks 41 23  6 44 60 13 85 31  3  59</span></span>
+<span><span class="co">#&gt;        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
+<span><span class="co">#&gt; dress   5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat    37 40  0 61  5 10 19  2 11  22</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pears</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
-<span><span class="co">#&gt; dress    8  6 46 61 54  8  4 37  7  42</span></span>
-<span><span class="co">#&gt; socks   41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; gloves  63  7 24  6 26  6 21  7  0   8</span></span>
+<span><span class="co">#&gt; t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; socks    9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; gloves  22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; hat     37 40  0 61  5 10 19  2 11  22</span></span>
 <span></span>
 <span><span class="co"># More complex example: </span></span>
 <span><span class="co"># For all subgroups of clothing corresponding to one particular fruit, if that </span></span>
 <span><span class="co"># group has more than two rows (types of clothing), fit a statistical model. </span></span>
 <span><span class="co"># </span></span>
-<span><span class="fu"><a href="../reference/subgroup_apply.html">subgroup_apply</a></span><span class="op">(</span></span>
-<span>  <span class="va">clothing_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="fu"><a href="../reference/weave_apply-generic.html">weave_apply</a></span><span class="op">(</span></span>
+<span>  <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, <span class="va">clothing_table</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="kw">if</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span> <span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="cn">NULL</span> <span class="op">)</span></span>
 <span>    <span class="co"># else: </span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">V1</span> <span class="op">~</span> <span class="va">V2</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op">)</span></span>
@@ -520,27 +530,75 @@ formula:</p>
 <span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt; t-shirt   dress   socks  gloves </span></span>
-<span><span class="co">#&gt;  -10.44  -27.43   10.03   27.84 </span></span>
+<span><span class="co">#&gt;   dress  gloves     hat t-shirt   socks </span></span>
+<span><span class="co">#&gt; -21.415  -3.038  16.644  13.106  -5.296 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  37.0008    29.5159   1.254    0.337</span></span>
-<span><span class="co">#&gt; V2           -0.2623     1.6771  -0.156    0.890</span></span>
+<span><span class="co">#&gt; (Intercept)  31.3733    15.1192   2.075    0.130</span></span>
+<span><span class="co">#&gt; V2           -0.2754     0.4233  -0.651    0.562</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 29.47 on 2 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.01209,    Adjusted R-squared:  -0.4819 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.02447 on 1 and 2 DF,  p-value: 0.8901</span></span>
+<span><span class="co">#&gt; Residual standard error: 17.75 on 3 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1237, Adjusted R-squared:  -0.1684 </span></span>
+<span><span class="co">#&gt; F-statistic: 0.4234 on 1 and 3 DF,  p-value: 0.5617</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $grapes</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;  dress gloves    hat </span></span>
+<span><span class="co">#&gt; -4.559  5.900 -1.341 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; (Intercept) -13.9900    13.2819  -1.053    0.483</span></span>
+<span><span class="co">#&gt; V2            1.3083     0.4645   2.817    0.217</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 7.576 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.8881, Adjusted R-squared:  0.7761 </span></span>
+<span><span class="co">#&gt; F-statistic: 7.933 on 1 and 1 DF,  p-value: 0.2172</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $melons</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;  dress gloves    hat </span></span>
+<span><span class="co">#&gt; -4.559  5.900 -1.341 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; (Intercept) -13.9900    13.2819  -1.053    0.483</span></span>
+<span><span class="co">#&gt; V2            1.3083     0.4645   2.817    0.217</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 7.576 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.8881, Adjusted R-squared:  0.7761 </span></span>
+<span><span class="co">#&gt; F-statistic: 7.933 on 1 and 1 DF,  p-value: 0.2172</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $oranges</span></span>
-<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residuals:</span></span>
+<span><span class="co">#&gt;  dress gloves    hat </span></span>
+<span><span class="co">#&gt; -4.559  5.900 -1.341 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span><span class="co">#&gt; (Intercept) -13.9900    13.2819  -1.053    0.483</span></span>
+<span><span class="co">#&gt; V2            1.3083     0.4645   2.817    0.217</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Residual standard error: 7.576 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.8881, Adjusted R-squared:  0.7761 </span></span>
+<span><span class="co">#&gt; F-statistic: 7.933 on 1 and 1 DF,  p-value: 0.2172</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $pears</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -548,38 +606,47 @@ formula:</p>
 <span><span class="co">#&gt; lm(formula = V1 ~ V2, data = x)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
-<span><span class="co">#&gt; t-shirt   dress   socks  gloves </span></span>
-<span><span class="co">#&gt;  -10.44  -27.43   10.03   27.84 </span></span>
+<span><span class="co">#&gt; t-shirt   socks  gloves     hat </span></span>
+<span><span class="co">#&gt;   2.555  -4.605 -10.619  12.669 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
-<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; (Intercept)  37.0008    29.5159   1.254    0.337</span></span>
-<span><span class="co">#&gt; V2           -0.2623     1.6771  -0.156    0.890</span></span>
+<span><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span><span class="co">#&gt; (Intercept)  43.8326    12.0644   3.633   0.0681 .</span></span>
+<span><span class="co">#&gt; V2           -0.4875     0.3101  -1.572   0.2565  </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 29.47 on 2 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.01209,    Adjusted R-squared:  -0.4819 </span></span>
-<span><span class="co">#&gt; F-statistic: 0.02447 on 1 and 2 DF,  p-value: 0.8901</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 12.27 on 2 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.5527, Adjusted R-squared:  0.3291 </span></span>
+<span><span class="co">#&gt; F-statistic: 2.472 on 1 and 2 DF,  p-value: 0.2565</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="compatibility-with-the-tidyverse-subgroup_to_tbl">Compatibility with the tidyverse: <code>subgroup_to_tbl</code><a class="anchor" aria-label="anchor" href="#compatibility-with-the-tidyverse-subgroup_to_tbl"></a>
+<h3 id="compatibility-with-the-tidyverse-weave_to_tbl">Compatibility with the tidyverse: <code>weave_to_tbl</code><a class="anchor" aria-label="anchor" href="#compatibility-with-the-tidyverse-weave_to_tbl"></a>
 </h3>
 <p>For those who prefer to use <code>tidyverse</code>,
-<code><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl()</a></code> returns a tidy wide-format table, ready
-to be grouped based on the first two columns.</p>
+<code><a href="../reference/weave_to_tbl.html">weave_to_tbl()</a></code> returns a tidy wide-format table, ready to
+be grouped based on the first two columns.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/subgroup_to_tbl.html">subgroup_to_tbl</a></span><span class="op">(</span><span class="va">clothing_table</span>, <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/weave_to_tbl.html">weave_to_tbl</a></span><span class="op">(</span><span class="va">tp</span>, .path <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, .data <span class="op">=</span> <span class="va">clothing_table</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
-<span><span class="co">#&gt; 1   apples  t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
-<span><span class="co">#&gt; 2    pears  t-shirt 20 25  9 84 62 40 10 13 11  44</span></span>
-<span><span class="co">#&gt; 3   apples    dress  8  6 46 61 54  8  4 37  7  42</span></span>
-<span><span class="co">#&gt; 4    pears    dress  8  6 46 61 54  8  4 37  7  42</span></span>
-<span><span class="co">#&gt; 5   apples    socks 41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; 6   grapes    socks 41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; 7   melons    socks 41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; 8  oranges    socks 41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; 9    pears    socks 41 23  6 44 60 13 85 31  3  59</span></span>
-<span><span class="co">#&gt; 10  apples   gloves 63  7 24  6 26  6 21  7  0   8</span></span>
-<span><span class="co">#&gt; 11   pears   gloves 63  7 24  6 26  6 21  7  0   8</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   apples    dress  5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; 2   grapes    dress  5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; 3   melons    dress  5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; 4  oranges    dress  5 18  0 69 36 28 36 44 51   7</span></span>
+<span><span class="co">#&gt; 5   apples   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 6   grapes   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 7   melons   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 8  oranges   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 9   apples      hat 37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; 10  grapes      hat 37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; 11 oranges      hat 37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; 12  apples  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; 13   pears  t-shirt 42  9 41 66  2  8 18  2 14   1</span></span>
+<span><span class="co">#&gt; 14  apples    socks  9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; 15   pears    socks  9 62  0 26 11 10 19 37 44   3</span></span>
+<span><span class="co">#&gt; 16   pears   gloves 22 23 21 38 21  1 61 16 44   8</span></span>
+<span><span class="co">#&gt; 17  melons      hat 37 40  0 61  5 10 19  2 11  22</span></span>
+<span><span class="co">#&gt; 18   pears      hat 37 40  0 61  5 10 19  2 11  22</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="reading-and-parsing-adjaceny-list-formatted-files">Reading and parsing adjaceny list-formatted files<a class="anchor" aria-label="anchor" href="#reading-and-parsing-adjaceny-list-formatted-files"></a>
@@ -621,23 +688,23 @@ blueberry\tchair\tdesk</code></pre>
 <span></span>
 <span><span class="va">adj_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_adjacency_list.html">read_adjacency_list</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
 <span><span class="va">adj_data</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 11 rows.</span></span>
-<span><span class="co">#&gt;       id.x    id.y</span></span>
-<span><span class="co">#&gt; 1   apples  gloves</span></span>
-<span><span class="co">#&gt; 2   apples     hat</span></span>
-<span><span class="co">#&gt; 3   apples   scarf</span></span>
-<span><span class="co">#&gt; 4   apples t-shirt</span></span>
-<span><span class="co">#&gt; 5   grapes   scarf</span></span>
-<span><span class="co">#&gt; 6   melons   scarf</span></span>
-<span><span class="co">#&gt; 7  oranges   scarf</span></span>
-<span><span class="co">#&gt; 8    pears  gloves</span></span>
-<span><span class="co">#&gt; 9    pears     hat</span></span>
-<span><span class="co">#&gt; 10   pears   scarf</span></span>
-<span><span class="co">#&gt;  + 1 more rows. Use `print(n = ...)` to see more rows.</span></span>
+<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 18 rows.</span></span>
+<span><span class="co">#&gt;      id.x    id.y</span></span>
+<span><span class="co">#&gt; 1  apples   dress</span></span>
+<span><span class="co">#&gt; 2  apples  gloves</span></span>
+<span><span class="co">#&gt; 3  apples     hat</span></span>
+<span><span class="co">#&gt; 4  apples   scarf</span></span>
+<span><span class="co">#&gt; 5  apples t-shirt</span></span>
+<span><span class="co">#&gt; 6  grapes   dress</span></span>
+<span><span class="co">#&gt; 7  grapes     hat</span></span>
+<span><span class="co">#&gt; 8  grapes   scarf</span></span>
+<span><span class="co">#&gt; 9  melons   dress</span></span>
+<span><span class="co">#&gt; 10 melons     hat</span></span>
+<span><span class="co">#&gt;  + 8 more rows. Use `print(n = ...)` to see more rows.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; @ levels:   2 variables: </span></span>
 <span><span class="co">#&gt;  $ id.x : 5 Levels: apples grapes ... pears </span></span>
-<span><span class="co">#&gt;  $ id.y : 4 Levels: gloves hat scarf t-shirt</span></span>
+<span><span class="co">#&gt;  $ id.y : 5 Levels: dress gloves ... t-shirt</span></span>
 <span></span>
 <span><span class="co"># Notice that the unlinked data types are no longer in the graph.  </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">adj_data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

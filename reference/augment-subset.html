@@ -93,21 +93,21 @@ output.</p></dd>
 <span class="r-in"><span><span class="co"># Use augment to chain together operations like weave and stack, in order.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">x</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span> <span class="op">~</span> <span class="va">c</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu"><a href="stack.MultiFactor.html">stack</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">~</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">a</span> <span class="op">+</span> <span class="va">b</span> <span class="op">~</span> <span class="va">c</span> <span class="op">+</span> <span class="va">d</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    <span class="fu"><a href="weave-generic.html">weave</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">d</span> <span class="op">~</span> <span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     8 feature types across 8 LinkMaps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          a  b  c  d  e  f a.b c.d</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a2b     10 10  .  .  .  .   .   .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b2c      .  9 10  .  .  .   .   .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c2d      .  .  9 10  .  .   .   .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d2e      .  .  . 10 10  .   .   .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e2f      .  .  .  .  9 10   .   .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a2c     10  . 10  .  .  .   .   .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a.b2c.d  .  .  .  .  .  .  19  20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d2f      .  .  . 10  . 10   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          a b  c d  e  f a.b c.d</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a2b     10 9  . .  .  .   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b2c      . 9  9 .  .  .   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c2d      . . 10 8  .  .   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d2e      . .  . 9 10  .   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e2f      . .  . .  9 10   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a2c      9 .  9 .  .  .   .   .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a.b2c.d  . .  . .  .  .  18  17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d2f      . .  . 9  . 10   .   .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -118,24 +118,24 @@ output.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ d   : 10 Levels: d_001 d_002 ... d_010 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ e   : 10 Levels: e_001 e_002 ... e_010 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ f   : 10 Levels: f_001 f_002 ... f_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ a.b : 19 Levels: a_001 a_002 ... b_010 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ c.d : 20 Levels: c_001 c_002 ... d_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ a.b : 18 Levels: a_001 a_002 ... b_009 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ c.d : 17 Levels: c_001 c_002 ... d_008 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Setting a LinkMap to NULL by name deletes it from the MultiFactor</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html" class="external-link">augment</a></span><span class="op">(</span><span class="va">x</span>, a2b <span class="op">=</span> <span class="cn">NULL</span> <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A MultiFactor::MultiFactor list S7_object,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     5 feature types across 4 LinkMaps.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     b  c  d  e  f</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b2c 9 10  .  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> c2d .  9 10  .  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> d2e .  . 10 10  .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> e2f .  .  .  9 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     b  c d  e  f</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b2c 9  9 .  .  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> c2d . 10 8  .  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> d2e .  . 9 10  .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> e2f .  . .  9 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Values represent unique feature names in that LinkMap.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> @ levels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b :  9 Levels: b_001 b_002 ... b_010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ b :  9 Levels: b_001 b_002 ... b_009 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ c : 10 Levels: c_001 c_002 ... c_010 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ d : 10 Levels: d_001 d_002 ... d_010 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ e : 10 Levels: e_001 e_002 ... e_010 </span>

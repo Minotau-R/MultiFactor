@@ -58,7 +58,7 @@ Convert a LinkMap to a sparse matrix object from the <code>Matrix</code> package
 <span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
-<span>  dims <span class="op">=</span> <span class="fu"><a href="nlevels-generic.html">nlevels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
+<span>  dims <span class="op">=</span> <span class="fu"><a href="nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
 <span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="va">terms</span><span class="op">]</span>,</span>
 <span>  value_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  force_pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">value_id</span><span class="op">)</span>,</span>
@@ -109,6 +109,43 @@ pattern matrix. (Default: FALSE)</p></dd>
     <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/Matrix/man/sparseMatrix.html" class="external-link">Matrix::sparseMatrix()</a></code></p></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="randomMultiFactor.html">randomLinkMap</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 x 26 sparse Matrix of class "ngCMatrix"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   [[ suppressing 26 column names ‘A’, ‘B’, ‘C’ ... ]]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      UPPER</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lower                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a | | | . . | | . . | | . . . . | | | | | . | | | . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     b . . . . | | | . . | . | | | | | | . . . | | . | | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     c . . | | . . | . . . | . | | | . . . | | | | . | | |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     d . | . . . | . | | . . . | . . | | . | . | | . . | |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     e . | | . | | | | | . | . . . | | . . | | | . | | | |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     f . . | | . | | | | | | . | | . . . | | . | | | . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     g | | . | . . . | | | . | . | | . | | | . | | | . . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     h | | . | | | | . . . | | | . | . . | . . . . . . . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     i | | | | | . | | | . | . | | | | | . . . | | | . . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     j | . | | . . . | | | | . . | | . . | | | | . . | . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     k | . . . | | . . . | | | . . | . . | | . | . | | . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     l . | | | | | | | . . . . | . . . . | . . | | | | | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     m | | . . | . . | . . . | | . | . . | . . . . | | . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n | | | | | . . . . . . . . . | | . | . . . . | . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     o . . | . . . . . | | . | | | | . | | . | | . | . . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     p | . | . . . | | . | . | | | . | . | . | | . . . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     q . | . . . | . . . . . . | . | . . . | | . . . | . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     r | | . . | . . . | | . . . . | | | | . . | | . . | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     s . . . . | . . | | . | | . . | . . | | | | | | . . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     t . | . . . | . . | | | . . . | . . . . . . . | | . |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     u . . | | | | . . . . | . . . | | . . | | . . . | | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     v | | | | . . | . | | . | . | . | . | . . | . . | . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     w | . | | . | . | . | . . | . | | | | . . | . | | | .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     x | | . | | | . | . . | | | | | | . . . | . . . | . .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     y . . . . | . . | . | | . | . | | . . | . . | . | | |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     z | . . . . | . | | . | | . . . . . . | | . | . . | |</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
