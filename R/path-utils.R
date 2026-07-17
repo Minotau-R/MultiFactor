@@ -2,7 +2,7 @@
 #' @returns a named list with three variables. See details.
 #' @details
 #'     `info` - How long is the provided path? `minimal` or `detailed`.
-#'     `complex` - `Logical`. Are the variables `ordinary` or concatenated with "+" `complex`.
+#'     `complex` - `Logical`. are steps concatenated with "+"?
 #'     `class`- .path class. `character`, `list`, `formula` or `data.frame`.
 #'
 #' @noRd
@@ -49,49 +49,22 @@
     return(res)
 }
 
-.std_path_to_list <- function(x, .path, check) switch(
+.path_to_std_list <- function(.path, check) switch(
     check[["class"]],
-    "character"  = res <- as.list(.path),
-    "data.frame" = res <- .path_df_to_list(.path),
-    "formula"    = res <- as.list(.cut_fm_by_tildes(.path)),
-    "list"       = res <- .path
+    "character"  = as.list(.path),
+    "data.frame" = .path_df_to_list(.path),
+    "formula"    = as.list(.cut_fm_by_tildes(.path)),
+    "list"       = .path
 )
 
-.select_std_path <- function(x, std_path) {
-    terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
-    include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
-    if(!length(include)) { include <- NULL }
-    full_path <- .select_path( x, terms, include )
+.path_df_to_list <- function(x) as.list( c(x[[1L]], x[[2L]][NROW(x)]) )
 
-    return(full_path)
-}
-
-
-#' @param std_path Takes a std list form and splits it by " + " for stack().
-#' @returns a std list with split variables.
+#' @importFrom rlang as_label
 #' @noRd
-#'
-.parse_stack_std_path <- function(std_path) unlist(
-    lapply(std_path, strsplit, split = " + ", fixed = TRUE), FALSE, FALSE
+#' @returns a character vector of length >= 2L.
+.cut_fm_by_tildes <- function(x) unlist(
+    strsplit(rlang::as_label(x), " ~ ", fixed = TRUE)
 )
-
-
-.path_df_to_list <- function(x) as.list(c(x[[1L]], x[[2L]][NROW(x)]))
-
-
-.path_ordinary_to_full <- function(x, .path) {
-    if(inherits(.path, "formula")) {
-        all_terms <- .cut_fm_by_tildes(.path)
-    } else {
-        all_terms <- .path
-    }
-    terms <- all_terms[c(1L, length(all_terms))]
-    include <- all_terms[-c(1, length(all_terms))]
-    if(!length(include)) { include <- NULL}
-    full_path <- .select_path( x, terms, include)
-    return(full_path)
-}
-
 
 #' Standardize terms
 #' @returns a length 2 character vector of y, x.
@@ -124,26 +97,6 @@
     lapply(list(y_vars, x_vars), all.vars)
 }
 
-
-#' @importFrom rlang as_label
-#' @noRd
-#' @returns a character vector of length >= 2L.
-.cut_fm_by_tildes <- function(x) unlist(
-    strsplit(rlang::as_label(x), " ~ ", fixed = TRUE)
-    )
-
-
-
-#' @importFrom stats reformulate
-#' @noRd
-#' @returns a list of step-wise formulae.
-.path_prep_fm_detailed <- function(.path) {
-    all_terms <- .cut_fm_by_tildes(.path)
-    lapply(
-        seq_len(length(all_terms) -1L),
-        function(i) stats::reformulate(all_terms[i+1L], all_terms[i])
-    )
-}
 
 
 

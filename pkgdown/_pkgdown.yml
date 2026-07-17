@@ -20,10 +20,10 @@ reference:
   - weave
   - weave-methods
   - weave_coverage
-  - stack
-  - select_path
-  - subgroup_apply
-  - subgroup_to_tbl
+  - stack-methods
+  - weave_apply
+  - weave_apply-methods
+  - weave_to_tbl
 - title: Classes
 - contents:
   - MultiFactor
@@ -32,6 +32,10 @@ reference:
   - LinkMap
   - LinkMap-methods
   - nlevels
+  - factor_path
+  - factor_path-methods
+  - select_path
+  - select_path-methods
 - title: Converters
 - contents:
   - as.MultiFactor

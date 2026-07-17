@@ -1,11 +1,10 @@
 #' Define a path through a MultiFactor object.
-#' @rdname select_path
-#' @name select_path
-#' @inheritParams weave-methods
-#' @param as.edges `Boolean scalar` Whether to return names of edges or nodes
-#'     (Default) in the path.
-#' @returns a list of character vectors.
-#' @importFrom igraph as_ids
+#' @name select_path-methods
+#' @rdname select_path-methods
+#' @param x input object
+#' @param .path either a `formula` or a `character vector` of length 2 with the
+#'     names of the desired combination of feature types.
+#' @returns a `factor_path` object.
 #' @examples
 #' #' # Generate pair of random linkage input
 #' a2b <- data.frame(
@@ -22,22 +21,65 @@
 #'
 #' # Inspect a path between data types
 #' select_path(x, b ~ c)
-#' @export
 #'
-select_path <- function(
-        x, .path, include = NULL, exclude = NULL, exact = NULL, as.edges = FALSE
+NULL
+
+#' @importFrom igraph as_ids
+#'
+S7::method(select_path, MultiFactor) <- function(
+        x, .path,  ...
 ) {
     path_check <- .check_path(.path)
-    .path_check_valid_weave(path_check)
+    .path_check_valid_select(path_check)
+    path_list <- .path_to_std_list(.path, path_check)
 
-    path_list <- .std_path_to_list(x, .path, path_check)
-    paths <- .select_std_path(x, path_list)
-
-    #paths <- .select_path(x, .path_parse(.path), include, exclude, exact)
-
-    if( as.edges ) paths <- lapply(paths, .V_path_as_E_path)
+    paths     <- .select_std_path(x, path_list)
     return(paths)
 }
+
+.path_check_valid_select <- function(path_check) {
+    if(path_check[["complex"]]) {
+        stop(
+            "`weave_select()` '.path' cannot contain '+'.",
+            "Use `stack()` to prepare input."
+        )
+    }
+}
+
+.select_std_path <- function(x, std_path) {
+    terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
+    include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
+    if(!length(include)) { include <- NULL }
+    full_path <- .select_path( x, terms, include )
+    i <- lapply(full_path, function(ii) ii[-c(1L, length(ii))])
+
+    res <- factor_path(terms, include = i, exclude = character(), exact = TRUE)
+
+    return(res)
+
+}
+
+.std_path_as_factor_path <- function(x, exact = TRUE) {
+    ll <- length(x)
+    if( ll == 2L ) {
+        res <- factor_path(unlist(x), list(character()), character(), exact)
+    } else {
+        include <- list(x[-c(1L, ll)])
+        x       <- unlist(x[ c(1L, ll)])
+        res     <- factor_path(x, include, character(), exact)
+    }
+    return(res)
+}
+
+# TODO delete if new .select_std_path is fine
+# .select_std_path <- function(x, std_path) {
+#     terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
+#     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
+#     if(!length(include)) { include <- NULL }
+#     full_path <- .select_path( x, terms, include )
+#
+#     return(full_path)
+# }
 
 .select_path <- function(
         x, terms, include = NULL, exclude = NULL, exact = NULL
@@ -53,6 +95,12 @@ select_path <- function(
         paths <- lapply( unlist(paths, FALSE, FALSE), as_ids )
     }
     return(paths)
+}
+
+.apply_shortest_ps <- function(terms, g) {
+    igraph::all_shortest_paths(
+        g, from = terms[1], to = terms[2]
+    )[["vpaths"]]
 }
 
 .subset_paths <- function(g, include, exclude, exact) {
@@ -174,20 +222,6 @@ select_path <- function(
 
 
 
-.apply_shortest_ps <- function(terms, g) {
-    igraph::all_shortest_paths(
-        g, from = terms[1], to = terms[2]
-    )[["vpaths"]]
-}
-
-
-
-
-
-
-.weave_ordinary_terms_df <- function(df, x, out.format) .weave_ordinary_terms(
-    x, c(df), out.format
-)
 
 
 # Utilities ----
@@ -197,7 +231,7 @@ select_path <- function(
 # returns a Character vector of the ids to walk in order.
 #' @importFrom igraph shortest_paths graph_from_data_frame
 #'
-termSeq <- function(terms, x) {
+.term_seq <- function(terms, x) {
     stopifnot(
         "both terms must be found as colnames in 'x'" = all(
             terms %in% colnames(x)
@@ -219,7 +253,7 @@ termSeq <- function(terms, x) {
 #'     traversed.
 #' @noRd
 #'
-stepSeq <- function(term_list, d) vapply(
+.step_seq <- function(term_list, d) vapply(
     term_list,
     FUN = rowsWithCol,
     d = d,
@@ -248,48 +282,13 @@ rowsWithCol <- function(d, id, names = TRUE) {
     return(rowInds)
 }
 
-subsetByPath <- function(link, all_terms) {
+.subset_by_path <- function(link, all_terms) {
     term_list <- lapply(
         seq_len(length(all_terms) - 1L),
         FUN = function(x) all_terms[c(x, x + 1L)]
     )
-    steps <- stepSeq(term_list, link@map)
+    steps <- .step_seq(term_list, link@map)
     link <- link[steps]
     return(link)
 }
-
-#' Generate dictionary Matrix from link input
-#' @param link `MultiFactor`
-#' @param all_terms `Character vector` of all path terms in sequence.
-#'     `termSeq(x, y, link)`
-#' @importMethodsFrom Matrix %&%
-#' @noRd
-#'
-.weave_to_dictionary_matrix <- function(link, all_terms) {
-    term_list <- lapply(
-        seq_len(length(all_terms) - 1L),
-        FUN = function(x) all_terms[c(x, x + 1L)]
-    )
-    steps <- stepSeq(term_list, link@map)
-    lv_len <- nlevels(link, use.names = TRUE)
-
-    # Handle simple case of one link df first, return sparse matrix.
-    if (length(steps) == 1L) {
-        return(`as.matrix.MultiFactor::LinkMap`(
-            x = S7::S7_data(link)[[steps]],
-            terms = all_terms,
-            dims = lv_len[all_terms]
-        ))
-    }
-    lv_list <- lapply(term_list, function(x) lv_len[x])
-    # Otherwise, make a list of matrices to Reduce to final dictionary
-    mat_list <- mapply(
-        FUN = `as.matrix.MultiFactor::LinkMap`,
-        x = S7::S7_data(link)[steps],
-        terms = term_list,
-        dims = lv_list
-    )
-    Reduce(Matrix::`%&%`, mat_list)
-}
-
 

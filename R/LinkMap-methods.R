@@ -109,6 +109,9 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 #' @returns a sparse biadjacency `Matrix` with
 #' @export
 #' @seealso [Matrix::sparseMatrix()]
+#' @examples
+#' x <- randomLinkMap()
+#' as.matrix(x)
 #'
 `as.matrix.MultiFactor::LinkMap` <- function(
         x, terms = colnames(x),
@@ -137,6 +140,9 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 #' @param row.names,optional,... For compatibility, not currently used.
 #' @importFrom S7 S7_data
 #' @returns a `data.frame`
+#' @examples
+#' x <- randomLinkMap()
+#' as.data.frame(x)
 #' @export
 #'
 `as.data.frame.MultiFactor::LinkMap` <- function(
@@ -147,14 +153,6 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 
 
 ##### LinkMap utils
-
-#' @noRd
-.formula2name <- function(.path) {
-   var_list <- .path_parse_formula(.path)
-   var_vctr <- vapply(var_list, paste, collapse = ".", FUN.VALUE = character(1L))
-   var_name <- paste(var_vctr, collapse = "2")
-   return(var_name)
-}
 
 .colnames2name <- function(x) paste(x, collapse = "2")
 

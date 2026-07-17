@@ -50,7 +50,7 @@ S7::method(as.LinkMap, S7::class_data.frame) <- function(
         x, edge.names = NULL
 ){
     if( NCOL(x) >= 3L ) {
-        metadata <- x[, -seq_len(2L)]
+        metadata <- x[, -seq_len(2L), drop = FALSE]
         x <- x[, seq_len(2L)]
     } else {
         metadata <- data.frame(row.names = seq_len(NROW(x)))

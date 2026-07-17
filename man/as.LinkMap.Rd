@@ -11,6 +11,9 @@ as.LinkMap(x, ...)
 
 \item{...}{additional arguments}
 }
+\value{
+a \code{LinkMap}
+}
 \description{
 Convert common classes to LinkMap
 }

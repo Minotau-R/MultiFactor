@@ -20,8 +20,7 @@ a \code{LinkMap} or \verb{sparse Matrix}.
 }
 \description{
 Generates a new \code{LinkMap} object by cross-referencing the elements of a
-given \code{MultiFactor}. Elements can be merged by including several names,
-separated by the plus (\code{+}) sign. See examples.
+given \code{MultiFactor}.
 }
 \examples{
 # Generate a random MultiFactor

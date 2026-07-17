@@ -182,7 +182,62 @@ MultiFactor <- S7::new_class(
 
 )
 
-##### LinkMap utils ----
+
+#' factor_path S7 class
+#' @name factor_path
+#' @rdname factor_path-class
+#' @description
+#' `factor_path` is an S7 class to standardize the various ways in which paths
+#' that can be specified across the `MultiFactor` package. This class is mostly
+#' for internal use.
+#'
+#' @param x `Character vector` of length two; `c(<from>, <to>)`.
+#' @param include `List of character vectors`. Which elements are included in
+#'     the path? Length of the list indicates number of paths.
+#' @param exclude `Character vector`. Which elements are excluded from the path?
+#' @param exact `Logical`. Should the path be followed as is?
+#'     (i.e., no pathfinding required)
+#' @returns a `factor_path` object.
+#' @importFrom S7 new_class new_property class_character new_object
+#' @examples
+#' factor_path(x = c("a", "c"), include = list("b"))
+#' @export
+#'
+factor_path <- S7::new_class(
+    "factor_path",
+    package = "MultiFactor",
+    parent = S7::class_character,
+    properties  = list(
+        include = S7::new_property(
+            class = S7::class_list, default = list(character())
+        ),
+        exclude = S7::new_property(
+            class = S7::class_character, default = character()
+        ),
+        exact   = S7::new_property(
+            class = S7::class_logical, default = FALSE
+        )
+    ),
+    constructor = function(
+        x, include = list(character()), exclude = character(), exact = FALSE
+    ) {
+        stopifnot(
+            "factor_path input must be length 2." = length(x) == 2L,
+            "factor_path input must be a character vector." = is.character(x)
+        )
+        S7::new_object(
+            .parent = x, include = include, exclude = exclude, exact = exact
+        )
+    },
+    validator = function(self) {
+        if(length(S7::S7_data(self)) != 2L) {
+            "factor_path must have length of two. "
+        }
+    }
+)
+
+
+##### LinkMap utils --]--
 
 .check_input_df <- function(x) {
     if(! is.data.frame(x) ) {
