@@ -27,18 +27,19 @@ S7::method(weave, MultiFactor) <- function(
     include = NULL, exclude = NULL, exact = NULL
 ) {
   out.format <- match.arg(out.format, c("LinkMap", "matrix"))
-  lv_list <- levels(x)
 
   path_check <- .check_path(.path)
   .path_check_valid_weave(path_check)
+  path_list <- .path_to_std_list(.path, path_check)
 
-  path_list <- .std_path_to_list(x, .path, path_check)
-  full_path <- .select_std_path(x, path_list)[[1L]]
-  # full_path <- .path_ordinary_to_full(x, .path)[[1L]]
-  res <- .weave_full_path(x, full_path, out.format)
+  full_path <- as.list(.select_std_path(x, path_list))
 
-  if( out.format == "LinkMap" ) {
-    res <- LinkMap(res)
+  res <- lapply(full_path, .weave_full_path, x = x, out.format = "LinkMap")
+  res <- do.call( rbind.data.frame, res )
+  res <- LinkMap(res)
+
+  if(out.format == "matrix") {
+   res <- `as.matrix.MultiFactor::LinkMap`(res)
   }
 
   return(res)
@@ -46,67 +47,57 @@ S7::method(weave, MultiFactor) <- function(
 
 .path_check_valid_weave <- function(path_check) {
   if(path_check[["complex"]]) {
-    stop("weave() '.path' cannot contain '+'. Use stack() to prepare input.")
+    stop("weave() '.path' cannot contain '+'. Use `stack()` to prepare input.")
   }
 }
-
-
-
-weave_along_path <- function(x, path, out.format = "LinkMap") {
-  # tolerate single path result in list
-  if(length(path) == 1L) path <- path[[1L]]
-  stopifnot(
-    "'path' must be a character vector of steps to take, in order." =
-      is.character(path)
-  )
-  stopifnot(
-    "All entries in 'path' must be found in colnames(x)." =
-      all( path %in% colnames(x) )
-  )
-  res <- .weave_full_path(x, path, out.format)
-  # Remove duplicates
-  if(out.format == "LinkMap") {
-    res <- res[ !duplicated(res[, seq_len(2L)]), ]
-  }
-  res
-}
-
-
-.weave_ordinary_terms <- function(x, terms, out.format) {
-  lv_list <- levels(x)
-  # Determine required ids in order, only keep relevant elements of link.
-  all_terms <- .select_path(x, terms, include = NULL, exclude = NULL, exact = NULL)
-  res <- lapply(all_terms, .weave_full_path, x = x, out.format = "LinkMap")
-  res <- do.call(
-    rbind.data.frame,
-    c(res, make.row.names = FALSE, stringsAsFactors = TRUE)
-  )
-  if( out.format == "matrix" ) {
-    res <- Matrix::sparseMatrix(
-      i = as.numeric(res[[terms[1L]]]), j = as.numeric(res[[terms[2L]]]),
-      dims = lengths(lv_list[terms]), dimnames = lv_list[terms]
-    )
-  }
-  return(res)
-}
-
 
 .weave_full_path <- function(x, all_terms, out.format) {
-  x <- subsetByPath(x, all_terms)
+  x <- .subset_by_path(x, all_terms)
   terms <- all_terms[c(1L, length(all_terms))]
+
   # Construct dictionary
   res <- .weave_to_dictionary_matrix(x, all_terms)
 
-  # Check if we're done
-  if(out.format == "matrix") {
-    dimnames(res) <- levels(x)[terms]
-    return(res)
-  }
-  # Otherwise, make a LinkMap
+  # make a LinkMap-shaped data.frame
   res <- .res_weave_matrix_to_LinkMap(res, levels(x)[terms])
 
   return(res)
 }
+
+#' Generate dictionary Matrix from link input
+#' @param link `MultiFactor`
+#' @param all_terms `Character vector` of all path terms in sequence.
+#'     `.term_seq(x, y, link)`
+#' @importMethodsFrom Matrix %&%
+#' @noRd
+#'
+.weave_to_dictionary_matrix <- function(link, all_terms) {
+  term_list <- lapply(
+    seq_len(length(all_terms) - 1L),
+    FUN = function(x) all_terms[c(x, x + 1L)]
+  )
+  steps <- .step_seq(term_list, link@map)
+  lv_len <- nlevels(link, use.names = TRUE)
+
+  # Handle simple case of one link df first, return sparse matrix.
+  if (length(steps) == 1L) {
+    return(`as.matrix.MultiFactor::LinkMap`(
+      x = S7::S7_data(link)[[steps]],
+      terms = all_terms,
+      dims = lv_len[all_terms]
+    ))
+  }
+  lv_list <- lapply(term_list, function(x) lv_len[x])
+  # Otherwise, make a list of matrices to Reduce to final dictionary
+  mat_list <- mapply(
+    FUN = `as.matrix.MultiFactor::LinkMap`,
+    x = S7::S7_data(link)[steps],
+    terms = term_list,
+    dims = lv_list
+  )
+  Reduce(Matrix::`%&%`, mat_list)
+}
+
 
 #' @importFrom Matrix which
 #'
@@ -119,18 +110,4 @@ weave_along_path <- function(x, path, out.format = "LinkMap") {
   }, x = res, y = lvs, SIMPLIFY = FALSE )
   colnames(res) <- names(lvs)
   return(res)
-}
-
-.weave_paths_terms <- function(x, terms) {
-  stopifnot(
-    "both terms must be found as colnames in 'x'" = all(
-      terms %in% colnames(x)
-    )
-  )
-  g <- igraph::graph_from_data_frame(
-    d = .all_names_in_list_mf(x),
-    directed = FALSE
-  )
-  igraph::all_shortest_paths(
-    g, from = terms[1], to = terms[2])[["vpaths"]]
 }

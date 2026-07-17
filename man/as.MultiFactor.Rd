@@ -21,7 +21,6 @@ Convert common classes to MultiFactor
 # Available methods:
 as.MultiFactor
 
-
 }
 \seealso{
 \link{as.LinkMap}

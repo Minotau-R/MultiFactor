@@ -26,32 +26,59 @@
 #'
 NULL
 
+
+
 #' @export
-#' @aliases subset.MultiFactor
 #'
 `subset.MultiFactor::MultiFactor` <- function(
-        x, subset = NULL, by_path = TRUE, drop.unmatched = TRUE, ...
+        x, .path, .drop.unmatched = FALSE, ...
 ) {
-    if(drop.unmatched) x <- .trimMultiFactor(x)
-    if(is.null(subset)) return(x)
-    if(by_path){
-        subset <- unlist(.path_parse(subset))
-        stopifnot("Argument `subset` must be length 2 if by_path` is TRUE" =
-                      length(subset) == 2L)
-        subset <- termSeq(subset, x)
-        # Determine required ids in order, keep relevant elements of MultiFactor
-        return(subsetByPath(x, subset))
-    } else `[`(x, subset)
+    if(.drop.unmatched) x <- .trimMultiFactor(x)
+
+    path_check <- .check_path(.path)
+    .path_check_valid_subset(path_check)
+    path_list <- .path_to_std_list(.path, path_check)
+
+    path_list <- .path_to_std_list(.path, path_check)
+
+    full_path <- unlist(as.list(.select_std_path(x, path_list)), FALSE, FALSE)
+
+    x <- .subset_by_path(x, full_path)
+    return(x)
 }
 
 #' @export
 #'
+`subset.MultiFactor::LinkMap` <- function(x, subset = NULL, ...) {
+    df <- as.data.frame(x)
+    if( is.null(subset) ) {
+        if("complete" %in% colnames(df)) {
+            i <- df[["complete"]] } else {
+                i <-  rep_len(TRUE, NCOL(df))
+            }
+    } else {
+        e <- substitute(subset)
+        i <- eval(e, df, enclos = parent.frame())
+    }
+    res <- x[i]
+    return(res)
+}
+
+.path_check_valid_subset <- function(path_check) {
+    if(path_check[["complex"]]) {
+        stop(
+            "subset() '.path' cannot contain '+'.",
+            "Use `stack()` to prepare input."
+        )
+        }
+    }
+
 method(subset, MultiFactor) <-
     function(
-        x, subset = NULL, by_path = TRUE, drop.unmatched = TRUE, ...
-    ) `subset.MultiFactor::MultiFactor`(
-        x, subset, by_path, drop.unmatched, ...
-    )
+        x, .path, .drop.unmatched = FALSE, ...
+        ) `subset.MultiFactor::MultiFactor`(
+            x, .path, .drop.unmatched
+        )
 
 
 #' @importFrom generics augment

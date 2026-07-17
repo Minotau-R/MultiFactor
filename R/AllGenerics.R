@@ -42,7 +42,6 @@ S7::method(nlevels, S7::class_any) <- base::nlevels
 #' # Available methods:
 #' as.MultiFactor
 #'
-#'
 as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
 
 #' Weave a path through an object
@@ -56,12 +55,43 @@ as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
 #' @param .path either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param ... additional arguments
+#' @returns a `LinkMap` or `matrix`.
 #' @importFrom S7 S7_dispatch
 #' @export
+#' @examples
+#' # Available methods:
+#' weave
 #'
 weave <- S7::new_generic("weave", "x", function(x, .path, ...) {
     S7::S7_dispatch()
 })
+
+#' Index a table and apply arbitrary code to it
+#' @rdname weave_apply-generic
+#' @name weave_apply-generic
+#' @description `weave_apply()` is an S7 generic that finds a path through a
+#'     relational object and evaluates provided code to each corresponding
+#'     subset of an input table. It is available for the following classes:
+#'     `r doclisting::methods_list("weave_apply")`
+#'
+#' @param .x input relational object to dispatch on.
+#' @param .path either a `formula` or a `character vector` of length 2 with the
+#'     names of the desired combination of feature types.
+#' @param .data an R object, such as tabular data.
+#' @param .fun the function to be applied to each subgroup of `.x`.
+#' @param ... Optional arguments to `.fun`
+#' @importFrom S7 S7_dispatch new_generic
+#' @export
+#' @returns a list containing the results of `.fun`.
+#' @examples
+#' # Available methods:
+#' weave_apply
+#'
+weave_apply <- S7::new_generic(
+    "weave_apply",
+    ".x",
+    function(.x, .path, .data, .fun = NULL, ...) {S7::S7_dispatch()}
+)
 
 #' Weave a path through an object
 #' @name select_path-generic

@@ -154,14 +154,6 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 
 ##### LinkMap utils
 
-#' @noRd
-.formula2name <- function(.path) {
-   var_list <- .path_parse_formula(.path)
-   var_vctr <- vapply(var_list, paste, collapse = ".", FUN.VALUE = character(1L))
-   var_name <- paste(var_vctr, collapse = "2")
-   return(var_name)
-}
-
 .colnames2name <- function(x) paste(x, collapse = "2")
 
 .linkmap2name <- function(x) paste(names(x), collapse = "2")

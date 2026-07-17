@@ -46,30 +46,27 @@ weave_coverage <- function(
         several.ok = TRUE
     )
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
+    .data <- .data_coverage_to_vector(.data, .data_column)
 
     path_check <- .check_path(.path)
 
     .path_check_valid_coverage(path_check)
 
-    path_list <- .std_path_to_list(x, .path, path_check)
-    full_path <- .select_std_path(x, path_list)[[1L]]
+    path_list <- .path_to_std_list(.path, path_check)
+    full_path <- as.list(.select_std_path(x, path_list))
 
-    stopifnot(
-        "weave_coverage() '.path' must be 2 or 3 steps long." =
-            length(full_path) %in% c(2L, 3L)
+    res <- lapply(
+        full_path,
+        .weave_coverage_factor_path,
+        x = x, .data = .data, metric = metric
     )
-    x <- subsetByPath(x, full_path)
 
-    .data <- .data_coverage_to_vector(.data, .data_column)
-    if( length(full_path) == 2L ) {
-        res <- .weave_coverage_two(x, full_path, .data, metric, out.format)
-    } else if( length(full_path) == 3L ) {
-        res <- .weave_coverage_three(x, full_path, .data, metric, out.format)
+    res <- do.call(rbind.data.frame, res)
+    res <- as.LinkMap(res)
+    if(out.format == "matrix") {
+        res <- `as.matrix.MultiFactor::LinkMap`(res)
     }
-
     return(res)
-
-
 }
 
 .path_check_valid_coverage <- function(path_check) {
@@ -79,6 +76,26 @@ weave_coverage <- function(
     }
 }
 
+.weave_coverage_factor_path <- function(
+        x, full_path, .data, metric
+) {
+    stopifnot(
+        "weave_coverage() '.path' must be 2 or 3 steps long." =
+            length(full_path) %in% c(2L, 3L)
+    )
+    x <- .subset_by_path(x, full_path)
+
+    if( length(full_path) == 2L ) {
+        res <- .weave_coverage_two(x, full_path, .data, metric)
+    } else if( length(full_path) == 3L ) {
+        res <- .weave_coverage_three(x, full_path, .data, metric)
+    }
+    return(res)
+}
+
+
+#' @importFrom stats reformulate
+#'
 .weave_contingency_params <- function(x) {
     shared <- do.call(intersect, unname(lapply(x, names)))
     stopifnot( "LinkMaps must share exactly one column" = length(shared) == 1L )
@@ -91,7 +108,7 @@ weave_coverage <- function(
     # Ensure order
     if(names(full)[2L] == shared) full <- full[,c(2L, 1L)]
 
-    to_from <- weave(x, reformulate(to, from))
+    to_from <- weave(x, stats::reformulate(to, from))
 
     hits <- weave(
         MultiFactor(list( to_from, seen )),
@@ -106,6 +123,8 @@ weave_coverage <- function(
     data.frame(q, m, n, k)
 }
 
+#' @importFrom stats reformulate
+#'
 .char_contingency_params <- function(x, observed, set) {
     stopifnot("'observed' must be a named list" = length(names(observed)) == 1L)
 
@@ -115,11 +134,11 @@ weave_coverage <- function(
         "Both set and observed must be found in 'x'" =
             all(c(shared, set) %in% colnames(x))
     )
-    full <- weave(x, reformulate(to, shared))
+    full <- weave(x, stats::reformulate(to, shared))
     hits <- full[full[[shared]] %in% observed[[1L]] ,]
 
-    q <- tapply(X = hits, INDEX = reformulate(to), FUN = NROW)
-    m <- tapply(X = full, INDEX = reformulate(to), FUN = NROW)
+    q <- tapply(X = hits, INDEX = stats::reformulate(to), FUN = NROW)
+    m <- tapply(X = full, INDEX = stats::reformulate(to), FUN = NROW)
     n <- nlevels(full)[[to]] - m
     k <- length( unique(hits[[1L]]) )
 
@@ -155,7 +174,7 @@ weave_coverage <- function(
 #' x.cpt@metadata
 #'
 .weave_coverage_three <- function(
-        x, all_terms, .data, metric, out.format
+        x, all_terms, .data, metric
 ) {
     # All steps in order
     from <- all_terms[[1L]]
@@ -184,20 +203,20 @@ weave_coverage <- function(
         complete = obs_set == tot_set
     )
 
-    if( out.format == "LinkMap" ) {
-        res <- .res_weave_matrix_to_LinkMap(res, levels(x)[c(from, to)])
-        metadata <- metadata[as.integer(res[[to]]), metric]
-        res <- LinkMap(res, metadata)
-    } else if (out.format == "matrix") {
-        res@x <- metadata[as.integer(res[[to]]), metric]
-    }
+    res <- .res_weave_matrix_to_LinkMap(res, levels(x)[c(from, to)])
+    metadata <- metadata[as.integer(res[[to]]), metric]
+    res <- cbind.data.frame(res, metadata)
+
+    row.names(res) <- NULL
+
     return(res)
 }
 
 #' @importFrom Matrix colSums
+#' @importFrom stats reformulate
 #'
 .weave_coverage_two <- function(
-        x, all_terms, .data, metric, out.format
+        x, all_terms, .data, metric
 ) {
     set_unit <- all_terms[[1L]]
     set_full <- all_terms[[2L]]
@@ -209,9 +228,9 @@ weave_coverage <- function(
         obs <- bg
     }
     tot_set <- pmax.int(
-        c(tapply(bg, INDEX = reformulate(set_full), FUN = NROW)), 1L
+        c(tapply(bg, INDEX = stats::reformulate(set_full), FUN = NROW)), 1L
         )
-    obs_set <- c(tapply(obs, INDEX = reformulate(set_full), FUN = NROW))
+    obs_set <- c(tapply(obs, INDEX = stats::reformulate(set_full), FUN = NROW))
     val <- data.frame(
         count    = obs_set,
         size     = tot_set,
@@ -220,11 +239,9 @@ weave_coverage <- function(
     )[metric]
 
     metadata <- val[match(bg[[set_full]], row.names(val)), , drop = FALSE]
-    row.names(metadata) <- NULL
-    res <- LinkMap(x.lm, metadata)
+    res <- cbind.data.frame(x.lm, metadata)
 
-    if( out.format == "matrix" ) {
-        res <- `as.matrix.MultiFactor::LinkMap`(res, value_id = metric[[1L]])
-    }
+    row.names(res) <- NULL
+
     return(res)
 }

@@ -300,20 +300,21 @@ rownames(clothing_table) <- levels(tp)$clothing
 clothing_table
 ```
 
-## subgroup_apply
-`subgroup_apply` allows us to run arbitrary code on subsets of a table, based on
+## weave_apply
+`weave_apply` allows us to run arbitrary code on subsets of a table, based on
 groupings on the left hand of the formula:  
 ```{r 'subgroup-apply'}
-subgroup_apply(
-  X = clothing_table, LINK = tp, BY = fruit ~ clothing, FUN = as.data.frame
+weave_apply(
+  .x = tp, .path = fruit ~ clothing, 
+  .data = clothing_table, .fun = as.data.frame
   )
 
 # More complex example: 
 # For all subgroups of clothing corresponding to one particular fruit, if that 
 # group has more than two rows (types of clothing), fit a statistical model. 
 # 
-subgroup_apply(
-  clothing_table, tp, fruit ~ clothing, FUN = function(x) {
+weave_apply(
+  tp, fruit ~ clothing, clothing_table, function(x) {
     if( NROW(x) <= 2 ) return( NULL )
     # else: 
     summary( lm(V1 ~ V2, data = x) )
@@ -321,11 +322,11 @@ subgroup_apply(
 )
 ```
 
-## Compatibility with the tidyverse: `subgroup_to_tbl`
-For those who prefer to use `tidyverse`, `subgroup_to_tbl()` returns a tidy 
+## Compatibility with the tidyverse: `weave_to_tbl`
+For those who prefer to use `tidyverse`, `weave_to_tbl()` returns a tidy 
 wide-format table, ready to be grouped based on the first two columns. 
 ```{r 'subgroup-tbl'}
-subgroup_to_tbl(clothing_table, tp, fruit ~ clothing)
+weave_to_tbl(tp, .path = fruit ~ clothing, .data = clothing_table)
 ```
 
 ## Reading and parsing adjaceny list-formatted files
