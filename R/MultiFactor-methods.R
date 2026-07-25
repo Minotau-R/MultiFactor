@@ -128,7 +128,7 @@ S7::method(dim, MultiFactor) <- function(x) {
 local({
 S7::method(`[`, MultiFactor) <- function(x, i) {
     if(rlang::is_missing(i)) return(x)
-    MultiFactor(base::`[`(S7::S7_data(x), i))
+    MultiFactor(base::`[`(S7::S7_data(x), i), levels = levels(x))
 }
 
 S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
@@ -182,7 +182,7 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
         function(lv) {
             res <- lapply(lv_list, `[[`, lv)
             res <- Reduce(union, res, init = character())
-            return( sort(res) )
+            return( res )
         }
     )
     names(res) <- all_lvs

@@ -25,6 +25,7 @@
 #' LinkMap(x)
 #'
 #' @seealso [MultiFactor()]
+#' @importFrom forcats as_factor
 #' @export
 #'
 LinkMap <- S7::new_class(
@@ -47,14 +48,13 @@ LinkMap <- S7::new_class(
     ),
     constructor = function(x, metadata = NULL) {
         # Check input
-        stopifnot(.check_input_df(x))
-
+        stopifnot( .check_input_df(x) )
 
         if(S7::S7_inherits(x, LinkMap)) {
             if( !NCOL(metadata) ) { metadata <- x@metadata }
             x <- `class<-`(S7::S7_data(x), "data.frame")
         }
-        if(!NCOL(metadata)) {
+        if( !NCOL(metadata) ) {
             metadata <- data.frame(row.names = seq_len(NROW(x)))
         } else {
             stopifnot(
@@ -62,8 +62,8 @@ LinkMap <- S7::new_class(
                     NROW(x) == NROW(metadata)
             )
         }
-        # Factorize x
-        x[] <- lapply(x, factor)
+        # Factorize x, preserve order
+        x[] <- lapply(x, forcats::as_factor)
         i <- !duplicated(x)
         x <- x[i, , drop = FALSE]
         x <- `row.names<-.data.frame`(x, NULL)

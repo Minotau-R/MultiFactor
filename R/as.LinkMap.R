@@ -65,18 +65,18 @@ S7::method(as.LinkMap, S7::class_data.frame) <- function(
 }
 
 S7::method(as.LinkMap, S7::class_list) <- function(
-    x, y = NULL, edge.names = NULL ){
+    x, y = NULL, edge.names = NULL ) {
     # Use list names
-    if( is.null(y) ){
+    if( is.null(y) ) {
         y <- names(x)
     }
     # Create linkMap
     x2y <- data.frame(
         x = unlist(x, recursive = TRUE, use.names = FALSE),
         y = rep(y, lengths(x))
-    )
+        )
     # Assign custom edge names
-    if( !is.null(edge.names) ){
+    if( !is.null(edge.names) ) {
         names(x2y) <- edge.names
     }
     # Convert to LinkMap
