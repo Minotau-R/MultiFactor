@@ -30,7 +30,7 @@
 #' result
 #'
 #' # Now let's spike a hand
-#' cheat <- draw_cards()[c(1, 10, 11, 12, 13)]
+#' cheat <- draw_cards()[c(10, 11, 12, 13, 1)]
 #' cheat
 #'
 #' .path = c("card", "rank", "straight")
@@ -186,12 +186,15 @@ weave_coverage <- function(
 
     # Ensure LinkMap order
     shared2from <- as.matrix(seen, terms = c(shared, from))
-    shared2to <- as.matrix(full, terms = c(shared, to))
+    shared2to   <- as.matrix(full, terms = c(shared, to))
 
-    if( length(.data) ) { shared2from <- shared2from[, .data] }
+    if( length(.data) ) {
+        shared2from[, !colnames(shared2from) %in% .data] <- FALSE
+        }
     # Link observed features to sets
     res <- Matrix::crossprod( shared2to, shared2from != 0L )
     res <- Matrix::t(Matrix::Matrix( res, sparse = TRUE ))
+
     obs_set <- Matrix::colSums(res)
 
     tot_set <- pmax(Matrix::colSums(shared2to), 1L)
