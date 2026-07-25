@@ -96,42 +96,42 @@ result
 #>  + 42 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
-#>  $ card : 52 Levels: 10♠️ ... Queen♦️ 
-#>  $ suit :  4 Levels: clubs diamonds hearts spades 
+#>  $ card : 52 Levels: Ace♥️ ... King♣️ 
+#>  $ suit :  4 Levels: hearts spades diamonds clubs 
 #> 
 #> @ metadata: 1 variables: 
 #> List of 1
 #>  $ count: int  0 0 0 0 0 0 0 0 0 0 ...
 
 # Now let's spike a hand
-cheat <- draw_cards()[c(1, 10, 11, 12, 13)]
+cheat <- draw_cards()[c(10, 11, 12, 13, 1)]
 cheat
-#> [1] "Ace♥️"   "10♥️"    "Jack♥️"  "Queen♥️" "King♥️" 
+#> [1] "10♥️"    "Jack♥️"  "Queen♥️" "King♥️"  "Ace♥️"  
 
 .path = c("card", "rank", "straight")
 weave_coverage(scores, c("card", "rank", "straight"), .data = cheat)
 #> A MultiFactor::LinkMap data.frame S7_object: 16 rows.
-#>    card   straight
-#> 1   10♣️    6 to 10
-#> 2   10♣️  7 to Jack
-#> 3   10♥️  7 to Jack
-#> 4   10♣️ 8 to Queen
-#> 5   10♥️ 8 to Queen
-#> 6   10♦️ 8 to Queen
-#> 7   10♣️  9 to King
-#> 8   10♥️  9 to King
-#> 9   10♦️  9 to King
-#> 10   2♠️  9 to King
+#>      card   straight
+#> 1    Ace♥️   Ace to 5
+#> 2     10♥️    6 to 10
+#> 3     10♥️  7 to Jack
+#> 4   Jack♥️  7 to Jack
+#> 5     10♥️ 8 to Queen
+#> 6   Jack♥️ 8 to Queen
+#> 7  Queen♥️ 8 to Queen
+#> 8     10♥️  9 to King
+#> 9   Jack♥️  9 to King
+#> 10 Queen♥️  9 to King
 #>  + 6 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
-#>  $ card     : 5 Levels: 10♠️ ... 2♠️ 
-#>  $ straight : 6 Levels: 6 to 10 ... Royal straight 
+#>  $ card     : 52 Levels: Ace♥️ ... King♣️ 
+#>  $ straight : 10 Levels: Ace to 5 ... Royal straight 
 #> 
 #> @ metadata: 4 variables: 
 #> List of 4
-#>  $ count   : num  1 2 2 3 3 3 4 4 4 4 ...
+#>  $ count   : num  1 1 2 2 3 3 3 4 4 4 ...
 #>  $ size    : int  5 5 5 5 5 5 5 5 5 5 ...
-#>  $ coverage: num  0.2 0.4 0.4 0.6 0.6 0.6 0.8 0.8 0.8 0.8 ...
+#>  $ coverage: num  0.2 0.2 0.4 0.4 0.6 0.6 0.6 0.8 0.8 0.8 ...
 #>  $ complete: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
 ```

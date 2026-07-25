@@ -38,7 +38,7 @@ dimnames(x)
 # Factor-like properties
 levels(x)
 #> $a
-#> [1] "a" "b" "c"
+#> [1] "c" "a" "b"
 #> 
 #> $b
 #> [1] "A" "B" "C"

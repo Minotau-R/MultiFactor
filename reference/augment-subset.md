@@ -68,8 +68,8 @@ augment(x,
 #>  $ d   : 10 Levels: d_001 d_002 ... d_010 
 #>  $ e   : 10 Levels: e_001 e_002 ... e_010 
 #>  $ f   : 10 Levels: f_001 f_002 ... f_010 
-#>  $ a.b : 18 Levels: a_001 a_002 ... b_009 
-#>  $ c.d : 17 Levels: c_001 c_002 ... d_008 
+#>  $ a.b : 20 Levels: a_001 a_002 ... b_010 
+#>  $ c.d : 20 Levels: c_001 c_002 ... d_010 
 
 # Setting a LinkMap to NULL by name deletes it from the MultiFactor
 augment(x, a2b = NULL )
@@ -85,7 +85,7 @@ augment(x, a2b = NULL )
 #> Values represent unique feature names in that LinkMap.
 #> 
 #> @ levels:
-#>  $ b :  9 Levels: b_001 b_002 ... b_009 
+#>  $ b : 10 Levels: b_001 b_002 ... b_010 
 #>  $ c : 10 Levels: c_001 c_002 ... c_010 
 #>  $ d : 10 Levels: d_001 d_002 ... d_010 
 #>  $ e : 10 Levels: e_001 e_002 ... e_010 

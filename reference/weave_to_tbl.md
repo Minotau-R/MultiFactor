@@ -55,8 +55,8 @@ weave_to_tbl(x, .path = fruit ~ clothing, .data = df)
 #> 3   apples    socks 21 14 15 48 25 16 10 25 40  14
 #> 4   grapes    socks 21 14 15 48 25 16 10 25 40  14
 #> 5 cherries   gloves  2 13  8  4  2 21 13 45  5  38
-#> 6   grapes   gloves  2 13  8  4  2 21 13 45  5  38
-#> 7   melons   gloves  2 13  8  4  2 21 13 45  5  38
-#> 8 cherries      hat 15  2 12 30 40 73  8 28 13  92
-#> 9    pears      hat 15  2 12 30 40 73  8 28 13  92
+#> 6   melons   gloves  2 13  8  4  2 21 13 45  5  38
+#> 7   grapes   gloves  2 13  8  4  2 21 13 45  5  38
+#> 8    pears    scarf  4 18 43 12 56 36  1  2 24  28
+#> 9 cherries    scarf  4 18 43 12 56 36  1  2 24  28
 ```

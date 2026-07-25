@@ -53,5 +53,5 @@ stack(x, b ~ c + d)
 #> 
 #> @ levels:   2 variables: 
 #>  $ b   : 10 Levels: b_001 b_002 ... b_010 
-#>  $ c.d : 19 Levels: c_001 c_002 ... d_010 
+#>  $ c.d : 20 Levels: c_001 c_002 ... d_010 
 ```

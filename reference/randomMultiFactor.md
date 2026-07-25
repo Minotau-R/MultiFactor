@@ -127,7 +127,7 @@ randomLinkMap()
 #>  + 328 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
-#>  $ lower : 26 Levels: a ... z 
+#>  $ lower : 26 Levels: a ... s 
 #>  $ UPPER : 26 Levels: A ... Z 
 
 # Make a random MultiFactor with the trading goods from the vignettes
