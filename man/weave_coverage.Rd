@@ -2,19 +2,22 @@
 % Please edit documentation in R/weave_coverage.R
 \name{weave_coverage}
 \alias{weave_coverage}
+\alias{test_enrichment}
 \title{Perform enrichtment analysis from a weave}
 \usage{
 weave_coverage(
   x,
   .path,
   .data = NULL,
-  metric = c("count", "size", "coverage", "complete"),
+  metric = c("set_count", "set_size", "coverage", "complete"),
   out.format = c("LinkMap", "matrix"),
   .data_column = "row.names"
 )
+
+test_enrichment(x, log_base = 2L)
 }
 \arguments{
-\item{x}{a \code{MultiFactor}}
+\item{x}{A LinkMap with coverage metadata from \code{weave_coverage()}.}
 
 \item{.path}{Either a \code{formula} or a \verb{character vector} of length 2 with the
 names of the desired combination of feature types.}
@@ -24,13 +27,15 @@ found within the first element of \code{.path}. Alternatively, a \code{data.fram
 with the same information. (Also see \code{.data_column} argument).}
 
 \item{metric}{\verb{Character scalar}.
-One of \code{'count'}, \code{'coverage'}, \code{'complete'}.}
+One or more of \code{'set_count'}, \code{'set_size'}, \code{'coverage'}, \code{'complete'}.}
 
 \item{out.format}{\verb{Character scalar}.
 One of \code{'LinkMap'}, \code{'matrix'}.}
 
 \item{.data_column}{\verb{Character scalar}. if \code{.data} is a table, where to find
 feature IDs}
+
+\item{log_base}{\code{Integer}. Base of logarithm for log-fold (default: 2).}
 }
 \value{
 a \code{LinkMap} or \code{matrix} with the desired coverage information in
@@ -49,16 +54,18 @@ scores
 
 # Now enrich input
 result <- weave_coverage(
-    x = scores, .path = card ~ suit, .data = drawn, metric = "count"
+x = scores, .path = card ~ suit, .data = drawn, metric = "set_count"
 )
 
 result
 
-# Now let's spike a hand
+# Now let's spike our hand with a royal straight flush
 cheat <- draw_cards()[c(10, 11, 12, 13, 1)]
 cheat
 
-.path = c("card", "rank", "straight")
-weave_coverage(scores, c("card", "rank", "straight"), .data = cheat)
+.path = card ~ straight
+result <- weave_coverage(scores, card ~ straight, .data = cheat)
+result
+test_enrichment(result)
 
 }

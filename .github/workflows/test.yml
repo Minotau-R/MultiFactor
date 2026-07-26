@@ -1,5 +1,5 @@
 name: R-BiocCheck
-'on':
+on:
   pull_request:
     branches:
     - devel
