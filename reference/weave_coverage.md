@@ -9,17 +9,19 @@ weave_coverage(
   x,
   .path,
   .data = NULL,
-  metric = c("count", "size", "coverage", "complete"),
+  metric = c("set_count", "set_size", "coverage", "complete"),
   out.format = c("LinkMap", "matrix"),
   .data_column = "row.names"
 )
+
+test_enrichment(x, log_base = 2L)
 ```
 
 ## Arguments
 
 - x:
 
-  a `MultiFactor`
+  A LinkMap with coverage metadata from `weave_coverage()`.
 
 - .path:
 
@@ -34,7 +36,8 @@ weave_coverage(
 
 - metric:
 
-  `Character scalar`. One of `'count'`, `'coverage'`, `'complete'`.
+  `Character scalar`. One or more of `'set_count'`, `'set_size'`,
+  `'coverage'`, `'complete'`.
 
 - out.format:
 
@@ -43,6 +46,10 @@ weave_coverage(
 - .data_column:
 
   `Character scalar`. if `.data` is a table, where to find feature IDs
+
+- log_base:
+
+  `Integer`. Base of logarithm for log-fold (default: 2).
 
 ## Value
 
@@ -77,7 +84,7 @@ scores
 
 # Now enrich input
 result <- weave_coverage(
-    x = scores, .path = card ~ suit, .data = drawn, metric = "count"
+x = scores, .path = card ~ suit, .data = drawn, metric = "set_count"
 )
 
 result
@@ -99,39 +106,54 @@ result
 #>  $ card : 52 Levels: Ace♥️ ... King♣️ 
 #>  $ suit :  4 Levels: hearts spades diamonds clubs 
 #> 
-#> @ metadata: 1 variables: 
-#> List of 1
-#>  $ count: int  0 0 0 0 0 0 0 0 0 0 ...
+#> @ metadata: 2 variables: 
+#> List of 2
+#>  $ observed : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+#>  $ set_count: int  0 0 0 0 0 0 0 0 0 0 ...
 
-# Now let's spike a hand
+# Now let's spike our hand with a royal straight flush
 cheat <- draw_cards()[c(10, 11, 12, 13, 1)]
 cheat
 #> [1] "10♥️"    "Jack♥️"  "Queen♥️" "King♥️"  "Ace♥️"  
 
-.path = c("card", "rank", "straight")
-weave_coverage(scores, c("card", "rank", "straight"), .data = cheat)
-#> A MultiFactor::LinkMap data.frame S7_object: 16 rows.
-#>      card   straight
-#> 1    Ace♥️   Ace to 5
-#> 2     10♥️    6 to 10
-#> 3     10♥️  7 to Jack
-#> 4   Jack♥️  7 to Jack
-#> 5     10♥️ 8 to Queen
-#> 6   Jack♥️ 8 to Queen
-#> 7  Queen♥️ 8 to Queen
-#> 8     10♥️  9 to King
-#> 9   Jack♥️  9 to King
-#> 10 Queen♥️  9 to King
-#>  + 6 more rows. Use `print(n = ...)` to see more rows.
+.path = card ~ straight
+result <- weave_coverage(scores, card ~ straight, .data = cheat)
+result
+#> A MultiFactor::LinkMap data.frame S7_object: 200 rows.
+#>    card straight
+#> 1  Ace♥️ Ace to 5
+#> 2    2♥️ Ace to 5
+#> 3    3♥️ Ace to 5
+#> 4    4♥️ Ace to 5
+#> 5    5♥️ Ace to 5
+#> 6  Ace♠️ Ace to 5
+#> 7    2♠️ Ace to 5
+#> 8    3♠️ Ace to 5
+#> 9    4♠️ Ace to 5
+#> 10   5♠️ Ace to 5
+#>  + 190 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
 #>  $ card     : 52 Levels: Ace♥️ ... King♣️ 
 #>  $ straight : 10 Levels: Ace to 5 ... Royal straight 
 #> 
-#> @ metadata: 4 variables: 
-#> List of 4
-#>  $ count   : num  1 1 2 2 3 3 3 4 4 4 ...
-#>  $ size    : int  5 5 5 5 5 5 5 5 5 5 ...
-#>  $ coverage: num  0.2 0.2 0.4 0.4 0.6 0.6 0.6 0.8 0.8 0.8 ...
-#>  $ complete: logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+#> @ metadata: 5 variables: 
+#> List of 5
+#>  $ observed : logi  TRUE FALSE FALSE FALSE FALSE FALSE ...
+#>  $ set_count: int  1 1 1 1 1 1 1 1 1 1 ...
+#>  $ set_size : int  20 20 20 20 20 20 20 20 20 20 ...
+#>  $ coverage : num  0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 ...
+#>  $ complete : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
+test_enrichment(result)
+#>                  expected observed fold    log_fold     p.value      p.adj
+#> Ace to 5       0.09615385     0.05 0.52 -0.94341647 0.922516699 1.00000000
+#> 2 to 6         0.09615385     0.00 0.00        -Inf 1.000000000 1.00000000
+#> 3 to 7         0.09615385     0.00 0.00        -Inf 1.000000000 1.00000000
+#> 4 to 8         0.09615385     0.00 0.00        -Inf 1.000000000 1.00000000
+#> 5 to 9         0.09615385     0.00 0.00        -Inf 1.000000000 1.00000000
+#> 6 to 10        0.09615385     0.05 0.52 -0.94341647 0.922516699 1.00000000
+#> 7 to Jack      0.09615385     0.10 1.04  0.05658353 0.645790624 1.00000000
+#> 8 to Queen     0.09615385     0.15 1.56  0.64154603 0.283184043 0.94394681
+#> 9 to King      0.09615385     0.20 2.08  1.05658353 0.065620094 0.32810047
+#> Royal straight 0.09615385     0.25 2.60  1.37851162 0.005965463 0.05965463
 ```

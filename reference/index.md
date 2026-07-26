@@ -7,6 +7,7 @@
 - [`weave-methods`](https://minotau-r.github.io/MultiFactor/reference/weave-methods.md)
   : Weave a new LinkMap from a MultiFactor
 - [`weave_coverage()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
+  [`test_enrichment()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
   : Perform enrichtment analysis from a weave
 - [`stack-methods`](https://minotau-r.github.io/MultiFactor/reference/stack-methods.md)
   : Combine levels across several LinkMaps in a MultiFactor
