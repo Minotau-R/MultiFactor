@@ -86,7 +86,6 @@ e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
   data.frame(
     name = c(l, r), 
     emoji = c("", ""), 
-    runes = c("", ""),
     y = NROW(x) + 1, 
     x = c(-1, -1/2)
     )

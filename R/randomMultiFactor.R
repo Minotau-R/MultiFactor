@@ -81,9 +81,7 @@ trade_posts <- function(raw.data = FALSE) {
     # Finish immediately if raw.data is toggled.
     if(raw.data) return(trade_goods)
     # Split and trim row.names
-    trade_goods <- tapply(
-        trade_goods[, -4], trade_goods[, 4], `rownames<-`, NULL
-        )
+    trade_goods <- split.data.frame(trade_goods[,-3L], trade_goods[,3L])
     layout <- igraph::sample_gnm(length(trade_goods), length(trade_goods))
 
     el <- igraph::as_edgelist(layout)
