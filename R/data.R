@@ -23,3 +23,27 @@
 #' @keywords datasets
 #'
 "playing_cards"
+
+
+#' Small data set of animals.
+#' @name animal_groups
+#' @rdname animals
+#' @format `animal_groups`: A MultiFactor of animals as well as associated
+#'     `emoji`.
+#' @source `animal_groups`: Manually curated.
+#' @usage data("animals", package = "MultiFactor")
+#' @keywords datasets
+#'
+"animal_groups"
+
+#' Small data set of animals.
+#' @name animal_traits
+#' @rdname animals
+#' @format `animal_traits`: A MultiFactor of animals as well as associated
+#'     `emoji`.
+#' @source `animal_traits`: Manually curated.
+#' @usage data("animals", package = "MultiFactor")
+#' @keywords datasets
+#'
+"animal_traits"
+

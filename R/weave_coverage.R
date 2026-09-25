@@ -87,43 +87,22 @@ weave_coverage <- function(
     )
     x <- .subset_by_path(x, full_path)
 
-    if( length(full_path) == 2L ) {
-        res <- .weave_coverage_two(x, full_path, .data, metric)
-    } else if( length(full_path) == 3L ) {
-        res <- .weave_coverage_three(x, full_path, .data, metric)
+    # check if .data argument is present
+    if( length(.data) ) {
+        if( length(full_path) == 2L ) {
+            res <- .weave_coverage_two(x, full_path, .data, metric)
+        } else if( length(full_path) == 3L ) {
+            res <- .weave_coverage_three(x, full_path, .data, metric)
+        }
+
+    } else {
+
     }
+
+
     return(res)
 }
 
-
-#' @importFrom stats reformulate
-#'
-.weave_contingency_params <- function(x) {
-    shared <- do.call(intersect, unname(lapply(x, names)))
-    stopifnot( "LinkMaps must share exactly one column" = length(shared) == 1L )
-
-    # Prepare params
-    seen <- x[[1L]]
-    full <- x[[2L]]
-    from <- setdiff(names(seen), shared)
-    to <- setdiff(names(full), shared)
-    # Ensure order
-    if(names(full)[2L] == shared) full <- full[,c(2L, 1L)]
-
-    to_from <- weave(x, stats::reformulate(to, from))
-
-    hits <- weave(
-        MultiFactor(list( to_from, seen )),
-        reformulate(to, shared)
-    )
-
-    q <- tapply(X = hits, INDEX = reformulate(to), FUN = NROW)
-    m <- tapply(X = full, INDEX = reformulate(to), FUN = NROW)
-    n <- nlevels(full)[[to]] - m
-    k <- length( unique(hits[[1L]]) )
-
-    data.frame(q, m, n, k)
-}
 
 #' @importFrom S7 S7_inherits
 #' @importFrom stats p.adjust
@@ -219,14 +198,19 @@ test_enrichment <- function(x, log_base = 2L) {
             sparse = TRUE )
     )
 
-    bg <- .res_weave_matrix_to_LinkMap(bg_mat, levels(x)[c(from, to)])
-
     if( length(.data) ) {
+        bg <- .res_weave_matrix_to_LinkMap(bg_mat, levels(x)[c(from, to)])
+
         obs <- bg[bg[[from]] %in% .data , ]
+        res <- .weave_coverage_cont_table(bg, obs, to, metric)
     } else {
-        obs <- bg
+        bg <- Matrix::colSums(shared2to)
+        obs <- bg_mat
+        full_set <- .res_weave_matrix_to_LinkMap(bg_mat, levels(x)[c(from, to)])
+        res <- .weave_coverage_cont_table_no_data(bg, obs, full_set, metric)
+
     }
-    res <- .weave_coverage_cont_table(bg, obs, from, to, metric)
+
     return(res)
 
 }
@@ -247,12 +231,13 @@ test_enrichment <- function(x, log_base = 2L) {
     } else {
         obs <- bg
     }
-    res <- .weave_coverage_cont_table(bg, obs, set_unit, set_full, metric)
+    res <- .weave_coverage_cont_table(bg, obs, set_full, metric)
 
     return(res)
 }
 
-.weave_coverage_cont_table <- function(bg, obs, set_unit, set_full, metric) {
+
+.weave_coverage_cont_table <- function(bg, obs, set_full, metric) {
     tot_set <- pmax.int(
         c(tapply(bg, INDEX = stats::reformulate(set_full), FUN = NROW)), 1L
     )
@@ -269,5 +254,31 @@ test_enrichment <- function(x, log_base = 2L) {
     res <- cbind.data.frame(bg, observed, metadata)
 
     row.names(res) <- NULL
+    return(res)
+}
+
+.weave_coverage_cont_table_no_data <- function(bg, obs, full_set, metric) {
+    tot_set <- pmax.int(bg, 1L)
+    obs_set <- apply(obs, 2L, c, simplify = FALSE)
+
+    val_list <- mapply(
+        FUN = function(obs_set, tot_set) data.frame(
+            set_count = obs_set,
+            set_size  = tot_set,
+            coverage  = obs_set / tot_set,
+            complete  = obs_set == tot_set
+        )[metric], obs_set, tot_set, SIMPLIFY = FALSE
+    )
+
+    res_list <- lapply(
+        val_list, function(val) {
+            metadata <- val[match(full_set[[1L]], row.names(val)), , drop = FALSE]
+            observed <- full_set[[1L]] %in% row.names(val)
+            cbind.data.frame(full_set, observed, metadata)
+        }
+    )
+
+    res <- do.call(rbind.data.frame, c(res_list, make.row.names = FALSE))
+
     return(res)
 }
