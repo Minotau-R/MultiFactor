@@ -12,6 +12,7 @@
 \
 `# Plotting`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`ggplot2`](https://ggplot2.tidyverse.org)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`patchwork`](https://patchwork.data-imaginist.com)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`systemfonts`](https://github.com/r-lib/systemfonts)`)`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`ragg`](https://ragg.r-lib.org)`)`\
 \
@@ -28,6 +29,8 @@
 `  ``)`
 
 #### Example Dataset: The Quick Brown Fox
+
+![](coverage_and_enrichment_files/figure-html/prep-plots-1.png)
 
 \
 [`levels`](https://rdrr.io/r/base/levels.html)`(``fox``)`\
