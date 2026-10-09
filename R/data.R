@@ -47,3 +47,11 @@
 #'
 "animal_traits"
 
+#' Example dataset using a famous pangram.
+#' @name quickbrownfox
+#' @format `quickbrownfox`: A MultiFactor of letters, words and constituents
+#' @source `quickbrownfox`: Manually curated.
+#' @usage data("quickbrownfox", package = "MultiFactor")
+#' @keywords datasets
+#'
+"quickbrownfox"
