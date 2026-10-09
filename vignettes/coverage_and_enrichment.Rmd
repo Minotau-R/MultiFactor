@@ -36,9 +36,12 @@ library(ragg)
 set.seed(2612)
 fox <- quickbrownfox()
 
-split_to_letters <- function(x) unlist(
-  strsplit( gsub(" ", "", x), split = "" ),
-  recursive = TRUE, use.names = FALSE
+# Define utility function
+split_to_letters <- function(x) unique(
+  unlist( 
+    strsplit( gsub(" ", "", x), split = "" ), 
+    recursive = TRUE, use.names = FALSE
+  )
   )
 ```
 
@@ -51,13 +54,17 @@ as.matrix(fox$letter2word)
 ```
 
 ### Calculate coverage
-
+We'll need to generate some collection of letters as input data. 
 ```{r 'setup-example1', message = FALSE}
-input <- split_to_letters("some number of letters")
+input <- split_to_letters("some collection of letters")
 
 input
 ```
 
+We can use the `weave_coverage()` function to calculate to what degree the input
+letters cover the words in our data set. This function behaves similarly to 
+`weave()` but comes with an additional argument, `.data`. For now, let's plug in
+our input letters: 
 ```{r 'weave-example1', message = FALSE}
 res <- weave_coverage(
     x = fox, .path = letter ~ word, .data = input
@@ -66,7 +73,7 @@ res <- weave_coverage(
 as.data.frame(res)
 ```
 
-Now, let's use a second set of letters that we know are in the sentence: 
+Now, let's use a second set of letters that are explicitly part of the sentence: 
 ```{r 'setup-example2', message = FALSE}
 input <- split_to_letters("jumps over")
 
@@ -80,9 +87,10 @@ res <- weave_coverage(
 
 as.data.frame(res)
 ```
-Notice that the column named `complete` marks two words as complete now. 
+Notice that the column named `"complete"` marks two partcular words as complete 
+now. 
 
-We can use the `subset` method for `LinkMap` to automatically filter for 
+We can use the `subset()` method for `LinkMap` to automatically filter for 
 complete cases:
 ```{r 'weave-subset', message = FALSE}
 subset(res)
