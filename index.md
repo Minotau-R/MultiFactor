@@ -13,18 +13,14 @@ Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install the released version of
 `MultiFactor`:
 
-``` r
-
-install.packages("MultiFactor")
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"MultiFactor"``)`
 
 Or install the development version from this repository:
 
-``` r
-
-install.packages("remotes")
-remotes::install_github("minotau-R/MultiFactor")
-```
+\
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"remotes"``)`\
+`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/MultiFactor"``)`
 
 ## Getting started using MultiFactor
 

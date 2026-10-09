@@ -24,7 +24,9 @@
   : MultiFactor S7 container class
 - [`MultiFactor-methods`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-methods.md)
   : Methods for MultiFactor S7 container class
-- [`augment(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
+- [`subset(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
+  [`subset(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
+  [`augment(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
   : Tools to modify MultiFactors
 - [`LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.md)
   : LinkMap S7 container class
@@ -83,6 +85,11 @@
   : Small data set of six types of goods.
 - [`playing_cards`](https://minotau-r.github.io/MultiFactor/reference/playing_cards.md)
   : Basic names of entities in a card deck.
+- [`animals`](https://minotau-r.github.io/MultiFactor/reference/animals.md)
+  : Small data set of animals.
+- [`quickbrownfox`](https://minotau-r.github.io/MultiFactor/reference/quickbrownfox.md)
+  [`quickbrownfox()`](https://minotau-r.github.io/MultiFactor/reference/quickbrownfox.md)
+  : Example dataset using a famous pangram.
 
 ## Utils
 

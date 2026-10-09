@@ -7,6 +7,12 @@ of a given `MultiFactor`.
 
 ``` r
 # S3 method for class '`MultiFactor::MultiFactor`'
+subset(x, .path, .drop.unmatched = FALSE, ...)
+
+# S3 method for class '`MultiFactor::LinkMap`'
+subset(x, subset = NULL, ...)
+
+# S3 method for class '`MultiFactor::MultiFactor`'
 augment(x, ...)
 ```
 
@@ -14,12 +20,26 @@ augment(x, ...)
 
 - x:
 
-  a `MultiFactor`
+  a `MultiFactor` or `LinkMap`.
+
+- .path:
+
+  Either a `formula` or a `character vector`.
+
+- .drop.unmatched:
+
+  `Boolean`. Whether to drop factor levels that do not appear in the
+  data (Default: keep all levels).
 
 - ...:
 
   Name-value pairs. The name gives the name of the LinkMap in the
   output.
+
+- subset:
+
+  Logical expression indicating elements or rows to keep. If `NULL`
+  (Default), subsets based on complete coverage if available.
 
 ## Value
 
