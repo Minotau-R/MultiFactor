@@ -27,6 +27,7 @@ Suggests:
     anansi,
     dplyr,
     ggplot2,
+    patchwork,
     ragg,
     systemfonts,
     knitr,
