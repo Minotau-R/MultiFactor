@@ -3,16 +3,31 @@
 \name{augment-subset}
 \alias{augment-subset}
 \alias{augment.MultiFactor}
+\alias{subset.MultiFactor::MultiFactor}
+\alias{subset.LinkMap}
+\alias{subset.MultiFactor::LinkMap}
 \alias{augment.MultiFactor::MultiFactor}
 \title{Tools to modify MultiFactors}
 \usage{
+\method{subset}{`MultiFactor::MultiFactor`}(x, .path, .drop.unmatched = FALSE, ...)
+
+\method{subset}{`MultiFactor::LinkMap`}(x, subset = NULL, ...)
+
 \method{augment}{`MultiFactor::MultiFactor`}(x, ...)
 }
 \arguments{
-\item{x}{a \code{MultiFactor}}
+\item{x}{a \code{MultiFactor} or \code{LinkMap}.}
+
+\item{.path}{Either a \code{formula} or a \verb{character vector}.}
+
+\item{.drop.unmatched}{\code{Boolean}. Whether to drop factor levels that do not
+appear in the data (Default: keep all levels).}
 
 \item{...}{Name-value pairs. The name gives the name of the LinkMap in the
 output.}
+
+\item{subset}{Logical expression indicating elements or rows to keep.
+If \code{NULL} (Default), subsets based on complete coverage if available.}
 }
 \value{
 a \code{MultiFactor}.

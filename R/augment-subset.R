@@ -4,7 +4,7 @@
 #' @description
 #' Generates a new `MultiFactor` object by cross-referencing the elements of a
 #'     given `MultiFactor`.
-#' @param x a `MultiFactor`
+#' @param x a `MultiFactor` or `LinkMap`.
 #' @param ... Name-value pairs. The name gives the name of the LinkMap in the
 #'     output.
 #' @returns a `MultiFactor`.
@@ -27,8 +27,13 @@
 NULL
 
 
-
 #' @export
+#' @rdname augment-subset
+#' @name augment.MultiFactor
+#' @param .path Either a `formula` or a `character vector`.
+#' @param .drop.unmatched `Boolean`. Whether to drop factor levels that do not
+#'     appear in the data (Default: keep all levels).
+#' @aliases subset.MultiFactor::MultiFactor
 #'
 `subset.MultiFactor::MultiFactor` <- function(
         x, .path, .drop.unmatched = FALSE, ...
@@ -48,18 +53,25 @@ NULL
 }
 
 #' @export
+#' @rdname augment-subset
+#' @name subset.LinkMap
+#' @aliases subset.MultiFactor::LinkMap
+#' @param subset Logical expression indicating elements or rows to keep.
+#'     If `NULL` (Default), subsets based on complete coverage if available.
 #'
 `subset.MultiFactor::LinkMap` <- function(x, subset = NULL, ...) {
     df <- as.data.frame(x)
     if( is.null(subset) ) {
         if("complete" %in% colnames(df)) {
-            i <- df[["complete"]] } else {
-                i <-  rep_len(TRUE, NCOL(df))
+            i <- df[["complete"]]
+            } else {
+                i <-  rep_len(TRUE, NROW(df))
             }
     } else {
         e <- substitute(subset)
         i <- eval(e, df, enclos = parent.frame())
     }
+    # Indexing a Linkmap takes a single value.
     res <- x[i]
     return(res)
 }
@@ -73,13 +85,17 @@ NULL
         }
     }
 
-method(subset, MultiFactor) <-
-    function(
+method(subset, MultiFactor) <- function(
         x, .path, .drop.unmatched = FALSE, ...
-        ) `subset.MultiFactor::MultiFactor`(
-            x, .path, .drop.unmatched
-        )
+) `subset.MultiFactor::MultiFactor`(
+    x, .path, .drop.unmatched
+)
 
+method(subset, LinkMap) <- function(
+        x, subset = NULL, ...
+) `subset.MultiFactor::LinkMap`(
+    x, subset = NULL, ...
+)
 
 #' @importFrom generics augment
 #'
