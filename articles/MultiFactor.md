@@ -322,11 +322,11 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `g`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``tp``)`\
 `g`\
-`#> IGRAPH 0d28b9c UN-- 6 6 -- `\
+`#> IGRAPH 46de0f1 UN-- 6 6 -- `\
 `#> + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji`\
 `#> | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji`\
 `#> | (e/n), fruit_emoji (e/n)`\
-`#> + edges from 0d28b9c (vertex names):`\
+`#> + edges from 46de0f1 (vertex names):`\
 `#> [1] books      --furniture   clothing   --furniture   books      --instruments`\
 `#> [4] fruit      --instruments furniture  --marbles     instruments--marbles`\
 `# Plot graph across data types`\
@@ -340,9 +340,9 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `lg`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)`\
 `lg`\
-`#> IGRAPH c9b1d7f UN-B 12 18 -- `\
+`#> IGRAPH 5e7bdc6 UN-B 12 18 -- `\
 `#> + attr: type (v/l), name (v/c)`\
-`#> + edges from c9b1d7f (vertex names):`\
+`#> + edges from 5e7bdc6 (vertex names):`\
 `#>  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  `\
 `#>  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves `\
 `#>  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    `\

@@ -100,9 +100,12 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2612</span><span class="op">)</span></span>
 <span><span class="va">fox</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quickbrownfox.html">quickbrownfox</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">split_to_letters</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">" "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">""</span> <span class="op">)</span>,</span>
-<span>  recursive <span class="op">=</span> <span class="cn">TRUE</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="co"># Define utility function</span></span>
+<span><span class="va">split_to_letters</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">" "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">""</span> <span class="op">)</span>, </span>
+<span>    recursive <span class="op">=</span> <span class="cn">TRUE</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="example-dataset-the-quick-brown-fox">Example Dataset: The Quick Brown Fox<a class="anchor" aria-label="anchor" href="#example-dataset-the-quick-brown-fox"></a>
@@ -156,11 +159,17 @@
 <div class="section level4">
 <h4 id="calculate-coverage">Calculate coverage<a class="anchor" aria-label="anchor" href="#calculate-coverage"></a>
 </h4>
+<p>We’ll need to generate some collection of letters as input data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">input</span> <span class="op">&lt;-</span> <span class="fu">split_to_letters</span><span class="op">(</span><span class="st">"some number of letters"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">input</span> <span class="op">&lt;-</span> <span class="fu">split_to_letters</span><span class="op">(</span><span class="st">"some collection of letters"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">input</span></span>
-<span><span class="co">#&gt;  [1] "s" "o" "m" "e" "n" "u" "m" "b" "e" "r" "o" "f" "l" "e" "t" "t" "e" "r" "s"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "s" "o" "m" "e" "c" "l" "t" "i" "n" "f" "r"</span></span></code></pre></div>
+<p>We can use the <code><a href="../reference/weave_coverage.html">weave_coverage()</a></code> function to calculate to
+what degree the input letters cover the words in our data set. This
+function behaves similarly to <code><a href="../reference/weave-generic.html">weave()</a></code> but comes with an
+additional argument, <code>.data</code>. For now, let’s plug in our
+input letters:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave_coverage.html">weave_coverage</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="va">fox</span>, .path <span class="op">=</span> <span class="va">letter</span> <span class="op">~</span> <span class="va">word</span>, .data <span class="op">=</span> <span class="va">input</span></span>
@@ -171,24 +180,24 @@
 <span><span class="co">#&gt; 1       t   the     TRUE         2        3 0.6666667    FALSE</span></span>
 <span><span class="co">#&gt; 2       h   the    FALSE         2        3 0.6666667    FALSE</span></span>
 <span><span class="co">#&gt; 3       e   the     TRUE         2        3 0.6666667    FALSE</span></span>
-<span><span class="co">#&gt; 4       q quick    FALSE         1        5 0.2000000    FALSE</span></span>
-<span><span class="co">#&gt; 5       u quick     TRUE         1        5 0.2000000    FALSE</span></span>
-<span><span class="co">#&gt; 6       i quick    FALSE         1        5 0.2000000    FALSE</span></span>
-<span><span class="co">#&gt; 7       c quick    FALSE         1        5 0.2000000    FALSE</span></span>
-<span><span class="co">#&gt; 8       k quick    FALSE         1        5 0.2000000    FALSE</span></span>
-<span><span class="co">#&gt; 9       b brown     TRUE         4        5 0.8000000    FALSE</span></span>
-<span><span class="co">#&gt; 10      r brown     TRUE         4        5 0.8000000    FALSE</span></span>
-<span><span class="co">#&gt; 11      o brown     TRUE         4        5 0.8000000    FALSE</span></span>
-<span><span class="co">#&gt; 12      w brown    FALSE         4        5 0.8000000    FALSE</span></span>
-<span><span class="co">#&gt; 13      n brown     TRUE         4        5 0.8000000    FALSE</span></span>
+<span><span class="co">#&gt; 4       q quick    FALSE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 5       u quick    FALSE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 6       i quick     TRUE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 7       c quick     TRUE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 8       k quick    FALSE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 9       b brown    FALSE         3        5 0.6000000    FALSE</span></span>
+<span><span class="co">#&gt; 10      r brown     TRUE         3        5 0.6000000    FALSE</span></span>
+<span><span class="co">#&gt; 11      o brown     TRUE         3        5 0.6000000    FALSE</span></span>
+<span><span class="co">#&gt; 12      w brown    FALSE         3        5 0.6000000    FALSE</span></span>
+<span><span class="co">#&gt; 13      n brown     TRUE         3        5 0.6000000    FALSE</span></span>
 <span><span class="co">#&gt; 14      f   fox     TRUE         2        3 0.6666667    FALSE</span></span>
 <span><span class="co">#&gt; 15      o   fox     TRUE         2        3 0.6666667    FALSE</span></span>
 <span><span class="co">#&gt; 16      x   fox    FALSE         2        3 0.6666667    FALSE</span></span>
-<span><span class="co">#&gt; 17      j jumps    FALSE         3        5 0.6000000    FALSE</span></span>
-<span><span class="co">#&gt; 18      u jumps     TRUE         3        5 0.6000000    FALSE</span></span>
-<span><span class="co">#&gt; 19      m jumps     TRUE         3        5 0.6000000    FALSE</span></span>
-<span><span class="co">#&gt; 20      p jumps    FALSE         3        5 0.6000000    FALSE</span></span>
-<span><span class="co">#&gt; 21      s jumps     TRUE         3        5 0.6000000    FALSE</span></span>
+<span><span class="co">#&gt; 17      j jumps    FALSE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 18      u jumps    FALSE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 19      m jumps     TRUE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 20      p jumps    FALSE         2        5 0.4000000    FALSE</span></span>
+<span><span class="co">#&gt; 21      s jumps     TRUE         2        5 0.4000000    FALSE</span></span>
 <span><span class="co">#&gt; 22      o  over     TRUE         3        4 0.7500000    FALSE</span></span>
 <span><span class="co">#&gt; 23      v  over    FALSE         3        4 0.7500000    FALSE</span></span>
 <span><span class="co">#&gt; 24      e  over     TRUE         3        4 0.7500000    FALSE</span></span>
@@ -200,8 +209,8 @@
 <span><span class="co">#&gt; 30      d   dog    FALSE         1        3 0.3333333    FALSE</span></span>
 <span><span class="co">#&gt; 31      o   dog     TRUE         1        3 0.3333333    FALSE</span></span>
 <span><span class="co">#&gt; 32      g   dog    FALSE         1        3 0.3333333    FALSE</span></span></code></pre></div>
-<p>Now, let’s use a second set of letters that we know are in the
-sentence:</p>
+<p>Now, let’s use a second set of letters that are explicitly part of
+the sentence:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">input</span> <span class="op">&lt;-</span> <span class="fu">split_to_letters</span><span class="op">(</span><span class="st">"jumps over"</span><span class="op">)</span></span>
 <span></span>
@@ -246,10 +255,10 @@ sentence:</p>
 <span><span class="co">#&gt; 30      d   dog    FALSE         1        3 0.3333333    FALSE</span></span>
 <span><span class="co">#&gt; 31      o   dog     TRUE         1        3 0.3333333    FALSE</span></span>
 <span><span class="co">#&gt; 32      g   dog    FALSE         1        3 0.3333333    FALSE</span></span></code></pre></div>
-<p>Notice that the column named <code>complete</code> marks two words as
-complete now.</p>
-<p>We can use the <code>subset</code> method for <code>LinkMap</code> to
-automatically filter for complete cases:</p>
+<p>Notice that the column named <code>"complete"</code> marks two
+partcular words as complete now.</p>
+<p>We can use the <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> method for <code>LinkMap</code>
+to automatically filter for complete cases:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
