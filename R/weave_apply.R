@@ -41,11 +41,13 @@ NULL
 S7::method(weave_apply, MultiFactor) <- function(
         .x, .path, .data, .fun = NULL, ..., .index = "row.names"
 ) {
-    path_check <- .check_path(.path)
+    .valid_path_input(.path)
+    pm <- .path_to_PathMap(.path)
+    .path_check_valid_weave_apply(pm)
 
-    .path_check_valid_weave_apply(path_check)
+    pm <- .select_by_PathMap(.x, pm)
 
-    path_list <- .path_to_std_list(.path, path_check)
+    path_list <- terms(pm)
 
     IDX <- .splitLinkMap(.index_tbl_by_path_list(.x, path_list, .data, .index))
 
@@ -60,8 +62,8 @@ S7::method(weave_apply, MultiFactor) <- function(
     return(res)
 }
 
-.path_check_valid_weave_apply <- function(path_check) {
-    if(path_check[["complex"]]) {
+.path_check_valid_weave_apply <- function(x) {
+    if(.check_pathmap_uses_stack(x) ) {
         stop(
             "`weave_apply()` '.path' cannot contain '+'.",
             "Use `stack()` to prepare input."

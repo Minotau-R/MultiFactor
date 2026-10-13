@@ -29,11 +29,12 @@
 #' @export
 #'
 weave_to_tbl <- function(x, .path, .data, .index = "row.names") {
-   path_check <- .check_path(.path)
 
-   .path_check_valid_weave_to_tbl(path_check)
+   .valid_path_input(.path)
+   pm <- .path_to_PathMap(.path)
+   .path_check_valid_weave_to_tbl(pm)
 
-   path_list <- .path_to_std_list(.path, path_check)
+   path_list <-  .pm_as_path_list(pm)
 
    out <- .index_tbl_by_path_list(x, path_list, .data, .index)
    out <- `class<-`(S7::S7_data(out), "data.frame")
@@ -49,10 +50,10 @@ weave_to_tbl <- function(x, .path, .data, .index = "row.names") {
    return(out)
 }
 
-.path_check_valid_weave_to_tbl <- function(path_check) {
-   if(path_check[["complex"]]) {
+.path_check_valid_weave_to_tbl <- function(x) {
+   if(.check_pathmap_uses_stack(x)) {
       stop(
-         "`weave_to_tbl()` '.path' cannot contain '+'.",
+         "`weave_to_tbl()` '.path' cannot contain '+'. ",
          "Use `stack()` to prepare input."
       )
    }

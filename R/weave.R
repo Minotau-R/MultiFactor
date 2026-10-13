@@ -28,14 +28,15 @@ S7::method(weave, MultiFactor) <- function(
 ) {
   out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
-  path_check <- .check_path(.path)
-  .path_check_valid_weave(path_check)
-  path_list <- .path_to_std_list(.path, path_check)
+  .valid_path_input(.path)
+  pm <- .path_to_PathMap(.path)
+  .path_check_valid_weave(pm)
 
-  full_path <- as.list(.select_std_path(x, path_list))
+  pm <- .select_by_PathMap(x, pm)
 
+  full_path <- .pm_as_full_path_list(pm)
   res <- lapply(full_path, .weave_full_path, x = x, out.format = "LinkMap")
-  res <- do.call( rbind.data.frame, res )
+  res <- do.call( rbind.data.frame, res)
   res <- LinkMap(res)
 
   if(out.format == "matrix") {
@@ -45,9 +46,12 @@ S7::method(weave, MultiFactor) <- function(
   return(res)
 }
 
-.path_check_valid_weave <- function(path_check) {
-  if(path_check[["complex"]]) {
-    stop("weave() '.path' cannot contain '+'. Use `stack()` to prepare input.")
+.path_check_valid_weave <- function(x) {
+  if(.check_pathmap_uses_stack(x)) {
+    stop(
+      "`weave()` '.path' cannot contain '+'. ",
+      "Use `stack()` to prepare input."
+    )
   }
 }
 

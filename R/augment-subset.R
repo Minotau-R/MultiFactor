@@ -40,9 +40,9 @@ NULL
 ) {
     if(.drop.unmatched) x <- .trimMultiFactor(x)
 
-    path_check <- .check_path(.path)
-    .path_check_valid_subset(path_check)
-    path_list <- .path_to_std_list(.path, path_check)
+    .valid_path_input(.path)
+    pm <- .path_to_PathMap(.path)
+    .path_check_valid_subset(pm)
 
     path_list <- .path_to_std_list(.path, path_check)
 
@@ -77,7 +77,7 @@ NULL
 }
 
 .path_check_valid_subset <- function(path_check) {
-    if(path_check[["complex"]]) {
+    if(path_check[["stack"]]) {
         stop(
             "subset() '.path' cannot contain '+'.",
             "Use `stack()` to prepare input."

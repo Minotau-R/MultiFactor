@@ -34,11 +34,11 @@ S7::method(stack, MultiFactor) <- function(
 ) {
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
     # Handle .path arg
-    path_check <- .check_path(.path)
-    .path_check_valid_stack(path_check)
-    path_list <- .path_to_std_list(.path, path_check)
+    .valid_path_input(.path)
+    pm <- .path_to_PathMap(.path)
+    .path_check_valid_stack(pm)
 
-    terms <-  .stack_parse_std_path(path_list)
+    terms <-  .pm_as_path_list(pm)
 
     res <- .stack_terms(x, terms)
     if(out.format == "matrix") {
@@ -47,14 +47,14 @@ S7::method(stack, MultiFactor) <- function(
     return(res)
 }
 
-.path_check_valid_stack <- function(path_check) {
+.path_check_valid_stack <- function(x) {
     stopifnot(
         "stack does not support '.path' with multiple tildes " =
-            path_check[["info"]] == "minimal"
+            .check_pathmap_is_minimal(x)
     )
     stopifnot(
         "At least one side of '.path' must include variables combined by '+'." =
-            path_check[["complex"]]
+            .check_pathmap_uses_stack(x)
     )
 }
 
@@ -77,9 +77,7 @@ S7::method(stack, MultiFactor) <- function(
     return(res)
 }
 
-.stack_weave_terms_df <- function(df, x) .stack_weave_terms(
-    x, c(df)
-)
+.stack_weave_terms_df <- function(df, x) .stack_weave_terms(x, c(df))
 
 .stack_weave_terms <- function(x, terms) {
     # Determine required ids in order, only keep relevant elements of link.

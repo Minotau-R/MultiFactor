@@ -50,12 +50,13 @@ weave_coverage <- function(
     out.format <- match.arg(out.format, c("LinkMap", "matrix"))
     .data <- .data_coverage_to_vector(.data, .data_column)
 
-    path_check <- .check_path(.path)
+    .valid_path_input(.path)
+    pm <- .path_to_PathMap(.path)
+    .path_check_valid_coverage(pm)
 
-    .path_check_valid_coverage(path_check)
+    pm <- .select_by_PathMap(x, pm)
 
-    path_list <- .path_to_std_list(.path, path_check)
-    full_path <- as.list(.select_std_path(x, path_list))
+    full_path <- .pm_as_full_path_list(pm)
 
     res <- lapply(
         full_path,
@@ -71,10 +72,13 @@ weave_coverage <- function(
     return(res)
 }
 
-.path_check_valid_coverage <- function(path_check) {
-    if(path_check[["complex"]]) {
-        stop("weave_coverage() '.path' cannot contain '+'.\n",
-             "Use stack() to prepare input.")
+.path_check_valid_coverage <- function(x) {
+
+    if(.check_pathmap_uses_stack(x)) {
+        stop(
+            "`weave_coverage()` '.path' cannot contain '+'. ",
+            "Use `stack()` to prepare input."
+        )
     }
 }
 

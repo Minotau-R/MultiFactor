@@ -16,7 +16,7 @@ a \code{factor_path} object.
 Define a path through a MultiFactor object.
 }
 \examples{
-#' # Generate pair of random linkage input
+# Generate pair of random linkage input
 a2b <- data.frame(
    a = sample(letters[seq(3)], 10, replace = TRUE),
    b = sample(LETTERS[seq(3)], 10, replace = TRUE)

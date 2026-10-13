@@ -183,55 +183,38 @@ MultiFactor <- S7::new_class(
 )
 
 
-#' factor_path S7 class
-#' @name factor_path
-#' @rdname factor_path-class
+#' PathMap S7 class
+#' @name PathMap
+#' @rdname PathMap-class
 #' @description
-#' `factor_path` is an S7 class to standardize the various ways in which paths
+#' `PathMap` is an S7 class to standardize the various ways in which paths
 #' that can be specified across the `MultiFactor` package. This class is mostly
 #' for internal use.
 #'
-#' @param x `Character vector` of length two; `c(<from>, <to>)`.
-#' @param include `List of character vectors`. Which elements are included in
-#'     the path? Length of the list indicates number of paths.
-#' @param exclude `Character vector`. Which elements are excluded from the path?
-#' @param exact `Logical`. Should the path be followed as is?
-#'     (i.e., no pathfinding required)
-#' @returns a `factor_path` object.
+#' @returns a `PathMap` object.
 #' @importFrom S7 new_class new_property class_character new_object
 #' @examples
-#' factor_path(x = c("a", "c"), include = list("b"))
+#' PathMap()
+#'
 #' @export
 #'
-factor_path <- S7::new_class(
-    "factor_path",
+PathMap <- S7::new_class(
+    "PathMap",
     package = "MultiFactor",
-    parent = S7::class_character,
-    properties  = list(
-        include = S7::new_property(
-            class = S7::class_list, default = list(character())
-        ),
-        exclude = S7::new_property(
-            class = S7::class_character, default = character()
-        ),
-        exact   = S7::new_property(
-            class = S7::class_logical, default = FALSE
-        )
-    ),
-    constructor = function(
-        x, include = list(character()), exclude = character(), exact = FALSE
-    ) {
+    parent = LinkMap,
+
+    constructor = function(x) {
+        if(is.data.frame(x) && !S7::S7_inherits(x, LinkMap)) {
+            x <- as.LinkMap(x)
+        }
         stopifnot(
-            "factor_path input must be length 2." = length(x) == 2L,
-            "factor_path input must be a character vector." = is.character(x)
+            "PathMap input must be LinkMap." = S7::S7_inherits(x, LinkMap)
         )
-        S7::new_object(
-            .parent = x, include = include, exclude = exclude, exact = exact
-        )
+        S7::new_object(.parent = x)
     },
     validator = function(self) {
-        if(length(S7::S7_data(self)) != 2L) {
-            "factor_path must have length of two. "
+        if(! all( colnames(self) %in% c("from", "to") )) {
+            "PathMap data columns must be named 'from' and 'to'."
         }
     }
 )

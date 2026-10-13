@@ -1,51 +1,61 @@
 #' Check .path input
 #' @returns a named list with three variables. See details.
 #' @details
-#'     `info` - How long is the provided path? `minimal` or `detailed`.
-#'     `complex` - `Logical`. are steps concatenated with "+"?
-#'     `class`- .path class. `character`, `list`, `formula` or `data.frame`.
+#'     `info`     - How long is the provided path? `minimal` or `detailed`.
+#'     `stack`    - `Logical`. are steps concatenated with "+"?
+#'     `coverage` - `Logical` or proportion (0-1) of coverage required.
 #'
+#' @importFrom S7 prop
 #' @noRd
 #'
-.check_path <- function(.path) {
-    # Initialize output with defaults
-    res <- list(info = "minimal", complex = logical(1L), class = "character")
+.check_pathmap_is_minimal <- function(.path_map) NROW(.path_map) == 1L
+
+.check_pathmap_uses_stack <- function(.path_map) any(
+    S7::prop(.path_map, "metadata")[["stack"]]
+    )
+
+.check_pathmap_uses_coverage <- function(.path_map) any(
+    S7::prop(.path_map, "metadata")[["coverage"]] > 0
+    )
+
+.pm_as_path_list <- function(x) strsplit(terms(x), "+", fixed = TRUE)
+
+.pm_as_full_path_list <- function(x) unname(
+    tapply(
+        as.data.frame(x), ~components,
+        `terms.MultiFactor::PathMap`, simplify = FALSE
+    )
+)
+
+
+.valid_path_input <- function(.path) {
     classes <- c("character", "formula", "data.frame", "list")
     #Some grace for select_path output
-    if(is.list(.path) && length(.path) == 1L) {.path <- .path[[1L]] }
+    if(is.list(.path) && length(.path) == 1L) { .path <- .path[[1L]] }
     stopifnot(
         "'.path' must be a formula or a (list of) character vector(s)." =
-            inherits(.path, c("character", "formula", "data.frame", "list"))
+            inherits(.path, classes)
     )
-    # Capture one class for switch statement
-    res[["class"]] <- .pc <- intersect(class(.path), classes)
-    # Defenses
-    stopifnot("'.path' requires at least two variables." = length(.path) >= 2L)
+    invisible()
+}
 
-    switch (.pc,
-            formula = {
-                ff <- .cut_fm_by_tildes(.path)
-                res[["complex"]] <- any(grepl(" + ", ff, fixed = TRUE))
-                if( length(ff) > 2L ) res["info"] <- "detailed"
-            },
-            list =,
-            character = {
-                stopifnot(
-                    "'.path' list elements must all be character vectors." =
-                        all(vapply(.path, is.character, FUN.VALUE = FALSE))
-                )
-                res[["complex"]] <- any(lengths(.path) >= 2L)
-                if( length(.path) >= 3L ) res["info"] <- "detailed"
-            },
-            data.frame = {
-                stopifnot(
-                    "If class(.path) == 'data.frame' it must have two columns" =
-                        NCOL(.path) == 2L
-                )
-                if(NROW(.path) >= 2L) res["info"] <- "detailed"
-            }
+.path_to_PathMap <- function(.path) PathMap(
+    as.LinkMap(
+        .path_to_PathMap_df(.path)
     )
+)
 
+#' @importFrom stats reformulate
+.path_to_PathMap_df <- function(.path) {
+    .valid_path_input(.path)
+
+    if(is.list(.path) && length(.path) == 1L) {
+        .path <- .path[[1L]]
+    }
+    if(inherits(.path, "character")) {
+        .path <- as.formula(paste0(.path, collapse = "~"))
+    }
+    res <- .cut_fm_to_df(.path)
     return(res)
 }
 
@@ -53,50 +63,38 @@
     check[["class"]],
     "character"  = as.list(.path),
     "data.frame" = .path_df_to_list(.path),
-    "formula"    = as.list(.cut_fm_by_tildes(.path)),
+    "formula"    = as.list(.cut_fm_by_separators(.path)),
     "list"       = .path
 )
 
-.path_df_to_list <- function(x) as.list( c(x[[1L]], x[[2L]][NROW(x)]) )
-
-#' @importFrom rlang as_label
 #' @noRd
 #' @returns a character vector of length >= 2L.
-.cut_fm_by_tildes <- function(x) unlist(
-    strsplit(rlang::as_label(x), " ~ ", fixed = TRUE)
+.cut_fm_by_separators <- function(x, all_seps = c("~", ":")) unlist(
+    strsplit(
+        gsub(" ", "", deparse1(x)),
+        paste0(all_seps, collapse = "|"), fixed = FALSE
+    )
 )
 
-#' Standardize terms
-#' @returns a length 2 character vector of y, x.
 #' @noRd
-#'
-.path_parse <- function(.path) {
+#' @returns a character vector of length >= 2L.
+.cut_fm_to_df <- function(x, all_seps = c("~", ":")) {
+    # Convert to character
+    x <- gsub(" ", "", deparse1(x))
 
-    if(inherits(.path, "formula")) return(.path_parse_formula(.path))
+    steps <- paste0(all_seps, collapse = "|")
 
-    if(inherits(.path, "character")) {
-        if(length(.path == 2L)) return(.path) else stop(
-            "Length of '.path' is must be exactly 2 using character input. ",
-            "Use formula syntax for more control."
-        )
-    }
+    # Get all separators and content
+    seps    <- strsplit(gsub(paste0("[^", steps, "]"), "", x), "")[[1L]]
+    content <- strsplit(x, steps)[[1L]]
+
+    from     <- factor(content[seq_along(seps)],      unique(sort(content)) )
+    to       <- factor(content[seq_along(seps) + 1L], unique(sort(content)) )
+    coverage <- seps == ":"
+    stack    <- grepl("+", to, fixed = TRUE) | grepl("+", from, fixed = TRUE)
+
+    data.frame(from, to, coverage, stack)
 }
-
-#' Standardize terms
-#' @importFrom rlang f_lhs f_rhs
-#' @returns a list of length 2 containing character vectors of y, x.
-#' @noRd
-#'
-.path_parse_formula <- function(.path) {
-    stopifnot( "'.path' must be a formula." = inherits(.path, "formula"))
-    y_vars <- rlang::f_lhs(.path)
-    x_vars <- rlang::f_rhs(.path)
-    if( is.null(y_vars) || is.null(x_vars) ) {
-        stop("Neither formula side can be empty.")
-    }
-    lapply(list(y_vars, x_vars), all.vars)
-}
-
 
 
 
