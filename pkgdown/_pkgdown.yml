@@ -32,8 +32,8 @@ reference:
   - LinkMap
   - LinkMap-methods
   - nlevels
-  - factor_path
-  - factor_path-methods
+  - path_frame
+  - path_frame-methods
   - select_path
   - select_path-methods
 - title: Converters

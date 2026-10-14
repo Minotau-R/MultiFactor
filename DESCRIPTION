@@ -15,6 +15,7 @@ Depends:
 Imports:
     S7,
     rlang,
+    dplyr,
     generics,
     Matrix,
     forcats,
@@ -25,7 +26,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Suggests: 
     anansi,
-    dplyr,
     ggplot2,
     patchwork,
     ragg,
