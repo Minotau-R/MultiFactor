@@ -288,12 +288,9 @@ included into one `LinkMap`.
 
 \
 [`select_path`](https://minotau-r.github.io/MultiFactor/reference/select_path-generic.md)`(``tp``, ``fruit`` ``~`` ``clothing``)`\
-`` #> A MultiFactor::factor_path S7_object from `fruit` to `clothing` with 2 sub-paths: ``\
-`#> [[1]]`\
-`#> [1] "fruit"       "instruments" "books"       "furniture"   "clothing"   `\
-`#> `\
-`#> [[2]]`\
-`#> [1] "fruit"       "instruments" "marbles"     "furniture"   "clothing"`
+`#> A MultiFactor::path_frame S7_object.`\
+`` #>   A path from `fruit` to `clothing` with 2 sub-paths: ``\
+`#> fruit ~ instruments ~ books ~ furniture ~ clothing`
 
 ## Compatibility with `igraph` and `Matrix`
 
@@ -322,11 +319,11 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `g`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``tp``)`\
 `g`\
-`#> IGRAPH f02e008 UN-- 6 6 -- `\
+`#> IGRAPH 5b849cd UN-- 6 6 -- `\
 `#> + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji`\
 `#> | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji`\
 `#> | (e/n), fruit_emoji (e/n)`\
-`#> + edges from f02e008 (vertex names):`\
+`#> + edges from 5b849cd (vertex names):`\
 `#> [1] books      --furniture   clothing   --furniture   books      --instruments`\
 `#> [4] fruit      --instruments furniture  --marbles     instruments--marbles`\
 `# Plot graph across data types`\
@@ -340,9 +337,9 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `lg`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)`\
 `lg`\
-`#> IGRAPH 0ee0ffb UN-B 12 18 -- `\
+`#> IGRAPH 664461b UN-B 12 18 -- `\
 `#> + attr: type (v/l), name (v/c)`\
-`#> + edges from 0ee0ffb (vertex names):`\
+`#> + edges from 664461b (vertex names):`\
 `#>  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  `\
 `#>  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves `\
 `#>  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    `\

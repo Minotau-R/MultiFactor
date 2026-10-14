@@ -20,7 +20,7 @@ a `factor_path` object.
 ## Examples
 
 ``` r
-#' # Generate pair of random linkage input
+# Generate pair of random linkage input
 a2b <- data.frame(
    a = sample(letters[seq(3)], 10, replace = TRUE),
    b = sample(LETTERS[seq(3)], 10, replace = TRUE)
@@ -35,8 +35,8 @@ x <- MultiFactor(list(a2b, a2c))
 
 # Inspect a path between data types
 select_path(x, b ~ c)
-#> A MultiFactor::factor_path S7_object from `b` to `c`:
-#> [[1]]
-#> [1] "b" "a" "c"
+#> A MultiFactor::path_frame S7_object.
+#>   A path from `b` to `c`:
+#> b ~ a ~ c
 #> 
 ```

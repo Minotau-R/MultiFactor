@@ -34,10 +34,10 @@
   : Methods for LinkMap S7 container class
 - [`nlevels()`](https://minotau-r.github.io/MultiFactor/reference/nlevels.md)
   : The Number of Levels of an Object
-- [`factor_path()`](https://minotau-r.github.io/MultiFactor/reference/factor_path-class.md)
-  : factor_path S7 class
-- [`factor_path-methods`](https://minotau-r.github.io/MultiFactor/reference/factor_path-methods.md)
-  : Methods for factor_path S7 class
+- [`path_frame()`](https://minotau-r.github.io/MultiFactor/reference/path_frame-class.md)
+  : path_frame S7 class
+- [`path_frame-methods`](https://minotau-r.github.io/MultiFactor/reference/path_frame-methods.md)
+  : Methods for path_frame S7 container class
 - [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path-generic.md)
   : Weave a path through an object
 - [`select_path-methods`](https://minotau-r.github.io/MultiFactor/reference/select_path-methods.md)

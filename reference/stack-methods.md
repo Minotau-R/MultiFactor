@@ -37,19 +37,19 @@ require(utils)
 x <- randomMultiFactor()
 # Merge variables with "+" operator, new names get concatenated with ".":
 stack(x, b ~ c + d)
-#> A MultiFactor::LinkMap data.frame S7_object: 81 rows.
+#> A MultiFactor::LinkMap data.frame S7_object: 73 rows.
 #>        b   c.d
-#> 1  b_003 c_001
+#> 1  b_006 c_001
 #> 2  b_009 c_001
-#> 3  b_003 c_002
-#> 4  b_004 c_002
-#> 5  b_006 c_002
-#> 6  b_010 c_002
-#> 7  b_007 c_004
-#> 8  b_001 c_005
-#> 9  b_003 c_005
-#> 10 b_005 c_005
-#>  + 71 more rows. Use `print(n = ...)` to see more rows.
+#> 3  b_005 c_002
+#> 4  b_007 c_002
+#> 5  b_008 c_002
+#> 6  b_009 c_002
+#> 7  b_001 c_003
+#> 8  b_005 c_003
+#> 9  b_010 c_003
+#> 10 b_010 c_004
+#>  + 63 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
 #>  $ b   : 10 Levels: b_001 b_002 ... b_010 
