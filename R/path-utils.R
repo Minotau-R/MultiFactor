@@ -8,22 +8,19 @@
 #' @importFrom S7 prop
 #' @noRd
 #'
-.check_pathmap_is_minimal <- function(.path_map) NROW(.path_map) == 1L
+.check_path_frame_is_minimal <- function(.path_map) NROW(.path_map) == 1L
 
-.check_pathmap_uses_stack <- function(.path_map) any(
-    S7::prop(.path_map, "metadata")[["stack"]]
-    )
+.check_path_frame_uses_stack <- function(.path_map) any(.path_map[["stack"]])
 
-.check_pathmap_uses_coverage <- function(.path_map) any(
-    S7::prop(.path_map, "metadata")[["coverage"]] > 0
+.check_path_frame_uses_coverage <- function(.path_map) any(
+    .path_map[["coverage"]] > 0
     )
 
 .pm_as_path_list <- function(x) strsplit(terms(x), "+", fixed = TRUE)
 
 .pm_as_full_path_list <- function(x) unname(
-    tapply(
-        as.data.frame(x), ~components,
-        `terms.MultiFactor::PathMap`, simplify = FALSE
+    tapply(x, ~components,
+        `terms.MultiFactor::path_frame`, simplify = FALSE
     )
 )
 
@@ -39,33 +36,24 @@
     invisible()
 }
 
-.path_to_PathMap <- function(.path) PathMap(
-    as.LinkMap(
-        .path_to_PathMap_df(.path)
-    )
+.path_to_path_frame <- function(.path) path_frame(
+        .path_to_path_frame_df(.path)
 )
 
-#' @importFrom stats reformulate
-.path_to_PathMap_df <- function(.path) {
+#' @importFrom stats as.formula
+.path_to_path_frame_df <- function(.path) {
     .valid_path_input(.path)
 
     if(is.list(.path) && length(.path) == 1L) {
         .path <- .path[[1L]]
     }
     if(inherits(.path, "character")) {
-        .path <- as.formula(paste0(.path, collapse = "~"))
+        .path <- stats::as.formula(paste0(.path, collapse = "~"))
     }
     res <- .cut_fm_to_df(.path)
     return(res)
 }
 
-.path_to_std_list <- function(.path, check) switch(
-    check[["class"]],
-    "character"  = as.list(.path),
-    "data.frame" = .path_df_to_list(.path),
-    "formula"    = as.list(.cut_fm_by_separators(.path)),
-    "list"       = .path
-)
 
 #' @noRd
 #' @returns a character vector of length >= 2L.

@@ -1,14 +1,29 @@
-.new_pathmap <- function(x) PathMap(as.LinkMap(x))
+#' Methods for path_frame S7 container class
+#' @name path_frame-methods
+#' @rdname path_frame-methods
+#'
+#' @examples
+#' x <- randomMultiFactor()
+#'
+#' # Generate a path_frame
+#' p <- select_path(x, a ~ d)
+#'
+#' # Get formula notation for the full path:
+#' formula(p)
+#'
+#' @param x,object `MultiFactor` on which the method should be applied.
+#' @returns A `MultiFactor`
+NULL
 
-S7::method(formula, PathMap) <- function(x) `formula.MultiFactor::PathMap`(x)
+S7::method(formula, path_frame) <- function(x) `formula.MultiFactor::path_frame`(x)
 
 #' @export
+#' @importFrom stats formula as.formula
 #'
-`formula.MultiFactor::PathMap` <- function(x, ...) {
-    x <- as.data.frame(x)
+`formula.MultiFactor::path_frame` <- function(x, ...) {
     out_len <- 1 + 2*NROW(x)
     res <- rep("~", out_len )
-    res[seq_len(out_len) %% 2 == 1L] <- `terms.MultiFactor::PathMap`(x)
+    res[seq_len(out_len) %% 2 == 1L] <- `terms.MultiFactor::path_frame`(x)
 
     if("coverage" %in% colnames(x)) {
         res[seq_len(out_len) %% 2 == 0L][x[["coverage"]] != 0L] <- ":"
@@ -20,22 +35,19 @@ S7::method(formula, PathMap) <- function(x) `formula.MultiFactor::PathMap`(x)
 
 }
 
-S7::method(terms, PathMap) <- function(x) `terms.MultiFactor::PathMap`(x)
+S7::method(terms, path_frame) <- function(x) `terms.MultiFactor::path_frame`(x)
 
 #' @export
-`terms.MultiFactor::PathMap` <- function(x, ...) as.character(
+`terms.MultiFactor::path_frame` <- function(x, ...) as.character(
         c(x[[1L]], x[[2L]][NROW(x)])
     )
 
-S7::method(print, PathMap) <- function(x, ...) {
+S7::method(print, path_frame) <- function(x, ...) {
     from_to <- terms(x)[c(1, NROW(x) + 1L)]
 
-    if( has_comps <- "components" %in% colnames(S7::prop(x, "metadata")) ) {
-
-        m <- as.data.frame(x)
-
+    if( has_comps <- "components" %in% colnames(x) ) {
         p <- tapply(
-            m, ~components, `formula.MultiFactor::PathMap`, simplify = FALSE
+            x, ~components, `formula.MultiFactor::path_frame`, simplify = FALSE
         )
     } else {
         p <- list(formula(x))

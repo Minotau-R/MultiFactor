@@ -30,15 +30,15 @@ S7::method(select_path, MultiFactor) <- function(
         x, .path,  ...
 ) {
     .valid_path_input(.path)
-    pm <- .path_to_PathMap(.path)
+    pm <- .path_to_path_frame(.path)
     .path_check_valid_select(pm)
 
-    paths <- .select_by_PathMap(x, pm)
+    paths <- .select_by_path_frame(x, pm)
     return(paths)
 }
 
 .path_check_valid_select <- function(x) {
-    if(.check_pathmap_uses_stack(x)) {
+    if(.check_path_frame_uses_stack(x)) {
         stop(
             "`weave_select()` '.path' cannot contain '+'.",
             "Use `stack()` to prepare input."
@@ -46,51 +46,46 @@ S7::method(select_path, MultiFactor) <- function(
     }
 }
 
-.select_std_path <- function(x, std_path) {
-    terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
-    include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
-    if(!length(include)) { include <- NULL }
-    full_path <- .select_path( x, terms, include )
-    i <- lapply(full_path, function(ii) ii[-c(1L, length(ii))])
+# .select_std_path <- function(x, std_path) {
+#     terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
+#     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
+#     if(!length(include)) { include <- NULL }
+#     full_path <- .select_path( x, terms, include )
+#     i <- lapply(full_path, function(ii) ii[-c(1L, length(ii))])
+#
+#     res <- factor_path(terms, include = i, exclude = character(), exact = TRUE)
+#
+#     return(res)
+#
+# }
 
-    res <- factor_path(terms, include = i, exclude = character(), exact = TRUE)
-
-    return(res)
-
-}
-
-
-.select_by_PathMap <- function(x, pm) {
+#' @importFrom dplyr bind_rows
+.select_by_path_frame <- function(x, pm) {
     from_to <- terms(pm)
     include <- from_to[-c(1L, length(from_to))]
     from_to <- from_to[c(1L, length(from_to))]
 
     if(!length(include)) { include <- NULL }
     full_path <- .select_path( x, terms = from_to, include )
-    i <- lapply(full_path, .path_to_PathMap_df)
+    i <- lapply(full_path, .path_to_path_frame_df)
 
-    res <- do.call(rbind.data.frame, i)
+    res <- dplyr::bind_rows(i, .id = "components")
+    col_order <- c(seq.int(from = 2L, to = NCOL(res)), 1L)
 
-    res[["components"]] <- rep(
-        seq_along(i),
-        each = vapply(i, NROW, FUN.VALUE = numeric(1L))
-    )
-    res <- .new_pathmap(res)
-    return(res)
-
+    path_frame(res[, col_order, drop = FALSE])
 }
 
-.std_path_as_factor_path <- function(x, exact = TRUE) {
-    ll <- length(x)
-    if( ll == 2L ) {
-        res <- factor_path(unlist(x), list(character()), character(), exact)
-    } else {
-        include <- list(x[-c(1L, ll)])
-        x       <- unlist(x[ c(1L, ll)])
-        res     <- factor_path(x, include, character(), exact)
-    }
-    return(res)
-}
+# .std_path_as_factor_path <- function(x, exact = TRUE) {
+#     ll <- length(x)
+#     if( ll == 2L ) {
+#         res <- factor_path(unlist(x), list(character()), character(), exact)
+#     } else {
+#         include <- list(x[-c(1L, ll)])
+#         x       <- unlist(x[ c(1L, ll)])
+#         res     <- factor_path(x, include, character(), exact)
+#     }
+#     return(res)
+# }
 
 # TODO delete if new .select_std_path is fine
 # .select_std_path <- function(x, std_path) {

@@ -31,10 +31,10 @@
 weave_to_tbl <- function(x, .path, .data, .index = "row.names") {
 
    .valid_path_input(.path)
-   pm <- .path_to_PathMap(.path)
+   pm <- .path_to_path_frame(.path)
    .path_check_valid_weave_to_tbl(pm)
 
-   path_list <-  .pm_as_path_list(pm)
+   path_list <-  terms(pm)
 
    out <- .index_tbl_by_path_list(x, path_list, .data, .index)
    out <- `class<-`(S7::S7_data(out), "data.frame")
@@ -43,7 +43,7 @@ weave_to_tbl <- function(x, .path, .data, .index = "row.names") {
    xcol <- if(.index == "row.names") row.names(.data) else .data[[.index]]
 
    subgroup <- data.frame(y = out[1L], x = xcol[out[[2L]]], check.rows = FALSE)
-   colnames(subgroup) <- terms(.std_path_as_factor_path(path_list))
+   colnames(subgroup) <- path_list[c(1L, length(path_list))]
 
    out <- data.frame(subgroup, .data[out[[2L]], ])
    row.names(out) <- NULL
@@ -51,7 +51,7 @@ weave_to_tbl <- function(x, .path, .data, .index = "row.names") {
 }
 
 .path_check_valid_weave_to_tbl <- function(x) {
-   if(.check_pathmap_uses_stack(x)) {
+   if(.check_path_frame_uses_stack(x)) {
       stop(
          "`weave_to_tbl()` '.path' cannot contain '+'. ",
          "Use `stack()` to prepare input."

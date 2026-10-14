@@ -29,10 +29,10 @@ S7::method(weave, MultiFactor) <- function(
   out.format <- match.arg(out.format, c("LinkMap", "matrix"))
 
   .valid_path_input(.path)
-  pm <- .path_to_PathMap(.path)
+  pm <- .path_to_path_frame(.path)
   .path_check_valid_weave(pm)
 
-  pm <- .select_by_PathMap(x, pm)
+  pm <- .select_by_path_frame(x, pm)
 
   full_path <- .pm_as_full_path_list(pm)
   res <- lapply(full_path, .weave_full_path, x = x, out.format = "LinkMap")
@@ -47,7 +47,7 @@ S7::method(weave, MultiFactor) <- function(
 }
 
 .path_check_valid_weave <- function(x) {
-  if(.check_pathmap_uses_stack(x)) {
+  if(.check_path_frame_uses_stack(x)) {
     stop(
       "`weave()` '.path' cannot contain '+'. ",
       "Use `stack()` to prepare input."

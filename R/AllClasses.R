@@ -183,38 +183,43 @@ MultiFactor <- S7::new_class(
 )
 
 
-#' PathMap S7 class
-#' @name PathMap
-#' @rdname PathMap-class
+#' path_frame S7 class
+#' @name path_frame
+#' @rdname path_frame-class
 #' @description
-#' `PathMap` is an S7 class to standardize the various ways in which paths
+#' `path_frame` is an S7 class to standardize the various ways in which paths
 #' that can be specified across the `MultiFactor` package. This class is mostly
 #' for internal use.
-#'
-#' @returns a `PathMap` object.
+#' @param x `data.frame` with the first two columns named `"from"` and `"to"`.
+#'     Optionally, additional columns (see Details)
+#' @details
+#' Rows represent edges in a path. Additional (optional) columns contain
+#' information about the edges:
+#' \itemize{
+#'   \item `components` `integer`. Indicates subpath ID.
+#'   \item `stack` `logical`. Whether the vertex contains merged data types.
+#'   \item `coverage` `numeric`. The proportional coverage threshold (or 0).
+#' }
+#' @returns a `path_frame` object.
 #' @importFrom S7 new_class new_property class_character new_object
 #' @examples
-#' PathMap()
+#' path_frame
 #'
 #' @export
 #'
-PathMap <- S7::new_class(
-    "PathMap",
+path_frame <- S7::new_class(
+    "path_frame",
     package = "MultiFactor",
-    parent = LinkMap,
-
+    parent = S7::class_data.frame,
     constructor = function(x) {
-        if(is.data.frame(x) && !S7::S7_inherits(x, LinkMap)) {
-            x <- as.LinkMap(x)
-        }
         stopifnot(
-            "PathMap input must be LinkMap." = S7::S7_inherits(x, LinkMap)
+            "path_frame input must be a data.frame." = is.data.frame(x)
         )
         S7::new_object(.parent = x)
     },
     validator = function(self) {
-        if(! all( colnames(self) %in% c("from", "to") )) {
-            "PathMap data columns must be named 'from' and 'to'."
+        if(! all( colnames(self)[seq_len(2L)] == c("from", "to") )) {
+            "First two path_frame columns must be named 'from' and 'to'."
         }
     }
 )

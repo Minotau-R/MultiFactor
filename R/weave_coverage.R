@@ -51,10 +51,10 @@ weave_coverage <- function(
     .data <- .data_coverage_to_vector(.data, .data_column)
 
     .valid_path_input(.path)
-    pm <- .path_to_PathMap(.path)
+    pm <- .path_to_path_frame(.path)
     .path_check_valid_coverage(pm)
 
-    pm <- .select_by_PathMap(x, pm)
+    pm <- .select_by_path_frame(x, pm)
 
     full_path <- .pm_as_full_path_list(pm)
 
@@ -74,7 +74,7 @@ weave_coverage <- function(
 
 .path_check_valid_coverage <- function(x) {
 
-    if(.check_pathmap_uses_stack(x)) {
+    if(.check_path_frame_uses_stack(x)) {
         stop(
             "`weave_coverage()` '.path' cannot contain '+'. ",
             "Use `stack()` to prepare input."

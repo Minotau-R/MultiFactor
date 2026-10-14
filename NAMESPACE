@@ -11,20 +11,20 @@ S3method(as.igraph,"MultiFactor::MultiFactor")
 S3method(as.matrix,"MultiFactor::LinkMap")
 S3method(augment,"MultiFactor::MultiFactor")
 S3method(c,"MultiFactor::MultiFactor")
-S3method(formula,"MultiFactor::PathMap")
+S3method(formula,"MultiFactor::path_frame")
 S3method(stack,"MultiFactor::MultiFactor")
 S3method(subset,"MultiFactor::LinkMap")
 S3method(subset,"MultiFactor::MultiFactor")
-S3method(terms,"MultiFactor::PathMap")
+S3method(terms,"MultiFactor::path_frame")
 S3method(unique,"MultiFactor::LinkMap")
 export(LinkMap)
 export(MultiFactor)
-export(PathMap)
 export(as.LinkMap)
 export(as.MultiFactor)
 export(draw_cards)
 export(mf_as_graph_df)
 export(nlevels)
+export(path_frame)
 export(poker_scores)
 export(quickbrownfox)
 export(randomLinkMap)
@@ -61,6 +61,7 @@ importFrom(S7,
   new_property,
   prop
 )
+importFrom(dplyr,bind_rows)
 importFrom(forcats,
   as_factor,
   lvls_expand,
@@ -87,6 +88,8 @@ importFrom(rlang,
   is_missing
 )
 importFrom(stats,
+  as.formula,
+  formula,
   p.adjust,
   phyper,
   reformulate
