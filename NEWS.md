@@ -1,3 +1,3 @@
-# MultiFactor 0.1.2
+# multifactor 0.1.2
 
 * Initial CRAN submission.

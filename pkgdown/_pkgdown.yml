@@ -1,4 +1,4 @@
-url: https://minotau-r.github.io/MultiFactor
+url: https://minotau-r.github.io/multifactor
 
 template:
   bootstrap: 5
@@ -26,11 +26,11 @@ reference:
   - weave_to_tbl
 - title: Classes
 - contents:
-  - MultiFactor
-  - MultiFactor-methods
+  - multifactor
+  - multifactor-methods
   - augment-subset
-  - LinkMap
-  - LinkMap-methods
+  - linkmap
+  - linkmap-methods
   - nlevels
   - path_frame
   - path_frame-methods
@@ -38,18 +38,18 @@ reference:
   - select_path-methods
 - title: Converters
 - contents:
-  - as.MultiFactor
-  - as.LinkMap
-  - as.LinkMap-methods
-  - as.igraph.MultiFactor
-  - as.igraph.LinkMap
-  - as.matrix.LinkMap
-  - as.data.frame.LinkMap
+  - as_multifactor
+  - as_linkmap
+  - as_linkmap-methods
+  - as.igraph.multifactor
+  - as.igraph.linkmap
+  - as.matrix.linkmap
+  - as.data.frame.linkmap
   - mf_as_graph_df
 - title: Datasets
 - contents:
-  - randomMultiFactor
-  - randomLinkMap
+  - random_multifactor
+  - random_linkmap
   - trade_goods
   - playing_cards
   - animal_groups

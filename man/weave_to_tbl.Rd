@@ -7,7 +7,7 @@
 weave_to_tbl(x, .path, .data, .index = "row.names")
 }
 \arguments{
-\item{x}{a \code{MultiFactor}.}
+\item{x}{a \code{multifactor}.}
 
 \item{.path}{either a \code{formula} or a `character vector`` of length 2 with the
 names of the desired combination of feature types.}

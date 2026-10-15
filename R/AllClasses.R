@@ -1,10 +1,10 @@
-#' LinkMap S7 container class
-#' @name LinkMap
-#' @rdname LinkMap-class
+#' linkmap S7 container class
+#' @name linkmap
+#' @rdname linkmap-class
 #' @description
-#' `LinkMap` is an S7 class to organize and manage multiple sets of factors,
+#' `linkmap` is an S7 class to organize and manage multiple sets of factors,
 #' for instance when tracing or converting feature IDs across databases. Methods
-#' for `LinkMap` aim to follow `factor` behaviour.
+#' for `linkmap` aim to follow `factor` behaviour.
 #'
 #' @slot levels `Named list` of character vectors depicting levels.
 #' @slot metadata `data.frame`. Optional. Used to store additional data or
@@ -13,7 +13,7 @@
 #'     Optionally, additional columns will be stored as metadata.
 #' @param metadata Optional `data.frame` with same number of rows as x. Contains
 #'     information about the feature link in that row.
-#' @returns a `LinkMap` object.
+#' @returns a `linkmap` object.
 #' @examples
 #' # Generate random linkage input
 #' x <- data.frame(
@@ -21,23 +21,23 @@
 #'     A = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
 #'
-#' # Create LinkMap
-#' LinkMap(x)
+#' # Create linkmap
+#' linkmap(x)
 #'
-#' @seealso [MultiFactor()]
+#' @seealso [multifactor()]
 #' @importFrom forcats as_factor
 #' @export
 #'
-LinkMap <- S7::new_class(
-    "LinkMap",
-    package = "MultiFactor",
+linkmap <- S7::new_class(
+    "linkmap",
+    package = "multifactor",
     parent = S7::class_data.frame,
     properties = list(
         levels = S7::new_property(
             getter = function(self) lapply(S7::S7_data(self), levels),
             setter = function(self, value) {
                 x <- `class<-`(S7::S7_data(self), "data.frame")
-                S7::S7_data(self) <- .unify_levels_LinkMap(x, value)
+                S7::S7_data(self) <- .unify_levels_linkmap(x, value)
                 return(self)
             }
         ),
@@ -50,7 +50,7 @@ LinkMap <- S7::new_class(
         # Check input
         stopifnot( .check_input_df(x) )
 
-        if(S7::S7_inherits(x, LinkMap)) {
+        if(S7::S7_inherits(x, linkmap)) {
             if( !NCOL(metadata) ) { metadata <- x@metadata }
             x <- `class<-`(S7::S7_data(x), "data.frame")
         }
@@ -82,31 +82,31 @@ LinkMap <- S7::new_class(
 )
 
 
-#' MultiFactor S7 container class
-#' @name MultiFactor
-#' @rdname MultiFactor-class
+#' multifactor S7 container class
+#' @name multifactor
+#' @rdname multifactor-class
 #' @description
-#' `MultiFactor` is an S7 class to organize and manage multiple sets of factors,
+#' `multifactor` is an S7 class to organize and manage multiple sets of factors,
 #' for instance when tracing or converting feature IDs across databases. Methods
-#' for `MultiFactor` aim to follow `factor` behaviour.
+#' for `multifactor` aim to follow `factor` behaviour.
 #'
 #' @details
-#' The most straightforward way to construct a `MultiFactor` object is as a
+#' The most straightforward way to construct a `multifactor` object is as a
 #' named list of named data.frames. The columns of the data.frames indicate the
 #' category of factor in that column.
 #'
-#' A `MultiFactor` object presents itself similar to a `data.frame`, in the
+#' A `multifactor` object presents itself similar to a `data.frame`, in the
 #' sense that level types can be called as columns and individual data.frame
 #' components can be called as rows.
-#' `MultiFactor` inherits from `list`; Content can be accessed through regular
+#' `multifactor` inherits from `list`; Content can be accessed through regular
 #' list methods (e.g., `[`, `[[`).
 #' @slot levels `Named list of character vectors`. Accessed through `levels(x)`
 #' @slot map `(sparse) Matrix` specifying which elements contain which levels.
-#' @param x a `LinkMap`, or named list of `LinkMap` objects.
+#' @param x a `linkmap`, or named list of `linkmap` objects.
 #' @param levels Optional. A `named list of character vectors`, to be used as
 #'     levels.
-#' @returns a `MultiFactor` object.
-#' @seealso [MultiFactor-methods()]
+#' @returns a `multifactor` object.
+#' @seealso [multifactor-methods()]
 #' @importFrom S7 new_class new_property
 #' @examples
 #' # Generate some random linkage input
@@ -118,14 +118,14 @@ LinkMap <- S7::new_class(
 #'     a = sample(letters[seq(3)], 10, replace = TRUE),
 #'     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
-#' x <- MultiFactor(list(a2b, a2c))
+#' x <- multifactor(list(a2b, a2c))
 #'
-#' @seealso [LinkMap()]
+#' @seealso [linkmap()]
 #' @export
 #'
-MultiFactor <- S7::new_class(
-    "MultiFactor",
-    package = "MultiFactor",
+multifactor <- S7::new_class(
+    "multifactor",
+    package = "multifactor",
     parent = S7::class_list,
     properties  = list(
         levels = S7::new_property(
@@ -136,13 +136,13 @@ MultiFactor <- S7::new_class(
                 if( !length(levels(self)) ) {
                     self@levels <- value
                 } else {
-                    self <- .set_levels_MultiFactor(self, value)
+                    self <- .set_levels_multifactor(self, value)
                 }
                 return(self)
             }
             ),
         map = S7::new_property(
-            getter = function(self) .mapMultiFactor(self, mode = "counts")
+            getter = function(self) .map_multifactor(self, mode = "counts")
         ),
         metadata = S7::new_property(
             getter = function(self) Reduce(
@@ -152,13 +152,13 @@ MultiFactor <- S7::new_class(
     ),
     constructor = function(x, levels = list()) {
         # Check input
-        if(is.data.frame(x)) x <- LinkMap(x)
-        if(S7::S7_inherits(x, LinkMap)) x <- list(x = x)
+        if(is.data.frame(x)) x <- linkmap(x)
+        if(S7::S7_inherits(x, linkmap)) x <- list(x = x)
         stopifnot(
-            "x must be a LinkMap or list of LinkMaps. " =
+            "x must be a linkmap or list of linkmaps. " =
                 all(vapply(x, .check_input_df, FALSE))
         )
-        x <- lapply(x, LinkMap)
+        x <- lapply(x, linkmap)
         # In case of identical pair names, merge.
         names(x) <- paste0("x_", seq_along(x))
         x   <- .merge_linkmaps(x)
@@ -174,8 +174,8 @@ MultiFactor <- S7::new_class(
         )
     },
     validator = function(self) {
-        if(!all(vapply(self, .validLinkMap, NA))) {
-            "LinkMap content not properly formatted. "
+        if(!all(vapply(self, .valid_linkmap, NA))) {
+            "linkmap content not properly formatted. "
         }
 
     }
@@ -188,7 +188,7 @@ MultiFactor <- S7::new_class(
 #' @rdname path_frame-class
 #' @description
 #' `path_frame` is an S7 class to standardize the various ways in which paths
-#' that can be specified across the `MultiFactor` package. This class is mostly
+#' that can be specified across the `multifactor` package. This class is mostly
 #' for internal use.
 #' @param x `data.frame` with the first two columns named `"from"` and `"to"`.
 #'     Optionally, additional columns (see Details)
@@ -209,14 +209,14 @@ MultiFactor <- S7::new_class(
 #'
 path_frame <- S7::new_class(
     "path_frame",
-    package = "MultiFactor",
+    package = "multifactor",
     parent = S7::class_data.frame,
     constructor = function(x) {
         if(inherits(x, "formula")) {
             x <- .path_to_path_frame(x)
         }
         stopifnot(
-            "path_frame input must be either formula or data.frame." =
+            "path_frame input must be formula, character or data.frame." =
                 is.data.frame(x)
         )
         S7::new_object(.parent = x)
@@ -229,7 +229,7 @@ path_frame <- S7::new_class(
 )
 
 
-##### LinkMap utils --]--
+##### linkmap utils --]--
 
 .check_input_df <- function(x) {
     if(! is.data.frame(x) ) {
@@ -245,7 +245,7 @@ path_frame <- S7::new_class(
 }
 
 
-#### MultiFactor utils ----
+#### multifactor utils ----
 
 .squash_meta <- function(x) {
     names <- paste(colnames(x), collapse = "2")
@@ -257,7 +257,7 @@ path_frame <- S7::new_class(
     `class<-`(`attr<-`(res, "row.names", names), "data.frame")
 }
 
-.mapMultiFactor <- function(x, mode = "counts") {
+.map_multifactor <- function(x, mode = "counts") {
     # Some flexibility in input
     mode <- match.arg(mode, choices = c("counts", "binary", "pattern"))
     all_names <- lapply(x, base::names)
@@ -316,14 +316,14 @@ path_frame <- S7::new_class(
 }
 
 #' @noRd
-#' @param x a list in `MultiFactor` formatting.
-#' @description Drop features that are not matched in another LinkMap.
-#' @returns a subsetted list with `MultiFactor`.formatting.
+#' @param x a list in `multifactor` formatting.
+#' @description Drop features that are not matched in another linkmap.
+#' @returns a subsetted list with `multifactor`.formatting.
 #' @importFrom Matrix colSums
 #'
-.trimMultiFactor <- function(x) {
+.trim_multifactor <- function(x) {
     # Determine positions of feature names that occur in several edge link dfs
-    m <- .mapMultiFactor(x, mode = "pattern")
+    m <- .map_multifactor(x, mode = "pattern")
     jj <- colnames(m)[Matrix::colSums(m) > 1]
 
     # Sequentially subset over feature names
@@ -340,10 +340,10 @@ path_frame <- S7::new_class(
     return(x)
 }
 
-#' @description Subset MultiFactor to only include the features
+#' @description Subset multifactor to only include the features
 #'     found in a feature table.
-#' @returns a MultiFactor subsetted by relevant features
-#' @param x a `MultiFactor` .
+#' @returns a multifactor subsetted by relevant features
+#' @param x a `multifactor` .
 #' @param id `Character scalar`, naming the x term to be trimmed
 #' @param ft A table containing features of interest, `tableX` or `tableY`.
 #' @noRd
@@ -407,9 +407,9 @@ path_frame <- S7::new_class(
 #' across x.
 #' @noRd
 .unify_levels <- function(x, levels) {
-    is_s7 <- all(vapply(x, S7::S7_inherits, LinkMap, FUN.VALUE = FALSE))
+    is_s7 <- all(vapply(x, S7::S7_inherits, linkmap, FUN.VALUE = FALSE))
     if(is_s7) {
-        res <- lapply(x, .unify_levels_LinkMap, levels)
+        res <- lapply(x, .unify_levels_linkmap, levels)
     } else {
         res <- lapply(x, .unify_levels_data.frame, levels)
     }
@@ -431,7 +431,7 @@ path_frame <- S7::new_class(
 # FIXME
 #' @importFrom forcats lvls_expand
 #'
-.unify_levels_LinkMap <- function(x, levels) {
+.unify_levels_linkmap <- function(x, levels) {
 
     x[] <- mapply(
         forcats::lvls_expand,
@@ -443,7 +443,7 @@ path_frame <- S7::new_class(
     return(x)
 }
 
-.validLinkMap <- function(x) {
+.valid_linkmap <- function(x) {
     is.data.frame(x) &&
         NCOL(x) == 2L &&
         length(colnames(x)) == 2L &&

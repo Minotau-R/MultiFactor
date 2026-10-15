@@ -1,6 +1,6 @@
 test_that("weaving content is equivalent", {
 
-    x <- randomMultiFactor()
+    x <- random_multifactor()
 
     x1 <- weave(x, a ~ c)
     x2 <- weave(x, c ~ a)

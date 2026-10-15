@@ -2,9 +2,9 @@
 % Please edit documentation in R/weave_apply.R
 \name{weave_apply-methods}
 \alias{weave_apply-methods}
-\title{Index a table by a MultiFactor and apply arbitrary code to it}
+\title{Index a table by a multifactor and apply arbitrary code to it}
 \arguments{
-\item{.x}{a \code{MultiFactor} object.}
+\item{.x}{a \code{multifactor} object.}
 
 \item{.path}{either a \code{formula} or a `character vector`` of length 2 with the
 names of the desired combination of feature types.}
@@ -48,5 +48,5 @@ weave_apply(
 
 }
 \seealso{
-\code{\link[=weave]{weave()}} \code{\link[=lapply]{lapply()}} \code{\link[=LinkMap]{LinkMap()}} \code{\link[=MultiFactor]{MultiFactor()}}
+\code{\link[=weave]{weave()}} \code{\link[=lapply]{lapply()}} \code{\link[=linkmap]{linkmap()}} \code{\link[=multifactor]{multifactor()}}
 }

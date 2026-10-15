@@ -5,19 +5,19 @@
 \alias{quickbrownfox}
 \title{Example dataset using a famous pangram.}
 \format{
-\code{quickbrownfox}: A MultiFactor of letters, words and constituents
+\code{quickbrownfox}: A multifactor of letters, words and constituents
 }
 \source{
 \code{quickbrownfox}: Manually curated.
 }
 \usage{
-data("quickbrownfox", package = "MultiFactor")
+data("quickbrownfox", package = "multifactor")
 
 quickbrownfox(raw.data = FALSE)
 }
 \arguments{
 \item{raw.data}{\code{Boolean}, Whether to return underlying \code{list} rather
-than the default \code{MultiFactor}.}
+than the default \code{multifactor}.}
 }
 \description{
 Demo data set used in the coverage en enrichment vignette.

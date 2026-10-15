@@ -13,7 +13,7 @@ A \code{path_frame} or method-appropriate value.
 Methods for path_frame S7 container class
 }
 \examples{
-x <- randomMultiFactor()
+x <- random_multifactor()
 
 # Generate a path_frame
 p <- select_path(x, a ~ d)

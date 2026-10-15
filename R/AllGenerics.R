@@ -1,23 +1,23 @@
-#' Convert common classes to LinkMap
+#' Convert common classes to linkmap
 #' @export
-#' @rdname as.LinkMap
-#' @name as.LinkMap
+#' @rdname as_linkmap
+#' @name as_linkmap
 #' @param x input object
 #' @param ... additional arguments
-#' @seealso [as.LinkMap-methods]
-#' @returns a `LinkMap`
+#' @seealso [as_linkmap-methods]
+#' @returns a `linkmap`
 #' @examples
 #' # Available methods:
-#' as.LinkMap
+#' as_linkmap
 #'
-as.LinkMap <- S7::new_generic("as.LinkMap", "x")
+as_linkmap <- S7::new_generic("as_linkmap", "x")
 
 #' The Number of Levels of an Object
 #' @name nlevels
 #' @rdname nlevels
 #' @description
 #' Return the number of levels which its argument has. Extends `base::nlevels`.
-#' @param x an object, such as a `LinkMap`, `MultiFactor` or `factor`.
+#' @param x an object, such as a `linkmap`, `multifactor` or `factor`.
 #' @param ... additional arguments. Not used for `base::factor` method.
 #' @returns A `Numeric vector` of length equal to the number of elements in `x`.
 #'     Optionally, named.
@@ -30,19 +30,19 @@ nlevels <- S7::new_generic("nlevels", "x")
 
 S7::method(nlevels, S7::class_any) <- base::nlevels
 
-#' Convert common classes to MultiFactor
+#' Convert common classes to multifactor
 #' @export
-#' @rdname as.MultiFactor
-#' @name as.MultiFactor
+#' @rdname as_multifactor
+#' @name as_multifactor
 #' @param x input object
 #' @param ... additional arguments
-#' @returns a `MultiFactor`.
-#' @seealso [as.LinkMap]
+#' @returns a `multifactor`.
+#' @seealso [as_linkmap]
 #' @examples
 #' # Available methods:
-#' as.MultiFactor
+#' as_multifactor
 #'
-as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
+as_multifactor <- S7::new_generic("as_multifactor", "x")
 
 #' Weave a path through an object
 #' @rdname weave-generic
@@ -54,7 +54,7 @@ as.MultiFactor <- S7::new_generic("as.MultiFactor", "x")
 #' @param .path either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param ... additional arguments
-#' @returns a `LinkMap` or `matrix`.
+#' @returns a `linkmap` or `matrix`.
 #' @importFrom S7 S7_dispatch
 #' @export
 #' @examples

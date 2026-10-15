@@ -1,11 +1,11 @@
 ---
-title: "MultiFactor"
+title: "multifactor"
 resource_files:
-  - images/plot-LinkMap.png
+  - images/plot-linkmap.png
 output: 
   rmarkdown::html_document
 vignette: >
-  %\VignetteIndexEntry{1. Getting started with MultiFactor}
+  %\VignetteIndexEntry{1. Getting started with multifactor}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,36 +20,36 @@ knitr::opts_chunk$set(
 
 # Overview
 
-`MultiFactor` aims to provide a consistent toolkit to incorporate relational 
+`multifactor` aims to provide a consistent toolkit to incorporate relational 
 data into data-analytical tools and methods. In practice, we expect 
-`MultiFactor` to be used in combination with additional packages that extend it.
+`multifactor` to be used in combination with additional packages that extend it.
 For instance, see [ariadne](https://github.com/minotau-R/ariadne) and
 [anansi](https://github.com/thomazbastiaanssen/anansi), two such packages that 
-make use of `MultiFactor` to link and convert across biological database IDs and
+make use of `multifactor` to link and convert across biological database IDs and
 perform multi-omics integration analysis, respectively. 
 
-# Get started using MultiFactor
+# Get started using multifactor
 
 ## Installation instructions
 
 Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
-install the released version of `MultiFactor`:
+install the released version of `multifactor`:
 
 ```{r 'cran-install', eval = FALSE}
-install.packages("MultiFactor")
+install.packages("multifactor")
 ```
 
 Or install the development version from this repository:
 
 ```{r, 'remotes-install', eval = FALSE}
 install.packages("remotes")
-remotes::install_github("minotau-R/MultiFactor")
+remotes::install_github("minotau-R/multifactor")
 ```
 
 ## Setup 
 
 ```{r 'setup-multifactor', message = FALSE}
-library(MultiFactor)
+library(multifactor)
 
 # Wrangling
 library(dplyr)
@@ -97,16 +97,16 @@ e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
 
 ```
 
-# MultiFactor and LinkMap objects
-## LinkMap
-The basic object in the `MultiFactor` package is the `LinkMap`, which contains 
+# multifactor and linkmap objects
+## linkmap
+The basic object in the `multifactor` package is the `linkmap`, which contains 
 relational information across two types of features. This format is sometimes 
 referred to as an [edge list](https://en.wikipedia.org/wiki/Edge_list). 
-Under a thin layer of S7, the `LinkMap` object is a `data.frame` where the first
+Under a thin layer of S7, the `linkmap` object is a `data.frame` where the first
 two columns indicate which feature IDs that are considered linked. Optional 
 additional columns are considered metadata. 
 
-Let's use an example data set to take a closer look at `LinkMap`. The 
+Let's use an example data set to take a closer look at `linkmap`. The 
 `trade_posts()` function generates data about fictional trade posts, where one 
 type of good is traded for another. In this particular case, types of books are 
 traded for types of furniture. 
@@ -117,11 +117,11 @@ linkmap
 The two types of goods are captured by the two columns, with column names 
 representing the *types* of good and rows representing which specific 
 *type-pairs* are traded at that trade post, or, more generally, are linked in 
-that `LinkMap`. 
+that `linkmap`. 
 ```{r 'linkmap-object-lvs'}
 levels( linkmap )
 ```
-Notice that `LinkMap` is two `factor` columns in a trench coat. We can inspect 
+Notice that `linkmap` is two `factor` columns in a trench coat. We can inspect 
 the levels as usual. 
 
 We can see that we have several of these types of trade posts in our data set. 
@@ -131,8 +131,8 @@ tp[[2]]
 tp[[3]]
 ```
 
-### Visual representation of the LinkMaps in our data set. 
-```{r, 'plot-LinkMap'}
+### Visual representation of the linkmaps in our data set. 
+```{r, 'plot-linkmap'}
 #| message=FALSE, echo=FALSE, fig.width=8, fig.height=4, dev='ragg_png'
 plot_dfs <- lapply(tp, .to_plot_df, e)
 
@@ -159,7 +159,7 @@ p <- ggplot() +
     x = x, y = y, 
     ) +
 
-  # Bunched LinkMaps
+  # Bunched linkmaps
   lapply(
     rev(plot_dfs[-1]), function(x) list(
       geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
@@ -176,36 +176,39 @@ p <- ggplot() +
    
   theme_void()
 
-# Doesn't render on github
-# pngfile <- file.path("images", "plot-LinkMap.png")
+# Doesn't render on github. 
+# Uncomment following two lines and run locally to update fig. 
+
+# pngfile <- file.path("images", "plot-linkmap.png")
 # ggsave(pngfile, p, device = ragg::agg_png)
-knitr::include_graphics("images/plot-LinkMap.png")
+
+knitr::include_graphics("images/plot-linkmap.png")
 
 ```
 
-## MultiFactor
-The `MultiFactor` is in essence a collection of `LinkMap`s. Where `LinkMap`s 
-contain relational information across two data types, `MultiFactor`s are a 
-representation of the relational graph formed by combining those `LinkMaps`. 
-The full object `tp`, which contains the `LinkMaps` we just investigated, is in
-fact a `MultiFactor` object: 
+## multifactor
+The `multifactor` is in essence a collection of `linkmap`s. Where `linkmap`s 
+contain relational information across two data types, `multifactor`s are a 
+representation of the relational graph formed by combining those `linkmaps`. 
+The full object `tp`, which contains the `linkmaps` we just investigated, is in
+fact a `multifactor` object: 
 
 ```{r 'multifactor-object-start'}
 tp
 ```
-Notice that a `MultiFactor` summarizes information across the component 
-`LinkMaps` in several ways. First, The matrix shows the types of goods as 
-columns and the component `LinkMaps` that contain this information as rows. The 
+Notice that a `multifactor` summarizes information across the component 
+`linkmaps` in several ways. First, The matrix shows the types of goods as 
+columns and the component `linkmaps` that contain this information as rows. The 
 numbers in the matrix then show the number of unique types of that type of good 
-in that particular `LinkMap` - and that are therefore linked to the second feature
-in the `LinkMap`. 
+in that particular `linkmap` - and that are therefore linked to the second feature
+in the `linkmap`. 
 
 For instance, in the top-left corner of the matrix, we can see that the first 
-`LinkMap` links books and furniture and is aptly named `books2furniture`.
+`linkmap` links books and furniture and is aptly named `books2furniture`.
 Notice that five unique types of books as well as five types of furniture are
 mentioned in `books2furniture`.  
 
-Though `MultiFactor` is a list of `LinkMap`s under the hood, we can also 
+Though `multifactor` is a list of `linkmap`s under the hood, we can also 
 interact with its matrix representation, as well as access the component levels:  
 ```{r 'multifactor-object-matrix'}
 dim(tp)
@@ -214,9 +217,9 @@ levels(tp)
 nlevels(tp)
 ```
 Note that levels of the same type are automatically unified across all component
-LinkMaps with that type of level.
+linkmaps with that type of level.
 
-```{r 'plot-MultiFactor', echo = FALSE}
+```{r 'plot-multifactor', echo = FALSE}
 main_graph <- data.frame(
   label = c("fruit", "marbles", "clothing", "instruments", "furniture"), 
   x = c(0, 2/3, 1, 4/3, 2), 
@@ -236,13 +239,13 @@ good that we can trade for clothing. The `weave()` function does exactly this:
 fruit2clothing <- weave(tp, fruit ~ clothing)
 fruit2clothing
 ```
-We receive a new `LinkMap` containing all fruits that could be traded for 
+We receive a new `linkmap` containing all fruits that could be traded for 
 clothing. 
 
 ## Selecting a path
 We can use `select_path()` to find the types of traded goods in order,
 or more generally, the paths that were traversed. If several paths exist, all 
-will be traversed and included into one `LinkMap`. 
+will be traversed and included into one `linkmap`. 
 ```{r 'weave-sp'}
 select_path(tp, fruit ~ clothing)
 ```
@@ -253,12 +256,12 @@ df_weave <- .to_plot_df(fruit2clothing, e)
 ```
 
 # Compatibility with `igraph` and `Matrix`
-## Convert `MultiFactor` and `LinkMap` objects to `igraph` representation 
-`MultiFactor` relies heavily on the excellent [`igraph`](https://r.igraph.org/) 
+## Convert `multifactor` and `linkmap` objects to `igraph` representation 
+`multifactor` relies heavily on the excellent [`igraph`](https://r.igraph.org/) 
 and [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly for
 path finding and sparse matrix representation. 
 
-### Convert `MultiFactor` main graph representation to `igraph` object
+### Convert `multifactor` main graph representation to `igraph` object
 ```{r 'igraph-multifactor-sp', fig.height=6, fig.width = 6}
 library(igraph)
 # Convert to an igraph object
@@ -268,16 +271,16 @@ g
 plot(g)
 ```
 
-### Convert `LinkMap` relational information to `igraph` object
+### Convert `linkmap` relational information to `igraph` object
 ```{r 'igraph-linkmap-sp', fig.height=6, fig.width = 6}
 # Convert to an igraph object
 lg <- as.igraph(fruit2clothing)
 lg
-# Same information as the LinkMap: 
+# Same information as the linkmap: 
 plot(lg)
 ```
 
-# Convert `LinkMap` linkage information to sparse adjacency `Matrix`
+# Convert `linkmap` linkage information to sparse adjacency `Matrix`
 ```{r 'Matrix-sp'}
 # Convert to an igraph object
 m <- as.matrix(fruit2clothing)
@@ -285,7 +288,7 @@ m
 ```
 
 # Utilities
-`MultiFactor` also provides some utility functions for data wrangling on tables 
+`multifactor` also provides some utility functions for data wrangling on tables 
 with features (rows) of the appropriate type. 
 
 ```{r 'prep-apply'}
@@ -337,7 +340,7 @@ properly parse into R. The function `read_adjacency_list()` allows these files
 to be read from file (or URL). 
 
 ### Example of adjacency list formatted data
-We'll format the `LinkMap` from fruit to furniture that we generated above. 
+We'll format the `linkmap` from fruit to furniture that we generated above. 
 ```{r 'adj-example'}
 # Use igraph to deconstruct a graph into an adjacency list, coerce to characters
 adj <- lapply( as_adj_list( as.igraph(fruit2clothing) ), as_ids )

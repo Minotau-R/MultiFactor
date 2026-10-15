@@ -1,52 +1,52 @@
-#' Convert a MultiFactor to igraph
+#' Convert a multifactor to igraph
 #' @description
-#' Extract relational information from MultiFactor and return an igraph object.
+#' Extract relational information from multifactor and return an igraph object.
 #' Calls `igraph::graph_from_data_frame` under the hood.
-#' @name as.igraph.MultiFactor
-#' @aliases as.igraph.MultiFactor::MultiFactor
+#' @name as.igraph.multifactor
+#' @aliases as.igraph.multifactor::multifactor
 #' @importFrom igraph as.igraph graph_from_data_frame
-#' @param x a `MultiFactor`
+#' @param x a `multifactor`
 #' @param directed See `?igraph::graph_from_data_frame`
 #' @param ... Additional arguments passed to `igraph::graph_from_data_frame`.
 #' @returns an `igraph` object.
-#' @method as.igraph MultiFactor::MultiFactor
+#' @method as.igraph multifactor::multifactor
 #' @export
 #' @examples
-#' x <- randomMultiFactor()
+#' x <- random_multifactor()
 #'
 #' # Make igraph object:
 #' igraph::as.igraph(x)
 #'
-`as.igraph.MultiFactor::MultiFactor`  <- function(x, directed = FALSE, ...) {
+`as.igraph.multifactor::multifactor`  <- function(x, directed = FALSE, ...) {
     igraph::graph_from_data_frame(mf_as_graph_df(x), directed, ...)
 }
 
-#' Convert a LinkMap to igraph
+#' Convert a linkmap to igraph
 #' @description
-#' Extract relational information from LinkMap and return an igraph object.
+#' Extract relational information from linkmap and return an igraph object.
 #' Calls `igraph::graph_from_biadjacency_matrix` under the hood.
-#' @name as.igraph.LinkMap
-#' @aliases as.igraph.MultiFactor::LinkMap
+#' @name as.igraph.linkmap
+#' @aliases as.igraph.multifactor::linkmap
 #' @importFrom igraph as.igraph graph_from_biadjacency_matrix edge_attr<-
-#' @param x a `MultiFactor`
+#' @param x a `multifactor`
 #' @param directed See `?igraph::graph_from_biadjacency_matrix`
 #' @param ... Additional arguments passed to
 #'     `igraph::graph_from_biadjacency_matrix`.
 #' @returns an `igraph` object.
-#' @details If a `LinkMap` contains metadata, this can be found back as edge
+#' @details If a `linkmap` contains metadata, this can be found back as edge
 #' attributes in the returned graph (see `igraph::edge_attr()`)
-#' @method as.igraph MultiFactor::LinkMap
+#' @method as.igraph multifactor::linkmap
 #' @export
 #' @examples
-#' x <- randomLinkMap()
+#' x <- random_linkmap()
 #'
 #' # Make igraph object:
 #' igraph::as.igraph(x)
 #'
-`as.igraph.MultiFactor::LinkMap`  <- function( x, directed = FALSE, ... ) {
+`as.igraph.multifactor::linkmap`  <- function( x, directed = FALSE, ... ) {
 
     g <- igraph::graph_from_biadjacency_matrix(
-        `as.matrix.MultiFactor::LinkMap`( x ),
+        `as.matrix.multifactor::linkmap`( x ),
         directed, ...
     )
     # Include metadata if it exits
@@ -59,31 +59,31 @@
 #' @export
 #' @importFrom igraph as.igraph
 #'
-S7::method(as.igraph, LinkMap) <-
-    function(x, ...) `as.igraph.MultiFactor::LinkMap`(x, ...)
+S7::method(as.igraph, linkmap) <-
+    function(x, ...) `as.igraph.multifactor::linkmap`(x, ...)
 
 
 #' @export
 #' @importFrom igraph as.igraph
 #'
-S7::method(as.igraph, MultiFactor) <-
-    function(x, ...) `as.igraph.MultiFactor::MultiFactor`(x, ...)
+S7::method(as.igraph, multifactor) <-
+    function(x, ...) `as.igraph.multifactor::multifactor`(x, ...)
 
-#' Convert a MultiFactor to relational graph format.
+#' Convert a multifactor to relational graph format.
 #' @description
-#' Utility function to convert graph information of a MultiFactor to a
-#' `data.frame`. Used in `as.igraph` method for MultiFactor.
-#' @param x MultiFactor
+#' Utility function to convert graph information of a multifactor to a
+#' `data.frame`. Used in `as.igraph` method for multifactor.
+#' @param x multifactor
 #' @returns a `data.frame` with three or more named columns; from, to and name.
 #' @export
 #' @examples
-#' x <- randomMultiFactor()
+#' x <- random_multifactor()
 #'
 #' # Three-column dfs of layouts
 #' x_df <- mf_as_graph_df(x)
 #'
 mf_as_graph_df <- function(x) {
-    if(!S7::S7_inherits(x, MultiFactor)) x <- MultiFactor(x)
+    if(!S7::S7_inherits(x, multifactor)) x <- multifactor(x)
     res <- as.data.frame.matrix( .all_names_in_list_mf(x) )
     res <- cbind.data.frame(  res, x@metadata )
     return(res)

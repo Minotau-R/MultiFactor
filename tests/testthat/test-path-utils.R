@@ -1,16 +1,10 @@
 # Create equivalent paths in different formats
-p_fm <- a ~ b ~ c ~ b ~ a
-p_ch <- c("a", "b", "c", "b", "a")
-p_ls <- as.list(p_ch)
-p_df <- data.frame(
-    c("a", "b", "c", "b"),
-    c("b", "c", "b", "a"),
-    fix.empty.names = FALSE
-)
+p_fm <- a ~ b ~ c : d ~ e : f < 0.5 ~ b ~ a
+path_frame(p_fm)
 
 p_list <- list(p_fm, p_ch, p_ls, p_df)
 
-
+lapply(p_list, path_frame)
 
 
 

@@ -8,11 +8,11 @@
     )
 
 .pm_as_stack_path_list <- function(x) strsplit(
-    `terms.MultiFactor::path_frame`(x), "+", fixed = TRUE
+    `terms.multifactor::path_frame`(x), "+", fixed = TRUE
     )
 
 .pm_as_full_path_list <- function(x) unname(
-    tapply(x, ~components, `terms.MultiFactor::path_frame`, simplify = FALSE)
+    tapply(x, ~components, `terms.multifactor::path_frame`, simplify = FALSE)
 )
 
 .valid_path_input <- function(.path) {
@@ -49,13 +49,13 @@
 
 .cut_fm_to_df <- function(x, all_seps = c("~", ":")) {
     # Convert to character
-    x <- gsub(" ", "", deparse1(x))
+    x <- deparse1(x)
 
     steps <- paste0(all_seps, collapse = "|")
 
     # Get all separators and content
     seps    <- strsplit(gsub(paste0("[^", steps, "]"), "", x), "")[[1L]]
-    content <- strsplit(x, steps)[[1L]]
+    content <- literal <- .drop_trailing_spaces(strsplit(x, steps)[[1L]])
     coverage <- 0.0
 
     if( any(i_cov <- seps == ":") ) {
@@ -63,6 +63,7 @@
         all_ops <- c(">", "<", ">=", "<=", "==", "!=")
         ops <-  paste0(all_ops, collapse = "|")
 
+        # t_cov is an index of coverage values with a specified threshold
         t_cov <- grepl( paste0("[", ops, "]"), content[-1L]) & i_cov
 
         if(any(t_cov)) {
@@ -70,8 +71,11 @@
                 as.numeric(
                 gsub(paste0(".*[", ops, "]"), "", content[-1L], perl = TRUE)[t_cov]
             )
-            content[-1L][t_cov] <-
-                gsub(paste0("[", ops, "].*"), "", content[-1L], perl = TRUE)[t_cov]
+            content[-1L][t_cov] <- .drop_trailing_spaces(
+                gsub(
+                    paste0("[", ops, "].*"), "",
+                    content[-1L], perl = TRUE)[t_cov]
+            )
         }
     }
 
@@ -83,6 +87,6 @@
     data.frame(from, to, coverage, stack)
 }
 
-
+.drop_trailing_spaces <- function(x) gsub("^ | $", "", x)
 
 

@@ -1,4 +1,4 @@
-#' Define a path through a MultiFactor object.
+#' Define a path through a multifactor object.
 #' @name select_path-methods
 #' @rdname select_path-methods
 #' @param x input object
@@ -16,8 +16,8 @@
 #'     c = sample(c("x", "y", "z"), 10, replace = TRUE)
 #' )
 #'
-#' # Create MultiFactor
-#' x <- MultiFactor(list(a2b, a2c))
+#' # Create multifactor
+#' x <- multifactor(list(a2b, a2c))
 #'
 #' # Inspect a path between data types
 #' select_path(x, b ~ c)
@@ -26,7 +26,7 @@ NULL
 
 #' @importFrom igraph as_ids
 #'
-S7::method(select_path, MultiFactor) <- function(
+S7::method(select_path, multifactor) <- function(
         x, .path,  ...
 ) {
     .valid_path_input(.path)
@@ -67,7 +67,7 @@ S7::method(select_path, MultiFactor) <- function(
 .select_path <- function(
         x, terms, include = NULL, exclude = NULL, exact = NULL
 ) {
-    g <- `as.igraph.MultiFactor::MultiFactor`(x)
+    g <- `as.igraph.multifactor::multifactor`(x)
     g <- .subset_paths(g, include, exclude, exact)
     # Use apply + unlist to support multiple variables on either side of .path
     term.grid <- expand.grid(as.list(terms))
@@ -245,13 +245,13 @@ S7::method(select_path, MultiFactor) <- function(
     USE.NAMES = FALSE
 )
 
-#' @param d `MultiFactor@map`
+#' @param d `multifactor@map`
 #' @param id `Character or Integer scalar`. Selects column(s) of `d`.
 #' @param names Whether to return characters (Default) or integer indices.
-#' @returns A vector indicating which elements of `MultiFactor` contain `id`.
+#' @returns A vector indicating which elements of `multifactor` contain `id`.
 #' @importFrom Matrix rowSums
 #' @noRd
-#' @description Helper function for `MultiFactor` to get names or indices of
+#' @description Helper function for `multifactor` to get names or indices of
 #' data frames that contain an id column
 #'
 rowsWithCol <- function(d, id, names = TRUE) {

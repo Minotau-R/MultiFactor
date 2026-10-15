@@ -1,6 +1,6 @@
-#' Methods for LinkMap S7 container class
-#' @name LinkMap-methods
-#' @rdname LinkMap-methods
+#' Methods for linkmap S7 container class
+#' @name linkmap-methods
+#' @rdname linkmap-methods
 #' @examples
 #' # Setup
 #' a2b <- data.frame(
@@ -8,8 +8,8 @@
 #'     b = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
 #'
-#' # Create LinkMap
-#' x <- LinkMap(a2b)
+#' # Create linkmap
+#' x <- linkmap(a2b)
 #'
 #' # Basic properties
 #' dim(x)
@@ -20,11 +20,11 @@
 #' nlevels(x)
 #'
 #'
-#' @param x,object `LinkMap` on which the method should be applied.
-#' @returns A `LinkMap`
+#' @param x,object `linkmap` on which the method should be applied.
+#' @returns A `linkmap`
 NULL
 
-S7::method(print, LinkMap) <- function(x, n = 10L, ...) {
+S7::method(print, linkmap) <- function(x, n = 10L, ...) {
   nr <- NROW(x)
   nrn <- nr - n
   cat("A ", paste(class(x), collapse = " "), ": ", nr, " rows.\n", sep = "")
@@ -54,22 +54,22 @@ S7::method(print, LinkMap) <- function(x, n = 10L, ...) {
 #'     (Default: `TRUE`)
 #' @noRd
 #'
-S7::method(nlevels, LinkMap) <- function(x, use.names = TRUE) lengths(
+S7::method(nlevels, linkmap) <- function(x, use.names = TRUE) lengths(
     levels(x), use.names
     )
 
-S7::method(levels, LinkMap) <- function(x) x@levels
+S7::method(levels, linkmap) <- function(x) x@levels
 
 #' @export
 #'
-`levels<-.MultiFactor::LinkMap` <- function(x, value) {
+`levels<-.multifactor::linkmap` <- function(x, value) {
     x@levels <- value
     return(x)
 }
 
 #' @export
 #'
-`unique.MultiFactor::LinkMap` <- function(x, incomparables = FALSE, ...) {
+`unique.multifactor::linkmap` <- function(x, incomparables = FALSE, ...) {
   if (!isFALSE(incomparables))
     .NotYetUsed("incomparables != FALSE")
   x[! duplicated(x) ]
@@ -78,7 +78,7 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 #' @importFrom rlang check_dots_empty0 is_missing
 #' @export
 #'
-`[.MultiFactor::LinkMap` <- function(x, i, ...) {
+`[.multifactor::linkmap` <- function(x, i, ...) {
     rlang::check_dots_empty0(...)
     if(! rlang::is_missing(i))  {
         metadata <- x@metadata
@@ -87,16 +87,16 @@ S7::method(levels, LinkMap) <- function(x) x@levels
         x <- `class<-`(S7::S7_data(x), "data.frame")
         x <- `[.data.frame`(x, i, , drop = FALSE)
 
-        x <- LinkMap(x, metadata)
+        x <- linkmap(x, metadata)
         }
     return(x)
 }
 
 
-#' @title Convert a LinkMap to a sparse matrix.
-#' Convert a LinkMap to a sparse matrix object from the `Matrix` package.
-#' @name as.matrix.LinkMap
-#' @param x a `LinkMap` object.
+#' @title Convert a linkmap to a sparse matrix.
+#' Convert a linkmap to a sparse matrix object from the `Matrix` package.
+#' @name as.matrix.linkmap
+#' @param x a `linkmap` object.
 #' @param terms id of cols in their desired order. `c(rows, cols)`.
 #' @param dims length-2 integer vector of matrix dimensions.
 #'     Default: `colnames(x)`
@@ -110,10 +110,10 @@ S7::method(levels, LinkMap) <- function(x) x@levels
 #' @export
 #' @seealso [Matrix::sparseMatrix()]
 #' @examples
-#' x <- randomLinkMap()
+#' x <- random_linkmap()
 #' as.matrix(x)
 #'
-`as.matrix.MultiFactor::LinkMap` <- function(
+`as.matrix.multifactor::linkmap` <- function(
         x, terms = colnames(x),
         dims = nlevels(x)[terms], dimnames = levels(x)[terms],
         value_id = NULL, force_pattern = is.null(value_id),
@@ -133,26 +133,26 @@ S7::method(levels, LinkMap) <- function(x) x@levels
   }
 
 
-#' @title Convert a LinkMap to a data.frame
-#' Convert a LinkMap back to a regular data.frame. Metadata is included.
-#' @name as.data.frame.LinkMap
-#' @param x a `LinkMap` object.
+#' @title Convert a linkmap to a data.frame
+#' Convert a linkmap back to a regular data.frame. Metadata is included.
+#' @name as.data.frame.linkmap
+#' @param x a `linkmap` object.
 #' @param row.names,optional,... For compatibility, not currently used.
 #' @importFrom S7 S7_data
 #' @returns a `data.frame`
 #' @examples
-#' x <- randomLinkMap()
+#' x <- random_linkmap()
 #' as.data.frame(x)
 #' @export
 #'
-`as.data.frame.MultiFactor::LinkMap` <- function(
+`as.data.frame.multifactor::linkmap` <- function(
     x, row.names, optional, ...
     ) cbind(S7::S7_data(x), x@metadata)
 
 
 
 
-##### LinkMap utils
+##### linkmap utils
 
 .colnames2name <- function(x) paste(x, collapse = "2")
 

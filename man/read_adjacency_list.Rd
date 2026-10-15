@@ -57,17 +57,17 @@ are separated by this character. (Default: \code{"\\t"})}
 the output. (Default: \code{c("id.x", "id.y")})}
 
 \item{as.df}{\code{Boolean} Whether to return an unmodified \code{data.frame} or a
-\code{LinkMap} (Default).}
+\code{linkmap} (Default).}
 
 \item{...}{Additional arguments, passed to \code{scan}.}
 }
 \value{
-A \code{LinkMap}, or \verb{if( as.df )}, a two-column data.frame formatted
-like an edge list, appropriate input for \code{LinkMap()}.
+A \code{linkmap}, or \verb{if( as.df )}, a two-column data.frame formatted
+like an edge list, appropriate input for \code{linkmap()}.
 }
 \description{
 Read relational data from a file in adjacency list format and parse it into a
-\code{LinkMap} (or a \code{LinkMap}-shaped \code{data.frame}). Relies on \code{base::scan} and
+\code{linkmap} (or a \code{linkmap}-shaped \code{data.frame}). Relies on \code{base::scan} and
 \code{utils::count.fields} under the hood.
 }
 \details{

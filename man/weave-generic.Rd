@@ -16,7 +16,7 @@ names of the desired combination of feature types.}
 \item{...}{additional arguments}
 }
 \value{
-a \code{LinkMap} or \code{matrix}.
+a \code{linkmap} or \code{matrix}.
 }
 \description{
 \code{weave()} is an S7 generic that finds a path through a

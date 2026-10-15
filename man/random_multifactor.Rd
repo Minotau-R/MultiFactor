@@ -3,20 +3,20 @@
 \name{draw_cards}
 \alias{draw_cards}
 \alias{poker_scores}
-\alias{randomMultiFactor}
+\alias{random_multifactor}
 \alias{trade_posts}
-\alias{randomLinkMap}
+\alias{random_linkmap}
 \title{Generate and optionally draw from a poker deck.}
 \usage{
 draw_cards(draw = NULL)
 
 poker_scores()
 
-randomMultiFactor(layout = NULL, n_features = 10, sparseness = 0.75)
+random_multifactor(layout = NULL, n_features = 10, sparseness = 0.75)
 
 trade_posts(raw.data = FALSE)
 
-randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
+random_linkmap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 }
 \arguments{
 \item{draw}{Optional \code{integer}. How many cards to draw from the deck.}
@@ -29,7 +29,7 @@ randomLinkMap(x = list(lower = letters, UPPER = LETTERS), sparseness = 0.5)
 Default is \code{0.5}.}
 
 \item{raw.data}{\code{Boolean}, Whether to return the \code{data.frame} of goods rather
-than the default \code{MultiFactor}.}
+than the default \code{multifactor}.}
 
 \item{x}{optional list of two named vectors of features to use. Default is
 \code{list(lower = letters, UPPER = LETTERS)}.}
@@ -38,25 +38,25 @@ than the default \code{MultiFactor}.}
 a randomly generated object of the specified class.
 }
 \description{
-Randomly generate a valid \code{MultiFactor} or \code{LinkMap} object.
-\code{randomMultiFactor} can optionally take am \code{igraph} object to determine its
+Randomly generate a valid \code{multifactor} or \code{linkmap} object.
+\code{random_multifactor} can optionally take am \code{igraph} object to determine its
 layout. (See examples)
-\code{trade_posts()} generates a random \code{MultiFactor} in the style of the trading
+\code{trade_posts()} generates a random \code{multifactor} in the style of the trading
 example from the vignette.
 
-called by \code{randomMultiFactor}, shouldn't be called by user.
+called by \code{random_multifactor}, shouldn't be called by user.
 }
 \examples{
-# Make a random MultiFactor object
-randomMultiFactor()
+# Make a random multifactor object
+random_multifactor()
 
 # Use a (possibly random) igraph as input:
-randomMultiFactor( igraph::sample_gnp(6, 2/3) )
+random_multifactor( igraph::sample_gnp(6, 2/3) )
 
-# Make a random LinkMap object
-randomLinkMap()
+# Make a random linkmap object
+random_linkmap()
 
-# Make a random MultiFactor with the trading goods from the vignettes
+# Make a random multifactor with the trading goods from the vignettes
 trade_posts()
 
 # Playing cards
@@ -67,7 +67,7 @@ poker_scores()
 \seealso{
 \link{playing_cards}
 
-\code{\link[=MultiFactor]{MultiFactor()}}
+\code{\link[=multifactor]{multifactor()}}
 
-\code{\link[=LinkMap]{LinkMap()}}
+\code{\link[=linkmap]{linkmap()}}
 }

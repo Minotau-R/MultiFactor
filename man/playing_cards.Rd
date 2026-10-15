@@ -13,7 +13,7 @@ vignette.
 \code{playing_cards}: Manual input.
 }
 \usage{
-data("playing_cards", package = "MultiFactor")
+data("playing_cards", package = "multifactor")
 }
 \description{
 Basic names of entities in a card deck.

@@ -2,31 +2,31 @@
 % Please edit documentation in R/weave.R
 \name{weave-methods}
 \alias{weave-methods}
-\title{Weave a new LinkMap from a MultiFactor}
+\title{Weave a new linkmap from a multifactor}
 \arguments{
-\item{x}{a \code{MultiFactor}}
+\item{x}{a \code{multifactor}}
 
 \item{.path}{Either a \code{formula} or a \verb{character vector} of length 2 with the
 names of the desired combination of feature types.}
 
-\item{out.format}{\verb{Character scalar}. One of \code{'LinkMap'}, \code{'matrix'}.}
+\item{out.format}{\verb{Character scalar}. One of \code{'linkmap'}, \code{'matrix'}.}
 
 \item{include, exclude, exact}{\verb{Character vectors} Should feature types be
 included or excluded from the available paths? Exact allows for exact
 path definition.}
 }
 \value{
-a \code{LinkMap} or \verb{sparse Matrix}.
+a \code{linkmap} or \verb{sparse Matrix}.
 }
 \description{
-Generates a new \code{LinkMap} object by cross-referencing the elements of a
-given \code{MultiFactor}.
+Generates a new \code{linkmap} object by cross-referencing the elements of a
+given \code{multifactor}.
 }
 \examples{
-# Generate a random MultiFactor
-x <- randomMultiFactor()
+# Generate a random multifactor
+x <- random_multifactor()
 
-# Weave new b2c LinkMap
+# Weave new b2c linkmap
 weave(x, b ~ c)
 weave(x, b ~ a, out.format = "matrix")
 

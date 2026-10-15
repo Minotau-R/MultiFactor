@@ -1,16 +1,16 @@
 #' @importFrom utils data
 .load_quickbrownfox <- function() local({
-    utils::data("quickbrownfox", package = "MultiFactor", envir = environment())
+    utils::data("quickbrownfox", package = "multifactor", envir = environment())
     quickbrownfox <- get("quickbrownfox", mode = "list")
     return(quickbrownfox)
 })
 
-#' A MultiFactor containing a famous pangram.
+#' A multifactor containing a famous pangram.
 #' @description
 #' Demo data set used in the coverage en enrichment vignette.
 #' @name quickbrownfox
 #' @param raw.data `Boolean`, Whether to return underlying `list` rather
-#' than the default `MultiFactor`.
+#' than the default `multifactor`.
 #' @export
 #' @examples
 #' quickbrownfox()
@@ -18,7 +18,7 @@
 quickbrownfox <- function(raw.data = FALSE) {
     x <- .load_quickbrownfox()
     if(!raw.data) {
-        x <- MultiFactor(x)
+        x <- multifactor(x)
     }
     return(x)
 }
@@ -37,7 +37,7 @@ quickbrownfox <- function(raw.data = FALSE) {
 # constituent <- c("the quick brown fox", "jumps over", "the lazy dog")
 # constituent_lv <- c("subject", "predicate", "object")
 #
-# # Compile LinkMaps
+# # Compile linkmaps
 #
 # letter2word <- lapply(word, strsplit, split = "", fixed = FALSE) |>
 #     unlist(recursive = FALSE) |>

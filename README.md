@@ -4,40 +4,40 @@
 <!-- badges: start -->
 
 [![GitHub
-issues](https://img.shields.io/github/issues/Minotau-R/MultiFactor)](https://github.com/Minotau-R/MultiFactor/issues)
+issues](https://img.shields.io/github/issues/Minotau-R/multifactor)](https://github.com/Minotau-R/multifactor/issues)
 [![GitHub
-pulls](https://img.shields.io/github/issues-pr/Minotau-R/MultiFactor)](https://github.com/Minotau-R/MultiFactor/pulls)
+pulls](https://img.shields.io/github/issues-pr/Minotau-R/multifactor)](https://github.com/Minotau-R/multifactor/pulls)
 [![R
-BiocCheck](https://github.com/Minotau-R/MultiFactor/actions/workflows/test.yml/badge.svg)](https://github.com/Minotau-R/MultiFactor/actions/workflows/test.yml)
+BiocCheck](https://github.com/Minotau-R/multifactor/actions/workflows/test.yml/badge.svg)](https://github.com/Minotau-R/multifactor/actions/workflows/test.yml)
 <!-- badges: end -->
 
-# MultiFactor: R package for MultiFactor and LinkMap S7 container classes.
+# multifactor: R package for multifactor and linkmap S7 container classes.
 
 ## Introduction
 
-`MultiFactor` and `LinkMap` are a pair of S7 classes to organize and
+`multifactor` and `linkmap` are a pair of S7 classes to organize and
 manage multiple sets of factors, for instance when tracing or converting
-feature IDs across databases. Methods for `MultiFactor` aim to follow
+feature IDs across databases. Methods for `multifactor` aim to follow
 `factor` behaviour.
 
 ## Installation instructions
 
 Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install the released version of
-`MultiFactor`:
+`multifactor`:
 
 ``` r
-install.packages("MultiFactor")
+install.packages("multifactor")
 ```
 
 Or install the development version from this repository:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("minotau-R/MultiFactor")
+remotes::install_github("minotau-R/multifactor")
 ```
 
-## Getting started using MultiFactor
+## Getting started using multifactor
 
 [See the vignettes on the package
-site.](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html)
+site.](https://minotau-r.github.io/multifactor/articles/multifactor.html)

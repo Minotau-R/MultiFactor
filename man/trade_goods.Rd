@@ -15,7 +15,7 @@ prefix.
 \code{trade_goods}: Curated using the \code{emo} package.
 }
 \usage{
-data("trade_goods", package = "MultiFactor")
+data("trade_goods", package = "multifactor")
 }
 \description{
 Small data set of six types of goods.

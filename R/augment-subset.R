@@ -1,18 +1,18 @@
-#' Tools to modify MultiFactors
+#' Tools to modify multifactors
 #' @name augment-subset
 #' @rdname augment-subset
 #' @description
-#' Generates a new `MultiFactor` object by cross-referencing the elements of a
-#'     given `MultiFactor`.
-#' @param x a `MultiFactor` or `LinkMap`.
-#' @param ... Name-value pairs. The name gives the name of the LinkMap in the
+#' Generates a new `multifactor` object by cross-referencing the elements of a
+#'     given `multifactor`.
+#' @param x a `multifactor` or `linkmap`.
+#' @param ... Name-value pairs. The name gives the name of the linkmap in the
 #'     output.
-#' @returns a `MultiFactor`.
+#' @returns a `multifactor`.
 #' @examples
 #' # Only necessary in example code
 #' require(generics)
-#' # Generate a random MultiFactor
-#' x <- randomMultiFactor()
+#' # Generate a random multifactor
+#' x <- random_multifactor()
 #'
 #' # Use augment to chain together operations like weave and stack, in order.
 #' augment(x,
@@ -21,7 +21,7 @@
 #'     weave(x, d ~ f)
 #' )
 #'
-#' # Setting a LinkMap to NULL by name deletes it from the MultiFactor
+#' # Setting a linkmap to NULL by name deletes it from the multifactor
 #' augment(x, a2b = NULL )
 #'
 NULL
@@ -29,16 +29,16 @@ NULL
 
 #' @export
 #' @rdname augment-subset
-#' @name augment.MultiFactor
+#' @name augment.multifactor
 #' @param .path Either a `formula` or a `character vector`.
 #' @param .drop.unmatched `Boolean`. Whether to drop factor levels that do not
 #'     appear in the data (Default: keep all levels).
-#' @aliases subset.MultiFactor::MultiFactor
+#' @aliases subset.multifactor::multifactor
 #'
-`subset.MultiFactor::MultiFactor` <- function(
+`subset.multifactor::multifactor` <- function(
         x, .path, .drop.unmatched = FALSE, ...
 ) {
-    if(.drop.unmatched) x <- .trimMultiFactor(x)
+    if(.drop.unmatched) x <- .trim_multifactor(x)
 
     .valid_path_input(.path)
     pm <- .path_to_path_frame(.path)
@@ -54,12 +54,12 @@ NULL
 
 #' @export
 #' @rdname augment-subset
-#' @name subset.LinkMap
-#' @aliases subset.MultiFactor::LinkMap
+#' @name subset.linkmap
+#' @aliases subset.multifactor::linkmap
 #' @param subset Logical expression indicating elements or rows to keep.
 #'     If `NULL` (Default), subsets based on complete coverage if available.
 #'
-`subset.MultiFactor::LinkMap` <- function(x, subset = NULL, ...) {
+`subset.multifactor::linkmap` <- function(x, subset = NULL, ...) {
     df <- as.data.frame(x)
     if( is.null(subset) ) {
         if("complete" %in% colnames(df)) {
@@ -85,29 +85,29 @@ NULL
         }
     }
 
-method(subset, MultiFactor) <- function(
+method(subset, multifactor) <- function(
         x, .path, .drop.unmatched = FALSE, ...
-) `subset.MultiFactor::MultiFactor`(
+) `subset.multifactor::multifactor`(
     x, .path, .drop.unmatched
 )
 
-method(subset, LinkMap) <- function(
+method(subset, linkmap) <- function(
         x, subset = NULL, ...
-) `subset.MultiFactor::LinkMap`(
+) `subset.multifactor::linkmap`(
     x, subset = NULL, ...
 )
 
 #' @importFrom generics augment
 #'
-S7::method(augment, MultiFactor) <-
-    function(x, ...) `augment.MultiFactor::MultiFactor`(x, ...)
+S7::method(augment, multifactor) <-
+    function(x, ...) `augment.multifactor::multifactor`(x, ...)
 
 #' @export
 #' @rdname augment-subset
-#' @name augment.MultiFactor
+#' @name augment.multifactor
 #' @importFrom rlang dots_list
 #'
-`augment.MultiFactor::MultiFactor` <- function(x, ...) {
+`augment.multifactor::multifactor` <- function(x, ...) {
     old_names <- rownames(x)
     dots <- rlang::dots_list(...)
     dot_names <- names(dots)
@@ -125,7 +125,7 @@ S7::method(augment, MultiFactor) <-
     return(x)
 }
 
-#' Safely get all names from a MultiFactor as a data.frame.
+#' Safely get all names from a multifactor as a data.frame.
 #' @noRd
 #'
 .all_names_in_list_mf <- function(x) {
