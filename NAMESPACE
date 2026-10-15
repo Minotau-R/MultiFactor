@@ -58,8 +58,7 @@ importFrom(S7,
   new_class,
   new_generic,
   new_object,
-  new_property,
-  prop
+  new_property
 )
 importFrom(dplyr,bind_rows)
 importFrom(forcats,

@@ -38,7 +38,7 @@ S7::method(stack, MultiFactor) <- function(
     pm <- .path_to_path_frame(.path)
     .path_check_valid_stack(pm)
 
-    terms <-  .pm_as_path_list(pm)
+    terms <- .pm_as_stack_path_list(pm)
 
     res <- .stack_terms(x, terms)
     if(out.format == "matrix") {

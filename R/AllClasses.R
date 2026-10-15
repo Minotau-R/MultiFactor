@@ -212,8 +212,12 @@ path_frame <- S7::new_class(
     package = "MultiFactor",
     parent = S7::class_data.frame,
     constructor = function(x) {
+        if(inherits(x, "formula")) {
+            x <- .path_to_path_frame(x)
+        }
         stopifnot(
-            "path_frame input must be a data.frame." = is.data.frame(x)
+            "path_frame input must be either formula or data.frame." =
+                is.data.frame(x)
         )
         S7::new_object(.parent = x)
     },

@@ -46,18 +46,6 @@ S7::method(select_path, MultiFactor) <- function(
     }
 }
 
-# .select_std_path <- function(x, std_path) {
-#     terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
-#     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
-#     if(!length(include)) { include <- NULL }
-#     full_path <- .select_path( x, terms, include )
-#     i <- lapply(full_path, function(ii) ii[-c(1L, length(ii))])
-#
-#     res <- factor_path(terms, include = i, exclude = character(), exact = TRUE)
-#
-#     return(res)
-#
-# }
 
 #' @importFrom dplyr bind_rows
 .select_by_path_frame <- function(x, pm) {
@@ -75,27 +63,6 @@ S7::method(select_path, MultiFactor) <- function(
     path_frame(res[, col_order, drop = FALSE])
 }
 
-# .std_path_as_factor_path <- function(x, exact = TRUE) {
-#     ll <- length(x)
-#     if( ll == 2L ) {
-#         res <- factor_path(unlist(x), list(character()), character(), exact)
-#     } else {
-#         include <- list(x[-c(1L, ll)])
-#         x       <- unlist(x[ c(1L, ll)])
-#         res     <- factor_path(x, include, character(), exact)
-#     }
-#     return(res)
-# }
-
-# TODO delete if new .select_std_path is fine
-# .select_std_path <- function(x, std_path) {
-#     terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
-#     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
-#     if(!length(include)) { include <- NULL }
-#     full_path <- .select_path( x, terms, include )
-#
-#     return(full_path)
-# }
 
 .select_path <- function(
         x, terms, include = NULL, exclude = NULL, exact = NULL

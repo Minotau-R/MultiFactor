@@ -11,8 +11,8 @@
 #' # Get formula notation for the full path:
 #' formula(p)
 #'
-#' @param x,object `MultiFactor` on which the method should be applied.
-#' @returns A `MultiFactor`
+#' @param x,object `path_frame` on which the method should be applied.
+#' @returns A `path_frame` or method-appropriate value.
 NULL
 
 S7::method(formula, path_frame) <- function(x) `formula.MultiFactor::path_frame`(x)
@@ -27,6 +27,12 @@ S7::method(formula, path_frame) <- function(x) `formula.MultiFactor::path_frame`
 
     if("coverage" %in% colnames(x)) {
         res[seq_len(out_len) %% 2 == 0L][x[["coverage"]] != 0L] <- ":"
+        if(any(prop <- x[["coverage"]] > 0L & x[["coverage"]] < 1L)) {
+
+            res[2 * which(prop) + 1L] <- paste0(
+                res[2 * which(prop) + 1L], " < ", x[["coverage"]][which(prop)]
+            )
+        }
     }
 
     res <- paste0(res, collapse = "")
