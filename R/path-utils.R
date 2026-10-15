@@ -4,11 +4,11 @@
 .check_path_frame_uses_stack <- function(.path_map) any(.path_map[["stack"]])
 
 .check_path_frame_uses_coverage <- function(.path_map) any(
-    .path_map[["coverage"]] > 0
+    .path_map[["use_cov"]] > 0
     )
 
 .pf_as_stack_path_list <- function(x) strsplit(
-    `terms.multifactor::path_frame`(x), "+", fixed = TRUE
+    `terms.multifactor::path_frame`(x), " + ", fixed = TRUE
     )
 
 .pf_as_full_path_list <- function(x) unname(
