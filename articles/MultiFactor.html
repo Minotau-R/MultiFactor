@@ -35,6 +35,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/multifactor.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
@@ -393,11 +394,11 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 80cd245 UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 4ea281c UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), fruit_emoji (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 80cd245 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 4ea281c (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -412,9 +413,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 191036f UN-B 12 18 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 328eafb UN-B 12 18 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 191036f (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 328eafb (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  </span></span>
 <span><span class="co">#&gt;  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves </span></span>
 <span><span class="co">#&gt;  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    </span></span>
