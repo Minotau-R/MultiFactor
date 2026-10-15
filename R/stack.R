@@ -1,48 +1,48 @@
-#' Combine levels across several LinkMaps in a MultiFactor
+#' Combine levels across several linkmaps in a multifactor
 #' @name stack-methods
 #' @rdname stack-methods
-#' @description Generates a new `LinkMap` object by merging levels by name,
+#' @description Generates a new `linkmap` object by merging levels by name,
 #'     separated by the plus (`+`) sign. See examples.
-#' @param x a `MultiFactor`
+#' @param x a `multifactor`
 #' @param .path a `formula` of length 2 with with levels to be merged separated
 #'     by the plus (`+`) sign. Optionally, a list with two character vectors,
 #'     signifying the variables to be combined at the left and right hand side,
 #'     respectively.
 #' @param ... Additional arguments (unused.)
-#' @param out.format `Character scalar`. One of `'LinkMap'`, `'matrix'`.
-#' @returns a `LinkMap` or `sparse Matrix`.
+#' @param out.format `Character scalar`. One of `'linkmap'`, `'matrix'`.
+#' @returns a `linkmap` or `sparse Matrix`.
 #' @importFrom utils stack
 #' @examples
 #' # Only necessary in example code
 #' require(utils)
 #'
-#' x <- randomMultiFactor()
+#' x <- random_multifactor()
 #' # Merge variables with "+" operator, new names get concatenated with ".":
 #' stack(x, b ~ c + d)
 #'
 NULL
 
-S7::method(stack, MultiFactor) <- function(
-        x, .path, out.format = c("LinkMap", "matrix"), ...
-        ) `stack.MultiFactor::MultiFactor`(x, .path, out.format, ...)
+S7::method(stack, multifactor) <- function(
+        x, .path, out.format = c("linkmap", "matrix"), ...
+        ) `stack.multifactor::multifactor`(x, .path, out.format, ...)
 
 #' @importFrom utils stack
 #' @export
 #'
-`stack.MultiFactor::MultiFactor` <- function(
-        x, .path, out.format = c("LinkMap", "matrix"), ...
+`stack.multifactor::multifactor` <- function(
+        x, .path, out.format = c("linkmap", "matrix"), ...
 ) {
-    out.format <- match.arg(out.format, c("LinkMap", "matrix"))
+    out.format <- match.arg(out.format, c("linkmap", "matrix"))
     # Handle .path arg
     .valid_path_input(.path)
     pm <- .path_to_path_frame(.path)
     .path_check_valid_stack(pm)
 
-    terms <-  .pm_as_path_list(pm)
+    terms <- .pm_as_stack_path_list(pm)
 
     res <- .stack_terms(x, terms)
     if(out.format == "matrix") {
-        res <- `as.matrix.MultiFactor::LinkMap`(res)
+        res <- `as.matrix.multifactor::linkmap`(res)
     }
     return(res)
 }
@@ -73,7 +73,7 @@ S7::method(stack, MultiFactor) <- function(
     )
     cn <- vapply(lapply(terms, unique), paste, collapse = ".", "")
     res <- do.call( rbind.data.frame, lapply(res, `colnames<-`, cn) )
-    res <- LinkMap(res)
+    res <- linkmap(res)
     return(res)
 }
 
@@ -82,7 +82,7 @@ S7::method(stack, MultiFactor) <- function(
 .stack_weave_terms <- function(x, terms) {
     # Determine required ids in order, only keep relevant elements of link.
     all_terms <- .select_path(x, terms, NULL, NULL, NULL)
-    res <- lapply(all_terms, .weave_full_path, x = x, out.format = "LinkMap")
+    res <- lapply(all_terms, .weave_full_path, x = x, out.format = "linkmap")
     res <- do.call(
         rbind.data.frame,
         c(res, make.row.names = FALSE, stringsAsFactors = TRUE)

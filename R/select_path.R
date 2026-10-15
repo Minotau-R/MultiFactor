@@ -1,4 +1,4 @@
-#' Define a path through a MultiFactor object.
+#' Define a path through a multifactor object.
 #' @name select_path-methods
 #' @rdname select_path-methods
 #' @param x input object
@@ -16,8 +16,8 @@
 #'     c = sample(c("x", "y", "z"), 10, replace = TRUE)
 #' )
 #'
-#' # Create MultiFactor
-#' x <- MultiFactor(list(a2b, a2c))
+#' # Create multifactor
+#' x <- multifactor(list(a2b, a2c))
 #'
 #' # Inspect a path between data types
 #' select_path(x, b ~ c)
@@ -26,7 +26,7 @@ NULL
 
 #' @importFrom igraph as_ids
 #'
-S7::method(select_path, MultiFactor) <- function(
+S7::method(select_path, multifactor) <- function(
         x, .path,  ...
 ) {
     .valid_path_input(.path)
@@ -46,18 +46,6 @@ S7::method(select_path, MultiFactor) <- function(
     }
 }
 
-# .select_std_path <- function(x, std_path) {
-#     terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
-#     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
-#     if(!length(include)) { include <- NULL }
-#     full_path <- .select_path( x, terms, include )
-#     i <- lapply(full_path, function(ii) ii[-c(1L, length(ii))])
-#
-#     res <- factor_path(terms, include = i, exclude = character(), exact = TRUE)
-#
-#     return(res)
-#
-# }
 
 #' @importFrom dplyr bind_rows
 .select_by_path_frame <- function(x, pm) {
@@ -75,32 +63,11 @@ S7::method(select_path, MultiFactor) <- function(
     path_frame(res[, col_order, drop = FALSE])
 }
 
-# .std_path_as_factor_path <- function(x, exact = TRUE) {
-#     ll <- length(x)
-#     if( ll == 2L ) {
-#         res <- factor_path(unlist(x), list(character()), character(), exact)
-#     } else {
-#         include <- list(x[-c(1L, ll)])
-#         x       <- unlist(x[ c(1L, ll)])
-#         res     <- factor_path(x, include, character(), exact)
-#     }
-#     return(res)
-# }
-
-# TODO delete if new .select_std_path is fine
-# .select_std_path <- function(x, std_path) {
-#     terms <- unlist(std_path[c(1L, length(std_path))], FALSE, FALSE)
-#     include <- unlist(std_path[-c(1, length(std_path))], FALSE, FALSE)
-#     if(!length(include)) { include <- NULL }
-#     full_path <- .select_path( x, terms, include )
-#
-#     return(full_path)
-# }
 
 .select_path <- function(
         x, terms, include = NULL, exclude = NULL, exact = NULL
 ) {
-    g <- `as.igraph.MultiFactor::MultiFactor`(x)
+    g <- `as.igraph.multifactor::multifactor`(x)
     g <- .subset_paths(g, include, exclude, exact)
     # Use apply + unlist to support multiple variables on either side of .path
     term.grid <- expand.grid(as.list(terms))
@@ -278,13 +245,13 @@ S7::method(select_path, MultiFactor) <- function(
     USE.NAMES = FALSE
 )
 
-#' @param d `MultiFactor@map`
+#' @param d `multifactor@map`
 #' @param id `Character or Integer scalar`. Selects column(s) of `d`.
 #' @param names Whether to return characters (Default) or integer indices.
-#' @returns A vector indicating which elements of `MultiFactor` contain `id`.
+#' @returns A vector indicating which elements of `multifactor` contain `id`.
 #' @importFrom Matrix rowSums
 #' @noRd
-#' @description Helper function for `MultiFactor` to get names or indices of
+#' @description Helper function for `multifactor` to get names or indices of
 #' data frames that contain an id column
 #'
 rowsWithCol <- function(d, id, names = TRUE) {

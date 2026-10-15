@@ -1,7 +1,7 @@
 # # library(dplyr)
 # library(tidyverse)
 # library(patchwork)
-# # library(MultiFactor)
+# # library(multifactor)
 #
 # traits_df <- list(
 #     Movement   = c("🐾" = "Ground", "🪶" = "Flight", "🌊" = "Aquatic"),
@@ -159,19 +159,19 @@
 #
 #
 #
-# traits <- MultiFactor::MultiFactor(
+# traits <- multifactor::multifactor(
 #     tapply(
 #         species2traits, ~trait.name,
 #         function(x) {
 #             colnames(x)[2] <- unique(as.character(x$trait.name))
 #             x$trait.name <- NULL
-#             MultiFactor::as.LinkMap(x)
+#             multifactor::as_linkmap(x)
 #         }
 #     )
 # )
 #
 #
-# taxonomy <- MultiFactor::MultiFactor(
+# taxonomy <- multifactor::multifactor(
 #     tapply(
 #         taxonomy_df, ~name,
 #
@@ -179,14 +179,14 @@
 #             colnames(x)[2] <- unique(as.character(x$name))
 #             x <- x[!is.na(x[[2L]]), ]
 #             x$name <- NULL
-#             MultiFactor::as.LinkMap(x)
+#             multifactor::as_linkmap(x)
 #         }
 #     )
 # )
 #
 #
-# complex_traits <-  MultiFactor::MultiFactor(
-#     MultiFactor::LinkMap(
+# complex_traits <-  multifactor::multifactor(
+#     multifactor::linkmap(
 #         data.frame(
 #             Diet  = c("Meat", "Misc", "Plants"),
 #             Trait = c("Omnivore")

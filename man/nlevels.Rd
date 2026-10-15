@@ -7,7 +7,7 @@
 nlevels(x, ...)
 }
 \arguments{
-\item{x}{an object, such as a \code{LinkMap}, \code{MultiFactor} or \code{factor}.}
+\item{x}{an object, such as a \code{linkmap}, \code{multifactor} or \code{factor}.}
 
 \item{...}{additional arguments. Not used for \code{base::factor} method.}
 }

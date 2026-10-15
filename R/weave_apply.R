@@ -1,10 +1,10 @@
-#' Index a table by a MultiFactor and apply arbitrary code to it
+#' Index a table by a multifactor and apply arbitrary code to it
 #' @name weave_apply-methods
 #' @rdname weave_apply-methods
 #' @description
 #' `weave_apply` can run arbitrary code specified by `FUN` across any number
 #'  of row-based subsets of table `.data`. Mimics lapply.
-#' @param .x a `MultiFactor` object.
+#' @param .x a `multifactor` object.
 #' @param .path either a `formula` or a `character vector`` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param .data `A table`. A `data.frame`, `matrix`, other object with rows and
@@ -34,11 +34,11 @@
 #'     .fun = function(x) colSums(x)
 #' )
 #'
-#' @seealso [weave()] [lapply()] [LinkMap()] [MultiFactor()]
+#' @seealso [weave()] [lapply()] [linkmap()] [multifactor()]
 #'
 NULL
 
-S7::method(weave_apply, MultiFactor) <- function(
+S7::method(weave_apply, multifactor) <- function(
         .x, .path, .data, .fun = NULL, ..., .index = "row.names"
 ) {
     .valid_path_input(.path)
@@ -51,7 +51,7 @@ S7::method(weave_apply, MultiFactor) <- function(
     #
     # path_list <- tapply(pm, ~components, terms, simplify = FALSE) |> unname()
 
-    IDX <- .splitLinkMap(.index_tbl_by_path_list(.x, path_list, .data, .index))
+    IDX <- .splitlinkmap(.index_tbl_by_path_list(.x, path_list, .data, .index))
 
     # Mimic tapply behaviour; Leaving FUN = NULL returns the index itself.
     if(is.null(.fun)) {
@@ -78,7 +78,7 @@ S7::method(weave_apply, MultiFactor) <- function(
 #' @rdname index_tbl
 #' @description
 #' `.index_tbl_by_path_list()` finds row indices for input table `.data`,
-#' based on a user-defined path through a MultiFactor.
+#' based on a user-defined path through a multifactor.
 #' @noRd
 #' @examples
 #' # Utilities
@@ -90,9 +90,9 @@ S7::method(weave_apply, MultiFactor) <- function(
 
     .data <- .index_tbl(.data, type = path_list[[2L]], .i = .i)
     path_list[[2L]] <- colnames(.data)[[2L]]
-    .data <- MultiFactor(.data)
+    .data <- multifactor(.data)
 
-    .x <- `c.MultiFactor::MultiFactor`(.x, .data)
+    .x <- `c.multifactor::multifactor`(.x, .data)
 
     weave(.x, path_list, ...)
 
@@ -104,7 +104,7 @@ S7::method(weave_apply, MultiFactor) <- function(
 #' @rdname index_tbl
 #' @description
 #' `.index_tbl()` is a utility function that flexibly takes a table as input and
-#' returns a special `LinkMap` object that has (1) row names and (2)
+#' returns a special `linkmap` object that has (1) row names and (2)
 #' corresponding row indices of that table as columns.
 #'
 #' @param type `Character scalar` Specifies name of the feature type, will be
@@ -112,7 +112,7 @@ S7::method(weave_apply, MultiFactor) <- function(
 #' @param .i `Character scalar` column with features. Defaults to `rownames(X)`
 #' @noRd
 #' @examples
-#' # Any table can be a indexed into a LinkMap:
+#' # Any table can be a indexed into a linkmap:
 #' .index_tbl(mtcars)
 #'
 .index_tbl <- function(
@@ -126,12 +126,12 @@ S7::method(weave_apply, MultiFactor) <- function(
     res <- data.frame( row.index, seq_len(NROW(.data)) )
 
     colnames(res) <- c(type, "row.index")
-    as.LinkMap(res)
+    as_linkmap(res)
 }
 
 
 #' @noRd
-.splitLinkMap <- function(x, drop = TRUE) split.default(
+.splitlinkmap <- function(x, drop = TRUE) split.default(
     as.integer(x[[2L]]), x[[1L]], drop
     )
 

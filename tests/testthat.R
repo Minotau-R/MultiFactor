@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(MultiFactor)
+library(multifactor)
 
-test_check("MultiFactor")
+test_check("multifactor")

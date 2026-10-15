@@ -1,4 +1,4 @@
-Package: MultiFactor
+Package: multifactor
 Title: S7 Classes for Relational Data
 Version: 0.1.2
 Authors@R: c(
@@ -9,7 +9,7 @@ Authors@R: c(
             )
 Description: An S7 framework to organize and manage multiple sets of factors, 
     for instance when tracing or converting feature IDs across databases. 
-    Methods for MultiFactor aim to follow factor behaviour.
+    Methods for multifactor aim to follow factor behaviour.
 Depends: 
     R (>= 4.1.0)
 Imports:
@@ -34,6 +34,6 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://minotau-r.github.io/MultiFactor/
+URL: https://minotau-r.github.io/multifactor/
 VignetteBuilder: knitr
 Config/roxygen2/version: 8.1.0

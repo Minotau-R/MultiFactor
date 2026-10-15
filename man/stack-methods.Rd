@@ -2,9 +2,9 @@
 % Please edit documentation in R/stack.R
 \name{stack-methods}
 \alias{stack-methods}
-\title{Combine levels across several LinkMaps in a MultiFactor}
+\title{Combine levels across several linkmaps in a multifactor}
 \arguments{
-\item{x}{a \code{MultiFactor}}
+\item{x}{a \code{multifactor}}
 
 \item{.path}{a \code{formula} of length 2 with with levels to be merged separated
 by the plus (\code{+}) sign. Optionally, a list with two character vectors,
@@ -13,20 +13,20 @@ respectively.}
 
 \item{...}{Additional arguments (unused.)}
 
-\item{out.format}{\verb{Character scalar}. One of \code{'LinkMap'}, \code{'matrix'}.}
+\item{out.format}{\verb{Character scalar}. One of \code{'linkmap'}, \code{'matrix'}.}
 }
 \value{
-a \code{LinkMap} or \verb{sparse Matrix}.
+a \code{linkmap} or \verb{sparse Matrix}.
 }
 \description{
-Generates a new \code{LinkMap} object by merging levels by name,
+Generates a new \code{linkmap} object by merging levels by name,
 separated by the plus (\code{+}) sign. See examples.
 }
 \examples{
 # Only necessary in example code
 require(utils)
 
-x <- randomMultiFactor()
+x <- random_multifactor()
 # Merge variables with "+" operator, new names get concatenated with ".":
 stack(x, b ~ c + d)
 

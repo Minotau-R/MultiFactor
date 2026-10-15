@@ -2,45 +2,45 @@
 % Please edit documentation in R/augment-subset.R
 \name{augment-subset}
 \alias{augment-subset}
-\alias{augment.MultiFactor}
-\alias{subset.MultiFactor::MultiFactor}
-\alias{subset.LinkMap}
-\alias{subset.MultiFactor::LinkMap}
-\alias{augment.MultiFactor::MultiFactor}
-\title{Tools to modify MultiFactors}
+\alias{augment.multifactor}
+\alias{subset.multifactor::multifactor}
+\alias{subset.linkmap}
+\alias{subset.multifactor::linkmap}
+\alias{augment.multifactor::multifactor}
+\title{Tools to modify multifactors}
 \usage{
-\method{subset}{`MultiFactor::MultiFactor`}(x, .path, .drop.unmatched = FALSE, ...)
+\method{subset}{`multifactor::multifactor`}(x, .path, .drop.unmatched = FALSE, ...)
 
-\method{subset}{`MultiFactor::LinkMap`}(x, subset = NULL, ...)
+\method{subset}{`multifactor::linkmap`}(x, subset = NULL, ...)
 
-\method{augment}{`MultiFactor::MultiFactor`}(x, ...)
+\method{augment}{`multifactor::multifactor`}(x, ...)
 }
 \arguments{
-\item{x}{a \code{MultiFactor} or \code{LinkMap}.}
+\item{x}{a \code{multifactor} or \code{linkmap}.}
 
 \item{.path}{Either a \code{formula} or a \verb{character vector}.}
 
 \item{.drop.unmatched}{\code{Boolean}. Whether to drop factor levels that do not
 appear in the data (Default: keep all levels).}
 
-\item{...}{Name-value pairs. The name gives the name of the LinkMap in the
+\item{...}{Name-value pairs. The name gives the name of the linkmap in the
 output.}
 
 \item{subset}{Logical expression indicating elements or rows to keep.
 If \code{NULL} (Default), subsets based on complete coverage if available.}
 }
 \value{
-a \code{MultiFactor}.
+a \code{multifactor}.
 }
 \description{
-Generates a new \code{MultiFactor} object by cross-referencing the elements of a
-given \code{MultiFactor}.
+Generates a new \code{multifactor} object by cross-referencing the elements of a
+given \code{multifactor}.
 }
 \examples{
 # Only necessary in example code
 require(generics)
-# Generate a random MultiFactor
-x <- randomMultiFactor()
+# Generate a random multifactor
+x <- random_multifactor()
 
 # Use augment to chain together operations like weave and stack, in order.
 augment(x,
@@ -49,7 +49,7 @@ augment(x,
     weave(x, d ~ f)
 )
 
-# Setting a LinkMap to NULL by name deletes it from the MultiFactor
+# Setting a linkmap to NULL by name deletes it from the multifactor
 augment(x, a2b = NULL )
 
 }

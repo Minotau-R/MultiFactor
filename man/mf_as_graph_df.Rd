@@ -2,22 +2,22 @@
 % Please edit documentation in R/graph_conversion_utils.R
 \name{mf_as_graph_df}
 \alias{mf_as_graph_df}
-\title{Convert a MultiFactor to relational graph format.}
+\title{Convert a multifactor to relational graph format.}
 \usage{
 mf_as_graph_df(x)
 }
 \arguments{
-\item{x}{MultiFactor}
+\item{x}{multifactor}
 }
 \value{
 a \code{data.frame} with three or more named columns; from, to and name.
 }
 \description{
-Utility function to convert graph information of a MultiFactor to a
-\code{data.frame}. Used in \code{as.igraph} method for MultiFactor.
+Utility function to convert graph information of a multifactor to a
+\code{data.frame}. Used in \code{as.igraph} method for multifactor.
 }
 \examples{
-x <- randomMultiFactor()
+x <- random_multifactor()
 
 # Three-column dfs of layouts
 x_df <- mf_as_graph_df(x)

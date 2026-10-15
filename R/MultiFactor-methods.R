@@ -1,6 +1,6 @@
-#' Methods for MultiFactor S7 container class
-#' @name MultiFactor-methods
-#' @rdname MultiFactor-methods
+#' Methods for multifactor S7 container class
+#' @name multifactor-methods
+#' @rdname multifactor-methods
 #' @examples
 #' # Setup
 #' a2b <- data.frame(
@@ -12,8 +12,8 @@
 #'     c = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
 #'
-#' # Create MultiFactor
-#' x <- MultiFactor(list(a2b, a2c))
+#' # Create multifactor
+#' x <- multifactor(list(a2b, a2c))
 #'
 #' # Basic properties
 #' dim(x)
@@ -23,10 +23,10 @@
 #' levels(x)
 #' nlevels(x)
 #'
-#' # Retain MultiFactor structure using `[`.
+#' # Retain multifactor structure using `[`.
 #' x["a2b"]
 #'
-#' # Or extract individual LinkMaps using `[[`
+#' # Or extract individual linkmaps using `[[`
 #' x[["a2c"]]
 #'
 #' # Subset by a path
@@ -38,34 +38,34 @@
 #' # Combine using `c`:
 #' c(x[2], x[1])
 #'
-#' @param x,object `MultiFactor` on which the method should be applied.
-#' @returns A `MultiFactor`
+#' @param x,object `multifactor` on which the method should be applied.
+#' @returns A `multifactor`
 NULL
 
 #' @param use.names `Boolean scalar` Whether tho provide names.
 #'     (Default: `TRUE`)
 #' @noRd
 #'
-S7::method(nlevels, MultiFactor) <-
+S7::method(nlevels, multifactor) <-
     function(x, use.names = TRUE) lengths(levels(x), use.names)
 
-S7::method(str, MultiFactor) <- function(object, ...) {
+S7::method(str, multifactor) <- function(object, ...) {
     Matrix::printSpMatrix(object@map)
     str(levels(object))
 }
 
-S7::method(print, MultiFactor) <- function(x, ...) {
+S7::method(print, multifactor) <- function(x, ...) {
     cat(
         "A ", paste(class(x), collapse = " "),
         ",\n    ", NCOL(x),
         " feature types across ",
         NROW(x),
-        " LinkMaps.\n\n",
+        " linkmaps.\n\n",
         sep = ""
     )
     Matrix::printSpMatrix(x@map)
     cat(
-        "\nValues represent unique feature names in that LinkMap.\n\n",
+        "\nValues represent unique feature names in that linkmap.\n\n",
         "@ levels:\n",
         sep = ""
     )
@@ -109,55 +109,55 @@ S7::method(print, MultiFactor) <- function(x, ...) {
     }
 }
 
-S7::method(levels, MultiFactor) <- function(x) {
+S7::method(levels, multifactor) <- function(x) {
     x@levels
 }
 #' @export
-`levels<-.MultiFactor::MultiFactor` <- function(x, value) {
-    .set_levels_MultiFactor(x, value)
+`levels<-.multifactor::multifactor` <- function(x, value) {
+    .set_levels_multifactor(x, value)
 }
 
-S7::method(dimnames, MultiFactor) <- function(x) {
+S7::method(dimnames, multifactor) <- function(x) {
     dimnames(x@map)
 }
 
-S7::method(dim, MultiFactor) <- function(x) {
+S7::method(dim, multifactor) <- function(x) {
     dim(x@map)
 }
 
 local({
-S7::method(`[`, MultiFactor) <- function(x, i) {
+S7::method(`[`, multifactor) <- function(x, i) {
     if(rlang::is_missing(i)) return(x)
-    MultiFactor(base::`[`(S7::S7_data(x), i), levels = levels(x))
+    multifactor(base::`[`(S7::S7_data(x), i), levels = levels(x))
 }
 
-S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
+S7::method(`[[`, multifactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
 
 })
 
 
 #' @export
 #'
-`[<-.MultiFactor::MultiFactor` <- function(x, i, value) {
-    MultiFactor(base::`[<-`(S7::S7_data(x), i, value))
+`[<-.multifactor::multifactor` <- function(x, i, value) {
+    multifactor(base::`[<-`(S7::S7_data(x), i, value))
 
 }
 
 #' @export
 #'
-`[[<-.MultiFactor::MultiFactor` <- function(x, i, value) {
-    MultiFactor(base::`[[<-`(S7::S7_data(x), i, value))
+`[[<-.multifactor::multifactor` <- function(x, i, value) {
+    multifactor(base::`[[<-`(S7::S7_data(x), i, value))
 }
 
 #' @export
 #'
-`c.MultiFactor::MultiFactor` <- function(...) {
+`c.multifactor::multifactor` <- function(...) {
     x <- list(...)
     # Figure out content
-    lms <- vapply(x, S7::S7_inherits, LinkMap, FUN.VALUE = FALSE)
-    mfs <- vapply(x, S7::S7_inherits, MultiFactor, FUN.VALUE = FALSE)
+    lms <- vapply(x, S7::S7_inherits, linkmap, FUN.VALUE = FALSE)
+    mfs <- vapply(x, S7::S7_inherits, multifactor, FUN.VALUE = FALSE)
     stopifnot(
-        "Arguments must be MultiFactor or LinkMap" = sum(lms, mfs) == length(x)
+        "Arguments must be multifactor or linkmap" = sum(lms, mfs) == length(x)
         )
     # Gather all levels
     lv_list <- lapply(x[mfs], levels)
@@ -172,8 +172,8 @@ S7::method(`[[`, MultiFactor) <- function(x, i) base::`[[`(S7::S7_data(x), i)
     x <- lapply(x[mfs], S7::S7_data)
     if(any(lms)) x <- c(x, list(lm_lst))
     x <- unlist(x, FALSE, FALSE)
-    # Plug both into MultiFactor
-    MultiFactor(x, levels = all_lvs)
+    # Plug both into multifactor
+    multifactor(x, levels = all_lvs)
 }
 
 .reduce_level_list <- function(lv_list, all_lvs) {

@@ -7,7 +7,7 @@
 #'     `group` as well as their associated emoji and unicode ID, sans `U+`
 #'     prefix.
 #' @source `trade_goods`: Curated using the `emo` package.
-#' @usage data("trade_goods", package = "MultiFactor")
+#' @usage data("trade_goods", package = "multifactor")
 #' @keywords datasets
 #'
 "trade_goods"
@@ -19,7 +19,7 @@
 #'     four `suits` and thirteen `ranks` of a standard poker deck. Used in the
 #'     vignette.
 #' @source `playing_cards`: Manual input.
-#' @usage data("playing_cards", package = "MultiFactor")
+#' @usage data("playing_cards", package = "multifactor")
 #' @keywords datasets
 #'
 "playing_cards"
@@ -28,10 +28,10 @@
 #' Small data set of animals.
 #' @name animal_groups
 #' @rdname animals
-#' @format `animal_groups`: A MultiFactor of animals as well as associated
+#' @format `animal_groups`: A multifactor of animals as well as associated
 #'     `emoji`.
 #' @source `animal_groups`: Manually curated.
-#' @usage data("animals", package = "MultiFactor")
+#' @usage data("animals", package = "multifactor")
 #' @keywords datasets
 #'
 "animal_groups"
@@ -39,19 +39,19 @@
 #' Small data set of animals.
 #' @name animal_traits
 #' @rdname animals
-#' @format `animal_traits`: A MultiFactor of animals as well as associated
+#' @format `animal_traits`: A multifactor of animals as well as associated
 #'     `emoji`.
 #' @source `animal_traits`: Manually curated.
-#' @usage data("animals", package = "MultiFactor")
+#' @usage data("animals", package = "multifactor")
 #' @keywords datasets
 #'
 "animal_traits"
 
 #' Example dataset using a famous pangram.
 #' @name quickbrownfox
-#' @format `quickbrownfox`: A MultiFactor of letters, words and constituents
+#' @format `quickbrownfox`: A multifactor of letters, words and constituents
 #' @source `quickbrownfox`: Manually curated.
-#' @usage data("quickbrownfox", package = "MultiFactor")
+#' @usage data("quickbrownfox", package = "multifactor")
 #' @keywords datasets
 #'
 "quickbrownfox"

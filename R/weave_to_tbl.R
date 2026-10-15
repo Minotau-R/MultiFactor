@@ -2,7 +2,7 @@
 #' @name weave_to_tbl
 #' @description
 #' Expand a table into a tidy table suitable for tidyverse-stype operations.
-#' @param x a `MultiFactor`.
+#' @param x a `multifactor`.
 #' @param .data `A table`. A `data.frame`, `matrix`, other object with rows and
 #'     columns. Should have a `cbind` method.
 #' @param .path either a `formula` or a `character vector`` of length 2 with the

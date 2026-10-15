@@ -1,13 +1,13 @@
 #' @importFrom utils data
 .load_playing_cards <- function() local({
-    utils::data("playing_cards", package = "MultiFactor", envir = environment())
+    utils::data("playing_cards", package = "multifactor", envir = environment())
     playing_cards <- get("playing_cards", mode = "list")
     names(playing_cards) <- c("suits", "ranks")
     return(playing_cards)
 })
 
 #' Generate and optionally draw from a poker deck.
-#' @rdname randomMultiFactor
+#' @rdname random_multifactor
 #' @name draw_cards
 #' @param draw Optional `integer`. How many cards to draw from the deck.
 #' @seealso [playing_cards]
@@ -26,8 +26,8 @@ draw_cards <- function(draw = NULL) {
         x = .load_playing_cards()
 ) with(x, paste0( rep(ranks, length(suits)), rep(suits, each = length(ranks)) ))
 
-#' Generate a small demo MultiFactor dataset containing different poker scorings
-#' @rdname randomMultiFactor
+#' Generate a small demo multifactor dataset containing different poker scorings
+#' @rdname random_multifactor
 #' @name poker_scores
 #' @export
 #'
@@ -50,7 +50,7 @@ poker_scores <- function() {
     names(straights) <- lapply(straights, function(x) paste(x[1L], "to", x[5L]))
     names(straights)[10L] <- "Royal straight"
 
-    # Convert to LinkMaps
+    # Convert to linkmaps
     card2rank <- stack(multiples)
     colnames(card2rank) <- c("card", "rank")
     levels(card2rank$card) <- deck
@@ -73,6 +73,6 @@ poker_scores <- function() {
         suit = names(suits),
         straight = names(straights)
         )
-    MultiFactor(x, levels)
+    multifactor(x, levels)
 }
 

@@ -10,14 +10,14 @@ weave_coverage(
   .path,
   .data = NULL,
   metric = c("set_count", "set_size", "coverage", "complete"),
-  out.format = c("LinkMap", "matrix"),
+  out.format = c("linkmap", "matrix"),
   .data_column = "row.names"
 )
 
 test_enrichment(x, log_base = 2L)
 }
 \arguments{
-\item{x}{A LinkMap with coverage metadata from \code{weave_coverage()}.}
+\item{x}{A linkmap with coverage metadata from \code{weave_coverage()}.}
 
 \item{.path}{Either a \code{formula} or a \verb{character vector} of length 2 with the
 names of the desired combination of feature types.}
@@ -30,7 +30,7 @@ with the same information. (Also see \code{.data_column} argument).}
 One or more of \code{'set_count'}, \code{'set_size'}, \code{'coverage'}, \code{'complete'}.}
 
 \item{out.format}{\verb{Character scalar}.
-One of \code{'LinkMap'}, \code{'matrix'}.}
+One of \code{'linkmap'}, \code{'matrix'}.}
 
 \item{.data_column}{\verb{Character scalar}. if \code{.data} is a table, where to find
 feature IDs}
@@ -38,7 +38,7 @@ feature IDs}
 \item{log_base}{\code{Integer}. Base of logarithm for log-fold (default: 2).}
 }
 \value{
-a \code{LinkMap} or \code{matrix} with the desired coverage information in
+a \code{linkmap} or \code{matrix} with the desired coverage information in
 the @metadata slot.
 }
 \description{

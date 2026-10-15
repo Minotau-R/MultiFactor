@@ -2,7 +2,7 @@
 % Please edit documentation in R/select_path.R
 \name{select_path-methods}
 \alias{select_path-methods}
-\title{Define a path through a MultiFactor object.}
+\title{Define a path through a multifactor object.}
 \arguments{
 \item{x}{input object}
 
@@ -13,7 +13,7 @@ names of the desired combination of feature types.}
 a \code{factor_path} object.
 }
 \description{
-Define a path through a MultiFactor object.
+Define a path through a multifactor object.
 }
 \examples{
 # Generate pair of random linkage input
@@ -26,8 +26,8 @@ a2c <- data.frame(
     c = sample(c("x", "y", "z"), 10, replace = TRUE)
 )
 
-# Create MultiFactor
-x <- MultiFactor(list(a2b, a2c))
+# Create multifactor
+x <- multifactor(list(a2b, a2c))
 
 # Inspect a path between data types
 select_path(x, b ~ c)

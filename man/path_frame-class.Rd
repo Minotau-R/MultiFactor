@@ -15,7 +15,7 @@ a \code{path_frame} object.
 }
 \description{
 \code{path_frame} is an S7 class to standardize the various ways in which paths
-that can be specified across the \code{MultiFactor} package. This class is mostly
+that can be specified across the \code{multifactor} package. This class is mostly
 for internal use.
 }
 \details{

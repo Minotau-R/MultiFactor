@@ -2,7 +2,7 @@
 #' @name read_adjacency_list
 #' @description
 #' Read relational data from a file in adjacency list format and parse it into a
-#' `LinkMap` (or a `LinkMap`-shaped `data.frame`). Relies on `base::scan` and
+#' `linkmap` (or a `linkmap`-shaped `data.frame`). Relies on `base::scan` and
 #' `utils::count.fields` under the hood.
 #' @details
 #' Note that the other common representation of relational data, a two-column
@@ -15,11 +15,11 @@
 #' @param col.names `Character vector` of length 2, specifying the colnames of
 #'     the output. (Default: `c("id.x", "id.y")`)
 #' @param as.df `Boolean` Whether to return an unmodified `data.frame` or a
-#'     `LinkMap` (Default).
+#'     `linkmap` (Default).
 #' @param ... Additional arguments, passed to `scan`.
 #' @seealso [utils::count.fields()] [base::scan()]
-#' @returns A `LinkMap`, or `if( as.df )`, a two-column data.frame formatted
-#'     like an edge list, appropriate input for `LinkMap()`.
+#' @returns A `linkmap`, or `if( as.df )`, a two-column data.frame formatted
+#'     like an edge list, appropriate input for `linkmap()`.
 #' @importFrom utils count.fields download.file
 #' @export
 #' @examples
@@ -57,7 +57,7 @@ read_adjacency_list <- function(
     )
     colnames(out) <- col.names
 
-    if( !as.df ) out <- LinkMap(out)
+    if( !as.df ) out <- linkmap(out)
 
     return(out)
 }

@@ -6,10 +6,10 @@
 \alias{animal_traits}
 \title{Small data set of animals.}
 \format{
-\code{animal_groups}: A MultiFactor of animals as well as associated
+\code{animal_groups}: A multifactor of animals as well as associated
 \code{emoji}.
 
-\code{animal_traits}: A MultiFactor of animals as well as associated
+\code{animal_traits}: A multifactor of animals as well as associated
 \code{emoji}.
 }
 \source{
@@ -18,9 +18,9 @@
 \code{animal_traits}: Manually curated.
 }
 \usage{
-data("animals", package = "MultiFactor")
+data("animals", package = "multifactor")
 
-data("animals", package = "MultiFactor")
+data("animals", package = "multifactor")
 }
 \description{
 Small data set of animals.

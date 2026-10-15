@@ -1,5 +1,5 @@
 #' Perform enrichtment analysis from a weave
-#' @param x a `MultiFactor`
+#' @param x a `multifactor`
 #' @param .path Either a `formula` or a `character vector` of length 2 with the
 #'     names of the desired combination of feature types.
 #' @param .data Optional `Character vector`. Lists observed features from the
@@ -8,10 +8,10 @@
 #' @param metric `Character scalar`.
 #'     One or more of `'set_count'`, `'set_size'`, `'coverage'`, `'complete'`.
 #' @param out.format `Character scalar`.
-#'     One of `'LinkMap'`, `'matrix'`.
+#'     One of `'linkmap'`, `'matrix'`.
 #' @param .data_column `Character scalar`. if `.data` is a table, where to find
 #'     feature IDs
-#' @returns a `LinkMap` or `matrix` with the desired coverage information in
+#' @returns a `linkmap` or `matrix` with the desired coverage information in
 #'     the @metadata slot.
 #' @export
 #' @examples
@@ -41,13 +41,13 @@
 weave_coverage <- function(
         x, .path, .data = NULL,
         metric = c("set_count", "set_size", "coverage", "complete"),
-        out.format = c("LinkMap", "matrix"), .data_column = "row.names"
+        out.format = c("linkmap", "matrix"), .data_column = "row.names"
 ) {
     metric <- match.arg(
         metric, c("set_count", "set_size", "coverage", "complete"),
         several.ok = TRUE
     )
-    out.format <- match.arg(out.format, c("LinkMap", "matrix"))
+    out.format <- match.arg(out.format, c("linkmap", "matrix"))
     .data <- .data_coverage_to_vector(.data, .data_column)
 
     .valid_path_input(.path)
@@ -65,9 +65,9 @@ weave_coverage <- function(
     )
 
     res <- do.call(rbind.data.frame, res)
-    res <- as.LinkMap(res)
+    res <- as_linkmap(res)
     if(out.format == "matrix") {
-        res <- `as.matrix.MultiFactor::LinkMap`(res)
+        res <- `as.matrix.multifactor::linkmap`(res)
     }
     return(res)
 }
@@ -110,7 +110,7 @@ weave_coverage <- function(
 
 #' @importFrom S7 S7_inherits
 #' @importFrom stats p.adjust
-#' @param x A LinkMap with coverage metadata from `weave_coverage()`.
+#' @param x A linkmap with coverage metadata from `weave_coverage()`.
 #' @param log_base `Integer`. Base of logarithm for log-fold (default: 2).
 #' @export
 #' @rdname weave_coverage
@@ -118,7 +118,7 @@ weave_coverage <- function(
 #'
 test_enrichment <- function(x, log_base = 2L) {
     stopifnot(
-        "'x' must be a LinkMap." = S7::S7_inherits(x, LinkMap),
+        "'x' must be a linkmap." = S7::S7_inherits(x, linkmap),
         "No coverage data found in metadata. Run `weave_coverage()` first." =
             all(c("observed", "set_count", "set_size") %in% colnames(x@metadata))
     )
@@ -170,7 +170,7 @@ test_enrichment <- function(x, log_base = 2L) {
 
 #' @noRd
 #' @examples
-#' x <- randomMultiFactor()[seq_len(2L)]
+#' x <- random_multifactor()[seq_len(2L)]
 #' at <- c("a", "b", "c")
 #' x.cov <- .weave_coverage_three(x, all_terms = at, metric = "coverage")
 #' x.cnt <- .weave_coverage_three(x, all_terms = at, metric = "set_count")
@@ -191,7 +191,7 @@ test_enrichment <- function(x, log_base = 2L) {
     seen <- x[[rowsWithCol(x@map, c(shared, from))]]
     full <- x[[rowsWithCol(x@map, c(shared, to))  ]]
 
-    # Ensure LinkMap order
+    # Ensure linkmap order
     shared2from <- as.matrix(seen, terms = c(shared, from))
     shared2to   <- as.matrix(full, terms = c(shared, to))
 
@@ -203,14 +203,14 @@ test_enrichment <- function(x, log_base = 2L) {
     )
 
     if( length(.data) ) {
-        bg <- .res_weave_matrix_to_LinkMap(bg_mat, levels(x)[c(from, to)])
+        bg <- .res_weave_matrix_to_linkmap(bg_mat, levels(x)[c(from, to)])
 
         obs <- bg[bg[[from]] %in% .data , ]
         res <- .weave_coverage_cont_table(bg, obs, to, metric)
     } else {
         bg <- Matrix::colSums(shared2to)
         obs <- bg_mat
-        full_set <- .res_weave_matrix_to_LinkMap(bg_mat, levels(x)[c(from, to)])
+        full_set <- .res_weave_matrix_to_linkmap(bg_mat, levels(x)[c(from, to)])
         res <- .weave_coverage_cont_table_no_data(bg, obs, full_set, metric)
 
     }
