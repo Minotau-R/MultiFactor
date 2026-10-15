@@ -20,7 +20,7 @@ Or install the development version from this repository:
 
 \
 [`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"remotes"``)`\
-`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/multifactor"``)`
+`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"Minotau-R/multifactor"``)`
 
 ## Getting started using multifactor
 

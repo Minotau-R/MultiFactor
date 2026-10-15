@@ -66,7 +66,30 @@ augment(x,
     stack(x, a + b ~ c + d),
     weave(x, d ~ f)
 )
-#> Error in as_igraph_vs(graph, from): Invalid vertex names
+#> A multifactor::multifactor list S7_object,
+#>     8 feature types across 8 linkmaps.
+#> 
+#>          a  b  c  d e  f a.b c.d
+#> a2b     10 10  .  . .  .   .   .
+#> b2c      . 10 10  . .  .   .   .
+#> c2d      .  . 10 10 .  .   .   .
+#> d2e      .  .  .  8 9  .   .   .
+#> e2f      .  .  .  . 9 10   .   .
+#> a2c     10  . 10  . .  .   .   .
+#> a.b2c.d  .  .  .  . .  .  20  20
+#> d2f      .  .  .  8 . 10   .   .
+#> 
+#> Values represent unique feature names in that linkmap.
+#> 
+#> @ levels:
+#>  $ a   : 10 Levels: a_001 a_002 ... a_010 
+#>  $ b   : 10 Levels: b_001 b_002 ... b_010 
+#>  $ c   : 10 Levels: c_001 c_002 ... c_010 
+#>  $ d   : 10 Levels: d_001 d_002 ... d_010 
+#>  $ e   : 10 Levels: e_001 e_002 ... e_010 
+#>  $ f   : 10 Levels: f_001 f_002 ... f_010 
+#>  $ a.b : 20 Levels: a_001 a_002 ... b_010 
+#>  $ c.d : 20 Levels: c_001 c_002 ... d_010 
 
 # Setting a linkmap to NULL by name deletes it from the multifactor
 augment(x, a2b = NULL )
