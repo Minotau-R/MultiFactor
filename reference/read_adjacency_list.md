@@ -1,7 +1,7 @@
 # Read Relational Data Values
 
 Read relational data from a file in adjacency list format and parse it
-into a `LinkMap` (or a `LinkMap`-shaped `data.frame`). Relies on
+into a `linkmap` (or a `linkmap`-shaped `data.frame`). Relies on
 [`base::scan`](https://rdrr.io/r/base/scan.html) and
 [`utils::count.fields`](https://rdrr.io/r/utils/count.fields.html) under
 the hood.
@@ -73,7 +73,7 @@ read_adjacency_list(
 
 - as.df:
 
-  `Boolean` Whether to return an unmodified `data.frame` or a `LinkMap`
+  `Boolean` Whether to return an unmodified `data.frame` or a `linkmap`
   (Default).
 
 - ...:
@@ -82,9 +82,9 @@ read_adjacency_list(
 
 ## Value
 
-A `LinkMap`, or `if( as.df )`, a two-column data.frame formatted like an
+A `linkmap`, or `if( as.df )`, a two-column data.frame formatted like an
 edge list, appropriate input for
-[`LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.md).
+[`linkmap()`](https://minotau-r.github.io/multifactor/reference/linkmap-class.md).
 
 ## Details
 

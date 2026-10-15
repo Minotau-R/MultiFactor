@@ -1,13 +1,13 @@
-# Combine levels across several LinkMaps in a MultiFactor
+# Combine levels across several linkmaps in a multifactor
 
-Generates a new `LinkMap` object by merging levels by name, separated by
+Generates a new `linkmap` object by merging levels by name, separated by
 the plus (`+`) sign. See examples.
 
 ## Arguments
 
 - x:
 
-  a `MultiFactor`
+  a `multifactor`
 
 - .path:
 
@@ -22,11 +22,11 @@ the plus (`+`) sign. See examples.
 
 - out.format:
 
-  `Character scalar`. One of `'LinkMap'`, `'matrix'`.
+  `Character scalar`. One of `'linkmap'`, `'matrix'`.
 
 ## Value
 
-a `LinkMap` or `sparse Matrix`.
+a `linkmap` or `sparse Matrix`.
 
 ## Examples
 
@@ -34,24 +34,8 @@ a `LinkMap` or `sparse Matrix`.
 # Only necessary in example code
 require(utils)
 
-x <- randomMultiFactor()
+x <- random_multifactor()
 # Merge variables with "+" operator, new names get concatenated with ".":
 stack(x, b ~ c + d)
-#> A MultiFactor::LinkMap data.frame S7_object: 73 rows.
-#>        b   c.d
-#> 1  b_006 c_001
-#> 2  b_009 c_001
-#> 3  b_005 c_002
-#> 4  b_007 c_002
-#> 5  b_008 c_002
-#> 6  b_009 c_002
-#> 7  b_001 c_003
-#> 8  b_005 c_003
-#> 9  b_010 c_003
-#> 10 b_010 c_004
-#>  + 63 more rows. Use `print(n = ...)` to see more rows.
-#> 
-#> @ levels:   2 variables: 
-#>  $ b   : 10 Levels: b_001 b_002 ... b_010 
-#>  $ c.d : 20 Levels: c_001 c_002 ... d_010 
+#> Error in as_igraph_vs(graph, to): Invalid vertex names
 ```

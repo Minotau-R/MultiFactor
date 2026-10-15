@@ -1,6 +1,6 @@
-# Define a path through a MultiFactor object.
+# Define a path through a multifactor object.
 
-Define a path through a MultiFactor object.
+Define a path through a multifactor object.
 
 ## Arguments
 
@@ -30,12 +30,12 @@ a2c <- data.frame(
     c = sample(c("x", "y", "z"), 10, replace = TRUE)
 )
 
-# Create MultiFactor
-x <- MultiFactor(list(a2b, a2c))
+# Create multifactor
+x <- multifactor(list(a2b, a2c))
 
 # Inspect a path between data types
 select_path(x, b ~ c)
-#> A MultiFactor::path_frame S7_object.
+#> A multifactor::path_frame S7_object.
 #>   A path from `b` to `c`:
 #> b ~ a ~ c
 #> 

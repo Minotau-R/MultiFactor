@@ -10,7 +10,7 @@ weave_coverage(
   .path,
   .data = NULL,
   metric = c("set_count", "set_size", "coverage", "complete"),
-  out.format = c("LinkMap", "matrix"),
+  out.format = c("linkmap", "matrix"),
   .data_column = "row.names"
 )
 
@@ -21,7 +21,7 @@ test_enrichment(x, log_base = 2L)
 
 - x:
 
-  A LinkMap with coverage metadata from `weave_coverage()`.
+  A linkmap with coverage metadata from `weave_coverage()`.
 
 - .path:
 
@@ -41,7 +41,7 @@ test_enrichment(x, log_base = 2L)
 
 - out.format:
 
-  `Character scalar`. One of `'LinkMap'`, `'matrix'`.
+  `Character scalar`. One of `'linkmap'`, `'matrix'`.
 
 - .data_column:
 
@@ -53,7 +53,7 @@ test_enrichment(x, log_base = 2L)
 
 ## Value
 
-a `LinkMap` or `matrix` with the desired coverage information in the
+a `linkmap` or `matrix` with the desired coverage information in the
 @metadata slot.
 
 ## Examples
@@ -66,15 +66,15 @@ drawn
 #> [1] "Jack♦️" "5♥️"    "King♠️" "7♥️"    "6♦️"   
 scores <- poker_scores()
 scores
-#> A MultiFactor::MultiFactor list S7_object,
-#>     4 feature types across 3 LinkMaps.
+#> A multifactor::multifactor list S7_object,
+#>     4 feature types across 3 linkmaps.
 #> 
 #>               card rank suit straight
 #> card2rank       52   13    .        .
 #> card2suit       52    .    4        .
 #> rank2straight    .   13    .       10
 #> 
-#> Values represent unique feature names in that LinkMap.
+#> Values represent unique feature names in that linkmap.
 #> 
 #> @ levels:
 #>  $ card     : 52 Levels: Ace♥️ ... King♣️ 
@@ -88,7 +88,7 @@ x = scores, .path = card ~ suit, .data = drawn, metric = "set_count"
 )
 
 result
-#> A MultiFactor::LinkMap data.frame S7_object: 52 rows.
+#> A multifactor::linkmap data.frame S7_object: 52 rows.
 #>    card  suit
 #> 1  Ace♣️ clubs
 #> 2    2♣️ clubs
@@ -119,7 +119,7 @@ cheat
 .path = card ~ straight
 result <- weave_coverage(scores, card ~ straight, .data = cheat)
 result
-#> A MultiFactor::LinkMap data.frame S7_object: 200 rows.
+#> A multifactor::linkmap data.frame S7_object: 200 rows.
 #>    card straight
 #> 1  Ace♥️ Ace to 5
 #> 2    2♥️ Ace to 5

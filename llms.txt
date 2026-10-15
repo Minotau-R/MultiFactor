@@ -1,128 +1,128 @@
-# MultiFactor: R package for MultiFactor and LinkMap S7 container classes.
+# multifactor: R package for multifactor and linkmap S7 container classes.
 
 ## Introduction
 
-`MultiFactor` and `LinkMap` are a pair of S7 classes to organize and
+`multifactor` and `linkmap` are a pair of S7 classes to organize and
 manage multiple sets of factors, for instance when tracing or converting
-feature IDs across databases. Methods for `MultiFactor` aim to follow
+feature IDs across databases. Methods for `multifactor` aim to follow
 `factor` behaviour.
 
 ## Installation instructions
 
 Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install the released version of
-`MultiFactor`:
+`multifactor`:
 
 \
-[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"MultiFactor"``)`
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"multifactor"``)`
 
 Or install the development version from this repository:
 
 \
 [`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"remotes"``)`\
-`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/MultiFactor"``)`
+`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/multifactor"``)`
 
-## Getting started using MultiFactor
+## Getting started using multifactor
 
 [See the vignettes on the package
-site.](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html)
+site.](https://minotau-r.github.io/multifactor/articles/multifactor.html)
 
 # Package index
 
 ## Operations
 
-- [`weave()`](https://minotau-r.github.io/MultiFactor/reference/weave-generic.md)
+- [`weave()`](https://minotau-r.github.io/multifactor/reference/weave-generic.md)
   : Weave a path through an object
-- [`weave-methods`](https://minotau-r.github.io/MultiFactor/reference/weave-methods.md)
-  : Weave a new LinkMap from a MultiFactor
-- [`weave_coverage()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
-  [`test_enrichment()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
+- [`weave-methods`](https://minotau-r.github.io/multifactor/reference/weave-methods.md)
+  : Weave a new linkmap from a multifactor
+- [`weave_coverage()`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)
+  [`test_enrichment()`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)
   : Perform enrichtment analysis from a weave
-- [`stack-methods`](https://minotau-r.github.io/MultiFactor/reference/stack-methods.md)
-  : Combine levels across several LinkMaps in a MultiFactor
-- [`weave_apply()`](https://minotau-r.github.io/MultiFactor/reference/weave_apply-generic.md)
+- [`stack-methods`](https://minotau-r.github.io/multifactor/reference/stack-methods.md)
+  : Combine levels across several linkmaps in a multifactor
+- [`weave_apply()`](https://minotau-r.github.io/multifactor/reference/weave_apply-generic.md)
   : Index a table and apply arbitrary code to it
-- [`weave_apply-methods`](https://minotau-r.github.io/MultiFactor/reference/weave_apply-methods.md)
-  : Index a table by a MultiFactor and apply arbitrary code to it
-- [`weave_to_tbl()`](https://minotau-r.github.io/MultiFactor/reference/weave_to_tbl.md)
+- [`weave_apply-methods`](https://minotau-r.github.io/multifactor/reference/weave_apply-methods.md)
+  : Index a table by a multifactor and apply arbitrary code to it
+- [`weave_to_tbl()`](https://minotau-r.github.io/multifactor/reference/weave_to_tbl.md)
   : Expand a table based on possibly overlapping group membership.
 
 ## Classes
 
-- [`MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-class.md)
-  : MultiFactor S7 container class
-- [`MultiFactor-methods`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-methods.md)
-  : Methods for MultiFactor S7 container class
-- [`subset(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
-  [`subset(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
-  [`augment(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/augment-subset.md)
-  : Tools to modify MultiFactors
-- [`LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.md)
-  : LinkMap S7 container class
-- [`LinkMap-methods`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-methods.md)
-  : Methods for LinkMap S7 container class
-- [`nlevels()`](https://minotau-r.github.io/MultiFactor/reference/nlevels.md)
+- [`multifactor()`](https://minotau-r.github.io/multifactor/reference/multifactor-class.md)
+  : multifactor S7 container class
+- [`multifactor-methods`](https://minotau-r.github.io/multifactor/reference/multifactor-methods.md)
+  : Methods for multifactor S7 container class
+- [`subset(`*`<multifactor::multifactor>`*`)`](https://minotau-r.github.io/multifactor/reference/augment-subset.md)
+  [`subset(`*`<multifactor::linkmap>`*`)`](https://minotau-r.github.io/multifactor/reference/augment-subset.md)
+  [`augment(`*`<multifactor::multifactor>`*`)`](https://minotau-r.github.io/multifactor/reference/augment-subset.md)
+  : Tools to modify multifactors
+- [`linkmap()`](https://minotau-r.github.io/multifactor/reference/linkmap-class.md)
+  : linkmap S7 container class
+- [`linkmap-methods`](https://minotau-r.github.io/multifactor/reference/linkmap-methods.md)
+  : Methods for linkmap S7 container class
+- [`nlevels()`](https://minotau-r.github.io/multifactor/reference/nlevels.md)
   : The Number of Levels of an Object
-- [`path_frame()`](https://minotau-r.github.io/MultiFactor/reference/path_frame-class.md)
+- [`path_frame()`](https://minotau-r.github.io/multifactor/reference/path_frame-class.md)
   : path_frame S7 class
-- [`path_frame-methods`](https://minotau-r.github.io/MultiFactor/reference/path_frame-methods.md)
+- [`path_frame-methods`](https://minotau-r.github.io/multifactor/reference/path_frame-methods.md)
   : Methods for path_frame S7 container class
-- [`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path-generic.md)
+- [`select_path()`](https://minotau-r.github.io/multifactor/reference/select_path-generic.md)
   : Weave a path through an object
-- [`select_path-methods`](https://minotau-r.github.io/MultiFactor/reference/select_path-methods.md)
-  : Define a path through a MultiFactor object.
+- [`select_path-methods`](https://minotau-r.github.io/multifactor/reference/select_path-methods.md)
+  : Define a path through a multifactor object.
 
 ## Converters
 
-- [`as.MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/as.MultiFactor.md)
-  : Convert common classes to MultiFactor
+- [`as_multifactor()`](https://minotau-r.github.io/multifactor/reference/as_multifactor.md)
+  : Convert common classes to multifactor
 
-- [`as.LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap.md)
-  : Convert common classes to LinkMap
+- [`as_linkmap()`](https://minotau-r.github.io/multifactor/reference/as_linkmap.md)
+  : Convert common classes to linkmap
 
-- [`as.LinkMap-methods`](https://minotau-r.github.io/MultiFactor/reference/as.LinkMap-methods.md)
-  : Convert common classes to LinkMap or MultiFactor
+- [`as_linkmap-methods`](https://minotau-r.github.io/multifactor/reference/as_linkmap-methods.md)
+  : Convert common classes to linkmap or multifactor
 
-- [`as.igraph(`*`<MultiFactor::MultiFactor>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.igraph.MultiFactor.md)
-  : Convert a MultiFactor to igraph
+- [`as.igraph(`*`<multifactor::multifactor>`*`)`](https://minotau-r.github.io/multifactor/reference/as.igraph.multifactor.md)
+  : Convert a multifactor to igraph
 
-- [`as.igraph(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.igraph.LinkMap.md)
-  : Convert a LinkMap to igraph
+- [`as.igraph(`*`<multifactor::linkmap>`*`)`](https://minotau-r.github.io/multifactor/reference/as.igraph.linkmap.md)
+  : Convert a linkmap to igraph
 
-- [`as.matrix(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.matrix.LinkMap.md)
+- [`as.matrix(`*`<multifactor::linkmap>`*`)`](https://minotau-r.github.io/multifactor/reference/as.matrix.linkmap.md)
   :
 
-  Convert a LinkMap to a sparse matrix. Convert a LinkMap to a sparse
+  Convert a linkmap to a sparse matrix. Convert a linkmap to a sparse
   matrix object from the `Matrix` package.
 
-- [`as.data.frame(`*`<MultiFactor::LinkMap>`*`)`](https://minotau-r.github.io/MultiFactor/reference/as.data.frame.LinkMap.md)
-  : Convert a LinkMap to a data.frame Convert a LinkMap back to a
+- [`as.data.frame(`*`<multifactor::linkmap>`*`)`](https://minotau-r.github.io/multifactor/reference/as.data.frame.linkmap.md)
+  : Convert a linkmap to a data.frame Convert a linkmap back to a
   regular data.frame. Metadata is included.
 
-- [`mf_as_graph_df()`](https://minotau-r.github.io/MultiFactor/reference/mf_as_graph_df.md)
-  : Convert a MultiFactor to relational graph format.
+- [`mf_as_graph_df()`](https://minotau-r.github.io/multifactor/reference/mf_as_graph_df.md)
+  : Convert a multifactor to relational graph format.
 
 ## Datasets
 
-- [`draw_cards()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
-  [`poker_scores()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
-  [`randomMultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
-  [`trade_posts()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
-  [`randomLinkMap()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
+- [`draw_cards()`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)
+  [`poker_scores()`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)
+  [`random_multifactor()`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)
+  [`trade_posts()`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)
+  [`random_linkmap()`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)
   : Generate and optionally draw from a poker deck.
-- [`trade_goods`](https://minotau-r.github.io/MultiFactor/reference/trade_goods.md)
+- [`trade_goods`](https://minotau-r.github.io/multifactor/reference/trade_goods.md)
   : Small data set of six types of goods.
-- [`playing_cards`](https://minotau-r.github.io/MultiFactor/reference/playing_cards.md)
+- [`playing_cards`](https://minotau-r.github.io/multifactor/reference/playing_cards.md)
   : Basic names of entities in a card deck.
-- [`animals`](https://minotau-r.github.io/MultiFactor/reference/animals.md)
+- [`animals`](https://minotau-r.github.io/multifactor/reference/animals.md)
   : Small data set of animals.
-- [`quickbrownfox`](https://minotau-r.github.io/MultiFactor/reference/quickbrownfox.md)
-  [`quickbrownfox()`](https://minotau-r.github.io/MultiFactor/reference/quickbrownfox.md)
+- [`quickbrownfox`](https://minotau-r.github.io/multifactor/reference/quickbrownfox.md)
+  [`quickbrownfox()`](https://minotau-r.github.io/multifactor/reference/quickbrownfox.md)
   : Example dataset using a famous pangram.
 
 ## Utils
 
-- [`read_adjacency_list()`](https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.md)
+- [`read_adjacency_list()`](https://minotau-r.github.io/multifactor/reference/read_adjacency_list.md)
   : Read Relational Data Values
 
 # Articles
@@ -130,5 +130,5 @@ site.](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html)
 ### All vignettes
 
 - [Coverage and enrichment
-  testing](https://minotau-r.github.io/MultiFactor/articles/coverage_and_enrichment.md):
-- [MultiFactor](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.md):
+  testing](https://minotau-r.github.io/multifactor/articles/coverage_and_enrichment.md):
+- [multifactor](https://minotau-r.github.io/multifactor/articles/MultiFactor.md):

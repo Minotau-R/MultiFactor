@@ -5,7 +5,7 @@ Small data set of six types of goods.
 ## Usage
 
 ``` r
-data("trade_goods", package = "MultiFactor")
+data("trade_goods", package = "multifactor")
 ```
 
 ## Format

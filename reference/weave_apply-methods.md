@@ -1,4 +1,4 @@
-# Index a table by a MultiFactor and apply arbitrary code to it
+# Index a table by a multifactor and apply arbitrary code to it
 
 `weave_apply` can run arbitrary code specified by `FUN` across any
 number of row-based subsets of table `.data`. Mimics lapply.
@@ -7,7 +7,7 @@ number of row-based subsets of table `.data`. Mimics lapply.
 
 - .x:
 
-  a `MultiFactor` object.
+  a `multifactor` object.
 
 - .path:
 
@@ -38,10 +38,10 @@ a `Named list` of desired output.
 
 ## See also
 
-[`weave()`](https://minotau-r.github.io/MultiFactor/reference/weave-generic.md)
+[`weave()`](https://minotau-r.github.io/multifactor/reference/weave-generic.md)
 [`lapply()`](https://rdrr.io/r/base/lapply.html)
-[`LinkMap()`](https://minotau-r.github.io/MultiFactor/reference/LinkMap-class.md)
-[`MultiFactor()`](https://minotau-r.github.io/MultiFactor/reference/MultiFactor-class.md)
+[`linkmap()`](https://minotau-r.github.io/multifactor/reference/linkmap-class.md)
+[`multifactor()`](https://minotau-r.github.io/multifactor/reference/multifactor-class.md)
 
 ## Examples
 
@@ -66,26 +66,26 @@ weave_apply(
 )
 #> $apples
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  26  34   2  51   9  10  88   8   0  21 
+#>  54 104  72 114   3  20 109  20  82  53 
 #> 
 #> $pears
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  29  20   9   6  15  17  68  59  29  13 
+#>  55  76 150 138  72 178 190  96  80  91 
 #> 
 #> $cherries
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  45  38  31  41  35  47  68 109  36  41 
+#>  25  32  77  75  14  93 102  10  32  77 
 #> 
 #> $oranges
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  26  50  15  59  10  63 157  19  10  32 
+#>  54 104  72 114   3  20 109  20  82  53 
 #> 
 #> $melons
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  16  18  22  35  20  30   0  50   7  28 
+#> 148 132 164 166  81 183 242 110  97 104 
 #> 
 #> $grapes
 #>  V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 
-#>  29  36  22  14  16  70 137  70  39  24 
+#> 145 100  95 106  80 167 175 108  67  71 
 #> 
 ```

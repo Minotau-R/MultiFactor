@@ -1,28 +1,28 @@
-# MultiFactor: R package for MultiFactor and LinkMap S7 container classes.
+# multifactor: R package for multifactor and linkmap S7 container classes.
 
 ## Introduction
 
-`MultiFactor` and `LinkMap` are a pair of S7 classes to organize and
+`multifactor` and `linkmap` are a pair of S7 classes to organize and
 manage multiple sets of factors, for instance when tracing or converting
-feature IDs across databases. Methods for `MultiFactor` aim to follow
+feature IDs across databases. Methods for `multifactor` aim to follow
 `factor` behaviour.
 
 ## Installation instructions
 
 Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install the released version of
-`MultiFactor`:
+`multifactor`:
 
 \
-[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"MultiFactor"``)`
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"multifactor"``)`
 
 Or install the development version from this repository:
 
 \
 [`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"remotes"``)`\
-`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/MultiFactor"``)`
+`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/multifactor"``)`
 
-## Getting started using MultiFactor
+## Getting started using multifactor
 
 [See the vignettes on the package
-site.](https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html)
+site.](https://minotau-r.github.io/multifactor/articles/multifactor.html)

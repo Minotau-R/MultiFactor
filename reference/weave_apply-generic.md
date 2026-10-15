@@ -43,5 +43,5 @@ a list containing the results of `.fun`.
 # Available methods:
 weave_apply
 #> <S7_generic> weave_apply(.x, .path, .data, .fun = NULL, ...) with 1 methods:
-#> 1: method(weave_apply, MultiFactor::MultiFactor)
+#> 1: method(weave_apply, multifactor::multifactor)
 ```

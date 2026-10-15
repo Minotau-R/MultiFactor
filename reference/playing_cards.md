@@ -5,7 +5,7 @@ Basic names of entities in a card deck.
 ## Usage
 
 ``` r
-data("playing_cards", package = "MultiFactor")
+data("playing_cards", package = "multifactor")
 ```
 
 ## Format

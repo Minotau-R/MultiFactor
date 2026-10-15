@@ -13,7 +13,7 @@ nlevels(x, ...)
 
 - x:
 
-  an object, such as a `LinkMap`, `MultiFactor` or `factor`.
+  an object, such as a `linkmap`, `multifactor` or `factor`.
 
 - ...:
 
@@ -31,7 +31,7 @@ Optionally, named.
 # Available methods:
 nlevels
 #> <S7_generic> nlevels(x, ...) with 3 methods:
-#> 1: method(nlevels, MultiFactor::MultiFactor)
-#> 2: method(nlevels, MultiFactor::LinkMap)
+#> 1: method(nlevels, multifactor::linkmap)
+#> 2: method(nlevels, multifactor::multifactor)
 #> 3: method(nlevels, class_any)
 ```

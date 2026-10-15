@@ -13,7 +13,7 @@ weave_to_tbl(x, .path, .data, .index = "row.names")
 
 - x:
 
-  a `MultiFactor`.
+  a `multifactor`.
 
 - .path:
 

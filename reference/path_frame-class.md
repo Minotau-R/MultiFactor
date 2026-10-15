@@ -1,7 +1,7 @@
 # path_frame S7 class
 
 `path_frame` is an S7 class to standardize the various ways in which
-paths that can be specified across the `MultiFactor` package. This class
+paths that can be specified across the `multifactor` package. This class
 is mostly for internal use.
 
 ## Usage
@@ -36,7 +36,7 @@ information about the edges:
 
 ``` r
 path_frame
-#> <MultiFactor::path_frame> class
+#> <multifactor::path_frame> class
 #> @ parent     : S3<data.frame>
 #> @ constructor: function(x) {...}
 #> @ validator  : function(self) {...}

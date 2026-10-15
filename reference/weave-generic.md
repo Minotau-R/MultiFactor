@@ -26,7 +26,7 @@ weave(x, .path, ...)
 
 ## Value
 
-a `LinkMap` or `matrix`.
+a `linkmap` or `matrix`.
 
 ## Examples
 
@@ -34,5 +34,5 @@ a `LinkMap` or `matrix`.
 # Available methods:
 weave
 #> <S7_generic> weave(x, .path, ...) with 1 methods:
-#> 1: method(weave, MultiFactor::MultiFactor)
+#> 1: method(weave, multifactor::multifactor)
 ```

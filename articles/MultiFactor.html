@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>MultiFactor • MultiFactor</title>
+<title>multifactor • multifactor</title>
 <!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
   window.MathJax = {
     chtml: {
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MultiFactor">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="multifactor">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -24,7 +24,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">MultiFactor</a>
+    <a class="navbar-brand me-2" href="../index.html">multifactor</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
 
@@ -35,12 +35,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item"><a class="nav-link" href="../articles/MultiFactor.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/coverage_and_enrichment.html">Coverage and enrichment testing</a></li>
+    <li><a class="dropdown-item" href="../articles/MultiFactor.html">multifactor</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -70,7 +70,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>MultiFactor</h1>
+      <h1>multifactor</h1>
             
       
 
@@ -82,34 +82,34 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p><code>MultiFactor</code> aims to provide a consistent toolkit to
+<p><code>multifactor</code> aims to provide a consistent toolkit to
 incorporate relational data into data-analytical tools and methods. In
-practice, we expect <code>MultiFactor</code> to be used in combination
+practice, we expect <code>multifactor</code> to be used in combination
 with additional packages that extend it. For instance, see <a href="https://github.com/minotau-R/ariadne" class="external-link">ariadne</a> and <a href="https://github.com/thomazbastiaanssen/anansi" class="external-link">anansi</a>, two such
-packages that make use of <code>MultiFactor</code> to link and convert
+packages that make use of <code>multifactor</code> to link and convert
 across biological database IDs and perform multi-omics integration
 analysis, respectively.</p>
 </div>
 <div class="section level2">
-<h2 id="get-started-using-multifactor">Get started using MultiFactor<a class="anchor" aria-label="anchor" href="#get-started-using-multifactor"></a>
+<h2 id="get-started-using-multifactor">Get started using multifactor<a class="anchor" aria-label="anchor" href="#get-started-using-multifactor"></a>
 </h2>
 <div class="section level3">
 <h3 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h3>
 <p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install the released
-version of <code>MultiFactor</code>:</p>
+version of <code>multifactor</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"MultiFactor"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"multifactor"</span><span class="op">)</span></span></code></pre></div>
 <p>Or install the development version from this repository:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"minotau-R/MultiFactor"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"minotau-R/multifactor"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://minotau-r.github.io/MultiFactor/">MultiFactor</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://minotau-r.github.io/multifactor/">multifactor</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Wrangling</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -121,31 +121,31 @@ version of <code>MultiFactor</code>:</p>
 <span></span>
 <span><span class="co"># Load demo data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2612</span><span class="op">)</span></span>
-<span><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/randomMultiFactor.html">trade_posts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">tp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/random_multifactor.html">trade_posts</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="multifactor-and-linkmap-objects">MultiFactor and LinkMap objects<a class="anchor" aria-label="anchor" href="#multifactor-and-linkmap-objects"></a>
+<h2 id="multifactor-and-linkmap-objects">multifactor and linkmap objects<a class="anchor" aria-label="anchor" href="#multifactor-and-linkmap-objects"></a>
 </h2>
 <div class="section level3">
-<h3 id="linkmap">LinkMap<a class="anchor" aria-label="anchor" href="#linkmap"></a>
+<h3 id="linkmap">linkmap<a class="anchor" aria-label="anchor" href="#linkmap"></a>
 </h3>
-<p>The basic object in the <code>MultiFactor</code> package is the
-<code>LinkMap</code>, which contains relational information across two
+<p>The basic object in the <code>multifactor</code> package is the
+<code>linkmap</code>, which contains relational information across two
 types of features. This format is sometimes referred to as an <a href="https://en.wikipedia.org/wiki/Edge_list" class="external-link">edge list</a>. Under a
-thin layer of S7, the <code>LinkMap</code> object is a
+thin layer of S7, the <code>linkmap</code> object is a
 <code>data.frame</code> where the first two columns indicate which
 feature IDs that are considered linked. Optional additional columns are
 considered metadata.</p>
 <p>Let’s use an example data set to take a closer look at
-<code>LinkMap</code>. The <code><a href="../reference/randomMultiFactor.html">trade_posts()</a></code> function generates
+<code>linkmap</code>. The <code><a href="../reference/random_multifactor.html">trade_posts()</a></code> function generates
 data about fictional trade posts, where one type of good is traded for
 another. In this particular case, types of books are traded for types of
 furniture.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">linkmap</span> <span class="op">&lt;-</span> <span class="va">tp</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">linkmap</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
+<span><span class="co">#&gt; A multifactor::linkmap data.frame S7_object: 9 rows.</span></span>
 <span><span class="co">#&gt;        books furniture</span></span>
 <span><span class="co">#&gt; 1   red book     couch</span></span>
 <span><span class="co">#&gt; 2 green book   cabinet</span></span>
@@ -168,7 +168,7 @@ furniture.</p>
 <p>The two types of goods are captured by the two columns, with column
 names representing the <em>types</em> of good and rows representing
 which specific <em>type-pairs</em> are traded at that trade post, or,
-more generally, are linked in that <code>LinkMap</code>.</p>
+more generally, are linked in that <code>linkmap</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span> <span class="va">linkmap</span> <span class="op">)</span></span>
 <span><span class="co">#&gt; $books</span></span>
@@ -177,14 +177,14 @@ more generally, are linked in that <code>LinkMap</code>.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $furniture</span></span>
 <span><span class="co">#&gt; [1] "couch"    "cabinet"  "wastebin" "bed"      "box"      "door"</span></span></code></pre></div>
-<p>Notice that <code>LinkMap</code> is two <code>factor</code> columns
+<p>Notice that <code>linkmap</code> is two <code>factor</code> columns
 in a trench coat. We can inspect the levels as usual.</p>
 <p>We can see that we have several of these types of trade posts in our
 data set. However, we also notice that the column names - the types of
 goods - can differ.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
+<span><span class="co">#&gt; A multifactor::linkmap data.frame S7_object: 9 rows.</span></span>
 <span><span class="co">#&gt;   clothing furniture</span></span>
 <span><span class="co">#&gt; 1    scarf     couch</span></span>
 <span><span class="co">#&gt; 2    scarf   cabinet</span></span>
@@ -205,7 +205,7 @@ goods - can differ.</p>
 <span><span class="co">#&gt;  $ clothing_emoji : chr  "🧣" "🧣" "🧤" "🎩" ...</span></span>
 <span><span class="co">#&gt;  $ furniture_emoji: chr  "🛋" "🗄" "🗑" "🗑" ...</span></span>
 <span><span class="va">tp</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 9 rows.</span></span>
+<span><span class="co">#&gt; A multifactor::linkmap data.frame S7_object: 9 rows.</span></span>
 <span><span class="co">#&gt;         books instruments</span></span>
 <span><span class="co">#&gt; 1  green book     trumpet</span></span>
 <span><span class="co">#&gt; 2    red book      guitar</span></span>
@@ -226,25 +226,25 @@ goods - can differ.</p>
 <span><span class="co">#&gt;  $ books_emoji      : chr  "📗" "📕" "📘" "📘" ...</span></span>
 <span><span class="co">#&gt;  $ instruments_emoji: chr  "🎺" "🎸" "🎸" "🥁" ...</span></span></code></pre></div>
 <div class="section level4">
-<h4 id="visual-representation-of-the-linkmaps-in-our-data-set-">Visual representation of the LinkMaps in our data set.<a class="anchor" aria-label="anchor" href="#visual-representation-of-the-linkmaps-in-our-data-set-"></a>
+<h4 id="visual-representation-of-the-linkmaps-in-our-data-set-">Visual representation of the linkmaps in our data set.<a class="anchor" aria-label="anchor" href="#visual-representation-of-the-linkmaps-in-our-data-set-"></a>
 </h4>
-<p><img src="images/plot-LinkMap.png"><!-- --></p>
+<p><img src="images/plot-linkmap.png"><!-- --></p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="multifactor">MultiFactor<a class="anchor" aria-label="anchor" href="#multifactor"></a>
+<h3 id="multifactor">multifactor<a class="anchor" aria-label="anchor" href="#multifactor"></a>
 </h3>
-<p>The <code>MultiFactor</code> is in essence a collection of
-<code>LinkMap</code>s. Where <code>LinkMap</code>s contain relational
-information across two data types, <code>MultiFactor</code>s are a
+<p>The <code>multifactor</code> is in essence a collection of
+<code>linkmap</code>s. Where <code>linkmap</code>s contain relational
+information across two data types, <code>multifactor</code>s are a
 representation of the relational graph formed by combining those
-<code>LinkMaps</code>. The full object <code>tp</code>, which contains
-the <code>LinkMaps</code> we just investigated, is in fact a
-<code>MultiFactor</code> object:</p>
+<code>linkmaps</code>. The full object <code>tp</code>, which contains
+the <code>linkmaps</code> we just investigated, is in fact a
+<code>multifactor</code> object:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tp</span></span>
-<span><span class="co">#&gt; A MultiFactor::MultiFactor list S7_object,</span></span>
-<span><span class="co">#&gt;     6 feature types across 6 LinkMaps.</span></span>
+<span><span class="co">#&gt; A multifactor::multifactor list S7_object,</span></span>
+<span><span class="co">#&gt;     6 feature types across 6 linkmaps.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;                     books furniture clothing instruments fruit marbles</span></span>
 <span><span class="co">#&gt; books2furniture         5         5        .           .     .       .</span></span>
@@ -254,7 +254,7 @@ the <code>LinkMaps</code> we just investigated, is in fact a
 <span><span class="co">#&gt; furniture2marbles       .         5        .           .     .       6</span></span>
 <span><span class="co">#&gt; instruments2marbles     .         .        .           5     .       4</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Values represent unique feature names in that LinkMap.</span></span>
+<span><span class="co">#&gt; Values represent unique feature names in that linkmap.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; @ levels:</span></span>
 <span><span class="co">#&gt;  $ books       : 6 Levels: fancy book ... plain book </span></span>
@@ -263,19 +263,19 @@ the <code>LinkMaps</code> we just investigated, is in fact a
 <span><span class="co">#&gt;  $ instruments : 6 Levels: trumpet ... saxophone </span></span>
 <span><span class="co">#&gt;  $ fruit       : 6 Levels: apples ... grapes </span></span>
 <span><span class="co">#&gt;  $ marbles     : 6 Levels: red marble ... sparkly marble</span></span></code></pre></div>
-<p>Notice that a <code>MultiFactor</code> summarizes information across
-the component <code>LinkMaps</code> in several ways. First, The matrix
+<p>Notice that a <code>multifactor</code> summarizes information across
+the component <code>linkmaps</code> in several ways. First, The matrix
 shows the types of goods as columns and the component
-<code>LinkMaps</code> that contain this information as rows. The numbers
+<code>linkmaps</code> that contain this information as rows. The numbers
 in the matrix then show the number of unique types of that type of good
-in that particular <code>LinkMap</code> - and that are therefore linked
-to the second feature in the <code>LinkMap</code>.</p>
+in that particular <code>linkmap</code> - and that are therefore linked
+to the second feature in the <code>linkmap</code>.</p>
 <p>For instance, in the top-left corner of the matrix, we can see that
-the first <code>LinkMap</code> links books and furniture and is aptly
+the first <code>linkmap</code> links books and furniture and is aptly
 named <code>books2furniture</code>. Notice that five unique types of
 books as well as five types of furniture are mentioned in
 <code>books2furniture</code>.</p>
-<p>Though <code>MultiFactor</code> is a list of <code>LinkMap</code>s
+<p>Though <code>multifactor</code> is a list of <code>linkmap</code>s
 under the hood, we can also interact with its matrix representation, as
 well as access the component levels:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -313,7 +313,7 @@ well as access the component levels:</p>
 <span><span class="co">#&gt;       books    clothing       fruit   furniture instruments     marbles </span></span>
 <span><span class="co">#&gt;           6           6           6           6           6           6</span></span></code></pre></div>
 <p>Note that levels of the same type are automatically unified across
-all component LinkMaps with that type of level.</p>
+all component linkmaps with that type of level.</p>
 </div>
 </div>
 <div class="section level2">
@@ -330,7 +330,7 @@ this:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fruit2clothing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave-generic.html">weave</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="va">fruit2clothing</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 18 rows.</span></span>
+<span><span class="co">#&gt; A multifactor::linkmap data.frame S7_object: 18 rows.</span></span>
 <span><span class="co">#&gt;      fruit clothing</span></span>
 <span><span class="co">#&gt; 1   apples  t-shirt</span></span>
 <span><span class="co">#&gt; 2    pears  t-shirt</span></span>
@@ -347,7 +347,7 @@ this:</p>
 <span><span class="co">#&gt; @ levels:   2 variables: </span></span>
 <span><span class="co">#&gt;  $ fruit    : 6 Levels: apples ... grapes </span></span>
 <span><span class="co">#&gt;  $ clothing : 6 Levels: t-shirt ... scarf</span></span></code></pre></div>
-<p>We receive a new <code>LinkMap</code> containing all fruits that
+<p>We receive a new <code>linkmap</code> containing all fruits that
 could be traded for clothing.</p>
 <div class="section level3">
 <h3 id="selecting-a-path">Selecting a path<a class="anchor" aria-label="anchor" href="#selecting-a-path"></a>
@@ -355,10 +355,10 @@ could be traded for clothing.</p>
 <p>We can use <code><a href="../reference/select_path-generic.html">select_path()</a></code> to find the types of traded
 goods in order, or more generally, the paths that were traversed. If
 several paths exist, all will be traversed and included into one
-<code>LinkMap</code>.</p>
+<code>linkmap</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/select_path-generic.html">select_path</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
-<span><span class="co">#&gt; A MultiFactor::path_frame S7_object.</span></span>
+<span><span class="co">#&gt; A multifactor::path_frame S7_object.</span></span>
 <span><span class="co">#&gt;   A path from `fruit` to `clothing` with 2 sub-paths:</span></span>
 <span><span class="co">#&gt; fruit ~ instruments ~ books ~ furniture ~ clothing</span></span></code></pre></div>
 </div>
@@ -367,14 +367,14 @@ several paths exist, all will be traversed and included into one
 <h2 id="compatibility-with-igraph-and-matrix">Compatibility with <code>igraph</code> and <code>Matrix</code><a class="anchor" aria-label="anchor" href="#compatibility-with-igraph-and-matrix"></a>
 </h2>
 <div class="section level3">
-<h3 id="convert-multifactor-and-linkmap-objects-to-igraph-representation">Convert <code>MultiFactor</code> and <code>LinkMap</code> objects to
+<h3 id="convert-multifactor-and-linkmap-objects-to-igraph-representation">Convert <code>multifactor</code> and <code>linkmap</code> objects to
 <code>igraph</code> representation<a class="anchor" aria-label="anchor" href="#convert-multifactor-and-linkmap-objects-to-igraph-representation"></a>
 </h3>
-<p><code>MultiFactor</code> relies heavily on the excellent <a href="https://r.igraph.org/" class="external-link"><code>igraph</code></a> and <a href="https://matrix.r-forge.r-project.org/" class="external-link"><code>Matrix</code></a>
+<p><code>multifactor</code> relies heavily on the excellent <a href="https://r.igraph.org/" class="external-link"><code>igraph</code></a> and <a href="https://matrix.r-forge.r-project.org/" class="external-link"><code>Matrix</code></a>
 packages, particularly for path finding and sparse matrix
 representation.</p>
 <div class="section level4">
-<h4 id="convert-multifactor-main-graph-representation-to-igraph-object">Convert <code>MultiFactor</code> main graph representation to
+<h4 id="convert-multifactor-main-graph-representation-to-igraph-object">Convert <code>multifactor</code> main graph representation to
 <code>igraph</code> object<a class="anchor" aria-label="anchor" href="#convert-multifactor-main-graph-representation-to-igraph-object"></a>
 </h4>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -393,11 +393,11 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 5b849cd UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH f3f7b05 UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), fruit_emoji (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 5b849cd (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from f3f7b05 (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -405,29 +405,29 @@ representation.</p>
 <p><img src="MultiFactor_files/figure-html/igraph-multifactor-sp-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 <div class="section level4">
-<h4 id="convert-linkmap-relational-information-to-igraph-object">Convert <code>LinkMap</code> relational information to
+<h4 id="convert-linkmap-relational-information-to-igraph-object">Convert <code>linkmap</code> relational information to
 <code>igraph</code> object<a class="anchor" aria-label="anchor" href="#convert-linkmap-relational-information-to-igraph-object"></a>
 </h4>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 664461b UN-B 12 18 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 3097562 UN-B 12 18 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 664461b (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 3097562 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  </span></span>
 <span><span class="co">#&gt;  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves </span></span>
 <span><span class="co">#&gt;  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    </span></span>
 <span><span class="co">#&gt; [13] grapes --hat     apples --scarf   pears  --scarf   oranges--scarf  </span></span>
 <span><span class="co">#&gt; [17] melons --scarf   grapes --scarf</span></span>
-<span><span class="co"># Same information as the LinkMap: </span></span>
+<span><span class="co"># Same information as the linkmap: </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lg</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MultiFactor_files/figure-html/igraph-linkmap-sp-1.png" class="r-plt" alt="" width="576"></p>
 </div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="convert-linkmap-linkage-information-to-sparse-adjacency-matrix">Convert <code>LinkMap</code> linkage information to sparse adjacency
+<h2 id="convert-linkmap-linkage-information-to-sparse-adjacency-matrix">Convert <code>linkmap</code> linkage information to sparse adjacency
 <code>Matrix</code><a class="anchor" aria-label="anchor" href="#convert-linkmap-linkage-information-to-sparse-adjacency-matrix"></a>
 </h2>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -447,7 +447,7 @@ representation.</p>
 <div class="section level2">
 <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a>
 </h2>
-<p><code>MultiFactor</code> also provides some utility functions for
+<p><code>multifactor</code> also provides some utility functions for
 data wrangling on tables with features (rows) of the appropriate
 type.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -657,7 +657,7 @@ read from file (or URL).</p>
 <div class="section level4">
 <h4 id="example-of-adjacency-list-formatted-data">Example of adjacency list formatted data<a class="anchor" aria-label="anchor" href="#example-of-adjacency-list-formatted-data"></a>
 </h4>
-<p>We’ll format the <code>LinkMap</code> from fruit to furniture that we
+<p>We’ll format the <code>linkmap</code> from fruit to furniture that we
 generated above.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use igraph to deconstruct a graph into an adjacency list, coerce to characters</span></span>
@@ -684,7 +684,7 @@ blueberry\tchair\tdesk</code></pre>
 <span></span>
 <span><span class="va">adj_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_adjacency_list.html">read_adjacency_list</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
 <span><span class="va">adj_data</span></span>
-<span><span class="co">#&gt; A MultiFactor::LinkMap data.frame S7_object: 18 rows.</span></span>
+<span><span class="co">#&gt; A multifactor::linkmap data.frame S7_object: 18 rows.</span></span>
 <span><span class="co">#&gt;       id.x    id.y</span></span>
 <span><span class="co">#&gt; 1   apples t-shirt</span></span>
 <span><span class="co">#&gt; 2   apples   dress</span></span>
@@ -737,7 +737,7 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
 <span><span class="co">#&gt; [1] igraph_2.3.4      ragg_1.5.2        systemfonts_1.3.2 ggplot2_4.0.3    </span></span>
-<span><span class="co">#&gt; [5] dplyr_1.2.1       MultiFactor_0.1.2</span></span>
+<span><span class="co">#&gt; [5] dplyr_1.2.1       multifactor_0.1.2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] Matrix_1.7-6       gtable_0.3.6       jsonlite_2.0.0     compiler_4.6.1    </span></span>

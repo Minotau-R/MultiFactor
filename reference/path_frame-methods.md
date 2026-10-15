@@ -6,16 +6,16 @@ Methods for path_frame S7 container class
 
 - x, object:
 
-  `MultiFactor` on which the method should be applied.
+  `path_frame` on which the method should be applied.
 
 ## Value
 
-A `MultiFactor`
+A `path_frame` or method-appropriate value.
 
 ## Examples
 
 ``` r
-x <- randomMultiFactor()
+x <- random_multifactor()
 
 # Generate a path_frame
 p <- select_path(x, a ~ d)

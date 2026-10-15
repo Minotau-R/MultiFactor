@@ -1,38 +1,38 @@
-# MultiFactor
+# multifactor
 
 ## Overview
 
-`MultiFactor` aims to provide a consistent toolkit to incorporate
+`multifactor` aims to provide a consistent toolkit to incorporate
 relational data into data-analytical tools and methods. In practice, we
-expect `MultiFactor` to be used in combination with additional packages
+expect `multifactor` to be used in combination with additional packages
 that extend it. For instance, see
 [ariadne](https://github.com/minotau-R/ariadne) and
 [anansi](https://github.com/thomazbastiaanssen/anansi), two such
-packages that make use of `MultiFactor` to link and convert across
+packages that make use of `multifactor` to link and convert across
 biological database IDs and perform multi-omics integration analysis,
 respectively.
 
-## Get started using MultiFactor
+## Get started using multifactor
 
 ### Installation instructions
 
 Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install the released version of
-`MultiFactor`:
+`multifactor`:
 
 \
-[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"MultiFactor"``)`
+[`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"multifactor"``)`
 
 Or install the development version from this repository:
 
 \
 [`install.packages`](https://rdrr.io/r/utils/install.packages.html)`(``"remotes"``)`\
-`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/MultiFactor"``)`
+`remotes``::`[`install_github`](https://remotes.r-lib.org/reference/install_github.html)`(``"minotau-R/multifactor"``)`
 
 ### Setup
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`MultiFactor`](https://minotau-r.github.io/MultiFactor/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`multifactor`](https://minotau-r.github.io/multifactor/)`)`\
 \
 `# Wrangling`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`\
@@ -44,22 +44,22 @@ Or install the development version from this repository:
 \
 `# Load demo data`\
 [`set.seed`](https://rdrr.io/r/base/Random.html)`(``2612``)`\
-`tp`` ``<-`` `[`trade_posts`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)`(``)`
+`tp`` ``<-`` `[`trade_posts`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)`(``)`
 
-## MultiFactor and LinkMap objects
+## multifactor and linkmap objects
 
-### LinkMap
+### linkmap
 
-The basic object in the `MultiFactor` package is the `LinkMap`, which
+The basic object in the `multifactor` package is the `linkmap`, which
 contains relational information across two types of features. This
 format is sometimes referred to as an [edge
 list](https://en.wikipedia.org/wiki/Edge_list). Under a thin layer of
-S7, the `LinkMap` object is a `data.frame` where the first two columns
+S7, the `linkmap` object is a `data.frame` where the first two columns
 indicate which feature IDs that are considered linked. Optional
 additional columns are considered metadata.
 
-Let’s use an example data set to take a closer look at `LinkMap`. The
-[`trade_posts()`](https://minotau-r.github.io/MultiFactor/reference/randomMultiFactor.md)
+Let’s use an example data set to take a closer look at `linkmap`. The
+[`trade_posts()`](https://minotau-r.github.io/multifactor/reference/random_multifactor.md)
 function generates data about fictional trade posts, where one type of
 good is traded for another. In this particular case, types of books are
 traded for types of furniture.
@@ -67,7 +67,7 @@ traded for types of furniture.
 \
 `linkmap`` ``<-`` ``tp``[[``1``]``]`\
 `linkmap`\
-`#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.`\
+`#> A multifactor::linkmap data.frame S7_object: 9 rows.`\
 `#>        books furniture`\
 `#> 1   red book     couch`\
 `#> 2 green book   cabinet`\
@@ -91,7 +91,7 @@ traded for types of furniture.
 The two types of goods are captured by the two columns, with column
 names representing the *types* of good and rows representing which
 specific *type-pairs* are traded at that trade post, or, more generally,
-are linked in that `LinkMap`.
+are linked in that `linkmap`.
 
 \
 [`levels`](https://rdrr.io/r/base/levels.html)`(`` ``linkmap`` ``)`\
@@ -102,7 +102,7 @@ are linked in that `LinkMap`.
 `#> $furniture`\
 `#> [1] "couch"    "cabinet"  "wastebin" "bed"      "box"      "door"`
 
-Notice that `LinkMap` is two `factor` columns in a trench coat. We can
+Notice that `linkmap` is two `factor` columns in a trench coat. We can
 inspect the levels as usual.
 
 We can see that we have several of these types of trade posts in our
@@ -111,7 +111,7 @@ goods - can differ.
 
 \
 `tp``[[``2``]``]`\
-`#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.`\
+`#> A multifactor::linkmap data.frame S7_object: 9 rows.`\
 `#>   clothing furniture`\
 `#> 1    scarf     couch`\
 `#> 2    scarf   cabinet`\
@@ -132,7 +132,7 @@ goods - can differ.
 `#>  $ clothing_emoji : chr  "🧣" "🧣" "🧤" "🎩" ...`\
 `#>  $ furniture_emoji: chr  "🛋" "🗄" "🗑" "🗑" ...`\
 `tp``[[``3``]``]`\
-`#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.`\
+`#> A multifactor::linkmap data.frame S7_object: 9 rows.`\
 `#>         books instruments`\
 `#> 1  green book     trumpet`\
 `#> 2    red book      guitar`\
@@ -153,22 +153,22 @@ goods - can differ.
 `#>  $ books_emoji      : chr  "📗" "📕" "📘" "📘" ...`\
 `#>  $ instruments_emoji: chr  "🎺" "🎸" "🎸" "🥁" ...`
 
-#### Visual representation of the LinkMaps in our data set.
+#### Visual representation of the linkmaps in our data set.
 
-![](images/plot-LinkMap.png)
+![](images/plot-linkmap.png)
 
-### MultiFactor
+### multifactor
 
-The `MultiFactor` is in essence a collection of `LinkMap`s. Where
-`LinkMap`s contain relational information across two data types,
-`MultiFactor`s are a representation of the relational graph formed by
-combining those `LinkMaps`. The full object `tp`, which contains the
-`LinkMaps` we just investigated, is in fact a `MultiFactor` object:
+The `multifactor` is in essence a collection of `linkmap`s. Where
+`linkmap`s contain relational information across two data types,
+`multifactor`s are a representation of the relational graph formed by
+combining those `linkmaps`. The full object `tp`, which contains the
+`linkmaps` we just investigated, is in fact a `multifactor` object:
 
 \
 `tp`\
-`#> A MultiFactor::MultiFactor list S7_object,`\
-`#>     6 feature types across 6 LinkMaps.`\
+`#> A multifactor::multifactor list S7_object,`\
+`#>     6 feature types across 6 linkmaps.`\
 `#> `\
 `#>                     books furniture clothing instruments fruit marbles`\
 `#> books2furniture         5         5        .           .     .       .`\
@@ -178,7 +178,7 @@ combining those `LinkMaps`. The full object `tp`, which contains the
 `#> furniture2marbles       .         5        .           .     .       6`\
 `#> instruments2marbles     .         .        .           5     .       4`\
 `#> `\
-`#> Values represent unique feature names in that LinkMap.`\
+`#> Values represent unique feature names in that linkmap.`\
 `#> `\
 `#> @ levels:`\
 `#>  $ books       : 6 Levels: fancy book ... plain book `\
@@ -188,19 +188,19 @@ combining those `LinkMaps`. The full object `tp`, which contains the
 `#>  $ fruit       : 6 Levels: apples ... grapes `\
 `#>  $ marbles     : 6 Levels: red marble ... sparkly marble`
 
-Notice that a `MultiFactor` summarizes information across the component
-`LinkMaps` in several ways. First, The matrix shows the types of goods
-as columns and the component `LinkMaps` that contain this information as
+Notice that a `multifactor` summarizes information across the component
+`linkmaps` in several ways. First, The matrix shows the types of goods
+as columns and the component `linkmaps` that contain this information as
 rows. The numbers in the matrix then show the number of unique types of
-that type of good in that particular `LinkMap` - and that are therefore
-linked to the second feature in the `LinkMap`.
+that type of good in that particular `linkmap` - and that are therefore
+linked to the second feature in the `linkmap`.
 
 For instance, in the top-left corner of the matrix, we can see that the
-first `LinkMap` links books and furniture and is aptly named
+first `linkmap` links books and furniture and is aptly named
 `books2furniture`. Notice that five unique types of books as well as
 five types of furniture are mentioned in `books2furniture`.
 
-Though `MultiFactor` is a list of `LinkMap`s under the hood, we can also
+Though `multifactor` is a list of `linkmap`s under the hood, we can also
 interact with its matrix representation, as well as access the component
 levels:
 
@@ -235,12 +235,12 @@ levels:
 `#> $marbles`\
 `#> [1] "red marble"     "white marble"   "black marble"   "blue marble"   `\
 `#> [5] "8 marble"       "sparkly marble"`\
-[`nlevels`](https://minotau-r.github.io/MultiFactor/reference/nlevels.md)`(``tp``)`\
+[`nlevels`](https://minotau-r.github.io/multifactor/reference/nlevels.md)`(``tp``)`\
 `#>       books    clothing       fruit   furniture instruments     marbles `\
 `#>           6           6           6           6           6           6`
 
 Note that levels of the same type are automatically unified across all
-component LinkMaps with that type of level.
+component linkmaps with that type of level.
 
 ## weave() a path
 
@@ -251,13 +251,13 @@ that particular pair of goods. However, we could imagine trading our
 fruit for clothing in steps: We can trade our fruit for a different
 good, which we trade for another one, until we reach a good that we can
 trade for clothing. The
-[`weave()`](https://minotau-r.github.io/MultiFactor/reference/weave-generic.md)
+[`weave()`](https://minotau-r.github.io/multifactor/reference/weave-generic.md)
 function does exactly this:
 
 \
-`fruit2clothing`` ``<-`` `[`weave`](https://minotau-r.github.io/MultiFactor/reference/weave-generic.md)`(``tp``, ``fruit`` ``~`` ``clothing``)`\
+`fruit2clothing`` ``<-`` `[`weave`](https://minotau-r.github.io/multifactor/reference/weave-generic.md)`(``tp``, ``fruit`` ``~`` ``clothing``)`\
 `fruit2clothing`\
-`#> A MultiFactor::LinkMap data.frame S7_object: 18 rows.`\
+`#> A multifactor::linkmap data.frame S7_object: 18 rows.`\
 `#>      fruit clothing`\
 `#> 1   apples  t-shirt`\
 `#> 2    pears  t-shirt`\
@@ -275,33 +275,33 @@ function does exactly this:
 `#>  $ fruit    : 6 Levels: apples ... grapes `\
 `#>  $ clothing : 6 Levels: t-shirt ... scarf`
 
-We receive a new `LinkMap` containing all fruits that could be traded
+We receive a new `linkmap` containing all fruits that could be traded
 for clothing.
 
 ### Selecting a path
 
 We can use
-[`select_path()`](https://minotau-r.github.io/MultiFactor/reference/select_path-generic.md)
+[`select_path()`](https://minotau-r.github.io/multifactor/reference/select_path-generic.md)
 to find the types of traded goods in order, or more generally, the paths
 that were traversed. If several paths exist, all will be traversed and
-included into one `LinkMap`.
+included into one `linkmap`.
 
 \
-[`select_path`](https://minotau-r.github.io/MultiFactor/reference/select_path-generic.md)`(``tp``, ``fruit`` ``~`` ``clothing``)`\
-`#> A MultiFactor::path_frame S7_object.`\
+[`select_path`](https://minotau-r.github.io/multifactor/reference/select_path-generic.md)`(``tp``, ``fruit`` ``~`` ``clothing``)`\
+`#> A multifactor::path_frame S7_object.`\
 `` #>   A path from `fruit` to `clothing` with 2 sub-paths: ``\
 `#> fruit ~ instruments ~ books ~ furniture ~ clothing`
 
 ## Compatibility with `igraph` and `Matrix`
 
-### Convert `MultiFactor` and `LinkMap` objects to `igraph` representation
+### Convert `multifactor` and `linkmap` objects to `igraph` representation
 
-`MultiFactor` relies heavily on the excellent
+`multifactor` relies heavily on the excellent
 [`igraph`](https://r.igraph.org/) and
 [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly
 for path finding and sparse matrix representation.
 
-#### Convert `MultiFactor` main graph representation to `igraph` object
+#### Convert `multifactor` main graph representation to `igraph` object
 
 \
 [`library`](https://rdrr.io/r/base/library.html)`(`[`igraph`](https://r.igraph.org/)`)`\
@@ -319,11 +319,11 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `g`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``tp``)`\
 `g`\
-`#> IGRAPH 5b849cd UN-- 6 6 -- `\
+`#> IGRAPH f3f7b05 UN-- 6 6 -- `\
 `#> + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji`\
 `#> | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji`\
 `#> | (e/n), fruit_emoji (e/n)`\
-`#> + edges from 5b849cd (vertex names):`\
+`#> + edges from f3f7b05 (vertex names):`\
 `#> [1] books      --furniture   clothing   --furniture   books      --instruments`\
 `#> [4] fruit      --instruments furniture  --marbles     instruments--marbles`\
 `# Plot graph across data types`\
@@ -331,26 +331,26 @@ for path finding and sparse matrix representation.
 
 ![](MultiFactor_files/figure-html/igraph-multifactor-sp-1.png)
 
-#### Convert `LinkMap` relational information to `igraph` object
+#### Convert `linkmap` relational information to `igraph` object
 
 \
 `# Convert to an igraph object`\
 `lg`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)`\
 `lg`\
-`#> IGRAPH 664461b UN-B 12 18 -- `\
+`#> IGRAPH 3097562 UN-B 12 18 -- `\
 `#> + attr: type (v/l), name (v/c)`\
-`#> + edges from 664461b (vertex names):`\
+`#> + edges from 3097562 (vertex names):`\
 `#>  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  `\
 `#>  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves `\
 `#>  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    `\
 `#> [13] grapes --hat     apples --scarf   pears  --scarf   oranges--scarf  `\
 `#> [17] melons --scarf   grapes --scarf`\
-`# Same information as the LinkMap: `\
+`# Same information as the linkmap: `\
 [`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``lg``)`
 
 ![](MultiFactor_files/figure-html/igraph-linkmap-sp-1.png)
 
-## Convert `LinkMap` linkage information to sparse adjacency `Matrix`
+## Convert `linkmap` linkage information to sparse adjacency `Matrix`
 
 \
 `# Convert to an igraph object`\
@@ -368,13 +368,13 @@ for path finding and sparse matrix representation.
 
 ## Utilities
 
-`MultiFactor` also provides some utility functions for data wrangling on
+`multifactor` also provides some utility functions for data wrangling on
 tables with features (rows) of the appropriate type.
 
 \
 `# Generate small example table`\
 `generate_sample`` ``<-`` ``function``(``n``)`` `[`rbinom`](https://rdrr.io/r/stats/Binomial.html)`(``n``, `[`rbinom`](https://rdrr.io/r/stats/Binomial.html)`(``n``, ``100``, `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``n``)``)``, `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``n``)``)`\
-`n`` ``<-`` `[`nlevels`](https://minotau-r.github.io/MultiFactor/reference/nlevels.md)`(``tp``)``[[``"clothing"``]``]`\
+`n`` ``<-`` `[`nlevels`](https://minotau-r.github.io/multifactor/reference/nlevels.md)`(``tp``)``[[``"clothing"``]``]`\
 \
 `clothing_table`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(`` `[`replicate`](https://rdrr.io/r/base/lapply.html)`(`` ``10``,  ``generate_sample``(``n``)``)`` ``)`\
 [`rownames`](https://rdrr.io/r/base/colnames.html)`(``clothing_table``)`` ``<-`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``tp``)``$``clothing`\
@@ -394,7 +394,7 @@ tables with features (rows) of the appropriate type.
 based on groupings on the left hand of the formula:
 
 \
-[`weave_apply`](https://minotau-r.github.io/MultiFactor/reference/weave_apply-generic.md)`(`\
+[`weave_apply`](https://minotau-r.github.io/multifactor/reference/weave_apply-generic.md)`(`\
 `  .x ``=`` ``tp``, .path ``=`` ``fruit`` ``~`` ``clothing``, `\
 `  .data ``=`` ``clothing_table``, .fun ``=`` ``as.data.frame`\
 `  ``)`\
@@ -435,7 +435,7 @@ based on groupings on the left hand of the formula:
 `# For all subgroups of clothing corresponding to one particular fruit, if that `\
 `# group has more than two rows (types of clothing), fit a statistical model. `\
 `# `\
-[`weave_apply`](https://minotau-r.github.io/MultiFactor/reference/weave_apply-generic.md)`(`\
+[`weave_apply`](https://minotau-r.github.io/multifactor/reference/weave_apply-generic.md)`(`\
 `  ``tp``, ``fruit`` ``~`` ``clothing``, ``clothing_table``, ``function``(``x``)`` ``{`\
 `    ``if``(`` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``x``)`` ``<=`` ``2`` ``)`` `[`return`](https://rdrr.io/r/base/function.html)`(`` ``NULL`` ``)`\
 `    ``# else: `\
@@ -541,12 +541,12 @@ based on groupings on the left hand of the formula:
 ### Compatibility with the tidyverse: `weave_to_tbl`
 
 For those who prefer to use `tidyverse`,
-[`weave_to_tbl()`](https://minotau-r.github.io/MultiFactor/reference/weave_to_tbl.md)
+[`weave_to_tbl()`](https://minotau-r.github.io/multifactor/reference/weave_to_tbl.md)
 returns a tidy wide-format table, ready to be grouped based on the first
 two columns.
 
 \
-[`weave_to_tbl`](https://minotau-r.github.io/MultiFactor/reference/weave_to_tbl.md)`(``tp``, .path ``=`` ``fruit`` ``~`` ``clothing``, .data ``=`` ``clothing_table``)`\
+[`weave_to_tbl`](https://minotau-r.github.io/multifactor/reference/weave_to_tbl.md)`(``tp``, .path ``=`` ``fruit`` ``~`` ``clothing``, .data ``=`` ``clothing_table``)`\
 `#>      fruit clothing V1 V2 V3 V4 V5 V6 V7 V8 V9 V10`\
 `#> 1   apples    dress 16 11 34 40 35 63  2 28  0  42`\
 `#> 2  oranges    dress 16 11 34 40 35 63  2 28  0  42`\
@@ -574,12 +574,12 @@ a text file to be read row-wise. The first element of each row specifies
 a level of the first type of data, whereas all following elements all
 from the second type, indicate which levels it is connected to. These
 files can be tricky to load and properly parse into R. The function
-[`read_adjacency_list()`](https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.md)
+[`read_adjacency_list()`](https://minotau-r.github.io/multifactor/reference/read_adjacency_list.md)
 allows these files to be read from file (or URL).
 
 #### Example of adjacency list formatted data
 
-We’ll format the `LinkMap` from fruit to furniture that we generated
+We’ll format the `linkmap` from fruit to furniture that we generated
 above.
 
 \
@@ -607,9 +607,9 @@ If stored in a file in adjacency list format, it may look like this:
 [`cat`](https://rdrr.io/r/base/cat.html)`(``adj``, file ``=`` ``t.con``, sep ``=`` ``"\n"``)`\
 [`close`](https://rdrr.io/r/base/connections.html)`(``t.con``)`\
 \
-`adj_data`` ``<-`` `[`read_adjacency_list`](https://minotau-r.github.io/MultiFactor/reference/read_adjacency_list.md)`(``temp``)`\
+`adj_data`` ``<-`` `[`read_adjacency_list`](https://minotau-r.github.io/multifactor/reference/read_adjacency_list.md)`(``temp``)`\
 `adj_data`\
-`#> A MultiFactor::LinkMap data.frame S7_object: 18 rows.`\
+`#> A multifactor::linkmap data.frame S7_object: 18 rows.`\
 `#>       id.x    id.y`\
 `#> 1   apples t-shirt`\
 `#> 2   apples   dress`\
@@ -660,7 +660,7 @@ If stored in a file in adjacency list format, it may look like this:
 `#> `\
 `#> other attached packages:`\
 `#> [1] igraph_2.3.4      ragg_1.5.2        systemfonts_1.3.2 ggplot2_4.0.3    `\
-`#> [5] dplyr_1.2.1       MultiFactor_0.1.2`\
+`#> [5] dplyr_1.2.1       multifactor_0.1.2`\
 `#> `\
 `#> loaded via a namespace (and not attached):`\
 `#>  [1] Matrix_1.7-6       gtable_0.3.6       jsonlite_2.0.0     compiler_4.6.1    `\

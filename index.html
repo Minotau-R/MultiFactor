@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>S7 Classes for Relational Data • MultiFactor</title>
+<title>S7 Classes for Relational Data • multifactor</title>
 <!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
   window.MathJax = {
     chtml: {
@@ -17,8 +17,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="S7 Classes for Relational Data">
-<meta name="description" content="An S7 framework to organize and manage multiple sets of factors, for instance when tracing or converting feature IDs across databases. Methods for MultiFactor aim to follow factor behaviour.">
-<meta property="og:description" content="An S7 framework to organize and manage multiple sets of factors, for instance when tracing or converting feature IDs across databases. Methods for MultiFactor aim to follow factor behaviour.">
+<meta name="description" content="An S7 framework to organize and manage multiple sets of factors, for instance when tracing or converting feature IDs across databases. Methods for multifactor aim to follow factor behaviour.">
+<meta property="og:description" content="An S7 framework to organize and manage multiple sets of factors, for instance when tracing or converting feature IDs across databases. Methods for multifactor aim to follow factor behaviour.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -26,7 +26,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">MultiFactor</a>
+    <a class="navbar-brand me-2" href="index.html">multifactor</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.2</small>
 
@@ -37,12 +37,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="articles/MultiFactor.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/coverage_and_enrichment.html">Coverage and enrichment testing</a></li>
+    <li><a class="dropdown-item" href="articles/MultiFactor.html">multifactor</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -68,28 +68,28 @@
 <div class="row">
   <main id="main" class="col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="multifactor-r-package-for-multifactor-and-linkmap-s7-container-classes">MultiFactor: R package for MultiFactor and LinkMap S7 container classes.<a class="anchor" aria-label="anchor" href="#multifactor-r-package-for-multifactor-and-linkmap-s7-container-classes"></a>
+<div class="page-header"><h1 id="multifactor-r-package-for-multifactor-and-linkmap-s7-container-classes">multifactor: R package for multifactor and linkmap S7 container classes.<a class="anchor" aria-label="anchor" href="#multifactor-r-package-for-multifactor-and-linkmap-s7-container-classes"></a>
 </h1></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p><code>MultiFactor</code> and <code>LinkMap</code> are a pair of S7 classes to organize and manage multiple sets of factors, for instance when tracing or converting feature IDs across databases. Methods for <code>MultiFactor</code> aim to follow <code>factor</code> behaviour.</p>
+<p><code>multifactor</code> and <code>linkmap</code> are a pair of S7 classes to organize and manage multiple sets of factors, for instance when tracing or converting feature IDs across databases. Methods for <code>multifactor</code> aim to follow <code>factor</code> behaviour.</p>
 </div>
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
-<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install the released version of <code>MultiFactor</code>:</p>
+<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install the released version of <code>multifactor</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"MultiFactor"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"multifactor"</span><span class="op">)</span></span></code></pre></div>
 <p>Or install the development version from this repository:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"minotau-R/MultiFactor"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"minotau-R/multifactor"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="getting-started-using-multifactor">Getting started using MultiFactor<a class="anchor" aria-label="anchor" href="#getting-started-using-multifactor"></a>
+<h2 id="getting-started-using-multifactor">Getting started using multifactor<a class="anchor" aria-label="anchor" href="#getting-started-using-multifactor"></a>
 </h2>
-<p><a href="https://minotau-r.github.io/MultiFactor/articles/MultiFactor.html">See the vignettes on the package site.</a></p>
+<p><a href="https://minotau-r.github.io/multifactor/articles/multifactor.html">See the vignettes on the package site.</a></p>
 </div>
 </div>
 
@@ -104,7 +104,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing MultiFactor</a></li>
+<li><a href="authors.html#citation">Citing multifactor</a></li>
 </ul>
 </div>
 

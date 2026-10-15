@@ -5,7 +5,7 @@
 ### Setup
 
 \
-[`library`](https://rdrr.io/r/base/library.html)`(`[`MultiFactor`](https://minotau-r.github.io/MultiFactor/)`)`\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`multifactor`](https://minotau-r.github.io/multifactor/)`)`\
 \
 `# Wrangling`\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`\
@@ -18,7 +18,7 @@
 \
 `# Load demo data`\
 [`set.seed`](https://rdrr.io/r/base/Random.html)`(``2612``)`\
-`fox`` ``<-`` `[`quickbrownfox`](https://minotau-r.github.io/MultiFactor/reference/quickbrownfox.md)`(``)`\
+`fox`` ``<-`` `[`quickbrownfox`](https://minotau-r.github.io/multifactor/reference/quickbrownfox.md)`(``)`\
 \
 `# Define utility function`\
 `split_to_letters`` ``<-`` ``function``(``x``)`` `[`unique`](https://rdrr.io/r/base/unique.html)`(`\
@@ -89,15 +89,15 @@ We’ll need to generate some collection of letters as input data.
 `#>  [1] "s" "o" "m" "e" "c" "l" "t" "i" "n" "f" "r"`
 
 We can use the
-[`weave_coverage()`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)
+[`weave_coverage()`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)
 function to calculate to what degree the input letters cover the words
 in our data set. This function behaves similarly to
-[`weave()`](https://minotau-r.github.io/MultiFactor/reference/weave-generic.md)
+[`weave()`](https://minotau-r.github.io/multifactor/reference/weave-generic.md)
 but comes with an additional argument, `.data`. For now, let’s plug in
 our input letters:
 
 \
-`res`` ``<-`` `[`weave_coverage`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)`(`\
+`res`` ``<-`` `[`weave_coverage`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)`(`\
 `    x ``=`` ``fox``, .path ``=`` ``letter`` ``~`` ``word``, .data ``=`` ``input`\
 `)`\
 \
@@ -146,7 +146,7 @@ sentence:
 `#> [1] "j" "u" "m" "p" "s" "o" "v" "e" "r"`
 
 \
-`res`` ``<-`` `[`weave_coverage`](https://minotau-r.github.io/MultiFactor/reference/weave_coverage.md)`(`\
+`res`` ``<-`` `[`weave_coverage`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)`(`\
 `    x ``=`` ``fox``, .path ``=`` ``letter`` ``~`` ``word``, .data ``=`` ``input`\
 `)`\
 \
@@ -189,11 +189,11 @@ Notice that the column named `"complete"` marks two partcular words as
 complete now.
 
 We can use the [`subset()`](https://rdrr.io/r/base/subset.html) method
-for `LinkMap` to automatically filter for complete cases:
+for `linkmap` to automatically filter for complete cases:
 
 \
 [`subset`](https://rdrr.io/r/base/subset.html)`(``res``)`\
-`#> A MultiFactor::LinkMap data.frame S7_object: 9 rows.`\
+`#> A multifactor::linkmap data.frame S7_object: 9 rows.`\
 `#>   letter  word`\
 `#> 1      j jumps`\
 `#> 2      u jumps`\

@@ -1,13 +1,13 @@
-# Weave a new LinkMap from a MultiFactor
+# Weave a new linkmap from a multifactor
 
-Generates a new `LinkMap` object by cross-referencing the elements of a
-given `MultiFactor`.
+Generates a new `linkmap` object by cross-referencing the elements of a
+given `multifactor`.
 
 ## Arguments
 
 - x:
 
-  a `MultiFactor`
+  a `multifactor`
 
 - .path:
 
@@ -16,7 +16,7 @@ given `MultiFactor`.
 
 - out.format:
 
-  `Character scalar`. One of `'LinkMap'`, `'matrix'`.
+  `Character scalar`. One of `'linkmap'`, `'matrix'`.
 
 - include, exclude, exact:
 
@@ -25,28 +25,28 @@ given `MultiFactor`.
 
 ## Value
 
-a `LinkMap` or `sparse Matrix`.
+a `linkmap` or `sparse Matrix`.
 
 ## Examples
 
 ``` r
-# Generate a random MultiFactor
-x <- randomMultiFactor()
+# Generate a random multifactor
+x <- random_multifactor()
 
-# Weave new b2c LinkMap
+# Weave new b2c linkmap
 weave(x, b ~ c)
-#> A MultiFactor::LinkMap data.frame S7_object: 25 rows.
+#> A multifactor::linkmap data.frame S7_object: 25 rows.
 #>        b     c
-#> 1  b_005 c_001
-#> 2  b_002 c_002
-#> 3  b_001 c_003
-#> 4  b_002 c_003
-#> 5  b_005 c_003
-#> 6  b_007 c_003
-#> 7  b_009 c_003
-#> 8  b_003 c_004
-#> 9  b_009 c_004
-#> 10 b_003 c_005
+#> 1  b_002 c_001
+#> 2  b_008 c_001
+#> 3  b_001 c_002
+#> 4  b_002 c_002
+#> 5  b_004 c_002
+#> 6  b_005 c_002
+#> 7  b_010 c_002
+#> 8  b_005 c_003
+#> 9  b_006 c_003
+#> 10 b_008 c_003
 #>  + 15 more rows. Use `print(n = ...)` to see more rows.
 #> 
 #> @ levels:   2 variables: 
@@ -57,14 +57,14 @@ weave(x, b ~ a, out.format = "matrix")
 #>   [[ suppressing 10 column names ‘a_001’, ‘a_002’, ‘a_003’ ... ]]
 #>        a
 #> b                          
-#>   b_001 . . . . . | . . . |
-#>   b_002 . . . . . . . . . .
+#>   b_001 . | | . | | . . . .
+#>   b_002 . | | | . . . . . .
 #>   b_003 . . . . . . . . . .
-#>   b_004 | | . . . . . . | .
-#>   b_005 . | . . . | . . . .
-#>   b_006 | . | . . . . . | .
-#>   b_007 . | | . | | . . . |
-#>   b_008 | . . | . . . . | .
-#>   b_009 . . . | | | . | . |
-#>   b_010 . . | | . . . . . .
+#>   b_004 . . . . . | . . . .
+#>   b_005 . . . | | | . . | .
+#>   b_006 . . . . . . . . . .
+#>   b_007 | . . | . . . . | .
+#>   b_008 . . | . . . . . . .
+#>   b_009 . | . | | | . | | .
+#>   b_010 . | . . . | . . . |
 ```

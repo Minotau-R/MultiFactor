@@ -34,5 +34,5 @@ a (list of) character vector(s).
 # Available methods:
 select_path
 #> <S7_generic> select_path(x, .path, ...) with 1 methods:
-#> 1: method(select_path, MultiFactor::MultiFactor)
+#> 1: method(select_path, multifactor::multifactor)
 ```
