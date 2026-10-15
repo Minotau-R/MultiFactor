@@ -34,7 +34,7 @@ Or install the development version from this repository:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("minotau-R/multifactor")
+remotes::install_github("Minotau-R/multifactor")
 ```
 
 ## Getting started using multifactor

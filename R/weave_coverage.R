@@ -56,7 +56,7 @@ weave_coverage <- function(
 
     pm <- .select_by_path_frame(x, pm)
 
-    full_path <- .pm_as_full_path_list(pm)
+    full_path <- .pf_as_full_path_list(pm)
 
     res <- lapply(
         full_path,
