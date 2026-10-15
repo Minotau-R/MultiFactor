@@ -1,4 +1,4 @@
-# multifactor: R package for multifactor and linkmap S7 container classes.
+# multifactor: An R package for multifactor and linkmap S7 container classes.
 
 ## Introduction
 
