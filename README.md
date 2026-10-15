@@ -11,7 +11,7 @@ pulls](https://img.shields.io/github/issues-pr/Minotau-R/multifactor)](https://g
 BiocCheck](https://github.com/Minotau-R/multifactor/actions/workflows/test.yml/badge.svg)](https://github.com/Minotau-R/multifactor/actions/workflows/test.yml)
 <!-- badges: end -->
 
-# multifactor: R package for multifactor and linkmap S7 container classes.
+# multifactor: An R package for multifactor and linkmap S7 container classes.
 
 ## Introduction
 
