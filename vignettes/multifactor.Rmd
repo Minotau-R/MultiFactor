@@ -1,0 +1,381 @@
+---
+title: "multifactor"
+resource_files:
+  - images/plot-linkmap.png
+output: 
+  rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{1. Getting started with multifactor}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r 'knitr-setup', include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  dev = "ragg_png", 
+  comment = "#>"
+)
+```
+
+# Overview
+
+`multifactor` aims to provide a consistent toolkit to incorporate relational 
+data into data-analytical tools and methods. In practice, we expect 
+`multifactor` to be used in combination with additional packages that extend it.
+For instance, see [ariadne](https://github.com/minotau-R/ariadne) and
+[anansi](https://github.com/thomazbastiaanssen/anansi), two such packages that 
+make use of `multifactor` to link and convert across biological database IDs and
+perform multi-omics integration analysis, respectively. 
+
+# Get started using multifactor
+
+## Installation instructions
+
+Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
+install the released version of `multifactor`:
+
+```{r 'cran-install', eval = FALSE}
+install.packages("multifactor")
+```
+
+Or install the development version from this repository:
+
+```{r, 'remotes-install', eval = FALSE}
+install.packages("remotes")
+remotes::install_github("minotau-R/multifactor")
+```
+
+## Setup 
+
+```{r 'setup-multifactor', message = FALSE}
+library(multifactor)
+
+# Wrangling
+library(dplyr)
+
+# Plotting
+library(ggplot2)
+library(systemfonts)
+library(ragg)
+
+# Load demo data
+set.seed(2612)
+tp <- trade_posts()
+```
+
+```{r 'prep-plot', echo = FALSE}
+require_font(
+    "Noto Color Emoji", repositories = "Google Fonts", verbose = FALSE
+)
+
+e <- tapply(trade_posts(raw.data = TRUE), ~group, `[[<-`, "group", value = NULL)
+
+.to_plot_df <- function(x, e) {
+  l <- colnames(x)[[1L]]
+  r <- colnames(x)[[2L]]
+  res <- rbind(
+  data.frame(
+  rbind(
+    e[[l]][match(x[[l]], levels(x)[[l]]), ],
+    e[[r]][match(x[[r]], levels(x)[[r]]), ]
+    ), 
+  y = rep(rev(seq_len(NROW(x))), 2), 
+  x = rep(c(-1, -1/2), each = NROW(x))
+  ), 
+  data.frame(
+    name = c(l, r), 
+    emoji = c("", ""), 
+    y = NROW(x) + 1, 
+    x = c(-1, -1/2)
+    )
+  )
+  res[["header"]] <- res[["name"]] %in% names(e)
+  return(res)
+}
+
+
+```
+
+# multifactor and linkmap objects
+## linkmap
+The basic object in the `multifactor` package is the `linkmap`, which contains 
+relational information across two types of features. This format is sometimes 
+referred to as an [edge list](https://en.wikipedia.org/wiki/Edge_list). 
+Under a thin layer of S7, the `linkmap` object is a `data.frame` where the first
+two columns indicate which feature IDs that are considered linked. Optional 
+additional columns are considered metadata. 
+
+Let's use an example data set to take a closer look at `linkmap`. The 
+`trade_posts()` function generates data about fictional trade posts, where one 
+type of good is traded for another. In this particular case, types of books are 
+traded for types of furniture. 
+```{r 'linkmap-object-start'}
+linkmap <- tp[[1]]
+linkmap
+```
+The two types of goods are captured by the two columns, with column names 
+representing the *types* of good and rows representing which specific 
+*type-pairs* are traded at that trade post, or, more generally, are linked in 
+that `linkmap`. 
+```{r 'linkmap-object-lvs'}
+levels( linkmap )
+```
+Notice that `linkmap` is two `factor` columns in a trench coat. We can inspect 
+the levels as usual. 
+
+We can see that we have several of these types of trade posts in our data set. 
+However, we also notice that the column names - the types of goods - can differ. 
+```{r 'linkmap-object-more'}
+tp[[2]]
+tp[[3]]
+```
+
+### Visual representation of the linkmaps in our data set. 
+```{r, 'plot-linkmap'}
+#| message=FALSE, echo=FALSE, fig.width=8, fig.height=4, dev='ragg_png'
+plot_dfs <- lapply(tp, .to_plot_df, e)
+
+plot_dfs[[2]]$x <- plot_dfs[[2]]$x + 1 + 2/3.5
+plot_dfs[[2]]$y <- plot_dfs[[2]]$y -20/12
+
+plot_dfs[[3]]$x <- plot_dfs[[3]]$x + 1 + 3/3.5
+plot_dfs[[3]]$y <- plot_dfs[[3]]$y -10/12
+
+plot_dfs[[4]]$x <- plot_dfs[[4]]$x + 1 + 4/3.5
+plot_dfs[[4]]$y <- plot_dfs[[4]]$y
+
+plot_dfs[[5]]$x <- plot_dfs[[5]]$x + 1 + 5/3.5
+plot_dfs[[5]]$y <- plot_dfs[[5]]$y + 10/12
+
+plot_dfs[[6]]$x <- plot_dfs[[6]]$x + 1 + 6/3.5
+plot_dfs[[6]]$y <- plot_dfs[[6]]$y + 20/12
+
+first_linkmap <- plot_dfs[[1L]]
+other_linkmap <- do.call(rbind, plot_dfs[-1L])
+
+p <- ggplot() +
+  aes(
+    x = x, y = y, 
+    ) +
+
+  # Bunched linkmaps
+  lapply(
+    rev(plot_dfs[-1]), function(x) list(
+      geom_tile(data = x, aes(fill = header), colour = "black", linewidth = 1/2), 
+      geom_text(data = filter(x, header),  aes(label = name), size = 4),
+      geom_text(data = filter(x, !header), aes(label = emoji), size = 5, 
+                family = "emoji")
+      ) 
+) +
+  geom_tile( data = first_linkmap, aes(fill = header), colour = "black", linewidth = 1/2 ) +
+  geom_text( data = filter(first_linkmap, header), aes(label = name), size = 4 ) +
+  geom_text( data = filter(first_linkmap, !header), aes(label = emoji), size = 5, family = "emoji") +
+  scale_fill_manual(values = c("TRUE" = "lightgray", "FALSE" = "white")) +
+  guides(fill = "none") +
+   
+  theme_void()
+
+# Doesn't render on github. 
+# Uncomment following two lines and run locally to update fig. 
+
+# pngfile <- file.path("images", "plot-linkmap.png")
+# ggsave(pngfile, p, device = ragg::agg_png)
+
+knitr::include_graphics("images/plot-linkmap.png")
+
+```
+
+## multifactor
+The `multifactor` is in essence a collection of `linkmap`s. Where `linkmap`s 
+contain relational information across two data types, `multifactor`s are a 
+representation of the relational graph formed by combining those `linkmaps`. 
+The full object `tp`, which contains the `linkmaps` we just investigated, is in
+fact a `multifactor` object: 
+
+```{r 'multifactor-object-start'}
+tp
+```
+Notice that a `multifactor` summarizes information across the component 
+`linkmaps` in several ways. First, The matrix shows the types of goods as 
+columns and the component `linkmaps` that contain this information as rows. The 
+numbers in the matrix then show the number of unique types of that type of good 
+in that particular `linkmap` - and that are therefore linked to the second feature
+in the `linkmap`. 
+
+For instance, in the top-left corner of the matrix, we can see that the first 
+`linkmap` links books and furniture and is aptly named `books2furniture`.
+Notice that five unique types of books as well as five types of furniture are
+mentioned in `books2furniture`.  
+
+Though `multifactor` is a list of `linkmap`s under the hood, we can also 
+interact with its matrix representation, as well as access the component levels:  
+```{r 'multifactor-object-matrix'}
+dim(tp)
+dimnames(tp)
+levels(tp)
+nlevels(tp)
+```
+Note that levels of the same type are automatically unified across all component
+linkmaps with that type of level.
+
+```{r 'plot-multifactor', echo = FALSE}
+main_graph <- data.frame(
+  label = c("fruit", "marbles", "clothing", "instruments", "furniture"), 
+  x = c(0, 2/3, 1, 4/3, 2), 
+  y = (c(1/2, 1/3, 2/3, 1/3, 1/2) * 20) 
+)
+
+```
+# weave() a path
+Going back to our trading post example, let's say we'd want to get some new 
+hats, but we only have fruit. While both fruit and clothing are available in 
+our data set, there aren't any trade post that deals in that particular pair of 
+goods. 
+However, we could imagine trading our fruit for clothing in steps: We can trade
+our fruit for a different good, which we trade for another one, until we reach a
+good that we can trade for clothing. The `weave()` function does exactly this: 
+```{r 'weave'}
+fruit2clothing <- weave(tp, fruit ~ clothing)
+fruit2clothing
+```
+We receive a new `linkmap` containing all fruits that could be traded for 
+clothing. 
+
+## Selecting a path
+We can use `select_path()` to find the types of traded goods in order,
+or more generally, the paths that were traversed. If several paths exist, all 
+will be traversed and included into one `linkmap`. 
+```{r 'weave-sp'}
+select_path(tp, fruit ~ clothing)
+```
+
+```{r 'weave-plot', echo = FALSE}
+df_weave <- .to_plot_df(fruit2clothing, e)
+
+```
+
+# Compatibility with `igraph` and `Matrix`
+## Convert `multifactor` and `linkmap` objects to `igraph` representation 
+`multifactor` relies heavily on the excellent [`igraph`](https://r.igraph.org/) 
+and [`Matrix`](https://matrix.r-forge.r-project.org/) packages, particularly for
+path finding and sparse matrix representation. 
+
+### Convert `multifactor` main graph representation to `igraph` object
+```{r 'igraph-multifactor-sp', fig.height=6, fig.width = 6}
+library(igraph)
+# Convert to an igraph object
+g <- as.igraph(tp)
+g
+# Plot graph across data types
+plot(g)
+```
+
+### Convert `linkmap` relational information to `igraph` object
+```{r 'igraph-linkmap-sp', fig.height=6, fig.width = 6}
+# Convert to an igraph object
+lg <- as.igraph(fruit2clothing)
+lg
+# Same information as the linkmap: 
+plot(lg)
+```
+
+# Convert `linkmap` linkage information to sparse adjacency `Matrix`
+```{r 'Matrix-sp'}
+# Convert to an igraph object
+m <- as.matrix(fruit2clothing)
+m
+```
+
+# Utilities
+`multifactor` also provides some utility functions for data wrangling on tables 
+with features (rows) of the appropriate type. 
+
+```{r 'prep-apply'}
+# Generate small example table
+generate_sample <- function(n) rbinom(n, rbinom(n, 100, runif(n)), runif(n))
+n <- nlevels(tp)[["clothing"]]
+
+clothing_table <- as.data.frame( replicate( 10,  generate_sample(n)) )
+rownames(clothing_table) <- levels(tp)$clothing
+
+clothing_table
+```
+
+## weave_apply
+`weave_apply` allows us to run arbitrary code on subsets of a table, based on
+groupings on the left hand of the formula:  
+```{r 'subgroup-apply'}
+weave_apply(
+  .x = tp, .path = fruit ~ clothing, 
+  .data = clothing_table, .fun = as.data.frame
+  )
+
+# More complex example: 
+# For all subgroups of clothing corresponding to one particular fruit, if that 
+# group has more than two rows (types of clothing), fit a statistical model. 
+# 
+weave_apply(
+  tp, fruit ~ clothing, clothing_table, function(x) {
+    if( NROW(x) <= 2 ) return( NULL )
+    # else: 
+    summary( lm(V1 ~ V2, data = x) )
+    }
+)
+```
+
+## Compatibility with the tidyverse: `weave_to_tbl`
+For those who prefer to use `tidyverse`, `weave_to_tbl()` returns a tidy 
+wide-format table, ready to be grouped based on the first two columns. 
+```{r 'subgroup-tbl'}
+weave_to_tbl(tp, .path = fruit ~ clothing, .data = clothing_table)
+```
+
+## Reading and parsing adjaceny list-formatted files
+Relational data between two types (bipartite) is sometimes expressed as a text 
+file to be read row-wise. The first element of each row specifies a level of the 
+first type of data, whereas all following elements all from the second type, 
+indicate which levels it is connected to. These files can be tricky to load and 
+properly parse into R. The function `read_adjacency_list()` allows these files 
+to be read from file (or URL). 
+
+### Example of adjacency list formatted data
+We'll format the `linkmap` from fruit to furniture that we generated above. 
+```{r 'adj-example'}
+# Use igraph to deconstruct a graph into an adjacency list, coerce to characters
+adj <- lapply( as_adj_list( as.igraph(fruit2clothing) ), as_ids )
+# Only keep the 'fruit' nodes that have more than one link for now
+adj <- adj[ levels(fruit2clothing)$fruit ]
+adj <- adj[ lengths(adj) > 0 ]
+# collapse names to first elements of character vectors
+adj <- mapply(c, names(adj), adj, USE.NAMES = FALSE)
+adj <- vapply(adj, paste, collapse = "\t", "")
+```
+
+If stored in a file in adjacency list format, it may look like this: 
+```
+pear\tdesk
+cherry\tchair\ttable\tdesk
+melon\tchair\ttable\tdesk 
+blueberry\tchair\tdesk
+```
+
+```{r 'read-adj', fig.height=6, fig.width = 6}
+# Create some temporary file to read from:
+temp <- tempfile()
+# fill the temp file with the adjacency list we just constructed 
+t.con <- file(temp, "w")
+cat(adj, file = t.con, sep = "\n")
+close(t.con)
+
+adj_data <- read_adjacency_list(temp)
+adj_data
+
+# Notice that the unlinked data types are no longer in the graph.  
+plot(as.igraph(adj_data))
+```
+
+# Session Info
+```{r 'session-info'}
+sessionInfo()
+```
