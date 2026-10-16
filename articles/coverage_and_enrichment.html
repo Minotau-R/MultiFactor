@@ -103,11 +103,11 @@
 <span></span>
 <span><span class="co"># Define utility function</span></span>
 <span><span class="va">split_to_letters</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">" "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">""</span> <span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">" "</span>, <span class="st">""</span>, <span class="va">x</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">""</span><span class="op">)</span>,</span>
 <span>    recursive <span class="op">=</span> <span class="cn">TRUE</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="example-dataset-the-quick-brown-fox">Example Dataset: The Quick Brown Fox<a class="anchor" aria-label="anchor" href="#example-dataset-the-quick-brown-fox"></a>
 </h4>
@@ -174,7 +174,7 @@ additional argument, <code>.data</code>. For now, let’s plug in our
 input letters:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave_coverage.html">weave_coverage</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">fox</span>, .path <span class="op">=</span> <span class="va">letter</span> <span class="op">~</span> <span class="va">word</span>, .data <span class="op">=</span> <span class="va">input</span></span>
+<span>  x <span class="op">=</span> <span class="va">fox</span>, .path <span class="op">=</span> <span class="va">letter</span> <span class="op">~</span> <span class="va">word</span>, .data <span class="op">=</span> <span class="va">input</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
@@ -220,7 +220,7 @@ the sentence:</p>
 <span><span class="co">#&gt; [1] "j" "u" "m" "p" "s" "o" "v" "e" "r"</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weave_coverage.html">weave_coverage</a></span><span class="op">(</span></span>
-<span>    x <span class="op">=</span> <span class="va">fox</span>, .path <span class="op">=</span> <span class="va">letter</span> <span class="op">~</span> <span class="va">word</span>, .data <span class="op">=</span> <span class="va">input</span></span>
+<span>  x <span class="op">=</span> <span class="va">fox</span>, .path <span class="op">=</span> <span class="va">letter</span> <span class="op">~</span> <span class="va">word</span>, .data <span class="op">=</span> <span class="va">input</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>

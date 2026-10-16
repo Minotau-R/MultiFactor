@@ -170,7 +170,7 @@ names representing the <em>types</em> of good and rows representing
 which specific <em>type-pairs</em> are traded at that trade post, or,
 more generally, are linked in that <code>linkmap</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span> <span class="va">linkmap</span> <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">linkmap</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $books</span></span>
 <span><span class="co">#&gt; [1] "fancy book"  "green book"  "red book"    "blue book"   "orange book"</span></span>
 <span><span class="co">#&gt; [6] "plain book" </span></span>
@@ -403,11 +403,11 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 11193ea UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH c546d9d UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), fruit_emoji (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 11193ea (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from c546d9d (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -422,15 +422,15 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH c831ee1 UN-B 12 18 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 92c3b46 UN-B 12 18 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from c831ee1 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 92c3b46 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  </span></span>
 <span><span class="co">#&gt;  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves </span></span>
 <span><span class="co">#&gt;  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    </span></span>
 <span><span class="co">#&gt; [13] grapes --hat     apples --scarf   pears  --scarf   oranges--scarf  </span></span>
 <span><span class="co">#&gt; [17] melons --scarf   grapes --scarf</span></span>
-<span><span class="co"># Same information as the linkmap: </span></span>
+<span><span class="co"># Same information as the linkmap:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">lg</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multifactor_files/figure-html/igraph-linkmap-sp-1.png" class="r-plt" alt="" width="576"></p>
 </div>
@@ -465,7 +465,7 @@ type.</p>
 <span><span class="va">generate_sample</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nlevels.html">nlevels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">[[</span><span class="st">"clothing"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
-<span><span class="va">clothing_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span> <span class="fl">10</span>,  <span class="fu">generate_sample</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">clothing_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fu">generate_sample</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">clothing_table</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span><span class="op">$</span><span class="va">clothing</span></span>
 <span></span>
 <span><span class="va">clothing_table</span></span>
@@ -483,9 +483,9 @@ type.</p>
 of a table, based on groupings on the left hand of the formula:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/weave_apply-generic.html">weave_apply</a></span><span class="op">(</span></span>
-<span>  .x <span class="op">=</span> <span class="va">tp</span>, .path <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, </span>
+<span>  .x <span class="op">=</span> <span class="va">tp</span>, .path <span class="op">=</span> <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>,</span>
 <span>  .data <span class="op">=</span> <span class="va">clothing_table</span>, .fun <span class="op">=</span> <span class="va">as.data.frame</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; $apples</span></span>
 <span><span class="co">#&gt;         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10</span></span>
 <span><span class="co">#&gt; dress   16 11 34 40 35 63  2 28  0  42</span></span>
@@ -519,16 +519,16 @@ of a table, based on groupings on the left hand of the formula:</p>
 <span><span class="co">#&gt; hat    0 61  0  4  3  0  7 20 38  21</span></span>
 <span><span class="co">#&gt; scarf  4 80 47 72 29 55  4  4 16  25</span></span>
 <span></span>
-<span><span class="co"># More complex example: </span></span>
-<span><span class="co"># For all subgroups of clothing corresponding to one particular fruit, if that </span></span>
-<span><span class="co"># group has more than two rows (types of clothing), fit a statistical model. </span></span>
-<span><span class="co"># </span></span>
+<span><span class="co"># More complex example:</span></span>
+<span><span class="co"># For all subgroups of clothing corresponding to one particular fruit, if that</span></span>
+<span><span class="co"># group has more than two rows (types of clothing), fit a statistical model.</span></span>
+<span><span class="co">#</span></span>
 <span><span class="fu"><a href="../reference/weave_apply-generic.html">weave_apply</a></span><span class="op">(</span></span>
 <span>  <span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span>, <span class="va">clothing_table</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="kw">if</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span> <span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span> <span class="cn">NULL</span> <span class="op">)</span></span>
-<span>    <span class="co"># else: </span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">V1</span> <span class="op">~</span> <span class="va">V2</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op">)</span></span>
-<span>    <span class="op">}</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">2</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>    <span class="co"># else:</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">V1</span> <span class="op">~</span> <span class="va">V2</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; $apples</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -671,10 +671,10 @@ read from file (or URL).</p>
 generated above.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use igraph to deconstruct a graph into an adjacency list, coerce to characters</span></span>
-<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span> <span class="fu"><a href="https://r.igraph.org/reference/as_adj_list.html" class="external-link">as_adj_list</a></span><span class="op">(</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span> <span class="op">)</span>, <span class="va">as_ids</span> <span class="op">)</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as_adj_list.html" class="external-link">as_adj_list</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span><span class="op">)</span>, <span class="va">as_ids</span><span class="op">)</span></span>
 <span><span class="co"># Only keep the 'fruit' nodes that have more than one link for now</span></span>
-<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span><span class="op">$</span><span class="va">fruit</span> <span class="op">]</span></span>
-<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span> <span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">]</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span><span class="op">$</span><span class="va">fruit</span><span class="op">]</span></span>
+<span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="va">adj</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span></span>
 <span><span class="co"># collapse names to first elements of character vectors</span></span>
 <span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span><span class="va">c</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">adj</span><span class="op">)</span>, <span class="va">adj</span>, USE.NAMES <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="va">adj</span>, <span class="va">paste</span>, collapse <span class="op">=</span> <span class="st">"\t"</span>, <span class="st">""</span><span class="op">)</span></span></code></pre></div>
@@ -687,7 +687,7 @@ blueberry\tchair\tdesk</code></pre>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Create some temporary file to read from:</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># fill the temp file with the adjacency list we just constructed </span></span>
+<span><span class="co"># fill the temp file with the adjacency list we just constructed</span></span>
 <span><span class="va">t.con</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">file</a></span><span class="op">(</span><span class="va">temp</span>, <span class="st">"w"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">adj</span>, file <span class="op">=</span> <span class="va">t.con</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">close</a></span><span class="op">(</span><span class="va">t.con</span><span class="op">)</span></span>
@@ -712,7 +712,7 @@ blueberry\tchair\tdesk</code></pre>
 <span><span class="co">#&gt;  $ id.x : 5 Levels: apples grapes ... pears </span></span>
 <span><span class="co">#&gt;  $ id.y : 5 Levels: dress gloves ... t-shirt</span></span>
 <span></span>
-<span><span class="co"># Notice that the unlinked data types are no longer in the graph.  </span></span>
+<span><span class="co"># Notice that the unlinked data types are no longer in the graph.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">adj_data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multifactor_files/figure-html/read-adj-1.png" class="r-plt" alt="" width="576"></p>
 </div>

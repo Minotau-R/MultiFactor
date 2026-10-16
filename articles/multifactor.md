@@ -94,7 +94,7 @@ specific *type-pairs* are traded at that trade post, or, more generally,
 are linked in that `linkmap`.
 
 \
-[`levels`](https://rdrr.io/r/base/levels.html)`(`` ``linkmap`` ``)`\
+[`levels`](https://rdrr.io/r/base/levels.html)`(``linkmap``)`\
 `#> $books`\
 `#> [1] "fancy book"  "green book"  "red book"    "blue book"   "orange book"`\
 `#> [6] "plain book" `\
@@ -329,11 +329,11 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `g`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``tp``)`\
 `g`\
-`#> IGRAPH 11193ea UN-- 6 6 -- `\
+`#> IGRAPH c546d9d UN-- 6 6 -- `\
 `#> + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji`\
 `#> | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji`\
 `#> | (e/n), fruit_emoji (e/n)`\
-`#> + edges from 11193ea (vertex names):`\
+`#> + edges from c546d9d (vertex names):`\
 `#> [1] books      --furniture   clothing   --furniture   books      --instruments`\
 `#> [4] fruit      --instruments furniture  --marbles     instruments--marbles`\
 `# Plot graph across data types`\
@@ -347,15 +347,15 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `lg`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)`\
 `lg`\
-`#> IGRAPH c831ee1 UN-B 12 18 -- `\
+`#> IGRAPH 92c3b46 UN-B 12 18 -- `\
 `#> + attr: type (v/l), name (v/c)`\
-`#> + edges from c831ee1 (vertex names):`\
+`#> + edges from 92c3b46 (vertex names):`\
 `#>  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  `\
 `#>  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves `\
 `#>  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    `\
 `#> [13] grapes --hat     apples --scarf   pears  --scarf   oranges--scarf  `\
 `#> [17] melons --scarf   grapes --scarf`\
-`# Same information as the linkmap: `\
+`# Same information as the linkmap:`\
 [`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``lg``)`
 
 ![](multifactor_files/figure-html/igraph-linkmap-sp-1.png)
@@ -386,7 +386,7 @@ tables with features (rows) of the appropriate type.
 `generate_sample`` ``<-`` ``function``(``n``)`` `[`rbinom`](https://rdrr.io/r/stats/Binomial.html)`(``n``, `[`rbinom`](https://rdrr.io/r/stats/Binomial.html)`(``n``, ``100``, `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``n``)``)``, `[`runif`](https://rdrr.io/r/stats/Uniform.html)`(``n``)``)`\
 `n`` ``<-`` `[`nlevels`](https://minotau-r.github.io/multifactor/reference/nlevels.md)`(``tp``)``[[``"clothing"``]``]`\
 \
-`clothing_table`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(`` `[`replicate`](https://rdrr.io/r/base/lapply.html)`(`` ``10``,  ``generate_sample``(``n``)``)`` ``)`\
+`clothing_table`` ``<-`` `[`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(`[`replicate`](https://rdrr.io/r/base/lapply.html)`(``10``, ``generate_sample``(``n``)``)``)`\
 [`rownames`](https://rdrr.io/r/base/colnames.html)`(``clothing_table``)`` ``<-`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``tp``)``$``clothing`\
 \
 `clothing_table`\
@@ -405,9 +405,9 @@ based on groupings on the left hand of the formula:
 
 \
 [`weave_apply`](https://minotau-r.github.io/multifactor/reference/weave_apply-generic.md)`(`\
-`  .x ``=`` ``tp``, .path ``=`` ``fruit`` ``~`` ``clothing``, `\
+`  .x ``=`` ``tp``, .path ``=`` ``fruit`` ``~`` ``clothing``,`\
 `  .data ``=`` ``clothing_table``, .fun ``=`` ``as.data.frame`\
-`  ``)`\
+`)`\
 `#> $apples`\
 `#>         V1 V2 V3 V4 V5 V6 V7 V8 V9 V10`\
 `#> dress   16 11 34 40 35 63  2 28  0  42`\
@@ -441,16 +441,16 @@ based on groupings on the left hand of the formula:
 `#> hat    0 61  0  4  3  0  7 20 38  21`\
 `#> scarf  4 80 47 72 29 55  4  4 16  25`\
 \
-`# More complex example: `\
-`# For all subgroups of clothing corresponding to one particular fruit, if that `\
-`# group has more than two rows (types of clothing), fit a statistical model. `\
-`# `\
+`# More complex example:`\
+`# For all subgroups of clothing corresponding to one particular fruit, if that`\
+`# group has more than two rows (types of clothing), fit a statistical model.`\
+`#`\
 [`weave_apply`](https://minotau-r.github.io/multifactor/reference/weave_apply-generic.md)`(`\
 `  ``tp``, ``fruit`` ``~`` ``clothing``, ``clothing_table``, ``function``(``x``)`` ``{`\
-`    ``if``(`` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``x``)`` ``<=`` ``2`` ``)`` `[`return`](https://rdrr.io/r/base/function.html)`(`` ``NULL`` ``)`\
-`    ``# else: `\
-`    `[`summary`](https://rdrr.io/r/base/summary.html)`(`` `[`lm`](https://rdrr.io/r/stats/lm.html)`(``V1`` ``~`` ``V2``, data ``=`` ``x``)`` ``)`\
-`    ``}`\
+`    ``if`` ``(`[`NROW`](https://rdrr.io/r/base/nrow.html)`(``x``)`` ``<=`` ``2``)`` `[`return`](https://rdrr.io/r/base/function.html)`(``NULL``)`\
+`    ``# else:`\
+`    `[`summary`](https://rdrr.io/r/base/summary.html)`(`[`lm`](https://rdrr.io/r/stats/lm.html)`(``V1`` ``~`` ``V2``, data ``=`` ``x``)``)`\
+`  ``}`\
 `)`\
 `#> $apples`\
 `#> `\
@@ -594,10 +594,10 @@ above.
 
 \
 `# Use igraph to deconstruct a graph into an adjacency list, coerce to characters`\
-`adj`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(`` `[`as_adj_list`](https://r.igraph.org/reference/as_adj_list.html)`(`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)`` ``)``, ``as_ids`` ``)`\
+`adj`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(`[`as_adj_list`](https://r.igraph.org/reference/as_adj_list.html)`(`[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)``)``, ``as_ids``)`\
 `# Only keep the 'fruit' nodes that have more than one link for now`\
-`adj`` ``<-`` ``adj``[`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``fruit2clothing``)``$``fruit`` ``]`\
-`adj`` ``<-`` ``adj``[`` `[`lengths`](https://rdrr.io/r/base/lengths.html)`(``adj``)`` ``>`` ``0`` ``]`\
+`adj`` ``<-`` ``adj``[`[`levels`](https://rdrr.io/r/base/levels.html)`(``fruit2clothing``)``$``fruit``]`\
+`adj`` ``<-`` ``adj``[`[`lengths`](https://rdrr.io/r/base/lengths.html)`(``adj``)`` ``>`` ``0``]`\
 `# collapse names to first elements of character vectors`\
 `adj`` ``<-`` `[`mapply`](https://rdrr.io/r/base/mapply.html)`(``c``, `[`names`](https://rdrr.io/r/base/names.html)`(``adj``)``, ``adj``, USE.NAMES ``=`` ``FALSE``)`\
 `adj`` ``<-`` `[`vapply`](https://rdrr.io/r/base/lapply.html)`(``adj``, ``paste``, collapse ``=`` ``"\t"``, ``""``)`
@@ -612,7 +612,7 @@ If stored in a file in adjacency list format, it may look like this:
 \
 `# Create some temporary file to read from:`\
 `temp`` ``<-`` `[`tempfile`](https://rdrr.io/r/base/tempfile.html)`(``)`\
-`# fill the temp file with the adjacency list we just constructed `\
+`# fill the temp file with the adjacency list we just constructed`\
 `t.con`` ``<-`` `[`file`](https://rdrr.io/r/base/connections.html)`(``temp``, ``"w"``)`\
 [`cat`](https://rdrr.io/r/base/cat.html)`(``adj``, file ``=`` ``t.con``, sep ``=`` ``"\n"``)`\
 [`close`](https://rdrr.io/r/base/connections.html)`(``t.con``)`\
@@ -637,7 +637,7 @@ If stored in a file in adjacency list format, it may look like this:
 `#>  $ id.x : 5 Levels: apples grapes ... pears `\
 `#>  $ id.y : 5 Levels: dress gloves ... t-shirt`\
 \
-`# Notice that the unlinked data types are no longer in the graph.  `\
+`# Notice that the unlinked data types are no longer in the graph.`\
 [`plot`](https://rdrr.io/r/graphics/plot.default.html)`(`[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``adj_data``)``)`
 
 ![](multifactor_files/figure-html/read-adj-1.png)

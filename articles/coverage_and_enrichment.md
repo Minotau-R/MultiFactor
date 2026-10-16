@@ -22,11 +22,11 @@
 \
 `# Define utility function`\
 `split_to_letters`` ``<-`` ``function``(``x``)`` `[`unique`](https://rdrr.io/r/base/unique.html)`(`\
-`  `[`unlist`](https://rdrr.io/r/base/unlist.html)`(`` `\
-`    `[`strsplit`](https://rdrr.io/r/base/strsplit.html)`(`` `[`gsub`](https://rdrr.io/r/base/grep.html)`(``" "``, ``""``, ``x``)``, split ``=`` ``""`` ``)``, `\
+`  `[`unlist`](https://rdrr.io/r/base/unlist.html)`(`\
+`    `[`strsplit`](https://rdrr.io/r/base/strsplit.html)`(`[`gsub`](https://rdrr.io/r/base/grep.html)`(``" "``, ``""``, ``x``)``, split ``=`` ``""``)``,`\
 `    recursive ``=`` ``TRUE``, use.names ``=`` ``FALSE`\
 `  ``)`\
-`  ``)`
+`)`
 
 #### Example Dataset: The Quick Brown Fox
 
@@ -98,7 +98,7 @@ our input letters:
 
 \
 `res`` ``<-`` `[`weave_coverage`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)`(`\
-`    x ``=`` ``fox``, .path ``=`` ``letter`` ``~`` ``word``, .data ``=`` ``input`\
+`  x ``=`` ``fox``, .path ``=`` ``letter`` ``~`` ``word``, .data ``=`` ``input`\
 `)`\
 \
 [`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(``res``)`\
@@ -147,7 +147,7 @@ sentence:
 
 \
 `res`` ``<-`` `[`weave_coverage`](https://minotau-r.github.io/multifactor/reference/weave_coverage.md)`(`\
-`    x ``=`` ``fox``, .path ``=`` ``letter`` ``~`` ``word``, .data ``=`` ``input`\
+`  x ``=`` ``fox``, .path ``=`` ``letter`` ``~`` ``word``, .data ``=`` ``input`\
 `)`\
 \
 [`as.data.frame`](https://rdrr.io/r/base/as.data.frame.html)`(``res``)`\
