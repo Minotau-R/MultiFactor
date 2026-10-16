@@ -1,7 +1,7 @@
-# # library(dplyr)
+# library(dplyr)
 # library(tidyverse)
 # library(patchwork)
-# # library(multifactor)
+# library(multifactor)
 #
 # traits_df <- list(
 #     Movement   = c("🐾" = "Ground", "🪶" = "Flight", "🌊" = "Aquatic"),
@@ -195,15 +195,15 @@
 # )
 #
 #
-# # animal_traits <- c(traits, complex_traits)
-# # animal_groups <- taxonomy
+# animal_traits <- c(traits, complex_traits)
+# animal_groups <- taxonomy
+#
+# save(animal_traits, animal_groups, file = "data/animals.rda")
+#
+#
+#
+#
+# # # Use stack() to add together traits from multiple categories!
 # #
-# # save(animal_traits, animal_groups, file = "data/animals.rda")
-#
-#
-#
-#
-# # Use stack() to add together traits from multiple categories!
-#
-# weave_coverage(x, Species ~ Trait)
-#
+# # weave_coverage(x, Species ~ Trait)
+# #
