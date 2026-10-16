@@ -1,5 +1,5 @@
 # Create equivalent paths in different formats
-p_fm <- a ~ b ~ c : d ~ e : f < 0.5 ~ b ~ a
+p_fm <- a ~ b ~ c:d ~ e:f < 0.5 ~ b ~ a
 path_frame(p_fm)
 
 # Only two formats (formula & list) can express complex paths

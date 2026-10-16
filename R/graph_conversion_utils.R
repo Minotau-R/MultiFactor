@@ -17,8 +17,8 @@
 #' # Make igraph object:
 #' igraph::as.igraph(x)
 #'
-`as.igraph.multifactor::multifactor`  <- function(x, directed = FALSE, ...) {
-    igraph::graph_from_data_frame(mf_as_graph_df(x), directed, ...)
+`as.igraph.multifactor::multifactor` <- function(x, directed = FALSE, ...) {
+  igraph::graph_from_data_frame(mf_as_graph_df(x), directed, ...)
 }
 
 #' Convert a linkmap to igraph
@@ -43,31 +43,30 @@
 #' # Make igraph object:
 #' igraph::as.igraph(x)
 #'
-`as.igraph.multifactor::linkmap`  <- function( x, directed = FALSE, ... ) {
-
-    g <- igraph::graph_from_biadjacency_matrix(
-        `as.matrix.multifactor::linkmap`( x ),
-        directed, ...
-    )
-    # Include metadata if it exits
-    if ( NCOL(mm <- x@metadata) > 0L ) {
-        for( m in NCOL(mm) ) edge_attr(g, colnames(mm)[m]) <- mm[[m]]
-    }
-    return(g)
+`as.igraph.multifactor::linkmap` <- function(x, directed = FALSE, ...) {
+  g <- igraph::graph_from_biadjacency_matrix(
+    `as.matrix.multifactor::linkmap`(x),
+    directed, ...
+  )
+  # Include metadata if it exits
+  if (NCOL(mm <- x@metadata) > 0L) {
+    for (m in NCOL(mm)) edge_attr(g, colnames(mm)[m]) <- mm[[m]]
+  }
+  return(g)
 }
 
 #' @export
 #' @importFrom igraph as.igraph
 #'
 S7::method(as.igraph, linkmap) <-
-    function(x, ...) `as.igraph.multifactor::linkmap`(x, ...)
+  function(x, ...) `as.igraph.multifactor::linkmap`(x, ...)
 
 
 #' @export
 #' @importFrom igraph as.igraph
 #'
 S7::method(as.igraph, multifactor) <-
-    function(x, ...) `as.igraph.multifactor::multifactor`(x, ...)
+  function(x, ...) `as.igraph.multifactor::multifactor`(x, ...)
 
 #' Convert a multifactor to relational graph format.
 #' @description
@@ -83,9 +82,8 @@ S7::method(as.igraph, multifactor) <-
 #' x_df <- mf_as_graph_df(x)
 #'
 mf_as_graph_df <- function(x) {
-    if(!S7::S7_inherits(x, multifactor)) x <- multifactor(x)
-    res <- as.data.frame.matrix( .all_names_in_list_mf(x) )
-    res <- cbind.data.frame(  res, x@metadata )
-    return(res)
+  if (!S7::S7_inherits(x, multifactor)) x <- multifactor(x)
+  res <- as.data.frame.matrix(.all_names_in_list_mf(x))
+  res <- cbind.data.frame(res, x@metadata)
+  return(res)
 }
-

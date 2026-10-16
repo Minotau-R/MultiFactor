@@ -23,8 +23,8 @@
 NULL
 
 S7::method(weave, multifactor) <- function(
-    x, .path, out.format = c("linkmap", "matrix"),
-    include = NULL, exclude = NULL, exact = NULL
+  x, .path, out.format = c("linkmap", "matrix"),
+  include = NULL, exclude = NULL, exact = NULL
 ) {
   out.format <- match.arg(out.format, c("linkmap", "matrix"))
 
@@ -36,18 +36,18 @@ S7::method(weave, multifactor) <- function(
 
   full_path <- .pf_as_full_path_list(pm)
   res <- lapply(full_path, .weave_full_path, x = x, out.format = "linkmap")
-  res <- do.call( rbind.data.frame, res)
+  res <- do.call(rbind.data.frame, res)
   res <- linkmap(res)
 
-  if(out.format == "matrix") {
-   res <- `as.matrix.multifactor::linkmap`(res)
+  if (out.format == "matrix") {
+    res <- `as.matrix.multifactor::linkmap`(res)
   }
 
   return(res)
 }
 
 .path_check_valid_weave <- function(x) {
-  if(.check_path_frame_uses_stack(x)) {
+  if (.check_path_frame_uses_stack(x)) {
     stop(
       "`weave()` '.path' cannot contain '+'. ",
       "Use `stack()` to prepare input."
@@ -106,12 +106,11 @@ S7::method(weave, multifactor) <- function(
 #' @importFrom Matrix which
 #'
 .res_weave_matrix_to_linkmap <- function(res, lvs) {
-
   res <- as.data.frame.matrix(Matrix::which(res > 0L, arr.ind = TRUE))
   res[] <- mapply(FUN = function(x, y) {
     attr(x, "levels") <- y
     `class<-`(x, "factor")
-  }, x = res, y = lvs, SIMPLIFY = FALSE )
+  }, x = res, y = lvs, SIMPLIFY = FALSE)
   colnames(res) <- names(lvs)
   return(res)
 }

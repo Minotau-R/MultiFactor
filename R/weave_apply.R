@@ -28,49 +28,47 @@
 #'
 #' # Apply arbitrary code to x based on group membership
 #' weave_apply(
-#'     x,
-#'     .path = fruit ~ clothing,
-#'     .data = df,
-#'     .fun = function(x) colSums(x)
+#'   x,
+#'   .path = fruit ~ clothing,
+#'   .data = df,
+#'   .fun = function(x) colSums(x)
 #' )
 #'
 #' @seealso [weave()] [lapply()] [linkmap()] [multifactor()]
 #'
 NULL
 
-S7::method(weave_apply, multifactor) <- function(
-        .x, .path, .data, .fun = NULL, ..., .index = "row.names"
-) {
-    .valid_path_input(.path)
-    pm <- .path_to_path_frame(.path)
-    .path_check_valid_weave_apply(pm)
-    path_list <- terms(pm)
+S7::method(weave_apply, multifactor) <- function(.x, .path, .data, .fun = NULL, ..., .index = "row.names") {
+  .valid_path_input(.path)
+  pm <- .path_to_path_frame(.path)
+  .path_check_valid_weave_apply(pm)
+  path_list <- terms(pm)
 
-    # TODO confirm below lines commented out lines can be deleted
-    # pm <- .select_by_path_frame(.x, pm)
-    #
-    # path_list <- tapply(pm, ~components, terms, simplify = FALSE) |> unname()
+  # TODO confirm below lines commented out lines can be deleted
+  # pm <- .select_by_path_frame(.x, pm)
+  #
+  # path_list <- tapply(pm, ~components, terms, simplify = FALSE) |> unname()
 
-    IDX <- .splitlinkmap(.index_tbl_by_path_list(.x, path_list, .data, .index))
+  IDX <- .splitlinkmap(.index_tbl_by_path_list(.x, path_list, .data, .index))
 
-    # Mimic tapply behaviour; Leaving FUN = NULL returns the index itself.
-    if(is.null(.fun)) {
-        res <- IDX
-    } else {
-        FUN <- match.fun(.fun)
-        # Apply FUN over each subset of X indexed by IDX
-        res <- lapply(X = IDX, FUN = function(iii) FUN(.data[iii, ]), ...)
-    }
-    return(res)
+  # Mimic tapply behaviour; Leaving FUN = NULL returns the index itself.
+  if (is.null(.fun)) {
+    res <- IDX
+  } else {
+    FUN <- match.fun(.fun)
+    # Apply FUN over each subset of X indexed by IDX
+    res <- lapply(X = IDX, FUN = function(iii) FUN(.data[iii, ]), ...)
+  }
+  return(res)
 }
 
 .path_check_valid_weave_apply <- function(x) {
-    if(.check_path_frame_uses_stack(x) ) {
-        stop(
-            "`weave_apply()` '.path' cannot contain '+'.",
-            "Use `stack()` to prepare input."
-        )
-    }
+  if (.check_path_frame_uses_stack(x)) {
+    stop(
+      "`weave_apply()` '.path' cannot contain '+'.",
+      "Use `stack()` to prepare input."
+    )
+  }
 }
 
 #' Index a table
@@ -84,18 +82,14 @@ S7::method(weave_apply, multifactor) <- function(
 #' # Utilities
 #' .index_tbl_by_path_list(link, ec ~ ko, .data)
 #'
-.index_tbl_by_path_list <- function(
-        .x, path_list, .data, .i = "row.names", ...
-        ) {
+.index_tbl_by_path_list <- function(.x, path_list, .data, .i = "row.names", ...) {
+  .data <- .index_tbl(.data, type = path_list[[2L]], .i = .i)
+  path_list[[2L]] <- colnames(.data)[[2L]]
+  .data <- multifactor(.data)
 
-    .data <- .index_tbl(.data, type = path_list[[2L]], .i = .i)
-    path_list[[2L]] <- colnames(.data)[[2L]]
-    .data <- multifactor(.data)
+  .x <- `c.multifactor::multifactor`(.x, .data)
 
-    .x <- `c.multifactor::multifactor`(.x, .data)
-
-    weave(.x, path_list, ...)
-
+  weave(.x, path_list, ...)
 }
 
 
@@ -115,41 +109,38 @@ S7::method(weave_apply, multifactor) <- function(
 #' # Any table can be a indexed into a linkmap:
 #' .index_tbl(mtcars)
 #'
-.index_tbl <- function(
-        .data, type = deparse1(substitute(.data)), .i = "row.names"
-        ) {
-    if( .i == "row.names" ) {
-        row.index <- rownames(.data)
-    } else {
-        row.index <- .data[[.i]]
-    }
-    res <- data.frame( row.index, seq_len(NROW(.data)) )
+.index_tbl <- function(.data, type = deparse1(substitute(.data)), .i = "row.names") {
+  if (.i == "row.names") {
+    row.index <- rownames(.data)
+  } else {
+    row.index <- .data[[.i]]
+  }
+  res <- data.frame(row.index, seq_len(NROW(.data)))
 
-    colnames(res) <- c(type, "row.index")
-    as_linkmap(res)
+  colnames(res) <- c(type, "row.index")
+  as_linkmap(res)
 }
 
 
 #' @noRd
 .splitlinkmap <- function(x, drop = TRUE) split.default(
-    as.integer(x[[2L]]), x[[1L]], drop
-    )
+  as.integer(x[[2L]]), x[[1L]], drop
+)
 
 #' Take the coverage .data arg and return a character vector.
 #' @noRd
 #'
 .data_coverage_to_vector <- function(.data, .i = "row.names") {
-    if( !length(.data) ) {
-        res <- NULL
-    } else if( is.character(.data) ) {
-        res <- .data
+  if (!length(.data)) {
+    res <- NULL
+  } else if (is.character(.data)) {
+    res <- .data
+  } else {
+    if (.i == "row.names") {
+      res <- row.names(.data)
     } else {
-        if( .i == "row.names") {
-            res <- row.names(.data)
-        } else {
-            res <- .data[[.i]]
-        }
+      res <- .data[[.i]]
     }
-    return(res)
+  }
+  return(res)
 }
-

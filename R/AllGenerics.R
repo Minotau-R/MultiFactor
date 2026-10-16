@@ -62,7 +62,7 @@ as_multifactor <- S7::new_generic("as_multifactor", "x")
 #' weave
 #'
 weave <- S7::new_generic("weave", "x", function(x, .path, ...) {
-    S7::S7_dispatch()
+  S7::S7_dispatch()
 })
 
 #' Index a table and apply arbitrary code to it
@@ -86,9 +86,11 @@ weave <- S7::new_generic("weave", "x", function(x, .path, ...) {
 #' weave_apply
 #'
 weave_apply <- S7::new_generic(
-    "weave_apply",
-    ".x",
-    function(.x, .path, .data, .fun = NULL, ...) {S7::S7_dispatch()}
+  "weave_apply",
+  ".x",
+  function(.x, .path, .data, .fun = NULL, ...) {
+    S7::S7_dispatch()
+  }
 )
 
 #' Weave a path through an object
@@ -109,6 +111,5 @@ weave_apply <- S7::new_generic(
 #' select_path
 #'
 select_path <- S7::new_generic("select_path", "x", function(x, .path, ...) {
-    S7::S7_dispatch()
+  S7::S7_dispatch()
 })
-

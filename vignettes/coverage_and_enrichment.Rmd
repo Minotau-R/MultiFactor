@@ -10,8 +10,8 @@ vignette: >
 
 ```{r 'knitr-setup', include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE, 
-  dev = "ragg_png", 
+  collapse = TRUE,
+  dev = "ragg_png",
   comment = "#>"
 )
 ```
@@ -39,63 +39,62 @@ fox <- quickbrownfox()
 
 # Define utility function
 split_to_letters <- function(x) unique(
-  unlist( 
-    strsplit( gsub(" ", "", x), split = "" ), 
+  unlist(
+    strsplit(gsub(" ", "", x), split = ""),
     recursive = TRUE, use.names = FALSE
   )
-  )
+)
 ```
 
 ### Example Dataset: The Quick Brown Fox 
 
 
 ```{r 'prep-plots', echo = FALSE, fig.width=10, fig.height=6, dev='ragg_png'}
-
 word_lvs <- c("the", "quick", "brown", "fox", "jumps", "over", "lazy", "dog")
 cons_lvs <- c("subject", "predicate", "object")
 
-letter2word_df <- as.data.frame(fox$letter2word) %>% 
-    mutate(
-      word = factor(word, levels = word_lvs), 
-      label = "X"
-      ) %>% 
+letter2word_df <- as.data.frame(fox$letter2word) %>%
+  mutate(
+    word = factor(word, levels = word_lvs),
+    label = "X"
+  ) %>%
   arrange(word)
 
-word2constituent_df <- as.data.frame(fox$word2constituent) %>% 
-    mutate(
-      word = factor(word, levels = word_lvs), 
-      constituent = factor(constituent, levels = cons_lvs),
-      label = "X"
-      ) %>% 
+word2constituent_df <- as.data.frame(fox$word2constituent) %>%
+  mutate(
+    word = factor(word, levels = word_lvs),
+    constituent = factor(constituent, levels = cons_lvs),
+    label = "X"
+  ) %>%
   arrange(constituent, word)
 
 
 lm1 <- ggplot(letter2word_df) +
-    geom_text(label = "X", x = I(0.5), y = I(0.5)) +
-  ggtitle("Words to letters") + 
-    facet_grid(word ~ letter, switch = "y", space = "free_x") 
+  geom_text(label = "X", x = I(0.5), y = I(0.5)) +
+  ggtitle("Words to letters") +
+  facet_grid(word ~ letter, switch = "y", space = "free_x")
 
 
 lm2 <- ggplot(word2constituent_df) +
-    geom_text(label = "X", x = I(0.5), y = I(0.5)) +
-    ggtitle("Words to Constituents") + 
-    facet_grid(word ~ constituent, switch = "y", space = "free_x") 
-   
+  geom_text(label = "X", x = I(0.5), y = I(0.5)) +
+  ggtitle("Words to Constituents") +
+  facet_grid(word ~ constituent, switch = "y", space = "free_x")
+
 d <- "
 AAAAAA
 BBCCCC"
 
-lm1 + lm2 + plot_spacer()  +
-    plot_layout(
-        axes = "collect", axis_titles = "collect",
-        nrow = 2L, design = d
-    ) +
-    plot_annotation(tag_levels = "a") &
-        theme_bw() &
-    theme(
-        strip.text.y.left = element_text(angle = 0), 
-        panel.spacing = unit(0.1, "lines")
-        ) 
+lm1 + lm2 + plot_spacer() +
+  plot_layout(
+    axes = "collect", axis_titles = "collect",
+    nrow = 2L, design = d
+  ) +
+  plot_annotation(tag_levels = "a") &
+  theme_bw() &
+  theme(
+    strip.text.y.left = element_text(angle = 0),
+    panel.spacing = unit(0.1, "lines")
+  )
 ```
 
 ```{r 'show-data', message = FALSE}
@@ -118,7 +117,7 @@ letters cover the words in our data set. This function behaves similarly to
 our input letters: 
 ```{r 'weave-example1', message = FALSE}
 res <- weave_coverage(
-    x = fox, .path = letter ~ word, .data = input
+  x = fox, .path = letter ~ word, .data = input
 )
 
 as.data.frame(res)
@@ -133,7 +132,7 @@ input
 
 ```{r 'weave-example2', message = FALSE}
 res <- weave_coverage(
-    x = fox, .path = letter ~ word, .data = input
+  x = fox, .path = letter ~ word, .data = input
 )
 
 as.data.frame(res)
