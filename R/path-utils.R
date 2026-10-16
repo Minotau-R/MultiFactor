@@ -1,19 +1,17 @@
+#' path_frame utilities
+#' @noRd
+#' @examples
+#' x <- random_multifactor()
+#' .path <- a ~ b : c > 0.2 ~ d + e : f ~ g
+#' pf <- path_frame(.path)
+#'
+NULL
 
-.check_path_frame_is_minimal <- function(.path_map) NROW(.path_map) == 1L
+.check_path_frame_is_minimal <- function(.pf) NROW(.pf) == 1L
 
-.check_path_frame_uses_stack <- function(.path_map) any(.path_map[["stack"]])
+.check_path_frame_uses_stack <- function(.pf) any(.pf[["stack"]])
 
-.check_path_frame_uses_coverage <- function(.path_map) any(
-    .path_map[["use_cov"]] > 0
-    )
-
-.pf_as_stack_path_list <- function(x) strsplit(
-    `terms.multifactor::path_frame`(x), " + ", fixed = TRUE
-    )
-
-.pf_as_full_path_list <- function(x) unname(
-    tapply(x, ~components, `terms.multifactor::path_frame`, simplify = FALSE)
-)
+.check_path_frame_uses_coverage <- function(.pf) any(.pf[["use_cov"]] > 0)
 
 .valid_path_input <- function(.path) {
     classes <- c("character", "formula", "data.frame", "list")
@@ -49,13 +47,13 @@
 
 .cut_fm_to_df <- function(x, all_seps = c("~", ":")) {
     # Convert to character
-    x <- deparse1(x)
+    x <- deparse1(x, collapse = "")
 
-    steps <- paste0(all_seps, collapse = "|")
+    all_seps <- paste0(all_seps, collapse = "|")
 
     # Get all separators and content
-    seps     <- strsplit(gsub(paste0("[^", steps, "]"), "", x), "")[[1L]]
-    content  <- .drop_trailing_spaces(strsplit(x, steps)[[1L]])
+    seps     <- strsplit(gsub(paste0("[^", all_seps, "]"), "", x), "")[[1L]]
+    content  <- .drop_trailing_spaces(strsplit(x, all_seps)[[1L]])
     use_cov  <- seps == ":"
     cov_res  <- .parse_coverage(content, use_cov)
     cov_req  <- cov_res[["cov_req"]]
@@ -69,8 +67,9 @@
     data.frame(from, to, stack, use_cov, cov_req)
 }
 
-.drop_trailing_spaces <- function(x) gsub("^ | $", "", x)
-
+.pf_as_full_path_list <- function(x) unname(
+    tapply(x, ~components, `terms.multifactor::path_frame`, simplify = FALSE)
+)
 
 .parse_coverage <- function(content, use_cov) {
     # Fill in required coverage thresholds
@@ -105,3 +104,5 @@
     list(cov_req = cov_req, content = content)
 
 }
+
+.drop_trailing_spaces <- function(x) gsub("^ | $", "", x)

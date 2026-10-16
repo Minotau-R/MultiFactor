@@ -25,13 +25,14 @@ S7::method(formula, path_frame) <- function(x) `formula.multifactor::path_frame`
     res <- rep("~", out_len )
     res[seq_len(out_len) %% 2 == 1L] <- `terms.multifactor::path_frame`(x)
 
-    if("use_cov" %in% colnames(x)) {
-        res[seq_len(out_len) %% 2 == 0L][x[["use_cov"]] != 0L] <- ":"
-        if(any(prop <- x[["use_cov"]] > 0L & x[["use_cov"]] < 1L)) {
+    if(.check_path_frame_uses_coverage(x)) {
+        res[seq_len(out_len) %% 2 == 0L][x[["use_cov"]]] <- ":"
 
-            res[2 * which(prop) + 1L] <- paste0(
-                res[2 * which(prop) + 1L], " < ", x[["use_cov"]][which(prop)]
-            )
+        if(any(spec <- x[["cov_req"]] %notin% c(">= 0", ">= 1"))) {
+
+            res[2 * which(spec) + 1L] <- paste(
+                res[2 * which(spec) + 1L], x[["cov_req"]][spec]
+                )
         }
     }
 
@@ -73,4 +74,5 @@ S7::method(print, path_frame) <- function(x, ...) {
         print(p[[1]])
         cat("\n")
     }
+    print.data.frame(x)
 }
