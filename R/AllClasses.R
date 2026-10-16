@@ -171,7 +171,7 @@ multifactor <- S7::new_class(
     names(x) <- paste0("x_", seq_along(x))
     x <- .merge_linkmaps(x)
 
-    if (!length(levels)) levels <- .build_levels_from_linkmap_list(x)
+    if (!length(levels)) levels <- .build_levels_from_lm_list(x)
     x <- .unify_levels(x, levels)
 
     names(x) <- vapply(x, .linkmap2name, FUN.VALUE = "", USE.NAMES = FALSE)
@@ -335,7 +335,7 @@ path_frame <- S7::new_class(
   # Sequentially subset over feature names
   for (j in jj) {
     # Select all those data frames where that term is mentioned
-    ii <- rowsWithCol(m, j, FALSE)
+    ii <- .rows_with_col(m, j, FALSE)
     keep <- Reduce(intersect, lapply(x[ii], base::`[[`, j))
 
     # Filter feature ids in each df to only universally shared ones.
@@ -354,9 +354,9 @@ path_frame <- S7::new_class(
 #' @param ft A table containing features of interest, `tableX` or `tableY`.
 #' @noRd
 #'
-.trimByFeatureTable <- function(x, ft, id) {
+.trim_by_feature_table <- function(x, ft, id) {
   lv <- levels(x)[[id]]
-  r <- rowsWithCol(x@map, id)
+  r <- .rows_with_col(x@map, id)
   stopifnot(
     "Feature names appeared in several index elements. " = length(r) == 1L
   )
@@ -385,7 +385,7 @@ path_frame <- S7::new_class(
 
 #' Given a list of linkmaps x, return a unified and sorted list of levels.
 #' @noRd
-.build_levels_from_linkmap_list <- function(x) {
+.build_levels_from_lm_list <- function(x) {
   all_lvs <- unique(unlist(lapply(x, colnames), FALSE, FALSE))
   lvs <- .gather_all_levels(x, all_lvs)
   return(lvs)

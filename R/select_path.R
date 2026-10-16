@@ -237,7 +237,7 @@ S7::method(select_path, multifactor) <- function(x, .path, ...) {
 #'
 .step_seq <- function(term_list, d) vapply(
   term_list,
-  FUN = rowsWithCol,
+  FUN = .rows_with_col,
   d = d,
   names = FALSE,
   FUN.VALUE = 0L,
@@ -253,7 +253,7 @@ S7::method(select_path, multifactor) <- function(x, .path, ...) {
 #' @description Helper function for `multifactor` to get names or indices of
 #' data frames that contain an id column
 #'
-rowsWithCol <- function(d, id, names = TRUE) {
+.rows_with_col <- function(d, id, names = TRUE) {
   rowInds <- which(Matrix::rowSums(d[, id, drop = FALSE] != 0L) == length(id))
   if (length(rowInds) == 0L) {
     return(0L)

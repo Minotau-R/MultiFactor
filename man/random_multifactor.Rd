@@ -51,7 +51,7 @@ called by \code{random_multifactor}, shouldn't be called by user.
 random_multifactor()
 
 # Use a (possibly random) igraph as input:
-random_multifactor( igraph::sample_gnp(6, 2/3) )
+random_multifactor(igraph::sample_gnp(6, 2 / 3))
 
 # Make a random linkmap object
 random_linkmap()

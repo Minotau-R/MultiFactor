@@ -179,8 +179,8 @@ test_enrichment <- function(x, log_base = 2L) {
   shared <- all_terms[[2L]]
   to <- all_terms[[3L]]
 
-  seen <- x[[rowsWithCol(x@map, c(shared, from))]]
-  full <- x[[rowsWithCol(x@map, c(shared, to))]]
+  seen <- x[[.rows_with_col(x@map, c(shared, from))]]
+  full <- x[[.rows_with_col(x@map, c(shared, to))]]
 
   # Ensure linkmap order
   shared2from <- as.matrix(seen, terms = c(shared, from))
