@@ -58,12 +58,8 @@ S7::method(stack, multifactor) <- function(
     )
 }
 
-#' @param std_path Takes a std list form and splits it by " + " for stack().
-#' @returns a std list with split variables.
-#' @noRd
-#'
-.stack_parse_std_path <- function(std_path) unlist(
-    lapply(std_path, strsplit, split = " + ", fixed = TRUE), FALSE, FALSE
+.pf_as_stack_path_list <- function(x) strsplit(
+    `terms.multifactor::path_frame`(x), " + ", fixed = TRUE
 )
 
 .stack_terms <- function(x, terms) {
