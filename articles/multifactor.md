@@ -290,7 +290,17 @@ included into one `linkmap`.
 [`select_path`](https://minotau-r.github.io/multifactor/reference/select_path-generic.md)`(``tp``, ``fruit`` ``~`` ``clothing``)`\
 `#> A multifactor::path_frame S7_object.`\
 `` #>   A path from `fruit` to `clothing` with 2 sub-paths: ``\
-`#> fruit ~ instruments ~ books ~ furniture ~ clothing`
+`#> fruit ~ instruments ~ books ~ furniture ~ clothing`\
+`#> `\
+`#>          from          to stack use_cov cov_req components`\
+`#> 1       fruit instruments FALSE   FALSE    >= 0          1`\
+`#> 2 instruments       books FALSE   FALSE    >= 0          1`\
+`#> 3       books   furniture FALSE   FALSE    >= 0          1`\
+`#> 4   furniture    clothing FALSE   FALSE    >= 0          1`\
+`#> 5       fruit instruments FALSE   FALSE    >= 0          2`\
+`#> 6 instruments     marbles FALSE   FALSE    >= 0          2`\
+`#> 7     marbles   furniture FALSE   FALSE    >= 0          2`\
+`#> 8   furniture    clothing FALSE   FALSE    >= 0          2`
 
 ## Compatibility with `igraph` and `Matrix`
 
@@ -319,11 +329,11 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `g`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``tp``)`\
 `g`\
-`#> IGRAPH 22c4355 UN-- 6 6 -- `\
+`#> IGRAPH 11193ea UN-- 6 6 -- `\
 `#> + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji`\
 `#> | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji`\
 `#> | (e/n), fruit_emoji (e/n)`\
-`#> + edges from 22c4355 (vertex names):`\
+`#> + edges from 11193ea (vertex names):`\
 `#> [1] books      --furniture   clothing   --furniture   books      --instruments`\
 `#> [4] fruit      --instruments furniture  --marbles     instruments--marbles`\
 `# Plot graph across data types`\
@@ -337,9 +347,9 @@ for path finding and sparse matrix representation.
 `# Convert to an igraph object`\
 `lg`` ``<-`` `[`as.igraph`](https://r.igraph.org/reference/as.igraph.html)`(``fruit2clothing``)`\
 `lg`\
-`#> IGRAPH 199e6a0 UN-B 12 18 -- `\
+`#> IGRAPH c831ee1 UN-B 12 18 -- `\
 `#> + attr: type (v/l), name (v/c)`\
-`#> + edges from 199e6a0 (vertex names):`\
+`#> + edges from c831ee1 (vertex names):`\
 `#>  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  `\
 `#>  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves `\
 `#>  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    `\

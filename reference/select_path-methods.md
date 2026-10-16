@@ -39,4 +39,7 @@ select_path(x, b ~ c)
 #>   A path from `b` to `c`:
 #> b ~ a ~ c
 #> 
+#>   from to stack use_cov cov_req components
+#> 1    b  a FALSE   FALSE    >= 0          1
+#> 2    a  c FALSE   FALSE    >= 0          1
 ```

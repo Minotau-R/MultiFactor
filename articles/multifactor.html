@@ -360,7 +360,17 @@ several paths exist, all will be traversed and included into one
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/select_path-generic.html">select_path</a></span><span class="op">(</span><span class="va">tp</span>, <span class="va">fruit</span> <span class="op">~</span> <span class="va">clothing</span><span class="op">)</span></span>
 <span><span class="co">#&gt; A multifactor::path_frame S7_object.</span></span>
 <span><span class="co">#&gt;   A path from `fruit` to `clothing` with 2 sub-paths:</span></span>
-<span><span class="co">#&gt; fruit ~ instruments ~ books ~ furniture ~ clothing</span></span></code></pre></div>
+<span><span class="co">#&gt; fruit ~ instruments ~ books ~ furniture ~ clothing</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;          from          to stack use_cov cov_req components</span></span>
+<span><span class="co">#&gt; 1       fruit instruments FALSE   FALSE    &gt;= 0          1</span></span>
+<span><span class="co">#&gt; 2 instruments       books FALSE   FALSE    &gt;= 0          1</span></span>
+<span><span class="co">#&gt; 3       books   furniture FALSE   FALSE    &gt;= 0          1</span></span>
+<span><span class="co">#&gt; 4   furniture    clothing FALSE   FALSE    &gt;= 0          1</span></span>
+<span><span class="co">#&gt; 5       fruit instruments FALSE   FALSE    &gt;= 0          2</span></span>
+<span><span class="co">#&gt; 6 instruments     marbles FALSE   FALSE    &gt;= 0          2</span></span>
+<span><span class="co">#&gt; 7     marbles   furniture FALSE   FALSE    &gt;= 0          2</span></span>
+<span><span class="co">#&gt; 8   furniture    clothing FALSE   FALSE    &gt;= 0          2</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -393,11 +403,11 @@ representation.</p>
 <span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">tp</span><span class="op">)</span></span>
 <span><span class="va">g</span></span>
-<span><span class="co">#&gt; IGRAPH 22c4355 UN-- 6 6 -- </span></span>
+<span><span class="co">#&gt; IGRAPH 11193ea UN-- 6 6 -- </span></span>
 <span><span class="co">#&gt; + attr: name (v/c), name (e/c), instruments_emoji (e/n), marbles_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), furniture_emoji (e/n), books_emoji (e/n), clothing_emoji</span></span>
 <span><span class="co">#&gt; | (e/n), fruit_emoji (e/n)</span></span>
-<span><span class="co">#&gt; + edges from 22c4355 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from 11193ea (vertex names):</span></span>
 <span><span class="co">#&gt; [1] books      --furniture   clothing   --furniture   books      --instruments</span></span>
 <span><span class="co">#&gt; [4] fruit      --instruments furniture  --marbles     instruments--marbles</span></span>
 <span><span class="co"># Plot graph across data types</span></span>
@@ -412,9 +422,9 @@ representation.</p>
 <code class="sourceCode R"><span><span class="co"># Convert to an igraph object</span></span>
 <span><span class="va">lg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/as.igraph.html" class="external-link">as.igraph</a></span><span class="op">(</span><span class="va">fruit2clothing</span><span class="op">)</span></span>
 <span><span class="va">lg</span></span>
-<span><span class="co">#&gt; IGRAPH 199e6a0 UN-B 12 18 -- </span></span>
+<span><span class="co">#&gt; IGRAPH c831ee1 UN-B 12 18 -- </span></span>
 <span><span class="co">#&gt; + attr: type (v/l), name (v/c)</span></span>
-<span><span class="co">#&gt; + edges from 199e6a0 (vertex names):</span></span>
+<span><span class="co">#&gt; + edges from c831ee1 (vertex names):</span></span>
 <span><span class="co">#&gt;  [1] apples --t-shirt pears  --t-shirt apples --dress   oranges--dress  </span></span>
 <span><span class="co">#&gt;  [5] melons --dress   grapes --dress   apples --gloves  pears  --gloves </span></span>
 <span><span class="co">#&gt;  [9] apples --hat     pears  --hat     oranges--hat     melons --hat    </span></span>
