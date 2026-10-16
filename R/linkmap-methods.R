@@ -4,8 +4,8 @@
 #' @examples
 #' # Setup
 #' a2b <- data.frame(
-#'     a = sample(letters[seq(3)], 10, replace = TRUE),
-#'     b = sample(LETTERS[seq(3)], 10, replace = TRUE)
+#'   a = sample(letters[seq(3)], 10, replace = TRUE),
+#'   b = sample(LETTERS[seq(3)], 10, replace = TRUE)
 #' )
 #'
 #' # Create linkmap
@@ -19,7 +19,6 @@
 #' levels(x)
 #' nlevels(x)
 #'
-#'
 #' @param x,object `linkmap` on which the method should be applied.
 #' @returns A `linkmap`
 NULL
@@ -29,9 +28,9 @@ S7::method(print, linkmap) <- function(x, n = 10L, ...) {
   nrn <- nr - n
   cat("A ", paste(class(x), collapse = " "), ": ", nr, " rows.\n", sep = "")
   # Factor columns
-  if(  n < nr ) {
+  if (n < nr) {
     print(`class<-`(S7::S7_data(x[seq_len(n)]), "data.frame"))
-    cat( " +", nrn, "more rows. Use `print(n = ...)` to see more rows.\n" )
+    cat(" +", nrn, "more rows. Use `print(n = ...)` to see more rows.\n")
   } else {
     print(`class<-`(S7::S7_data(x), "data.frame"))
   }
@@ -41,12 +40,11 @@ S7::method(print, linkmap) <- function(x, n = 10L, ...) {
   .print_levels(x)
 
   # Metadata
-  if( prod(dim(m <- x@metadata)) ) {
+  if (prod(dim(m <- x@metadata))) {
     cat("\n@ metadata:", NCOL(m), "variables: \n")
     # Dodge data.frame str header by forcing str.default:
     str(`class<-`(m, "default"), give.attr = FALSE, give.length = FALSE)
   }
-
 }
 
 
@@ -55,16 +53,16 @@ S7::method(print, linkmap) <- function(x, n = 10L, ...) {
 #' @noRd
 #'
 S7::method(nlevels, linkmap) <- function(x, use.names = TRUE) lengths(
-    levels(x), use.names
-    )
+  levels(x), use.names
+)
 
 S7::method(levels, linkmap) <- function(x) x@levels
 
 #' @export
 #'
 `levels<-.multifactor::linkmap` <- function(x, value) {
-    x@levels <- value
-    return(x)
+  x@levels <- value
+  return(x)
 }
 
 #' @export
@@ -72,24 +70,24 @@ S7::method(levels, linkmap) <- function(x) x@levels
 `unique.multifactor::linkmap` <- function(x, incomparables = FALSE, ...) {
   if (!isFALSE(incomparables))
     .NotYetUsed("incomparables != FALSE")
-  x[! duplicated(x) ]
+  x[!duplicated(x)]
 }
 
 #' @importFrom rlang check_dots_empty0 is_missing
 #' @export
 #'
 `[.multifactor::linkmap` <- function(x, i, ...) {
-    rlang::check_dots_empty0(...)
-    if(! rlang::is_missing(i))  {
-        metadata <- x@metadata
-        metadata <- `[.data.frame`(metadata, i, , drop = FALSE)
+  rlang::check_dots_empty0(...)
+  if (!rlang::is_missing(i)) {
+    metadata <- x@metadata
+    metadata <- `[.data.frame`(metadata, i, , drop = FALSE)
 
-        x <- `class<-`(S7::S7_data(x), "data.frame")
-        x <- `[.data.frame`(x, i, , drop = FALSE)
+    x <- `class<-`(S7::S7_data(x), "data.frame")
+    x <- `[.data.frame`(x, i, , drop = FALSE)
 
-        x <- linkmap(x, metadata)
-        }
-    return(x)
+    x <- linkmap(x, metadata)
+  }
+  return(x)
 }
 
 
@@ -113,24 +111,22 @@ S7::method(levels, linkmap) <- function(x) x@levels
 #' x <- random_linkmap()
 #' as.matrix(x)
 #'
-`as.matrix.multifactor::linkmap` <- function(
-        x, terms = colnames(x),
-        dims = nlevels(x)[terms], dimnames = levels(x)[terms],
-        value_id = NULL, force_pattern = is.null(value_id),
-        ...
-) if( force_pattern ) {
+`as.matrix.multifactor::linkmap` <- function(x, terms = colnames(x),
+                                             dims = nlevels(x)[terms], dimnames = levels(x)[terms],
+                                             value_id = NULL, force_pattern = is.null(value_id),
+                                             ...) if (force_pattern) {
   Matrix::sparseMatrix(
-      i = x[[terms[1L]]], j = x[[terms[2L]]],
-      dims = dims, dimnames = dimnames, ...
-    )
-  } else {
-    if( !length(value_id) ) value_id <- 1L
-    value <- x@metadata[[value_id]]
-    Matrix::sparseMatrix(
-      i = x[[terms[1L]]], j = x[[terms[2L]]], x = value,
-      dims = dims, dimnames = dimnames, ...
-    )
-  }
+    i = x[[terms[1L]]], j = x[[terms[2L]]],
+    dims = dims, dimnames = dimnames, ...
+  )
+} else {
+  if (!length(value_id)) value_id <- 1L
+  value <- x@metadata[[value_id]]
+  Matrix::sparseMatrix(
+    i = x[[terms[1L]]], j = x[[terms[2L]]], x = value,
+    dims = dims, dimnames = dimnames, ...
+  )
+}
 
 
 #' @title Convert a linkmap to a data.frame
@@ -146,10 +142,8 @@ S7::method(levels, linkmap) <- function(x) x@levels
 #' @export
 #'
 `as.data.frame.multifactor::linkmap` <- function(
-    x, row.names, optional, ...
-    ) cbind(S7::S7_data(x), x@metadata)
-
-
+  x, row.names, optional, ...
+) cbind(S7::S7_data(x), x@metadata)
 
 
 ##### linkmap utils

@@ -46,75 +46,74 @@ NULL
 S7::method(as_linkmap, linkmap) <- function(x) x
 
 
-S7::method(as_linkmap, S7::class_data.frame) <- function(
-        x, edge.names = NULL
-){
-    if( NCOL(x) >= 3L ) {
-        metadata <- x[, -seq_len(2L), drop = FALSE]
-        x <- x[, seq_len(2L)]
-    } else {
-        metadata <- data.frame(row.names = seq_len(NROW(x)))
-        }
-    # Assign custom edge names
-    if( !is.null(edge.names) ){
-        colnames(x) <- edge.names
-    }
-    # Convert to linkmap
-    x <- linkmap(x, metadata)
-    return(x)
+S7::method(as_linkmap, S7::class_data.frame) <- function(x, edge.names = NULL) {
+  if (NCOL(x) >= 3L) {
+    metadata <- x[, -seq_len(2L), drop = FALSE]
+    x <- x[, seq_len(2L)]
+  } else {
+    metadata <- data.frame(row.names = seq_len(NROW(x)))
+  }
+  # Assign custom edge names
+  if (!is.null(edge.names)) {
+    colnames(x) <- edge.names
+  }
+  # Convert to linkmap
+  x <- linkmap(x, metadata)
+  return(x)
 }
 
 S7::method(as_linkmap, S7::class_list) <- function(
-    x, y = NULL, edge.names = NULL ) {
-    # Use list names
-    if( is.null(y) ) {
-        y <- names(x)
-    }
-    # Create linkMap
-    x2y <- data.frame(
-        x = unlist(x, recursive = TRUE, use.names = FALSE),
-        y = rep(y, lengths(x))
-        )
-    # Assign custom edge names
-    if( !is.null(edge.names) ) {
-        names(x2y) <- edge.names
-    }
-    # Convert to linkmap
-    x2y <- linkmap(x2y)
-    return(x2y)
+  x, y = NULL, edge.names = NULL
+) {
+  # Use list names
+  if (is.null(y)) {
+    y <- names(x)
+  }
+  # Create linkMap
+  x2y <- data.frame(
+    x = unlist(x, recursive = TRUE, use.names = FALSE),
+    y = rep(y, lengths(x))
+  )
+  # Assign custom edge names
+  if (!is.null(edge.names)) {
+    names(x2y) <- edge.names
+  }
+  # Convert to linkmap
+  x2y <- linkmap(x2y)
+  return(x2y)
 }
 
-S7::method( as_linkmap, S7::class_logical) <- function(x, edge.names = NULL){
-        # Check that x is a matrix
-        if( !is.matrix(x) ){
-            stop("'x' must be a matrix.", call. = FALSE)
-        }
-        if( is.null(rownames(x)) || is.null(colnames(x)) ){
-            stop("'x' must have rownames and colnames.", call. = FALSE)
-        }
-        # Find link indices
-        idx <- which(x, arr.ind = TRUE)
-        # Find link pairs
-        x2y <- data.frame(
-            x = rownames(x)[idx[, 2]],
-            y = colnames(x)[idx[, 1]]
-        )
-        # Assign custom edge names
-        if( !is.null(edge.names) ){
-            names(x2y) <- edge.names
-        }
-        # Convert to linkmap
-        x2y <- linkmap(x2y)
-        return(x2y)
-    }
+S7::method(as_linkmap, S7::class_logical) <- function(x, edge.names = NULL) {
+  # Check that x is a matrix
+  if (!is.matrix(x)) {
+    stop("'x' must be a matrix.", call. = FALSE)
+  }
+  if (is.null(rownames(x)) || is.null(colnames(x))) {
+    stop("'x' must have rownames and colnames.", call. = FALSE)
+  }
+  # Find link indices
+  idx <- which(x, arr.ind = TRUE)
+  # Find link pairs
+  x2y <- data.frame(
+    x = rownames(x)[idx[, 2]],
+    y = colnames(x)[idx[, 1]]
+  )
+  # Assign custom edge names
+  if (!is.null(edge.names)) {
+    names(x2y) <- edge.names
+  }
+  # Convert to linkmap
+  x2y <- linkmap(x2y)
+  return(x2y)
+}
 
-S7::method(as_multifactor, S7::class_any) <- function(x, edge.names = NULL){
-        if( is.null(edge.names) ){
-        edge.names <- lapply(seq_along(x), function(i) letters[c(i, i + 1)])
-    }
-    # Convert each element to linkmap
-    mf <- mapply(as_linkmap, x = x, edge.names = edge.names, SIMPLIFY = FALSE)
-    # Convert to multifactor
-    mf <- multifactor(mf)
-    return(mf)
+S7::method(as_multifactor, S7::class_any) <- function(x, edge.names = NULL) {
+  if (is.null(edge.names)) {
+    edge.names <- lapply(seq_along(x), function(i) letters[c(i, i + 1)])
+  }
+  # Convert each element to linkmap
+  mf <- mapply(as_linkmap, x = x, edge.names = edge.names, SIMPLIFY = FALSE)
+  # Convert to multifactor
+  mf <- multifactor(mf)
+  return(mf)
 }

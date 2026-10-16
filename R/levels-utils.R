@@ -9,12 +9,11 @@
 #' @noRd
 #'
 .set_levels_multifactor <- function(x, levels) {
-    all_lvs <- colnames(x)
-    matched_lvs <- names(levels) %in% all_lvs
+  all_lvs <- colnames(x)
+  matched_lvs <- names(levels) %in% all_lvs
 
-    new_levels <- levels[matched_lvs]
-    S7::S7_data(x) <- .unify_levels( S7::S7_data(x), new_levels )
+  new_levels <- levels[matched_lvs]
+  S7::S7_data(x) <- .unify_levels(S7::S7_data(x), new_levels)
 
-    return(x)
+  return(x)
 }
-

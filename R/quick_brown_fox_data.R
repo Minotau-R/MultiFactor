@@ -1,8 +1,8 @@
 #' @importFrom utils data
 .load_quickbrownfox <- function() local({
-    utils::data("quickbrownfox", package = "multifactor", envir = environment())
-    quickbrownfox <- get("quickbrownfox", mode = "list")
-    return(quickbrownfox)
+  utils::data("quickbrownfox", package = "multifactor", envir = environment())
+  quickbrownfox <- get("quickbrownfox", mode = "list")
+  return(quickbrownfox)
 })
 
 #' A multifactor containing a famous pangram.
@@ -16,11 +16,11 @@
 #' quickbrownfox()
 #'
 quickbrownfox <- function(raw.data = FALSE) {
-    x <- .load_quickbrownfox()
-    if(!raw.data) {
-        x <- multifactor(x)
-    }
-    return(x)
+  x <- .load_quickbrownfox()
+  if (!raw.data) {
+    x <- multifactor(x)
+  }
+  return(x)
 }
 
 # save(quickbrownfox, file = "data/quickbrownfox.rda")
@@ -61,4 +61,3 @@ quickbrownfox <- function(raw.data = FALSE) {
 # quickbrownfox <- list(letter2word, word2constituent, constituent2sentence)
 #
 #
-

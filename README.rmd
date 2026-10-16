@@ -12,13 +12,13 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-    collapse = TRUE,
-    dev="ragg_png", 
-    comment = "#>",
-    fig.path = "man/figures/README-",
-    out.width = "100%",
-    tidy.opts = list(width.cutoff = 80),
-    tidy = TRUE
+  collapse = TRUE,
+  dev = "ragg_png",
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  tidy.opts = list(width.cutoff = 80),
+  tidy = TRUE
 )
 ```
 
