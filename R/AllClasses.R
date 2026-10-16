@@ -198,6 +198,8 @@ multifactor <- S7::new_class(
 #' for internal use.
 #' @param x `data.frame` with the first two columns named `"from"` and `"to"`.
 #'     Optionally, additional columns (see Details)
+#' @param call `character` (Default: empty). If Input is a formula, captures the
+#'     literal content as a character string. Optionally,
 #' @details
 #' Rows represent edges in a path. Additional (optional) columns contain
 #' information about the edges:
@@ -217,15 +219,19 @@ path_frame <- S7::new_class(
   "path_frame",
   package = "multifactor",
   parent = S7::class_data.frame,
-  constructor = function(x) {
-    if (inherits(x, "formula")) {
-      x <- .path_to_path_frame(x)
-    }
+  properties = list(
+    call = S7::new_property(
+      class = S7::class_character,
+      getter = function(self) S7::prop(self, "call"),
+      default = character()
+    )
+  ),
+  constructor = function(x, call = character()) {
     stopifnot(
       "path_frame input must be formula, character or data.frame." =
         is.data.frame(x)
     )
-    S7::new_object(.parent = x)
+    S7::new_object(.parent = x, call = call)
   },
   validator = function(self) {
     if (!all(colnames(self)[seq_len(2L)] == c("from", "to"))) {

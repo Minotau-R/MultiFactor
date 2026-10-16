@@ -3,9 +3,11 @@
 #' @examples
 #' x <- random_multifactor()
 #' .path <- a ~ b:c > 0.2 ~ d + e:f ~ g
-#' pf <- path_frame(.path)
+#' pf <- as_path_frame(.path)
 #'
 NULL
+
+.deparse_fm <- function(x) paste0(deparse(x, 500L), collapse = "")
 
 .check_path_frame_is_minimal <- function(.pf) NROW(.pf) == 1L
 
@@ -26,30 +28,31 @@ NULL
   invisible()
 }
 
-.path_to_path_frame <- function(.path) path_frame(
-  .path_to_path_frame_df(.path)
-)
+
+.path_to_path_frame_df <- function(.path) {
+    .path <- .standardize_path_to_fm(.path)
+    res <- .cut_fm_to_df(.path)
+    res
+}
 
 #' @importFrom stats as.formula
 #'
-.path_to_path_frame_df <- function(.path) {
-  .valid_path_input(.path)
+.standardize_path_to_fm <- function(.path) {
+    .valid_path_input(.path)
 
-  # Some flexibility if input is in a list of length 1:
-  if (is.list(.path) && length(.path) == 1L) {
-    .path <- .path[[1L]]
-  }
-  if (inherits(.path, "character")) {
-    .path <- stats::as.formula(paste0(.path, collapse = "~"))
-  }
-
-  res <- .cut_fm_to_df(.path)
-  return(res)
+    # Some flexibility if input is in a list of length 1:
+    if (is.list(.path) && length(.path) == 1L) {
+        .path <- .path[[1L]]
+    }
+    if (inherits(.path, "character")) {
+        .path <- stats::as.formula(paste0(.path, collapse = "~"))
+    }
+    .path
 }
 
 .cut_fm_to_df <- function(x, all_seps = c("~", ":")) {
   # Convert to character
-  x <- deparse1(x, collapse = "")
+  x <- .deparse_fm(x)
 
   all_seps <- paste0(all_seps, collapse = "|")
 

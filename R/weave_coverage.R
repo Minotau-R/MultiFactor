@@ -38,9 +38,45 @@
 #' result
 #' test_enrichment(result)
 #'
-weave_coverage <- function(x, .path, .data = NULL,
-                           metric = c("set_count", "set_size", "coverage", "complete"),
-                           out.format = c("linkmap", "matrix"), .data_column = "row.names") {
+weave_coverage <- function(
+        x, .path, .data = NULL,
+        metric = c("set_count", "set_size", "coverage", "complete"),
+        out.format = c("linkmap", "matrix"), .data_column = "row.names"
+) {
+    metric <- match.arg(
+        metric, c("set_count", "set_size", "coverage", "complete"),
+        several.ok = TRUE
+    )
+    out.format <- match.arg(out.format, c("linkmap", "matrix"))
+    .data <- .data_coverage_to_vector(.data, .data_column)
+
+    .valid_path_input(.path)
+    pf <- as_path_frame(.path)
+    .path_check_valid_coverage(pf)
+
+    pf <- .enframe_path(x, pf)
+
+    full_path <- .pf_as_full_path_list(pf)
+
+    res <- lapply(
+        full_path, .weave_coverage_factor_path,
+        x = x, .data = .data, metric = metric
+    )
+
+    res <- do.call(rbind.data.frame, res)
+    res <- as_linkmap(res)
+    if (out.format == "matrix") {
+        res <- `as.matrix.multifactor::linkmap`(res)
+    }
+    res
+}
+
+
+.weave_coverage_simple <- function(
+    x, .path, .data = NULL,
+    metric = c("set_count", "set_size", "coverage", "complete"),
+    out.format = c("linkmap", "matrix"), .data_column = "row.names"
+) {
   metric <- match.arg(
     metric, c("set_count", "set_size", "coverage", "complete"),
     several.ok = TRUE
@@ -49,35 +85,39 @@ weave_coverage <- function(x, .path, .data = NULL,
   .data <- .data_coverage_to_vector(.data, .data_column)
 
   .valid_path_input(.path)
-  pm <- .path_to_path_frame(.path)
-  .path_check_valid_coverage(pm)
+  pf <- as_path_frame(.path)
+  .path_check_valid_coverage(pf)
 
-  pm <- .select_by_path_frame(x, pm)
+  pf <- path_frame(.enframe_path(x, pf))
 
-  full_path <- .pf_as_full_path_list(pm)
-
-  res <- lapply(
-    full_path,
-    .weave_coverage_factor_path,
-    x = x, .data = .data, metric = metric
-  )
-
-  res <- do.call(rbind.data.frame, res)
-  res <- as_linkmap(res)
-  if (out.format == "matrix") {
-    res <- `as.matrix.multifactor::linkmap`(res)
+  # check path length:
+  if (NROW(pf) == 1) {
+  res <- .weave_coverage_two(x, terms(pf), .data, metric)
+  } else {
+    # We weave() from 'from' to the first instance of coverage:
+    # a ~ <....> : c. so we weave(a ~ c)
+    # Then we compute coverage on a ~ c and optionally filter.
+    #
+    # From there, proceed to weave to the next instance of coverage.
+    # weave(a  ~ c+1 ~ .... : c2)
+    # etc.
+    #
+    stop("TO DO")
   }
-  return(res)
+  as_linkmap(res)
+
 }
 
 .path_check_valid_coverage <- function(x) {
   if (.check_path_frame_uses_stack(x)) {
     stop(
-      "`weave_coverage()` '.path' cannot contain '+'. ",
+      "weave_coverage() '.path' cannot contain '+'. ",
       "Use `stack()` to prepare input."
     )
   }
 }
+
+
 
 .weave_coverage_factor_path <- function(x, full_path, .data, metric) {
   stopifnot(
@@ -93,8 +133,7 @@ weave_coverage <- function(x, .path, .data = NULL,
     } else if (length(full_path) == 3L) {
       res <- .weave_coverage_three(x, full_path, .data, metric)
     }
-  } else {}
-
+  }
 
   return(res)
 }
@@ -198,12 +237,12 @@ test_enrichment <- function(x, log_base = 2L) {
     bg <- .res_weave_matrix_to_linkmap(bg_mat, levels(x)[c(from, to)])
 
     obs <- bg[bg[[from]] %in% .data, ]
-    res <- .weave_coverage_cont_table(bg, obs, to, metric)
+    res <- .calc_coverage_cont_table(bg, obs, to, metric)
   } else {
     bg <- Matrix::colSums(shared2to)
     obs <- bg_mat
     full_set <- .res_weave_matrix_to_linkmap(bg_mat, levels(x)[c(from, to)])
-    res <- .weave_coverage_cont_table_no_data(bg, obs, full_set, metric)
+    res <- .calc_coverage_cont_table_no_data(bg, obs, full_set, metric)
   }
 
   return(res)
@@ -213,7 +252,7 @@ test_enrichment <- function(x, log_base = 2L) {
 #' @importFrom stats reformulate
 #' @importFrom S7 S7_data
 #'
-.weave_coverage_two <- function(x, all_terms, .data, metric) {
+.weave_coverage_two_old <- function(x, all_terms, .data, metric) {
   set_unit <- all_terms[[1L]]
   set_full <- all_terms[[2L]]
   x.lm <- x[[1L]]
@@ -223,17 +262,32 @@ test_enrichment <- function(x, log_base = 2L) {
   } else {
     obs <- bg
   }
-  res <- .weave_coverage_cont_table(bg, obs, set_full, metric)
-
-  return(res)
+  res <- .calc_coverage_cont_table(bg, obs, set_full, metric)
+  res
 }
 
+#' given a linkmap x, calculate enrichment of all_terms positions 1 ~ 2,
+#' with optional .data character vector
+#' @noRd
+.weave_coverage_two <- function(x, all_terms, .data = NULL, metric) {
+  x <- as.data.frame(x[[1L]])
+  unit_term <- all_terms[[1L]]
+  set_term <- all_terms[[2L]]
 
-.weave_coverage_cont_table <- function(bg, obs, set_full, metric) {
+  if (length(.data)) {
+    unit_obs <- x[x[[unit_term]] %in% .data, ]
+  } else {
+    unit_obs <- x
+  }
+  res <- .calc_coverage_cont_table(x, unit_obs, set_term, metric)
+  res
+}
+
+.calc_coverage_cont_table <- function(bg, obs, set_term, metric) {
   tot_set <- pmax.int(
-    c(tapply(bg, INDEX = stats::reformulate(set_full), FUN = NROW)), 1L
+    c(tapply(bg, INDEX = stats::reformulate(set_term), FUN = NROW)), 1L
   )
-  obs_set <- c(tapply(obs, INDEX = stats::reformulate(set_full), FUN = NROW))
+  obs_set <- c(tapply(obs, INDEX = stats::reformulate(set_term), FUN = NROW))
   val <- data.frame(
     set_count = obs_set,
     set_size  = tot_set,
@@ -241,7 +295,7 @@ test_enrichment <- function(x, log_base = 2L) {
     complete  = obs_set == tot_set
   )[metric]
 
-  metadata <- val[match(bg[[set_full]], row.names(val)), , drop = FALSE]
+  metadata <- val[match(bg[[set_term]], row.names(val)), , drop = FALSE]
   observed <- bg[[1L]] %in% obs[[1L]]
   res <- cbind.data.frame(bg, observed, metadata)
 
@@ -249,7 +303,7 @@ test_enrichment <- function(x, log_base = 2L) {
   return(res)
 }
 
-.weave_coverage_cont_table_no_data <- function(bg, obs, full_set, metric) {
+.calc_coverage_cont_table_no_data <- function(bg, obs, full_set, metric) {
   tot_set <- pmax.int(bg, 1L)
   obs_set <- apply(obs, 2L, c, simplify = FALSE)
 

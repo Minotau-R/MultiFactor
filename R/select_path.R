@@ -28,10 +28,10 @@ NULL
 #'
 S7::method(select_path, multifactor) <- function(x, .path, ...) {
   .valid_path_input(.path)
-  pm <- .path_to_path_frame(.path)
-  .path_check_valid_select(pm)
+  pf <- as_path_frame(.path)
+  .path_check_valid_select(pf)
 
-  paths <- .select_by_path_frame(x, pm)
+  paths <- .enframe_path(x, pf)
   return(paths)
 }
 
@@ -46,8 +46,8 @@ S7::method(select_path, multifactor) <- function(x, .path, ...) {
 
 
 #' @importFrom dplyr bind_rows
-.select_by_path_frame <- function(x, pm) {
-  from_to <- terms(pm)
+.enframe_path <- function(x, pf) {
+  from_to <- terms(pf)
   include <- from_to[-c(1L, length(from_to))]
   from_to <- from_to[c(1L, length(from_to))]
 
@@ -60,7 +60,7 @@ S7::method(select_path, multifactor) <- function(x, .path, ...) {
   res <- dplyr::bind_rows(i, .id = "components")
   col_order <- c(seq.int(from = 2L, to = NCOL(res)), 1L)
 
-  path_frame(res[, col_order, drop = FALSE])
+  res[, col_order, drop = FALSE]
 }
 
 
